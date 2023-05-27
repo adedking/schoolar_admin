@@ -35,7 +35,7 @@ const LogInPage = () => {
                         <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
                             Continue
                         </Button>
-                        <labelText className=''> Dont have an account? <span className='link-color'>Create a schoolar account</span></labelText>
+                        <labelText className=''> Dont have an account? <span className='link-color hover:underline duration-300'>Create a schoolar account</span></labelText>
                     </Stack>
                 </Form>
                 
