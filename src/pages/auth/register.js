@@ -69,7 +69,7 @@ const SignupPage = () => {
                                 value={'independent'}
                                 id="independent"
                                 onClick={() => {
-                                    if (schoolType != 'independent') {
+                                    if (schoolType !== 'independent') {
                                         setSchoolType('independent')
                                     } 
                                     
@@ -79,7 +79,7 @@ const SignupPage = () => {
                                 labelText="Group of schools"
                                 value='group'
                                 onClick={() => {
-                                    if (schoolType != 'group') {
+                                    if (schoolType !== 'group') {
                                         console.log('In')
                                         setSchoolType('group')
                                     } 
@@ -87,7 +87,7 @@ const SignupPage = () => {
                                 id="group"
                             />
                         </RadioButtonGroup>
-                        {schoolType == 'independent'?
+                        {schoolType === 'independent'?
                         <FormGroup className='duration-300'>
                             <Stack gap={7}>
                                 <TextInput
