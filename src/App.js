@@ -5,6 +5,8 @@ import React from 'react';
 import LogInPage from './pages/auth/login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './app.scss';
+import SignupPage from './pages/auth/register';
+
 
 const App = () => {
 
@@ -13,8 +15,8 @@ const App = () => {
         <div>
           <BrowserRouter>
             <Routes>
-              <Route path='/' Component={LogInPage} />
-              {/* <Route exact path='/register' component={RegisterPage} /> */}
+              <Route exact path='/' Component={LogInPage} />
+              <Route exact path='/register' Component={SignupPage} />
             </Routes>
           </BrowserRouter>
         </div>
