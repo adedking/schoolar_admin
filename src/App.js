@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+// import { Router, Route } from 'react-router-dom';
+// import OnboardingProvider from './components/provider/onboarding';
+// import history from './routes/history';
+import LogInPage from './pages/auth/login';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './app.scss';
 
-function App() {
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <React.Fragment>
+        <div>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' Component={LogInPage} />
+              {/* <Route exact path='/register' component={RegisterPage} /> */}
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </React.Fragment>
   );
-}
+};
 
 export default App;

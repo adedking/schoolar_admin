@@ -12,7 +12,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // localStorage
-import componentsSlice from './components/components-slice';
+import componentsSlice from './component/components-slice';
 // import userSlice from './user/user-slice';
 // import companySlice from './company/reducer';
 // import employeeSlice from './employee/reducer';
