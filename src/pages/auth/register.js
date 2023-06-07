@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, Stack, TextInput } from '@carbon/react';
+import { Button, Form, SelectItem, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
-import { FormGroup, RadioButton, RadioButtonGroup } from 'carbon-components-react';
+import { FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -18,7 +18,7 @@ const SignupPage = () => {
                     <Stack gap={7}>
                         <labelText className=''> 
                             Do you have an account?&nbsp;
-                            <span className='link-color hover:underline duration-300 cursor-pointer' 
+                            <span className='link-color hover:underline duration-300 cursor-pointer underline' 
                                 onClick={() => {navigate("/")}}
                             >
                                 Login
@@ -32,7 +32,7 @@ const SignupPage = () => {
                                     kind={'text'}
                                     name={'first_name'}
                                     id="first_name"
-                                    invalidText="Invalid error message."
+                                    invalidText="Please enter a valit first name"
                                     labelText="First Name"
                                     placeholder="Enter Your First Name"
                                 />
@@ -58,6 +58,30 @@ const SignupPage = () => {
                             labelText="Email"
                             placeholder="Enter Your Email"
                         />
+                        <div className='flex md:flex-row flex-col gap-4'>
+                            <div className='md:w-1/2 w-full mb-2'>
+                                
+                                <TextInput.PasswordInput
+                                    type="password"
+                                    required
+                                    name={'password'}
+                                    id="passsword"
+                                    labelText="Password"
+                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                    placeholder="Enter Your Password"
+                                />
+                            </div>
+                            <div className='md:w-1/2 w-full'>
+                                <TextInput.PasswordInput
+                                    type="password"
+                                    required
+                                    name={'confirm_password'}
+                                    id="confirm_passsword"
+                                    labelText="Password Confirmation"
+                                    placeholder="Confirm Your Password"
+                                />
+                            </div>
+                        </div>
                         <RadioButtonGroup
                             defaultSelected="independent"
                             legendText="Select School Type"
@@ -88,56 +112,60 @@ const SignupPage = () => {
                             />
                         </RadioButtonGroup>
                         {schoolType === 'independent'?
-                        <FormGroup className='duration-300'>
+                        <FormGroup className='duration-300 -mt-4'>
                             <Stack gap={7}>
                                 <TextInput
                                     className='min-w-full'
                                     kind={'text'}
-                                    name={'first_name'}
-                                    id="first_name"
+                                    name={'school_name'}
+                                    id="school_name"
                                     invalidText="Invalid error message."
                                     labelText="School Name"
-                                    placeholder="Enter Your First Name"
+                                    placeholder="Enter Your School Name"
                                 />
+                                
+                                <div className='flex md:flex-row flex-col gap-4'>
+                                    <div className='md:w-1/2 w-full'>
+                                        <Select
+                                            id="select-1"
+                                            defaultValue="placeholder-item"
+                                            labelText="Country"
+                                        >
+                                            <SelectItem
+                                                value="placeholder-item"
+                                                text="Nigeria"
+                                            />
+                                        </Select>
+                                    </div>
+                                    <div className='md:w-1/2 w-full'>
+                                        <Select
+                                            id="select-1"
+                                            defaultValue="placeholder-item"
+                                            labelText="State"
+                                        >
+                                            <SelectItem
+                                                hidden
+                                                value="placeholder-item"
+                                                text="Lagos"
+                                            />
+                                        </Select>
+                                    </div>
+                                </div>
                                 <TextInput
                                     className='min-w-full'
                                     kind={'text'}
-                                    name={'first_name'}
-                                    id="first_name"
+                                    name={'school_address'}
+                                    id="school_address"
                                     invalidText="Invalid error message."
                                     labelText="School Address"
-                                    placeholder="Enter Your First Name"
+                                    placeholder="Enter Your School Address"
                                 />
                             </Stack>
                         </FormGroup>
                         :
                         null
                         }
-                        <div className='flex md:flex-row flex-col gap-4'>
-                            <div className='md:w-1/2 w-full'>
-                                <TextInput
-                                    type="password"
-                                    required
-                                    name={'password'}
-                                    id="passsword"
-                                    labelText="Password"
-                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                    placeholder="Enter Your Password"
-                                    helperText="Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters."
-                                />
-                            </div>
-                            <div className='md:w-1/2 w-full'>
-                                <TextInput
-                                    type="password"
-                                    required
-                                    name={'confirm_password'}
-                                    id="confirm_passsword"
-                                    labelText="Password Confirmation"
-                                    placeholder="Confirm Your Password"
-                                    // helperText="Optional helper text here; if message is more than one line text should wrap (~100 character count maximum)"
-                                />
-                            </div>
-                        </div>
+                        
                         <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
                             Continue
                         </Button>

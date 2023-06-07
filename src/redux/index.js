@@ -13,7 +13,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // localStorage
 import componentsSlice from './component/components-slice';
-// import userSlice from './user/user-slice';
+import userSlice from './user/user-slice';
 // import companySlice from './company/reducer';
 // import employeeSlice from './employee/reducer';
 // import payrollSlice from './payroll/reducer';
@@ -25,7 +25,7 @@ import componentsSlice from './component/components-slice';
 const reducer = combineReducers({
   // add all reducers here
   componentsSlice,
-//   userSlice,
+  userSlice,
 //   companySlice,
 //   employeeSlice,
 //   payrollSlice,
