@@ -2,7 +2,7 @@ import React from 'react';
 import LogInPage from './pages/auth/login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './app.scss';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { GuestRoutes } from './routes/guest';
 import SignupPage from './pages/auth/register';
 import PasswordRecoveryPage from './pages/auth/forgot-password';
@@ -12,8 +12,8 @@ import DashboardPage from './pages/dashboard';
 
 
 const App = () => {
-  // const { user } = useSelector((state) => state.userSlice);
-  let user = 1
+  const { user } = useSelector((state) => state.userSlice);
+  // let user = 1
 
   return (
       <React.Fragment>
