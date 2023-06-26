@@ -6,8 +6,8 @@ export const ProtectedRoutes = () => {
 
   if ((user)) {
     return (
-        <React.Fragment>
-        </React.Fragment>
+      <React.Fragment>
+      </React.Fragment>
     )
   }
 };

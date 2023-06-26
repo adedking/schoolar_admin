@@ -14,25 +14,13 @@ import {
 import storage from 'redux-persist/lib/storage'; // localStorage
 import componentsSlice from './component/components-slice';
 import userSlice from './user/user-slice';
-// import companySlice from './company/reducer';
-// import employeeSlice from './employee/reducer';
-// import payrollSlice from './payroll/reducer';
-// import sectionSlice from './section/reducer';
-// import miscSlice from './miscellaneous/reducer';
-// import recruitmentSlice from './human-resources/reducers/recruitment';
-// import onboardingSlice from './onboarding/reducer';
+import schoolsSlice from './school/reducer';
 
 const reducer = combineReducers({
   // add all reducers here
   componentsSlice,
   userSlice,
-//   companySlice,
-//   employeeSlice,
-//   payrollSlice,
-//   sectionSlice,
-//   onboardingSlice,
-//   recruitmentSlice,
-//   miscSlice,
+  schoolsSlice,
 });
 
 const persistConfig = {

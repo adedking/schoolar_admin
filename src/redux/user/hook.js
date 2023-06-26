@@ -7,6 +7,7 @@ import { setAlert, setIsLoading } from '../components/components-slice';
 import { setCompany } from '../company/reducer';
 import { updateSectionData } from '../section/hook';
 import { useMutation } from '@tanstack/react-query';
+import { setSchools } from '../school/reducer';
 
 export function useLogin() {
   return useMutation(
@@ -16,7 +17,7 @@ export function useLogin() {
     {
       onSuccess: (response, variables, context) => {
         store.dispatch(setToken(response.data.authorization.token));
-        store.dispatch(setCompany(response.data?.company));
+        store.dispatch(setSchools(response.data?.schools));
         store.dispatch(setUser(response.data));
         store.dispatch(setAlert(true, 'success', 'You have successfully logged in'));
         updateSectionData(response.data.section);

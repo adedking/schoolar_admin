@@ -10,9 +10,22 @@ const SignupPage = () => {
 
     const [schoolType, setSchoolType] = useState('independent')
     const navigate = useNavigate();
+
+    const submitForm = () => {
+        let payload = {
+            "first_name": "Omotolani",
+            "last_name": "Olurotimi",
+            "email": "omotolaniolurotimi@gmail.com",
+            "school_name": "LightSoft Schools",
+            "school_type": "independent",
+            "country": "Nigeria",
+            "state": "Ogun",
+            "password": "ThinTree21+++",
+            "password_confirmation": "ThinTree21+++"
+        }
+    }
     return (
-        <AuthLayout
-        >
+        <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-8'>
                     <Stack gap={7}>
@@ -111,7 +124,6 @@ const SignupPage = () => {
                                 id="group"
                             />
                         </RadioButtonGroup>
-                        {schoolType === 'independent'?
                         <FormGroup className='duration-300 -mt-4'>
                             <Stack gap={7}>
                                 <TextInput
@@ -162,9 +174,6 @@ const SignupPage = () => {
                                 />
                             </Stack>
                         </FormGroup>
-                        :
-                        null
-                        }
                         
                         <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
                             Continue

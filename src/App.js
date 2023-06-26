@@ -9,11 +9,16 @@ import PasswordRecoveryPage from './pages/auth/forgot-password';
 import SetPasswordPage from './pages/auth/set-password';
 import ResetPasswordPage from './pages/auth/reset-password';
 import DashboardPage from './pages/dashboard';
+import TeachersPage from './pages/teachers';
+import StudentsPage from './pages/students';
+import ClassesPage from './pages/classes';
+import AdministrationPage from './pages/administration';
+import VerifyEmailPage from './pages/auth/verify-email';
 
 
 const App = () => {
-  const { user } = useSelector((state) => state.userSlice);
-  // let user = 1
+  // const { user } = useSelector((state) => state.userSlice);
+  let user = 1
 
   return (
       <React.Fragment>
@@ -23,6 +28,10 @@ const App = () => {
               <Routes>
                 <React.Fragment>
                   <Route exact path='/dashboard' Component={DashboardPage} />
+                  <Route exact path='/teachers' Component={TeachersPage} />
+                  <Route exact path='/students' Component={StudentsPage} />
+                  <Route exact path='/classes' Component={ClassesPage} />
+                  <Route exact path='/administration' Component={AdministrationPage} />
                 </React.Fragment>
               </Routes>
               :
@@ -33,6 +42,7 @@ const App = () => {
                   <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
                   <Route exact path='/set-password/:token' Component={SetPasswordPage} />
                   <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
+                  <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
                 </React.Fragment>
               </Routes>
               }

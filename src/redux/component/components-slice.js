@@ -6,7 +6,7 @@ const slice = createSlice({
   initialState: {
     isLoading: false,
     alert: {},
-    isSidebarOpen: false,
+    isSidebarOpen: true,
     isModalOpen: false,
   },
   reducers: {

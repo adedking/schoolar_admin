@@ -1,18 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import MenuSVG from '../assets/svg/menu.svg';
+import CloseSVG from '../assets/svg/close.svg';
+import { useDispatch } from 'react-redux';
+import { IsTogglingSidebar, toggleSidebar } from '../redux/component/components-slice';
+import classNames from 'classnames';
 // import { Button } from '@carbon/react';
 
-const NavBar = ({profile=false}) => {
+const NavBar = ({profile=false, isSidebarOpen}) => {
 
+    const dispatch = useDispatch();
+    const handleSidebarToggle = () => {
+        dispatch(IsTogglingSidebar());
+    };
+    useEffect(() => {
+      const handleResize = () => {
+        if (window.innerWidth < 600 && isSidebarOpen ) {
+          handleSidebarToggle()
+        } else if (window.innerWidth > 600 && !isSidebarOpen ) (
+          handleSidebarToggle()
+        )
+      }
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize)
+  }, [isSidebarOpen])
     return (
-        <div className='flex justify-between w-full h-[48px] items-center px-3 bg-white'>
-            <div className='font-bold text-[16px]'>Schoolar</div>
-            {profile?
-                <div></div>
+      <div className='flex justify-between w-full min-h-[48px] min-w-full items-center px-3 '>
+          <div className='flex flex-row items-center pl-4 md:pl-0'>
+            {window.innerWidth < 600?
+            <React.Fragment>
+              <button onClick={() => handleSidebarToggle()}>
+                <img src={CloseSVG} alt='menu' 
+                className={classNames('mr-3', {
+                  'flex': isSidebarOpen,
+                  'hidden': !isSidebarOpen
+                })}
+                  />
+              </button>
+              <button onClick={() => handleSidebarToggle()}>
+                <img src={MenuSVG} alt='menu' className={classNames('mr-3', {
+                  'flex': !isSidebarOpen,
+                  'hidden': isSidebarOpen
+                })} />
+              </button>
+            </React.Fragment>
             :
-                null
+            null
             }
-            
-        </div>
+            <div className='font-bold text-[16px]'>Schoolar</div>
+          </div>
+          {profile?
+              <div></div>
+          :
+              null
+          }
+          
+      </div>
     );
 };
 
