@@ -117,7 +117,6 @@ const SignupPage = () => {
                                 value='group'
                                 onClick={() => {
                                     if (schoolType !== 'group') {
-                                        console.log('In')
                                         setSchoolType('group')
                                     } 
                                 }}

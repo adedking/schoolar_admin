@@ -421,7 +421,8 @@ margin: -16px;
   }
   
   .tab-view {
-    width: auto;
+    display: flex;
+    width: 100%;
     white-space:nowrap; 
     height: 60px;
     overflow-x:auto;

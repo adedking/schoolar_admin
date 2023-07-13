@@ -1,8 +1,5 @@
 import React from 'react';
 const WidgetCard = ({cardData}) => {
-
-    // const navigate = useNavigate();
-    console.log(cardData)
     return (
         <React.Fragment>
             <div className={`grid md:grid-cols-2 grid-cols-1 gap-2 w-full min-h-[86px] bg-login-background rounded-md p-2`}>

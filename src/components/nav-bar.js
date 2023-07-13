@@ -24,7 +24,7 @@ const NavBar = ({profile=false, isSidebarOpen}) => {
       return () => window.removeEventListener("resize", handleResize)
   }, [isSidebarOpen])
     return (
-      <div className='flex justify-between w-full min-h-[48px] min-w-full items-center px-3 '>
+      <div className='flex justify-between w-full min-h-[48px] min-w-full items-center px-3 !border-b border-gray-400 '>
           <div className='flex flex-row items-center pl-4 md:pl-0'>
             {window.innerWidth < 600?
             <React.Fragment>
