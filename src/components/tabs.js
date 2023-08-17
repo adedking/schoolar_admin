@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+// import { Tab, TableActionList } from 'carbon-components-react';
+// import { Tabs, TabList, Tab, TabPanels, TabPanel, IconTab } from 'carbon-components-react';
+import classNames from 'classnames';
+import React, { useEffect } from 'react';
 import {
   TabContent,
   TabPane,
   Nav,
   NavItem,
   NavLink,
-  Collapse,
 } from 'reactstrap';
-import classnames from 'classnames';
-import DropDownSVG from '../assets/svg/chevron-down.svg';
-// import { useSelector } from 'react-redux';
 
 const TabView = ({ Tabs, activeTab, setActiveTab }) => {
   // const [activeTab, setActiveTab] = useState(1);
-  const [collapse, setCollapse] = useState(false);
+  // const [collapse, setCollapse] = useState(false);
 
 
   const toggle = (tab) => {
@@ -25,30 +24,24 @@ const TabView = ({ Tabs, activeTab, setActiveTab }) => {
     if(activeTab > Tabs.length) {
       setActiveTab(1)
     }
-  }, [])
-
-  const toggleCollapse = () => {
-    setCollapse(!collapse);
-  };
-
-  function switchTab(index) {
-    setActiveTab(index);
-    toggleCollapse();
-  }
+  }, [activeTab, setActiveTab, Tabs])
 
   return (
-    <React.Fragment>
+    <>
+      <div
+        className='hidden md:flex tab-view-container select-none'
+      >
         <Nav
           tabs
-          className='flex justify-between !rounded shadow-sm !flex-nowrap overflow-y-auto'
+          className='tab-view !rounded shadow-sm !flex-nowrap w-full p-0 overflow-y-hidden'
         >
           {activeTab < Tabs.length + 1 && Tabs.map((item, index) => (
-            <NavItem className='flex flex-row justify-center items-center !max-w-[200px] !h-[100%] p-0 cursor-pointer' key={index}>
+            <NavItem className='flex flex-row justify-center items-center !max-w-[200px] !h-[100%] p-0' key={index}>
               <NavLink
-                className={classnames(
-                  'flex flex-col justify-start items-start tab-view-item !w-full',
+                className={classNames(
+                  'flex flex-col justify-start items-start tab-view-item !w-full !rounded-none  p-0',
                   {
-                    'duration-300 border': activeTab === index + 1,
+                    'duration-300 border-b-2': activeTab === index + 1,
                   },
                 )}
                 onClick={() => {
@@ -56,11 +49,11 @@ const TabView = ({ Tabs, activeTab, setActiveTab }) => {
                 }}
               >
                 <div
-                  className={classnames(
-                    'flex flex-row justify-center items-start tab-view-item !rounded-none min-w-[115px] min-h-fit text-black',
+                  className={classNames(
+                    'flex flex-row justify-center items-start tab-view-item !rounded-none min-w-[115px] min-h-[100%]',
                     {
-                    'text-black text-[14px] duration-300 border-b-[4px] pb-[10px] pt-[18px] border-secondary-2 cursor-default font-extrabold': activeTab === index + 1,
-                    'text-[12px] text-black hover:text-gray-500 duration-300 pb-[10px] pt-[18px] hover:border-b-[4px] hover:text-[14px] hover:border-gray-300': activeTab !== index + 1,
+                    'text-secondary-2 text-[13px] duration-300 border-b-[4px] pb-[14px] pt-[18px] border-secondary-2 cursor-default font-extrabold': activeTab === index + 1,
+                    'text-[12px] text-color-gray hover:text-gray-500 duration-300 pb-[14px] pt-[18px] hover:border-b-[4px] hover:text-[14px] hover:border-gray-300': activeTab !== index + 1,
                   })}
                 >
                   {item.title}
@@ -69,19 +62,19 @@ const TabView = ({ Tabs, activeTab, setActiveTab }) => {
             </NavItem>
           ))}
         </Nav>
-
-      <TabContent activeTab={activeTab} className='mt-[35px]'>
+      </div>
+      <TabContent activeTab={activeTab} className='mt-[15px]'>
         {activeTab < Tabs.length + 1 && Tabs.map(({ title, Content }, index) => (
           <TabPane tabId={index + 1} key={index}>
             <>
               {activeTab - 1 === index ? (
-                <>{Content ? <Content /> : null}</>
+                <>{Content ? Content  : null}</>
               ) : null}
             </>
           </TabPane>
         ))}
       </TabContent>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import MenuSVG from '../assets/svg/menu.svg';
 import CloseSVG from '../assets/svg/close.svg';
 import { useDispatch } from 'react-redux';
-import { IsTogglingSidebar, toggleSidebar } from '../redux/component/components-slice';
+import { IsTogglingSidebar } from '../redux/component/components-slice';
 import classNames from 'classnames';
 // import { Button } from '@carbon/react';
 
@@ -14,11 +14,11 @@ const NavBar = ({profile=false, isSidebarOpen}) => {
     };
     useEffect(() => {
       const handleResize = () => {
-        if (window.innerWidth < 600 && isSidebarOpen ) {
+        if (window.innerWidth < 600 && isSidebarOpen == true ) {
           handleSidebarToggle()
-        } else if (window.innerWidth > 600 && !isSidebarOpen ) (
+        } else if (window.innerWidth > 600 && isSidebarOpen == false) {
           handleSidebarToggle()
-        )
+        }
       }
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize)

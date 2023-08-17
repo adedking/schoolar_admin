@@ -1,5 +1,5 @@
 
-import { Modal, Select, SelectItem, TextInput } from 'carbon-components-react';
+import { Modal } from 'carbon-components-react';
 import React, { useState } from 'react';
 import TabView from '../../../../components/tabs';
 
@@ -26,7 +26,7 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
         primaryButtonText="Continue" 
         secondaryButtons={false}
         // secondaryButtonText="Cancel" 
-        hasScrollingContent={true}
+        hasScrollingContent={false}
         open={isOpen} 
         preventCloseOnClickOutside={true}
         onRequestClose={() => closeModal()}
