@@ -1,33 +1,60 @@
 import React, { useState } from 'react';
+import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
 import { Button, Form, SelectItem, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
-
+import { useSignUp } from '../../redux/user/hook';
 
 const SignupPage = () => {
-
     const [schoolType, setSchoolType] = useState('independent')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [schoolName, setSchoolName] = useState('')
+    const [country, setCountry] = useState('')
+    const [state, setState] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setConfirmPassword] = useState('')
+    const [address, setAddress] = useState('')
+
     const navigate = useNavigate();
+    const {mutateAsync: register} = useSignUp()
 
     const submitForm = () => {
+        let first_name = DOMPurify.sanitize(firstName);
+        let last_name = DOMPurify.sanitize(lastName);
+        let user_email = DOMPurify.sanitize(email);
+        let school_name = DOMPurify.sanitize(schoolName);
+        let school_type = DOMPurify.sanitize(schoolType);
+        let user_country = DOMPurify.sanitize(country);
+        let user_state = DOMPurify.sanitize(state);
+        let user_password = DOMPurify.sanitize(password);
+        let password_confirmation = DOMPurify.sanitize(passwordConfirmation);
+        let user_address = DOMPurify.sanitize(address);
         let payload = {
-            "first_name": "Omotolani",
-            "last_name": "Olurotimi",
-            "email": "omotolaniolurotimi@gmail.com",
-            "school_name": "LightSoft Schools",
-            "school_type": "independent",
-            "country": "Nigeria",
-            "state": "Ogun",
-            "password": "ThinTree21+++",
-            "password_confirmation": "ThinTree21+++"
+            first_name,
+            last_name,
+            email: user_email,
+            school_name,
+            school_type,
+            country : user_country,
+            state: user_state,
+            password: user_password,
+            password_confirmation,
+            address: user_address
         }
+        console.log(payload)
+        // register(payload)
     }
     return (
         <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
-                <Form className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-8'>
+                <Form 
+                    className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-8'
+                    
+                >
                     <Stack gap={7}>
                         <labelText className=''> 
                             Do you have an account?&nbsp;
@@ -44,21 +71,30 @@ const SignupPage = () => {
                                     className='min-w-full'
                                     kind={'text'}
                                     name={'first_name'}
-                                    id="first_name"
-                                    invalidText="Please enter a valit first name"
+                                    required
+                                    invalidText="Please enter a valid first name"
                                     labelText="First Name"
                                     placeholder="Enter Your First Name"
+                                    value={firstName}
+                                    onChange={(e) => {
+                                        setFirstName(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className='md:w-1/2 w-full'>
                                 <TextInput
                                     className='min-w-full'
                                     kind={'text'}
+                                    required
                                     name={'last_name'}
                                     id="last_name"
-                                    invalidText="Invalid error message."
+                                    invalidText="Please enter a valid last name"
                                     labelText="Last Name"
                                     placeholder="Enter Your Last Name"
+                                    value={lastName}
+                                    onChange={(e) => {
+                                        setLastName(e.target.value)
+                                    }}
                                 />
                             </div>
                         </div>
@@ -66,14 +102,16 @@ const SignupPage = () => {
                             className='min-w-full'
                             kind={'email'}
                             name={'email'}
-                            id="last_name"
+                            required
                             invalidText="Invalid error message."
                             labelText="Email"
                             placeholder="Enter Your Email"
+                            onChange={() => {
+
+                            }}
                         />
                         <div className='flex md:flex-row flex-col gap-4'>
                             <div className='md:w-1/2 w-full mb-2'>
-                                
                                 <TextInput.PasswordInput
                                     type="password"
                                     required
@@ -173,14 +211,18 @@ const SignupPage = () => {
                                 />
                             </Stack>
                         </FormGroup>
-                        
-                        <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
+                        <Button 
+                            type="button" 
+                            kind={'primary'} 
+                            renderIcon={ArrowRight}
+                            onClick={() => {
+                                submitForm()
+                            }}
+                        >
                             Continue
                         </Button>
-                        
                     </Stack>
                 </Form>
-                
             </div>
         </AuthLayout>
     );

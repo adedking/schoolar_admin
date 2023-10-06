@@ -6,7 +6,7 @@ const login = async (payload) => {
 };
 
 const register = async (payload) => {
-    const { data } = await Axios.post('/register', payload,
+    const { data } = await Axios.post('/signup', payload,
     {
       timeout: 0
     });

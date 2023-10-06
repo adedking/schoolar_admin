@@ -11,7 +11,11 @@ const LogInPage = () => {
         <AuthLayout
         >
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
-                <Form className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[510px] h-screen md:p-4 p-8 pb-[15px] md:mt-16'>
+                <Form 
+                    onSubmit={() => {
+                        
+                    }}
+                    className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[510px] h-screen md:p-4 p-8 pb-[15px] md:mt-16'>
                     <Stack gap={7}>
                         <div className='header-2'>Login to Schoolar</div>
                         <TextInput

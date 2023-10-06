@@ -1,11 +1,9 @@
-import { user } from '../../api';
+import { user } from '../../api/user';
 import { store } from '..';
-import { clearToken, clearUser, setToken, setUser, setWebToken } from './user-slice';
-import { Axios } from '../../api/axios';
+import { clearToken, clearUser, setToken, setUser } from './user-slice';
+import { Axios } from '../../api/axios'
 import { queryClient } from '../..';
 import { setAlert, setIsLoading } from '../components/components-slice';
-import { setCompany } from '../company/reducer';
-import { updateSectionData } from '../section/hook';
 import { useMutation } from '@tanstack/react-query';
 import { setSchools } from '../school/reducer';
 
@@ -20,7 +18,6 @@ export function useLogin() {
         store.dispatch(setSchools(response.data?.schools));
         store.dispatch(setUser(response.data));
         store.dispatch(setAlert(true, 'success', 'You have successfully logged in'));
-        updateSectionData(response.data.section);
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
@@ -37,7 +34,7 @@ export function useSignUp() {
       {
         onSuccess: (response, variables, context) => {
           // store.dispatch(setCompany(response.data?.company));
-          updateSectionData(response.data.section);
+          // updateSectionData(response.data.section);
           store.dispatch(setAlert(true, 'success', 'You have successfully signed up'));
           store.dispatch(setToken(response.data.authorization.token));
           store.dispatch(setUser(response.data));
@@ -49,3 +46,12 @@ export function useSignUp() {
       },
     );
   }
+
+  export const logout = async () => {
+    store.dispatch(clearUser());
+    store.dispatch(clearToken());
+    // store.dispatch(clearTwoFaToken());
+    queryClient.invalidateQueries();
+    delete Axios.defaults.headers.common['Authorization'];
+    store.dispatch(setAlert(true, 'warning', 'You are successfully logged out.'));
+  };

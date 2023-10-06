@@ -4,7 +4,7 @@ import { useCheckOnboarding } from '../../middleware/check-onboarding';
 import Sidebar from '../sidebar';
 import { OffcanvasBody, Offcanvas } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '../../redux/component/components-slice';
+import { toggleSidebar } from '../../redux/components/components-slice';
 import classNames from 'classnames';
 
 const sidebarWidth = '255px';

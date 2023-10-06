@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import MenuSVG from '../assets/svg/menu.svg';
 import CloseSVG from '../assets/svg/close.svg';
 import { useDispatch } from 'react-redux';
-import { IsTogglingSidebar } from '../redux/component/components-slice';
+import { IsTogglingSidebar } from '../redux/components/components-slice';
 import classNames from 'classnames';
 // import { Button } from '@carbon/react';
 

@@ -17,9 +17,8 @@ import VerifyEmailPage from './pages/auth/verify-email';
 
 
 const App = () => {
-  // const { user } = useSelector((state) => state.userSlice);
-  let user = 1
-
+  const { user } = useSelector((state) => state.userSlice);
+  console.log(user)
   return (
       <React.Fragment>
         <div>

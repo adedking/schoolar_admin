@@ -6,7 +6,7 @@ import AddTeacherModal from './sub-components/modals/add-teacher';
 
 const TeachersPage = () => {
     
-
+    
     const cardData = {
         columns: 2,
         items: [
