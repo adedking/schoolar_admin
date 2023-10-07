@@ -1,13 +1,11 @@
 
 import { Button, Modal, ProgressIndicator, ProgressStep } from 'carbon-components-react';
 import React, { useState } from 'react';
-// import TabView from '../../../../components/tabs';
 import AddStudentStepOne from './add-student-step-one';
 import AddStudentStepTwo from './add-student-step-two';
 import AddStudentStepThree from './add-student-step-three';
 import AddStudentStepFour from './add-student-step-four';
-import { ArrowLeft, ArrowRight } from '@carbon/icons-react';
-// import { useEffect } from 'react';
+import { ArrowRight } from '@carbon/icons-react';
 
 
 const AddStudentModal = ({isOpen, closeModal}) => {

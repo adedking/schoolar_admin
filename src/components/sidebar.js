@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import  DashboardSVG  from '../assets/svg/sidebar/dashboard-icon.svg'
 import  TeacherSVG  from '../assets/svg/sidebar/teacher-icon.svg'
 import  StudentSVG  from '../assets/svg/sidebar/student-icon.svg'
@@ -8,8 +8,6 @@ import  RecordSVG  from '../assets/svg/sidebar/student-record-icon.svg'
 import  AdministrationSVG  from '../assets/svg/sidebar/administration-icon.svg'
 
 const Sidebar = ({switchLoading}) => {
-
-  // const navigate = useNavigate();
 
   const sideBar = [
         {

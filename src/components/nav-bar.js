@@ -4,7 +4,6 @@ import CloseSVG from '../assets/svg/close.svg';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar } from '../redux/components/components-slice';
 import classNames from 'classnames';
-// import { Button } from '@carbon/react';
 
 const NavBar = ({profile=false, isSidebarOpen}) => {
 
@@ -14,14 +13,15 @@ const NavBar = ({profile=false, isSidebarOpen}) => {
     };
     useEffect(() => {
       const handleResize = () => {
-        if (window.innerWidth < 600 && isSidebarOpen == true ) {
+        if (window.innerWidth < 600 && isSidebarOpen === true ) {
           handleSidebarToggle()
-        } else if (window.innerWidth > 600 && isSidebarOpen == false) {
+        } else if (window.innerWidth > 600 && isSidebarOpen === false) {
           handleSidebarToggle()
         }
       }
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSidebarOpen])
     return (
       <div className='flex justify-between w-full min-h-[48px] min-w-full items-center px-3 !border-b border-gray-400 '>

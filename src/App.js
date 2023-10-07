@@ -24,7 +24,7 @@ const App = () => {
       <React.Fragment>
         <div>
           <BrowserRouter>
-            {!user?
+            {user?
               <Routes>
                 <React.Fragment>
                   <Route exact path='/dashboard' Component={DashboardPage} />
