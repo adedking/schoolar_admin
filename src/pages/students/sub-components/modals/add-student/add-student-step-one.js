@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Stack, TextInput } from '@carbon/react';
 // import { useNavigate } from 'react-router-dom';
-import { FileUploader, FileUploaderDropContainer, FileUploaderItem, FormGroup, Select, SelectItem } from 'carbon-components-react';
+import { FileUploader, FileUploaderDropContainer, FormGroup, Select, SelectItem } from 'carbon-components-react';
 
 const AddStudentStepOne = () => {
 

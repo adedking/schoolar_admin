@@ -17,7 +17,7 @@ const SignupPage = () => {
     const [state, setState] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setConfirmPassword] = useState('')
-    const [address, setAddress] = useState('')
+    // const [address, setAddress] = useState('')
 
     const navigate = useNavigate();
     const {mutateAsync: register} = useSignUp()
@@ -32,7 +32,7 @@ const SignupPage = () => {
         let user_state = DOMPurify.sanitize(state);
         let user_password = DOMPurify.sanitize(password);
         let password_confirmation = DOMPurify.sanitize(passwordConfirmation);
-        let user_address = DOMPurify.sanitize(address);
+        // let user_address = DOMPurify.sanitize(address);
         let payload = {
             first_name,
             last_name,
@@ -43,10 +43,10 @@ const SignupPage = () => {
             state: user_state,
             password: user_password,
             password_confirmation,
-            address: user_address
+            // address: user_address
         }
-        console.log(payload)
-        // register(payload)
+        // console.log(payload)
+        register(payload)
     }
     return (
         <AuthLayout>

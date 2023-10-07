@@ -1,19 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import NavBar from '../nav-bar';
-// import { useCheckOnboarding } from '../../middleware/check-onboarding';
 import Sidebar from '../sidebar';
-// import { OffcanvasBody, Offcanvas } from 'reactstrap';
-import { useDispatch, useSelector } from 'react-redux';
-// import { toggleSidebar } from '../../redux/components/components-slice';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
-
-const sidebarWidth = '255px';
 
 const DashboardLayout = ({children, justification}) => {
     // useCheckOnboarding()
-
-    const dispatch = useDispatch();
-    const { isSidebarOpen, isModalOpen } = useSelector((state) => state.componentsSlice);
+    const { isSidebarOpen } = useSelector((state) => state.componentsSlice);
 
     return (
         <div className='flex flex-col bg-white max-w-screen min-w-screen max-h-screen min-h-screen overflow-y-auto relative'>
