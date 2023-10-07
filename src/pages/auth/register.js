@@ -53,9 +53,11 @@ const SignupPage = () => {
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
                     className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-8'
-                    
+                    onSubmit={() => {
+                        submitForm()
+                    }}
                 >
-                    <Stack gap={7}>
+                    <Stack gap={5}>
                         <labelText className=''> 
                             Do you have an account?&nbsp;
                             <span className='link-color hover:underline duration-300 cursor-pointer underline' 
@@ -103,11 +105,11 @@ const SignupPage = () => {
                             kind={'email'}
                             name={'email'}
                             required
-                            invalidText="Invalid error message."
+                            invalidText="Invalid email entered"
                             labelText="Email"
                             placeholder="Enter Your Email"
-                            onChange={() => {
-
+                            onChange={(e) => {
+                                setEmail(e.target.value)
                             }}
                         />
                         <div className='flex md:flex-row flex-col gap-4'>
@@ -118,8 +120,12 @@ const SignupPage = () => {
                                     name={'password'}
                                     id="passsword"
                                     labelText="Password"
+                                    invalidText="Invalid password format entered"
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                     placeholder="Enter Your Password"
+                                    onChange={(e) => {
+                                        setPassword(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className='md:w-1/2 w-full'>
@@ -130,13 +136,17 @@ const SignupPage = () => {
                                     id="confirm_passsword"
                                     labelText="Password Confirmation"
                                     placeholder="Confirm Your Password"
+                                    onChange={(e) => {
+                                        setConfirmPassword(e.target.value)
+                                    }}
                                 />
                             </div>
                         </div>
                         <RadioButtonGroup
                             defaultSelected="independent"
                             legendText="Select School Type"
-                            name="school_tyoe"
+                            name="school_type"
+                            id="school_type"
                             valueSelected={schoolType}
                         >
                             <RadioButton
@@ -161,7 +171,7 @@ const SignupPage = () => {
                                 id="group"
                             />
                         </RadioButtonGroup>
-                        <FormGroup className='duration-300 -mt-4'>
+                        <FormGroup className='duration-300 -mt-2'>
                             <Stack gap={7}>
                                 <TextInput
                                     className='min-w-full'
@@ -171,36 +181,55 @@ const SignupPage = () => {
                                     invalidText="Invalid error message."
                                     labelText="School Name"
                                     placeholder="Enter Your School Name"
+                                    onChange={(e) => {
+                                        setSchoolName(e.target.value)
+                                    }}
                                 />
                                 
-                                <div className='flex md:flex-row flex-col gap-4'>
+                                <div className='flex md:flex-row flex-col gap-4 -mt-2'>
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="select-1"
-                                            defaultValue="placeholder-item"
+                                            value={country}
                                             labelText="Country"
+                                            onChange={(e) => {
+                                                setCountry(e.target.value)
+                                            }}
+                                            
                                         >
                                             <SelectItem
-                                                value="placeholder-item"
+                                                value="Nigeria"
                                                 text="Nigeria"
+                                            />
+                                            <SelectItem
+                                                value="Ghana"
+                                                text="Ghana"
                                             />
                                         </Select>
                                     </div>
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="select-1"
-                                            defaultValue="placeholder-item"
+                                            value={state}
                                             labelText="State"
+                                            onChange={(e) => {
+                                                setState(e.target.value)
+                                            }}
                                         >
                                             <SelectItem
                                                 hidden
-                                                value="placeholder-item"
+                                                value="Lagos"
                                                 text="Lagos"
+                                            />
+                                            <SelectItem
+                                                hidden
+                                                value="Oyo"
+                                                text="Oyo"
                                             />
                                         </Select>
                                     </div>
                                 </div>
-                                <TextInput
+                                {/* <TextInput
                                     className='min-w-full'
                                     kind={'text'}
                                     name={'school_address'}
@@ -208,18 +237,18 @@ const SignupPage = () => {
                                     invalidText="Invalid error message."
                                     labelText="School Address"
                                     placeholder="Enter Your School Address"
-                                />
+                                /> */}
                             </Stack>
                         </FormGroup>
-                        <Button 
-                            type="button" 
+                        <Button
+                            type="submit" 
                             kind={'primary'} 
                             renderIcon={ArrowRight}
-                            onClick={() => {
-                                submitForm()
-                            }}
+                            // onClick={() => {
+                            //     submitForm()
+                            // }}
                         >
-                            Continue
+                            Create Account
                         </Button>
                     </Stack>
                 </Form>

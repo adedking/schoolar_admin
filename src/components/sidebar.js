@@ -33,10 +33,16 @@ const Sidebar = ({switchLoading}) => {
           route: '/students',
         },
         {
+          name: 'Classes',
+          id: 'classes',
+          icon: StudentSVG,
+          route: '/classes',
+        },
+        {
           name: 'Parents/Guardians',
           id: 'parents-guardians',
           icon: ParentSVG,
-          route: '/statutory-payments',
+          route: '/parents-guardians',
         },
         {
           name: 'Student Records',
@@ -68,7 +74,7 @@ const Sidebar = ({switchLoading}) => {
               <NavLink
                 to={item.route}
                 className='text-black font-normal text-[13px] leading-[20px] flex pl-[20px] h-[42px] items-center hover:font-semibold hover:bg-white duration-300 hover:border-l-4 hover:border-l-blue-800'
-                activeClassName= {'font-extrabold text-[15px] text-color-white bg-white border-l-4 border-blue-500'}
+                activeClassName={'font-extrabold text-[14px] !bg-white border-l-4 border-blue-500'}
               >
                 <img src={item.icon} alt={item.name} className={'pr-[15px]'} width={'30px'} height={'35px'} />
                 {item.name}

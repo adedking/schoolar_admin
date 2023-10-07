@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
 import { Button, Checkbox, Form, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
@@ -7,13 +7,28 @@ import { useNavigate } from 'react-router-dom';
 const AddSchoolPage = () => {
 
     const navigate = useNavigate();
+
+    const [schools, setSchools] = useState([])
+
     return (
         <AuthLayout
         >
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
-                <Form className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[510px] h-screen md:p-4 p-8 pb-[15px] md:mt-16'>
+                <Form className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-fit h-screen md:p-4 p-8 pb-[15px] md:mt-16'>
                     <Stack gap={7}>
-                        <div className='header-2'>Login to Schoolar</div>
+                        <div className='header-2'>Add All Your Schools</div>
+                        {schools.length > 0?
+                        <div>
+                            {schools?.map((item, index) => (
+                            <div className=''>
+
+                            </div>
+                            ))}
+                        </div>
+                        :
+                        null
+                        }
+                        
                         <TextInput
                             className='min-w-full'
                             kind={'email'}
@@ -53,6 +68,16 @@ const AddSchoolPage = () => {
                             </span>
                         </labelText>
                     </Stack>
+                    {/* <Button
+                        type="Continue" 
+                        kind={'primary'} 
+                        renderIcon={ArrowRight}
+                        // onClick={() => {
+                        //     submitForm()
+                        // }}
+                    >
+                        Create Account
+                    </Button> */}
                 </Form>
                 
             </div>

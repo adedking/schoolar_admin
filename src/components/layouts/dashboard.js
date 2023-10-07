@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import NavBar from '../nav-bar';
-import { useCheckOnboarding } from '../../middleware/check-onboarding';
+// import { useCheckOnboarding } from '../../middleware/check-onboarding';
 import Sidebar from '../sidebar';
-import { OffcanvasBody, Offcanvas } from 'reactstrap';
+// import { OffcanvasBody, Offcanvas } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '../../redux/components/components-slice';
+// import { toggleSidebar } from '../../redux/components/components-slice';
 import classNames from 'classnames';
 
 const sidebarWidth = '255px';
 
 const DashboardLayout = ({children, justification}) => {
-    useCheckOnboarding()
+    // useCheckOnboarding()
 
     const dispatch = useDispatch();
     const { isSidebarOpen, isModalOpen } = useSelector((state) => state.componentsSlice);

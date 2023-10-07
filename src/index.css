@@ -611,5 +611,25 @@ i {
   -ms-filter: blur(4px);
   -o-filter: blur(4px);
   filter: blur(4px);
-  }
+}
+
+.cds--modal-container {
+  min-height: fit-content;
+  max-height: fit-content;
+  max-width: fit-content;
+}
+
+.cds--modal {
+  min-height: fit-content;
+}
+
+.cds--file__drop-container {
+  min-width: 100%;
+  max-height: 70px !important; 
+}
+
+.cds--modal-content {
+  min-height: fit-content;
+  max-height: fit-content;
+}
   

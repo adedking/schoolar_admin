@@ -20,11 +20,13 @@ const props = () => ({
 
 const AppDataTable = ({
     tableHeader, 
+    mobileTableHeader, 
     data, 
     title, 
     description, 
     check=true, 
-    buttonAction,
+    mainButtonAction,
+    mainButtonText
 }) => {
 
     return (
@@ -71,9 +73,9 @@ const AppDataTable = ({
                                 <Button 
                                     renderIcon={Add} 
                                     onClick={() => {
-                                        buttonAction()
+                                        mainButtonAction()
                                     }}
-                                >Add Teacher</Button>
+                                >{mainButtonText}</Button>
                             </TableToolbarContent>
                         </TableToolbar>
                         <Table {...getTableProps()}>
@@ -87,15 +89,16 @@ const AppDataTable = ({
                                     </TableHeader>)}
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
+                            <TableBody
+                                
+                            >
                             {rows.map(row => 
-                                <TableRow key={row.id} {...getRowProps({
+                                <TableRow className='!text-[13px]' key={row.id} {...getRowProps({
                                     row
                                 })}>
                                     {check?
                                         <TableSelectRow {...getSelectionProps({row})} />
                                     :null}
-                                    
                                     {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
                                 </TableRow>
                             )}
@@ -106,7 +109,7 @@ const AppDataTable = ({
                 } />
             </div>
             <div className='md:hidden block'>
-                <DataTable className='!w-full' rows={data?.data} headers={tableHeader} render={({
+                <DataTable className='!w-full' rows={data?.data} headers={mobileTableHeader.main} render={({
                     rows,
                     headers,
                     getHeaderProps,
@@ -152,9 +155,9 @@ const AppDataTable = ({
                             <TableRow>
                                 <TableExpandHeader />
                                 <TableSelectAll {...getSelectionProps()} />
-                                {tableHeader.map((header, i) => <TableHeader key={i} {...getHeaderProps({
-                            header
-                        })}>
+                                {mobileTableHeader.main.map((header, i) => <TableHeader key={i} {...getHeaderProps({
+                                    header
+                                })}>
                                     {header.header}
                                 </TableHeader>)}
                             </TableRow>

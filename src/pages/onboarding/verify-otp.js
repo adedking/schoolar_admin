@@ -13,48 +13,38 @@ const VerifyOTPPage = () => {
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[510px] h-screen md:p-4 p-8 pb-[15px] md:mt-16'>
                     <Stack gap={7}>
-                        <div className='header-2'>Login to Schoolar</div>
+                        <div className='flex flex-com gap-2'>
+                            <div className='header-2'>
+                                Verify OTP
+                            </div>
+                            <div className='flex justify-between items-center'>
+                                <div className='flex flex-col w-[75%]'>
+                                    <span>OTP sent to </span>
+                                    <span>adedokun@schoolar.com</span>
+                                </div>
+                                <div className='w-[25%]'>
+                                    Edit
+                                </div>
+                            </div>
+                        </div>
                         <TextInput
                             className='min-w-full'
-                            kind={'email'}
-                            name={'email'}
-                            id="email"
-                            invalidText="Invalid error message."
+                            kind={'text'}
+                            name={'otp'}
+                            id="otp"
+                            invalidText="Invalid OTP provided"
                             labelText="Email"
-                            placeholder="Enter Your Email"
+                            placeholder="-"
                         />
-                        <div className='w-full mb-2'>
-                        <labelText className='flex flex-row justify-between text-[12px] mb-[10px] text-gray-600'> 
-                            <span>Password</span>
-                            <span className=' link-color hover:underline duration-300 cursor-pointer' onClick={() => {navigate("/forgot-password")}}>Forget Password?</span>
-                        </labelText>
-                        <TextInput.PasswordInput
-                            type="password"
-                            required
-                            name={'password'}
-                            id="passsword"
-                            // labelText="Password"
-                            placeholder="Enter Your Password"
-                            // helperText="Optional helper text here; if message is more than one line text should wrap (~100 character count maximum)"
-                            
-                        />
+                        <div className='flex justify-end w-full'>
+                            Resend OTP
                         </div>
-                        <Checkbox labelText={`Stay Logged In`} id="checkbox-label-1" />
                         <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
-                            Continue
+                            Submit OTP
                         </Button>
-                        <hr className='divider -mb-2' />
-                        <labelText> 
-                            Don't have an account?&nbsp;
-                            <span className='link-color underline duration-300 cursor-pointer' 
-                                onClick={() => {navigate("/register")}}
-                            >
-                                Create a schoolar account
-                            </span>
-                        </labelText>
+                        
                     </Stack>
                 </Form>
-                
             </div>
         </AuthLayout>
     );

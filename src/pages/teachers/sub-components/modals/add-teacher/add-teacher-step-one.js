@@ -13,9 +13,14 @@ const AddTeacherStepOne = () => {
             isFullWidth
         >
             <Stack gap={5}>
-                {/* <FileUploader isFullWidth labelTitle="Upload files" labelDescription="Max file size is 500mb. Only .jpg files are supported." filenameStatus="edit" accept={['.jpg', '.png']} disabled={false} name="" /> */}
-                <labelTitle>Upload files</labelTitle>
-                <FileUploaderDropContainer labelTitle="Upload files" labelDescription="Max file size is 500mb. Only .jpg files are supported." labelText="Drag and drop files here or click to upload" multiple={false} accept={['image/jpeg', 'image/png']} />
+                
+                <FormGroup className='duration-300'>
+                    <Stack gap={4}>
+                        <labelTitle className='text-[15px] font-bold mt-4'>Upload profile image</labelTitle>
+                        <labelTitle className='text-[12px] font-normal -mt-3'>Max file size is 3mb. Supported file types are .jpg, .jpeg and .png.</labelTitle>
+                        <FileUploaderDropContainer size='sm' labelTitle="Upload profile image" labelDescription="Max file size is 500mb. Only .jpg files are supported." labelText="Drag and drop files here or click to upload" multiple={false} accept={['image/jpeg', 'image/png']} />
+                    </Stack>
+                </FormGroup>
                 <div className='flex md:flex-row flex-col gap-4 w-full'>
                     <div className='md:w-1/2 w-full'>
                         <TextInput
@@ -75,6 +80,19 @@ const AddTeacherStepOne = () => {
                         />
                     </div>
                 </div>
+                <FormGroup className='duration-300 -mt-2'>
+                    <Stack gap={4}>
+                        <TextInput
+                            className='min-w-full'
+                            kind={'text'}
+                            name={'address'}
+                            id="address"
+                            invalidText="Invalid error message."
+                            labelText="Address"
+                            placeholder="Enter the teacher's address"
+                        />
+                    </Stack>
+                </FormGroup>
                 <div className='flex md:flex-row flex-col gap-4'>
                     <div className='md:w-1/2 w-full'>
                         <TextInput
@@ -101,20 +119,17 @@ const AddTeacherStepOne = () => {
                         </Select>
                     </div>
                 </div>
-                <FormGroup className='duration-300'>
-                    <Stack gap={5}>
-                        
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            name={'address'}
-                            id="address"
-                            invalidText="Invalid error message."
-                            labelText="Address"
-                            placeholder="Enter the teacher's address"
-                        />
-                    </Stack>
-                </FormGroup>
+                <Select
+                    id="select-1"
+                    defaultValue="placeholder-item"
+                    labelText="State"
+                >
+                    <SelectItem
+                        hidden
+                        value="placeholder-item"
+                        text="Lagos"
+                    />
+                </Select>
             </Stack>
         </Form>
     );

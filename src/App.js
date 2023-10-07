@@ -14,6 +14,7 @@ import StudentsPage from './pages/students';
 import ClassesPage from './pages/classes';
 import AdministrationPage from './pages/administration';
 import VerifyEmailPage from './pages/auth/verify-email';
+import ParentsPage from './pages/parents';
 
 
 const App = () => {
@@ -23,13 +24,14 @@ const App = () => {
       <React.Fragment>
         <div>
           <BrowserRouter>
-            {user?
+            {!user?
               <Routes>
                 <React.Fragment>
                   <Route exact path='/dashboard' Component={DashboardPage} />
                   <Route exact path='/teachers' Component={TeachersPage} />
                   <Route exact path='/students' Component={StudentsPage} />
                   <Route exact path='/classes' Component={ClassesPage} />
+                  <Route exact path='/parents-guardians' Component={ParentsPage} />
                   <Route exact path='/administration' Component={AdministrationPage} />
                 </React.Fragment>
               </Routes>
@@ -37,6 +39,7 @@ const App = () => {
               <Routes>
                 <React.Fragment>
                   <Route path='/' Component={LogInPage} />
+                  <Route path='/login' Component={LogInPage} />
                   <Route exact path='/register' Component={SignupPage} />
                   <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
                   <Route exact path='/set-password/:token' Component={SetPasswordPage} />

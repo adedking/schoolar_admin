@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
-import AddTeacherModal from './sub-components/modals/add-teacher';
+import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
 
 const TeachersPage = () => {
-    
-    
+
     const cardData = {
         columns: 2,
         items: [
@@ -14,35 +13,119 @@ const TeachersPage = () => {
            { title: 'Active', value: 20},
         ]
     }
-    const [showAddTeacher, setShowAddTeacher] = useState(true);
+    const [showAddTeacher, setShowAddTeacher] = useState(false);
     const data = {
         data: [
         {
-            id: 'a',
-            name: 'Load balancer 1',
-            status: 'Disabled',
+            id: 1,
+            first_name: 'Adedokun',
+            last_name: 'Agunbiade',
+            email: 'adedokun@schoolar.com',
+            phone_number: '08106668220',
+            teaching_class: 'SS2, SS3',
+            teaching_subject: 'Mathematics',
+            status: 'Active',
         },
         {
-            id: 'b',
-            name: 'Load balancer 2',
-            status: 'Starting',
+            id: 2,
+            first_name: 'Oladotun',
+            last_name: 'Aboaba',
+            email: 'dotun@schoolar.com',
+            phone_number: '08106668220',
+            teaching_class: 'SS2, SS3',
+            teaching_subject: 'Mathematics',
+            status: 'Active',
         },
         {
-            id: 'c',
-            name: 'Load balancer 3',
+            id: 3,
+            first_name: 'Omotolani',
+            last_name: 'Olurotimi',
+            email: 'tola@schoolar.com',
+            phone_number: '08106668220',
+            teaching_class: 'SS2, SS3',
+            teaching_subject: 'Mathematics',
             status: 'Active',
         },
     ]};
-    const tableHeader = [
+
+    const tableConfig = [
         {
-          key: 'name',
-          header: 'Name',
+            key: 'first_name',
+            header: 'First Name',
         },
         {
-          key: 'status',
-          header: 'Status',
+            key: 'last_name',
+            header: 'Last Name',
+        },
+        {
+            key: 'email',
+            header: 'Email',
+        },
+        {
+            key: 'phone_number',
+            header: 'Phone Number',
+        },
+        {
+            key: 'teaching_subject',
+            header: 'Teaching Subject',
+        },
+        {
+            key: 'teaching_class',
+            header: 'Teaching Class',
+        },
+        {
+            key: 'status',
+            header: 'Status',
         },
     ];
+
+    const mobileTableHeader = {
+        main:[
+            {
+                key: 'first_name',
+                header: 'First Name',
+            },
+            {
+                key: 'last_name',
+                header: 'Last Name',
+            },
+            {
+                key: 'email',
+                header: 'Email',
+            },
+        ],
+        full: [
+            {
+                key: 'first_name',
+                header: 'First Name',
+            },
+            {
+                key: 'last_name',
+                header: 'Last Name',
+            },
+            {
+                key: 'email',
+                header: 'Email',
+            },
+            {
+                key: 'phone_number',
+                header: 'Phone Number',
+            },
+            {
+                key: 'teaching_subject',
+                header: 'Teaching Subject',
+            },
+            {
+                key: 'teaching_class',
+                header: 'Teaching Class',
+            },
+            {
+                key: 'status',
+                header: 'Status',
+            },
+        ]
+    };
+
     return (
         <DashboardLayout>
             {showAddTeacher ?
@@ -59,11 +142,13 @@ const TeachersPage = () => {
                 />
                 <div className='min-w-full bg-login-background rounded-sm'>
                     <AppDataTable 
-                        title={'List of teachers'}
-                        description={'List of all teachers within your school'}
-                        tableHeader={tableHeader}
+                        title={'List of Teachers'}
+                        description={'List of all teachers in your school'}
+                        tableHeader={tableConfig}
+                        mobileTableHeader={mobileTableHeader}
                         data={data}
-                        buttonAction={() => {
+                        mainButtonText='Add Teacher'
+                        mainButtonAction={() => {
                             setShowAddTeacher(true)
                         }}
                     />
