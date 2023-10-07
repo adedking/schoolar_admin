@@ -24,18 +24,6 @@ const App = () => {
       <React.Fragment>
         <div>
           <BrowserRouter>
-            {user?
-              <Routes>
-                <React.Fragment>
-                  <Route exact path='/dashboard' Component={DashboardPage} />
-                  <Route exact path='/teachers' Component={TeachersPage} />
-                  <Route exact path='/students' Component={StudentsPage} />
-                  <Route exact path='/classes' Component={ClassesPage} />
-                  <Route exact path='/parents-guardians' Component={ParentsPage} />
-                  <Route exact path='/administration' Component={AdministrationPage} />
-                </React.Fragment>
-              </Routes>
-              :
               <Routes>
                 <React.Fragment>
                   <Route path='/' Component={LogInPage} />
@@ -45,11 +33,14 @@ const App = () => {
                   <Route exact path='/set-password/:token' Component={SetPasswordPage} />
                   <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
                   <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
+                  <Route exact path='/dashboard' Component={DashboardPage} />
+                  <Route exact path='/teachers' Component={TeachersPage} />
+                  <Route exact path='/students' Component={StudentsPage} />
+                  <Route exact path='/classes' Component={ClassesPage} />
+                  <Route exact path='/parents-guardians' Component={ParentsPage} />
+                  <Route exact path='/administration' Component={AdministrationPage} />
                 </React.Fragment>
               </Routes>
-              }
-              
-            
           </BrowserRouter>
         </div>
       </React.Fragment>
