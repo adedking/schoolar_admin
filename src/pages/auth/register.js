@@ -13,16 +13,16 @@ const SignupPage = () => {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [schoolName, setSchoolName] = useState('')
-    const [country, setCountry] = useState('')
-    const [state, setState] = useState('')
+    const [country, setCountry] = useState('Nigeria')
+    const [state, setState] = useState('Lagos')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setConfirmPassword] = useState('')
-    // const [address, setAddress] = useState('')
+    const [address, setAddress] = useState('')
 
     const navigate = useNavigate();
     const {mutateAsync: register} = useSignUp()
 
-    const submitForm = () => {
+    const submitForm = async () => {
         let first_name = DOMPurify.sanitize(firstName);
         let last_name = DOMPurify.sanitize(lastName);
         let user_email = DOMPurify.sanitize(email);
@@ -32,7 +32,7 @@ const SignupPage = () => {
         let user_state = DOMPurify.sanitize(state);
         let user_password = DOMPurify.sanitize(password);
         let password_confirmation = DOMPurify.sanitize(passwordConfirmation);
-        // let user_address = DOMPurify.sanitize(address);
+        let user_address = DOMPurify.sanitize(address);
         let payload = {
             first_name,
             last_name,
@@ -43,22 +43,22 @@ const SignupPage = () => {
             state: user_state,
             password: user_password,
             password_confirmation,
-            // address: user_address
+            address: user_address
         }
-        // console.log(payload)
-        register(payload)
+        console.log(payload)
+        await register(payload).then((response) => {
+            console.log(response)
+            navigate('/dashboard')
+        })
     }
     return (
         <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
-                    className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-8'
-                    onSubmit={() => {
-                        submitForm()
-                    }}
+                    className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-2'
                 >
-                    <Stack gap={5}>
-                        <labelText className=''> 
+                    <Stack gap={4}>
+                        <labelText className='!text-[14px]'> 
                             Do you have an account?&nbsp;
                             <span className='link-color hover:underline duration-300 cursor-pointer underline' 
                                 onClick={() => {navigate("/")}}
@@ -66,7 +66,7 @@ const SignupPage = () => {
                                 Login
                             </span>
                         </labelText>
-                        <div className='header-3'>Create a account and elevate your school management process</div>
+                        <div className='header-4'>Create a account and elevate your school management process</div>
                         <div className='flex md:flex-row flex-col gap-4'>
                             <div className='md:w-1/2 w-full'>
                                 <TextInput
@@ -92,7 +92,7 @@ const SignupPage = () => {
                                     id="last_name"
                                     invalidText="Please enter a valid last name"
                                     labelText="Last Name"
-                                    placeholder="Enter Your Last Name"
+                                    placeholder="Enter Your Surname"
                                     value={lastName}
                                     onChange={(e) => {
                                         setLastName(e.target.value)
@@ -172,7 +172,7 @@ const SignupPage = () => {
                             />
                         </RadioButtonGroup>
                         <FormGroup className='duration-300 -mt-2'>
-                            <Stack gap={7}>
+                            <Stack gap={6}>
                                 <TextInput
                                     className='min-w-full'
                                     kind={'text'}
@@ -217,39 +217,42 @@ const SignupPage = () => {
                                             }}
                                         >
                                             <SelectItem
-                                                hidden
                                                 value="Lagos"
                                                 text="Lagos"
                                             />
                                             <SelectItem
-                                                hidden
                                                 value="Oyo"
                                                 text="Oyo"
                                             />
                                         </Select>
                                     </div>
                                 </div>
-                                {/* <TextInput
+                                <TextInput
                                     className='min-w-full'
                                     kind={'text'}
-                                    name={'school_address'}
-                                    id="school_address"
+                                    name={'address'}
+                                    id="address"
                                     invalidText="Invalid error message."
                                     labelText="School Address"
                                     placeholder="Enter Your School Address"
-                                /> */}
+                                    onChange={(e) => {
+                                        setAddress(e.target.value)
+                                    }}
+                                />
                             </Stack>
                         </FormGroup>
-                        <Button
-                            type="submit" 
-                            kind={'primary'} 
-                            renderIcon={ArrowRight}
-                            // onClick={() => {
-                            //     submitForm()
-                            // }}
-                        >
-                            Create Account
-                        </Button>
+                        <div className='flex justify-end w-full'>
+                            <Button
+                                type="button" 
+                                kind={'primary'} 
+                                renderIcon={ArrowRight}
+                                onClick={() => {
+                                    submitForm()
+                                }}
+                            >
+                                Create Account
+                            </Button>
+                        </div>
                     </Stack>
                 </Form>
             </div>

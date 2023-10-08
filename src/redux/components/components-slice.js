@@ -7,7 +7,6 @@ const slice = createSlice({
     isLoading: false,
     alert: {},
     isSidebarOpen: true,
-    isModalOpen: false,
   },
   reducers: {
     IsShowingAlert: (state, { payload }) => {
@@ -21,9 +20,6 @@ const slice = createSlice({
     IsTogglingSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
-    setModalIsOpen: (state, { payload }) => {
-      state.isModalOpen = payload;
-    },
     setIsLoading(state, { payload }) {
       state.isLoading = payload;
     },
@@ -35,7 +31,6 @@ export const {
   IsShowingAlert,
   IsTogglingSidebar,
   setIsLoading,
-  setModalIsOpen,
 } = slice.actions;
 
 export const isLoading = (state) => state.componentsSlice.isLoading;
@@ -56,10 +51,6 @@ export const closeAlert = () => (dispatch) => {
 
 export const toggleSidebar = () => (dispatch) => {
   dispatch(IsTogglingSidebar());
-};
-
-export const updateModalStatus = (state) => (dispatch) => {
-  dispatch(setModalIsOpen(state));
 };
 
 export default slice.reducer;

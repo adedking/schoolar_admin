@@ -4,10 +4,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'schools',
   initialState: {
-    company: null,
+    schools: null,
   },
   reducers: {
-    setSchool: (state, { payload }) => {
+    setSchools: (state, { payload }) => {
       state.schools = payload;
     },
   },

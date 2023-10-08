@@ -30,8 +30,8 @@ const AppDataTable = ({
 }) => {
 
     return (
-        <div className='flex flex-col'>
-            <div className='hidden md:block'>
+        <div className='flex flex-col max-w-full mb-3 md:overflow-x-auto overflow-x-hidden !min-h-fit'>
+            <div className='hidden md:block max-w-full'>
                 <DataTable rows={data?.data} headers={tableHeader} isSortable render={({
                     rows,
                     headers,
@@ -108,8 +108,8 @@ const AppDataTable = ({
                         </TableContainer>
                 } />
             </div>
-            <div className='md:hidden block'>
-                <DataTable className='!w-full' rows={data?.data} headers={mobileTableHeader.main} render={({
+            <div className='md:hidden block max-w-full'>
+                <DataTable className='!max-w-full' rows={data?.data} headers={mobileTableHeader.main} render={({
                     rows,
                     headers,
                     getHeaderProps,
@@ -152,24 +152,29 @@ const AppDataTable = ({
                         </TableToolbar>
                         <Table {...getTableProps()}>
                             <TableHead>
-                            <TableRow>
-                                <TableExpandHeader />
-                                <TableSelectAll {...getSelectionProps()} />
-                                {mobileTableHeader.main.map((header, i) => <TableHeader key={i} {...getHeaderProps({
-                                    header
-                                })}>
-                                    {header.header}
-                                </TableHeader>)}
-                            </TableRow>
+                                <TableRow>
+                                    <TableExpandHeader />
+                                    <TableSelectAll {...getSelectionProps()} />
+                                    {mobileTableHeader.main.map((header, i) => <TableHeader key={i} {...getHeaderProps({
+                                        header
+                                    })}>
+                                        {header.header}
+                                    </TableHeader>)}
+                                </TableRow>
                             </TableHead>
                             <TableBody>
                             {rows.map(row => <React.Fragment key={row.id}>
-                                <TableExpandRow {...getRowProps({
-                            row
-                        })}>
-                                    <TableSelectRow {...getSelectionProps({
-                            row
-                            })} />
+                                <TableExpandRow  
+                                    className='!text-[13px]' 
+                                    {...getRowProps({
+                                        row
+                                    })}
+                                >
+                                    <TableSelectRow 
+                                        {...getSelectionProps({
+                                            row
+                                        })} 
+                                    />
                                     {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
                                 </TableExpandRow>
                                 <TableExpandedRow colSpan={headers.length + 3} className="demo-expanded-td">

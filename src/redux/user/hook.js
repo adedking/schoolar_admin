@@ -33,12 +33,10 @@ export function useSignUp() {
       },
       {
         onSuccess: (response, variables, context) => {
-          // store.dispatch(setCompany(response.data?.company));
-          // updateSectionData(response.data.section);
-          store.dispatch(setAlert(true, 'success', 'You have successfully signed up'));
           store.dispatch(setToken(response.data.authorization.token));
           store.dispatch(setUser(response.data));
-          
+          store.dispatch(setSchools(response.data.schools));
+          store.dispatch(setAlert(true, 'success', 'You have successfully added your school'));
         },
         onSettled: (response, error, variables, context) => {
           store.dispatch(setIsLoading(false));
