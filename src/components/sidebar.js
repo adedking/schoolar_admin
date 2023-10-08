@@ -14,61 +14,63 @@ const Sidebar = ({isSidebarOpen}) => {
 
   const dispatch = useDispatch();
   const handleSidebarToggle = () => {
-    dispatch(IsTogglingSidebar());
+    if (window.innerWidth < 600) {
+      dispatch(IsTogglingSidebar());
+    }
   };
 
   const sideBar = [
-        {
-          name: 'Dashboard',
-          id: 'dashboard',
-          icon: DashboardSVG,
-          route: '/dashboard',
-          active: true,
-        },
-        {
-          name: 'Teachers',
-          id: 'teachers',
-          icon: TeacherSVG,
-          route: '/teachers',
-          
-        },
-        {
-          name: 'Students',
-          id: 'students',
-          icon: StudentSVG,
-          route: '/students',
-        },
-        {
-          name: 'Classes',
-          id: 'classes',
-          icon: StudentSVG,
-          route: '/classes'
-        },
-        {
-          name: 'Parents/Guardians',
-          id: 'parents-guardians',
-          icon: ParentSVG,
-          route: '/parents-guardians',
-        },
-        {
-          name: 'Student Records',
-          id: 'student-records',
-          icon: RecordSVG,
-          route: '/student-records',
-        },
-        {
-            name: 'Admissions',
-            id: 'admissions',
-            icon: AdministrationSVG,
-            route: '/admissions',
-          },
-        {
-          name: 'Administration',
-          id: 'administration',
-          icon: AdministrationSVG,
-          route: '/administration',
-        },
-      ]
+    {
+      name: 'Dashboard',
+      id: 'dashboard',
+      icon: DashboardSVG,
+      route: '/dashboard',
+      active: true,
+    },
+    {
+      name: 'Teachers',
+      id: 'teachers',
+      icon: TeacherSVG,
+      route: '/teachers',
+      
+    },
+    {
+      name: 'Students',
+      id: 'students',
+      icon: StudentSVG,
+      route: '/students',
+    },
+    {
+      name: 'Classes',
+      id: 'classes',
+      icon: StudentSVG,
+      route: '/classes'
+    },
+    {
+      name: 'Parents/Guardians',
+      id: 'parents-guardians',
+      icon: ParentSVG,
+      route: '/parents-guardians',
+    },
+    {
+      name: 'Student Records',
+      id: 'student-records',
+      icon: RecordSVG,
+      route: '/student-records',
+    },
+    {
+        name: 'Admissions',
+        id: 'admissions',
+        icon: AdministrationSVG,
+        route: '/admissions',
+      },
+    {
+      name: 'Administration',
+      id: 'administration',
+      icon: AdministrationSVG,
+      route: '/administration',
+    },
+  ]
 
   return (
     <React.Fragment>
