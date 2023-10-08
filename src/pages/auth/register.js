@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, SelectItem, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
-import { FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
+import { Button, Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '../../redux/user/hook';
 

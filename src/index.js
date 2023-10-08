@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -17,8 +17,10 @@ export const queryClient = new QueryClient({
     },
   },
 });
+const container = document.getElementById('root');
+const root = createRoot(container)
 
-ReactDOM.render(
+root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <QueryClientProvider client={queryClient}>
@@ -26,8 +28,7 @@ ReactDOM.render(
         <ReactQueryDevtools />
       </QueryClientProvider>
     </PersistGate>
-  </Provider>,
-  document.getElementById('root'),
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

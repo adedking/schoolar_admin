@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import  DashboardSVG  from '../assets/svg/sidebar/dashboard-icon.svg'
 import  TeacherSVG  from '../assets/svg/sidebar/teacher-icon.svg'
 import  StudentSVG  from '../assets/svg/sidebar/student-icon.svg'
@@ -13,6 +13,7 @@ import { IsTogglingSidebar } from '../redux/components/components-slice';
 const Sidebar = ({isSidebarOpen}) => {
 
   const dispatch = useDispatch();
+  const location = useLocation();
   const handleSidebarToggle = () => {
     if (window.innerWidth < 600) {
       dispatch(IsTogglingSidebar());
@@ -96,9 +97,9 @@ const Sidebar = ({isSidebarOpen}) => {
             >
               <NavLink
                 to={item.route}
-                className='text-black font-normal text-[13px] leading-[20px] flex pl-[20px] h-[45px] items-center hover:font-semibold hover:bg-white duration-300 hover:border-l-4 hover:border-l-blue-800'
-                activeClassName={'font-extrabold text-[14px] !bg-white border-l-4 border-blue-500'}
-                
+                className={classNames('text-black font-normal text-[13px] leading-[20px] flex pl-[20px] h-[45px] items-center hover:font-semibold hover:bg-white duration-300 hover:border-l-4 hover:border-l-blue-800', {
+                  'font-extrabold text-[14px] !bg-white border-l-4 border-blue-500': location.pathname.split('/')[1] === item.route.split('/')[1],
+                })}
               >
                 <img src={item.icon} alt={item.name} className={'pr-[15px]'} width={'30px'} height={'35px'} />
                 {item.name}

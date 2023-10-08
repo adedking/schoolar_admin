@@ -17,7 +17,7 @@ const TeachersPage = () => {
     const data = {
         data: [
         {
-            id: 1,
+            id: '1',
             first_name: 'Adedokun',
             last_name: 'Agunbiade',
             email: 'adedokun@schoolar.com',
@@ -27,7 +27,7 @@ const TeachersPage = () => {
             status: 'Active',
         },
         {
-            id: 2,
+            id: '2',
             first_name: 'Oladotun',
             last_name: 'Aboaba',
             email: 'dotun@schoolar.com',
@@ -37,7 +37,7 @@ const TeachersPage = () => {
             status: 'Active',
         },
         {
-            id: 3,
+            id: '3',
             first_name: 'Omotolani',
             last_name: 'Olurotimi',
             email: 'tola@schoolar.com',

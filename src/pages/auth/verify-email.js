@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, Stack, TextInput } from '@carbon/react';
+import { Button, Form, Stack, TextInput } from 'carbon-components-react';
 import { ArrowRight } from '@carbon/icons-react';
 
 const VerifyEmailPage = () => {

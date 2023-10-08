@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, Stack, TextInput } from '@carbon/react';
 import { ArrowRight, InformationDisabled, TrashCan } from '@carbon/icons-react';
 // import { useNavigate } from 'react-router-dom';
-import { Select, SelectItem } from 'carbon-components-react';
+import { Button, Form, Stack, TextInput, Select, SelectItem } from 'carbon-components-react';
 
 const AddSchoolPage = () => {
 

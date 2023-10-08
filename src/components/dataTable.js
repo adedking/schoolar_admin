@@ -15,7 +15,9 @@ const props = () => ({
     pageSize: 10,
     pageSizes: [10, 20, 30, 40, 50],
     itemsPerPageText: '',
-    onChange: 'onChange'
+    onChange: () => {
+        
+    }
 });
 
 const AppDataTable = ({
@@ -47,26 +49,32 @@ const AppDataTable = ({
                 }) => <TableContainer title={title} description={description} {...getTableContainerProps()}>
                         <TableToolbar {...getToolbarProps()}>
                             <TableBatchActions {...getBatchActionProps()}>
-                                <TableBatchAction renderIcon={''} iconDescription="Delete the selected rows" >
+                                <TableBatchAction iconDescription="Delete the selected rows" >
                                     Edit
                                 </TableBatchAction>
-                                <TableBatchAction  renderIcon={''} iconDescription="Save the selected rows" >
+                                <TableBatchAction iconDescription="Save the selected rows" >
                                     Send Announcement
                                 </TableBatchAction>
-                                <TableBatchAction renderIcon={''} iconDescription="Download the selected rows" >
+                                <TableBatchAction iconDescription="Download the selected rows" >
                                     Assign To Class
                                 </TableBatchAction>
-                                <TableBatchAction renderIcon={''} iconDescription="Download the selected rows" >
+                                <TableBatchAction iconDescription="Download the selected rows" >
                                     Remove Teacher
                                 </TableBatchAction>
                             </TableBatchActions>
                             <TableToolbarContent>
                                 <TableToolbarSearch onChange={onInputChange} />
                                 <TableToolbarMenu>
-                                    <TableToolbarAction >
+                                    <TableToolbarAction 
+                                    onClick={() => {
+                                        
+                                    }}>
                                     Add row
                                     </TableToolbarAction>
-                                    <TableToolbarAction >
+                                    <TableToolbarAction 
+                                    onClick={() => {
+                                        
+                                    }}>
                                     Add header
                                     </TableToolbarAction>
                                 </TableToolbarMenu>
@@ -138,12 +146,18 @@ const AppDataTable = ({
                             </TableBatchAction>
                             </TableBatchActions>
                             <TableToolbarContent>
-                            <TableToolbarSearch onChange={onInputChange} />
+                            <TableToolbarSearch />
                             <TableToolbarMenu>
-                                <TableToolbarAction >
+                                <TableToolbarAction
+                                onClick={() => {
+                                        
+                                }}>
                                 Add row
                                 </TableToolbarAction>
-                                <TableToolbarAction >
+                                <TableToolbarAction 
+                                onClick={() => {
+                                        
+                                }}>
                                 Add header
                                 </TableToolbarAction>
                             </TableToolbarMenu>
