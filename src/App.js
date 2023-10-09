@@ -2,7 +2,6 @@ import React from 'react';
 import LogInPage from './pages/auth/login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './app.scss';
-// import { useSelector } from 'react-redux';
 import SignupPage from './pages/auth/register';
 import PasswordRecoveryPage from './pages/auth/forgot-password';
 import SetPasswordPage from './pages/auth/set-password';
@@ -16,7 +15,8 @@ import VerifyEmailPage from './pages/auth/verify-email';
 import ParentsPage from './pages/parents';
 import VerifyOTPPage from './pages/onboarding/verify-otp';
 import AddSchoolPage from './pages/onboarding/add-school';
-
+import AdmissionPage from './pages/admission';
+import StudentRecordsPage from './pages/student-records';
 
 const App = () => {
   
@@ -39,6 +39,8 @@ const App = () => {
                   <Route exact path='/students' Component={StudentsPage} />
                   <Route exact path='/classes' Component={ClassesPage} />
                   <Route exact path='/parents-guardians' Component={ParentsPage} />
+                  <Route exact path='/student-records' Component={StudentRecordsPage} />
+                  <Route exact path='/admission' Component={AdmissionPage} />
                   <Route exact path='/administration' Component={AdministrationPage} />
                 {/* </React.Fragment> */}
               </Routes>

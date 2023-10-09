@@ -4,7 +4,7 @@ import { IsTogglingSidebar } from '../redux/components/components-slice';
 import { Calendar, Close, Help, Menu, UserAvatar } from '@carbon/icons-react';
 import { Header, HeaderName } from 'carbon-components-react';
 
-const NavBar = ({profile=false, isSidebarOpen}) => {
+const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
   // const [profileOpen, setProfileOpen] = useState(false)
   // const align = document?.dir === 'rtl' ? 'bottom-left' : 'bottom-right';
   const dispatch = useDispatch();
@@ -28,24 +28,37 @@ const NavBar = ({profile=false, isSidebarOpen}) => {
         <div 
           className='flex justify-start items-center cursor-pointer'
           >
-          
-          {isSidebarOpen && window.innerWidth < 800 ? 
-          <div
-            onClick={() => {
-              handleSidebarToggle()
-            }}
-          >
-            <Close width={20} height={25} />  
-          </div>
-          : !isSidebarOpen && window.innerWidth < 600 ? 
-          <div
-            onClick={() => {
-              handleSidebarToggle()
-            }}
-          >
-            <Menu width={20} height={25} />  
-          </div>
-          : null }
+          {toggle?
+          <React.Fragment>
+            {isSidebarOpen ? 
+            <div
+              onClick={() => {
+                handleSidebarToggle()
+              }}
+            >
+              <Close width={20} height={25} />  
+            </div>
+            : !isSidebarOpen && window.innerWidth < 600 ? 
+            <div
+              onClick={() => {
+                handleSidebarToggle()
+              }}
+            >
+              <Menu width={20} height={25} />  
+            </div>
+            : 
+            <div
+              onClick={() => {
+                handleSidebarToggle()
+              }}
+            >
+              <Close width={20} height={25} />  
+            </div> 
+            }
+          </React.Fragment>
+          :
+          null
+          }
           <HeaderName href="#" prefix={''}>
             Schoolar
           </HeaderName>

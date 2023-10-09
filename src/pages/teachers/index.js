@@ -20,6 +20,7 @@ const TeachersPage = () => {
             id: '1',
             first_name: 'Adedokun',
             last_name: 'Agunbiade',
+            full_name: 'Adedokun Agunbiade',
             email: 'adedokun@schoolar.com',
             phone_number: '08106668220',
             teaching_class: 'SS2, SS3',
@@ -30,6 +31,7 @@ const TeachersPage = () => {
             id: '2',
             first_name: 'Oladotun',
             last_name: 'Aboaba',
+            full_name: 'Oladotun Aboaba',
             email: 'dotun@schoolar.com',
             phone_number: '08106668220',
             teaching_class: 'SS2, SS3',
@@ -40,6 +42,7 @@ const TeachersPage = () => {
             id: '3',
             first_name: 'Omotolani',
             last_name: 'Olurotimi',
+            full_name: 'Omotolani Olurotimi',
             email: 'tola@schoolar.com',
             phone_number: '08106668220',
             teaching_class: 'SS2, SS3',
@@ -82,12 +85,8 @@ const TeachersPage = () => {
     const mobileTableHeader = {
         main:[
             {
-                key: 'first_name',
-                header: 'First Name',
-            },
-            {
-                key: 'last_name',
-                header: 'Last Name',
+                key: 'full_name',
+                header: 'Student Name',
             },
             {
                 key: 'email',
@@ -136,7 +135,7 @@ const TeachersPage = () => {
             :
             null
             }
-            <div className='flex flex-col items-center jusify-center min-w-full min-h-full gap-4'>
+            <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                 <WidgetCard 
                     cardData={cardData}
                 />

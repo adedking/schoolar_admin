@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar } from '../redux/components/components-slice';
 import { SideNav, SideNavItems, SideNavLink, SideNavMenu, SideNavMenuItem } from 'carbon-components-react';
-import { Dashboard, Document, Education, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
+import { Dashboard, Education, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
 
 const Sidebar = ({isSidebarOpen}) => {
 
@@ -36,6 +36,7 @@ const Sidebar = ({isSidebarOpen}) => {
       name: 'Academics',
       id: 'students',
       has_sub: true,
+      sub_routes_list: ['students', 'classes', 'student-records'],
       icon: Education,
       sub_route: [
         {
@@ -48,6 +49,11 @@ const Sidebar = ({isSidebarOpen}) => {
           id: 'classes',
           route: '/classes',
         },
+        {
+          name: 'Student Records',
+          id: 'student-records',
+          route: '/student-records',
+        },
       ]
     },
     {
@@ -58,17 +64,10 @@ const Sidebar = ({isSidebarOpen}) => {
       route: '/parents-guardians',
     },
     {
-      name: 'Student Records',
-      id: 'student-records',
-      icon: Document,
-      has_sub: false,
-      route: '/student-records',
-    },
-    {
       name: 'Admissions',
       id: 'admissions',
       icon: UserFollow,
-      route: '/admissions',
+      route: '/admission',
     },
     {
       name: 'Administration',
@@ -79,23 +78,25 @@ const Sidebar = ({isSidebarOpen}) => {
   ]
 
   return (
-    <SideNav  expanded={isSidebarOpen} isChildOfHeader={true} aria-label="Side navigation">
+    <SideNav expanded={isSidebarOpen} isChildOfHeader={true} aria-label="Side navigation">
       <SideNavItems className='bg-login-background'>
         {sideBar?.map((item, index) =>
           <React.Fragment key={index}>
             {item.has_sub?
             <SideNavMenu 
               large
+              isActive={item.sub_routes_list.includes(location.pathname.split('/')[1])? true : false}
               className='!cursor-pointer'
               renderIcon={item.icon} 
               title={item.name}
-              isActive={false}>
+            >
               {item.sub_route?.map((subItem, subIndex) => (
                 <SideNavMenuItem 
                   key={subIndex}
                   element={Link} 
                   to={subItem.route}
                   className='-ml-4 cursor-pointer'
+                  isActive={location.pathname.split('/')[1] === (subItem.route).split('/')[1] ? true : false}
                   large
                   onClick={() => {
                     if (window.innerWidth < 600) {

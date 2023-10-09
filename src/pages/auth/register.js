@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
 import { ArrowRight } from '@carbon/icons-react';
-import { Button, Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
+import { Button, Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select, InlineLoading } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '../../redux/user/hook';
 
 const SignupPage = () => {
     const [schoolType, setSchoolType] = useState('independent')
+    const [locationType, setLocationType] = useState('Primary')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -19,7 +20,7 @@ const SignupPage = () => {
     const [address, setAddress] = useState('')
 
     const navigate = useNavigate();
-    const {mutateAsync: register} = useSignUp()
+    const {mutateAsync: register, isLoading} = useSignUp()
 
     const submitForm = async () => {
         let first_name = DOMPurify.sanitize(firstName);
@@ -27,29 +28,32 @@ const SignupPage = () => {
         let user_email = DOMPurify.sanitize(email);
         let school_name = DOMPurify.sanitize(schoolName);
         let school_type = DOMPurify.sanitize(schoolType);
+        let location_type = DOMPurify.sanitize(locationType);
         let user_country = DOMPurify.sanitize(country);
         let user_state = DOMPurify.sanitize(state);
         let user_password = DOMPurify.sanitize(password);
         let password_confirmation = DOMPurify.sanitize(passwordConfirmation);
-        let user_address = DOMPurify.sanitize(address);
+        let school_address = DOMPurify.sanitize(address);
+        
         let payload = {
             first_name,
             last_name,
             email: user_email,
             school_name,
             school_type,
+            location_type,
             country : user_country,
             state: user_state,
             password: user_password,
             password_confirmation,
-            address: user_address
+            address: school_address,
+            syllabus: "waec",
         }
-        console.log(payload)
         await register(payload).then((response) => {
-            console.log(response)
             navigate('/dashboard')
         })
     }
+
     return (
         <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
@@ -225,6 +229,25 @@ const SignupPage = () => {
                                             />
                                         </Select>
                                     </div>
+                                    <div className='md:w-1/2 w-full'>
+                                        <Select
+                                            id="school_type"
+                                            value={locationType}
+                                            labelText="School Type"
+                                            onChange={(e) => {
+                                                setLocationType(e.target.value)
+                                            }}
+                                        >
+                                            <SelectItem
+                                                value="Primary"
+                                                text="Primary"
+                                            />
+                                            <SelectItem
+                                                value="Secondary"
+                                                text="Secondary"
+                                            />
+                                        </Select>
+                                    </div>
                                 </div>
                                 <TextInput
                                     className='min-w-full'
@@ -241,6 +264,13 @@ const SignupPage = () => {
                             </Stack>
                         </FormGroup>
                         <div className='flex justify-end w-full'>
+                            {isLoading ? 
+                            <InlineLoading
+                                style={{
+                                marginLeft: '1rem'
+                                }} 
+                                description='Loading' 
+                            /> : 
                             <Button
                                 type="button" 
                                 kind={'primary'} 
@@ -251,6 +281,8 @@ const SignupPage = () => {
                             >
                                 Create Account
                             </Button>
+                            }
+                            
                         </div>
                     </Stack>
                 </Form>

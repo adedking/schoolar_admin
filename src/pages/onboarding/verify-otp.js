@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, Stack, TextInput } from 'carbon-components-react';
+import { Button, Form, InlineLoading, Stack, TextInput } from 'carbon-components-react';
 import { ArrowRight } from '@carbon/icons-react';
+import { useNavigate } from 'react-router-dom';
+import { UseVerifyOTP } from '../../redux/user/hook';
 // import { useNavigate } from 'react-router-dom';
 
 const VerifyOTPPage = () => {
+    const [otp, setOTP] = useState()
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const {mutateAsync: verify_otp, isLoading} = UseVerifyOTP()
+
+    const submitForm = async () => {
+        let email_otp = DOMPurify.sanitize(otp);
+        await verify_otp(email_otp).then(() => {
+            navigate('/dashboard')
+        })
+    }
     return (
         <AuthLayout
         >
@@ -33,15 +45,33 @@ const VerifyOTPPage = () => {
                             name={'otp'}
                             id="otp"
                             invalidText="Invalid OTP provided"
-                            labelText="Email"
+                            labelText="OTP"
                             placeholder="-"
+                            onChange={(e) => {
+                                setOTP(e.target.value)
+                            }}
                         />
                         <div className='flex justify-end w-full text-[12px] underline cursor-pointer text-[#0F62FE]'>
                             Resend OTP
                         </div>
-                        <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
+                        {isLoading ? 
+                        <InlineLoading
+                            style={{
+                            marginLeft: '1rem'
+                            }} 
+                            description='Loading' 
+                        /> : 
+                        <Button 
+                            type="button" 
+                            kind={'primary'} 
+                            renderIcon={ArrowRight}
+                            onClick={() => {
+                                submitForm()
+                            }}
+                        >
                             Submit OTP
                         </Button>
+                        }
                     </Stack>
                 </Form>
             </div>

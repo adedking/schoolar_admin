@@ -12,11 +12,10 @@ const AddTeacherStepOne = () => {
             }}
             isFullWidth
         >
-            <Stack gap={5}>
-                
-                <FormGroup className='duration-300'>
+            <Stack gap={4}>
+                <FormGroup className='mt-4'>
                     <Stack gap={4}>
-                        <labelTitle className='text-[15px] font-bold mt-4'>Upload profile image</labelTitle>
+                        <labelTitle className='text-[15px] font-bold'>Upload profile image</labelTitle>
                         <labelTitle className='text-[12px] font-normal -mt-3'>Max file size is 3mb. Supported file types are .jpg, .jpeg and .png.</labelTitle>
                         <FileUploaderDropContainer size='sm' labelTitle="Upload profile image" labelDescription="Max file size is 500mb. Only .jpg files are supported." labelText="Drag and drop files here or click to upload" multiple={false} accept={['image/jpeg', 'image/png']} />
                     </Stack>
@@ -112,22 +111,28 @@ const AddTeacherStepOne = () => {
                             labelText="State"
                         >
                             <SelectItem
-                                hidden
-                                value="placeholder-item"
+                                value="Lagos"
                                 text="Lagos"
+                            />
+                            <SelectItem
+                                value="Ondo"
+                                text="Ondo"
                             />
                         </Select>
                     </div>
                 </div>
                 <Select
                     id="select-1"
-                    defaultValue="placeholder-item"
+                    defaultValue="Lagos"
                     labelText="State"
                 >
                     <SelectItem
-                        hidden
-                        value="placeholder-item"
+                        value="Lagos"
                         text="Lagos"
+                    />
+                    <SelectItem
+                        value="Ondo"
+                        text="Ondo"
                     />
                 </Select>
             </Stack>

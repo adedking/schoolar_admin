@@ -21,6 +21,7 @@ const StudentsPage = () => {
             id: '1',
             first_name: 'Adedokun',
             last_name: 'Agunbiade',
+            full_name: 'Adedokun Agunbiade',
             email: 'adedokun@schoolar.com',
             gender: 'Male',
             class: 'SS3',
@@ -32,6 +33,7 @@ const StudentsPage = () => {
             id: '2',
             first_name: 'Oladotun',
             last_name: 'Aboaba',
+            full_name: 'Oladotun Aboaba',
             email: 'dotun@schoolar.com',
             gender: 'Male',
             class: 'SS3',
@@ -43,6 +45,7 @@ const StudentsPage = () => {
             id: '3',
             first_name: 'Omotolani',
             last_name: 'Olurotimi',
+            full_name: 'Omotolani Olurotimi',
             email: 'tola@schoolar.com',
             gender: 'Male',
             class: 'SS3',
@@ -90,12 +93,8 @@ const StudentsPage = () => {
     const mobileTableHeader = {
         main:[
             {
-                key: 'first_name',
-                header: 'First Name',
-            },
-            {
-                key: 'last_name',
-                header: 'Last Name',
+                key: 'full_name',
+                header: 'Student Name',
             },
             {
                 key: 'email',
@@ -144,7 +143,7 @@ const StudentsPage = () => {
             :
             null
             }
-            <div className='flex flex-col items-center jusify-center min-w-full max-w-full min-h-full gap-4 mb-3'>
+            <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
                 <WidgetCard 
                     cardData={cardData}
                 />

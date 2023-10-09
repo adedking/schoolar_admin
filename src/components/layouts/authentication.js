@@ -29,11 +29,12 @@ const AuthLayout = ({children, justification}) => {
             }
         } else {
             if (
-                location.pathname !== '/' ||
-                location.pathname !== '/register' ||
-                location.pathname !== '/forgot-password' ||
-                location.pathname !== '/set-password' ||
-                location.pathname !== '/reset-password') {
+                location.pathname !== '/' &&
+                location.pathname !== '/register' &&
+                location.pathname !== '/forgot-password' &&
+                location.pathname !== '/set-password' &&
+                location.pathname !== '/reset-password'
+                ) {
                     navigate('/'); 
                 }
             }
@@ -42,9 +43,9 @@ const AuthLayout = ({children, justification}) => {
     return (
         <div className='flex flex-col bg-login-background max-w-screen min-w-screen max-h-screen min-h-screen overflow-y-auto'>
             <NavBar 
-                profile={false}
+                profile={false} toggle={false}
             />
-            <>{children}</>
+            <div className='mt-[50px]'>{children}</div>
         </div>
     );
 };

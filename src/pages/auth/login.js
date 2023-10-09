@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
 import { Button, Checkbox, Form, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+import { useLogin } from '../../redux/user/hook';
+import { InlineLoading } from 'carbon-components-react';
 
 const LogInPage = () => {
 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const navigate = useNavigate();
+    const {mutateAsync: login, isLoading} = useLogin()
+
+    const submitForm = async () => {
+        let user_email = DOMPurify.sanitize(email);
+        let user_password = DOMPurify.sanitize(password);
+        
+        let payload = {
+            email: user_email,
+            password: user_password,
+        }
+        await login(payload).then((response) => {
+            navigate('/dashboard')
+        })
+    }
+    
     return (
         <AuthLayout
         >
@@ -23,6 +44,9 @@ const LogInPage = () => {
                             kind={'email'}
                             name={'email'}
                             id="email"
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
                             invalidText="Invalid error message."
                             labelText="Email"
                             placeholder="Enter Your Email"
@@ -37,20 +61,37 @@ const LogInPage = () => {
                             required
                             name={'password'}
                             id="passsword"
-                            // labelText="Password"
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
                             placeholder="Enter Your Password"
                             // helperText="Optional helper text here; if message is more than one line text should wrap (~100 character count maximum)"
                             
                         />
                         </div>
                         <Checkbox labelText={`Stay Logged In`} id="checkbox-label-1" />
-                        <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
+                        {isLoading ? 
+                        <InlineLoading 
+                            style={{
+                            marginLeft: '1rem'
+                            }} 
+                            description='Loading' 
+                        /> : 
+                        <Button 
+                            type="button" 
+                            kind={'primary'} 
+                            renderIcon={ArrowRight}
+                            onClick={() => {
+                                submitForm()
+                            }}
+                        >
                             Continue
                         </Button>
+                        }
                         <hr className='divider -mb-2' />
                         <labelText> 
                             Don't have an account?&nbsp;
-                            <span className='link-color underline duration-300 cursor-pointer' 
+                            <span className='link-color underline cursor-pointer text-[13px]' 
                                 onClick={() => {navigate("/register")}}
                             >
                                 Create a schoolar account

@@ -29,11 +29,11 @@ const DashboardLayout = ({children, justification}) => {
             }
         } else {
             if (
-                location.pathname !== '/' ||  
-                location.pathname !== '/register' || 
-                location.pathname !== '/forgot-password' || 
-                location.pathname !== '/set-password' || 
-                location.pathname !== '/reset-password' ||  
+                location.pathname !== '/' &&  
+                location.pathname !== '/register' && 
+                location.pathname !== '/forgot-password' && 
+                location.pathname !== '/set-password' &&
+                location.pathname !== '/reset-password' && 
                 location.pathname === '/onboarding/verify-otp') {
                 navigate('/'); 
             }
@@ -51,9 +51,9 @@ const DashboardLayout = ({children, justification}) => {
             <div className='flex overflow-auto mt-[50px]'>
                 {/* <Sidebar isSidebarOpen={isSidebarOpen} /> */}
                 <div 
-                    className={classNames('flex flex-col mt-2 w-full mr-3 max-w-screen !min-h-fit duration-300 gap-3 ml-3 z-30 pb-3', {
-                        'ml-3':!isSidebarOpen,
-                        'ml-[266px]':isSidebarOpen && window.innerWidth > 600,
+                    className={classNames('flex flex-col mt-2 w-full mr-3 max-w-calc[(100%-266px)] !min-h-fit h-fit duration-300 gap-3 ml-3 z-30 pb-3 overflow-x-auto', {
+                        'ml-3':!isSidebarOpen || window.innerWidth <= 600,
+                        'ml-[266px]':isSidebarOpen || window.innerWidth >= 600 ,
                     })}
                 >
                     {children}

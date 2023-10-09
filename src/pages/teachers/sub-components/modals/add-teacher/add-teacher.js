@@ -1,10 +1,11 @@
 
-import { Modal, ProgressIndicator, ProgressStep } from 'carbon-components-react';
+import { Button, Modal, ProgressIndicator, ProgressStep } from 'carbon-components-react';
 import React, { useState } from 'react';
 // import TabView from '../../../../components/tabs';
 import AddTeacherStepOne from './add-teacher-step-one';
 import AddTeacherStepTwo from './add-teacher-step-two';
 import AddTeacherStepThree from './add-teacher-step-three';
+import { ArrowRight } from '@carbon/icons-react';
 // import { useEffect } from 'react';
 
 
@@ -100,17 +101,16 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
       primaryButtonText="Continue" 
       secondaryButtonText={currentStep > 0 ? "Back" : ''}
       hasScrollingContent={false}
+      passiveModal
       isFullWidth
       open={isOpen} 
+      className='!md:pt-[50px] md:pl-[15%] !mt-4 min-h-fit'
       preventCloseOnClickOutside={true}
       onRequestClose={() => closeModal()}
-      onRequestSubmit={() => { requestSubmit() }}
-      onSecondarySubmit={() => { secondaryRequestSubmit() }}
-      size={'lg'}
+      size={window.innerWidth < 800 ?'md' : 'md'}
     > 
-      <div className='mt-3 md:w-[550px] min-h-fit px-4 mb-6'>
-        <ProgressIndicator
-        >
+      <div className='flex flex-col justify-between w-full min-h-fit px-4 mb-4 mt-3'>
+        <ProgressIndicator>
           {steps?.map((item, index) => (
             <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} description={item.description} />
           ))}
@@ -127,6 +127,34 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
           </>
           
         ))}
+      </div>
+      <div className='flex justify-end'>
+        {currentStep > 0 ?
+        <Button
+          type="submit" 
+          className='min-w-[180px] h-[60px]'
+          kind={'secondary'} 
+          onClick={() => {
+            secondaryRequestSubmit()
+          }}
+        >
+          Back
+        </Button>
+        :
+        null
+        }
+          
+        <Button
+            type="submit" 
+            kind={'primary'} 
+            className='min-w-[180px] h-[60px]'
+            renderIcon={ArrowRight}
+            onClick={() => {
+              requestSubmit()
+            }}
+        >
+            Continue
+        </Button>
       </div>
       
     </Modal>
