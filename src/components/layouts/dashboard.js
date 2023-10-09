@@ -11,15 +11,11 @@ const DashboardLayout = ({children, justification}) => {
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-            if (user.onboardingStatus === 0 || !user.onboardingStatus) {
+            if (user.email_verified === 0) {
                 if (location.pathname !== '/onboarding/verify-otp') {
                 navigate('/onboarding/verify-otp');
                 }
                 return;
-            } else if (user.onboardingStatus === 1) {
-                if (location.pathname !== '/onboarding/add-schools') {
-                    navigate('/onboarding/add-schools');
-                }
             } else {
                 if (
                 location.pathname === '/' ||  
@@ -31,31 +27,29 @@ const DashboardLayout = ({children, justification}) => {
                     navigate('/dashboard');
                 }
             }
-            } else {
-        if (
-            location.pathname !== '/' ||  
-            location.pathname !== '/register' || 
-            location.pathname !== '/forgot-password' || 
-            location.pathname !== '/set-password' || 
-            location.pathname !== '/reset-password' ||  
-            location.pathname === '/onboarding/verify-otp') {
-            navigate('/'); 
-        }
-    
+        } else {
+            if (
+                location.pathname !== '/' ||  
+                location.pathname !== '/register' || 
+                location.pathname !== '/forgot-password' || 
+                location.pathname !== '/set-password' || 
+                location.pathname !== '/reset-password' ||  
+                location.pathname === '/onboarding/verify-otp') {
+                navigate('/'); 
+            }
         }
     }, [location, user, navigate])
 
     const { isSidebarOpen } = useSelector((state) => state.componentsSlice);
     return (
         <div className='flex flex-col bg-white !max-h-screen !min-h-screen relative overflow-hidden'>
-            <div className='bg-white !border-b-2 !border-gray-400 z-50'>
-                <NavBar 
-                    isSidebarOpen={isSidebarOpen}
-                    profile={true}
-                />
-            </div>
-            < div className='flex overflow-auto '>
-                <Sidebar isSidebarOpen={isSidebarOpen} />
+            <NavBar
+                isSidebarOpen={isSidebarOpen}
+                profile={true}
+            />
+            <Sidebar isSidebarOpen={isSidebarOpen} />
+            <div className='flex overflow-auto mt-[50px]'>
+                {/* <Sidebar isSidebarOpen={isSidebarOpen} /> */}
                 <div 
                     className={classNames('flex flex-col mt-2 w-full mr-3 max-w-screen !min-h-fit duration-300 gap-3 ml-3 z-30 pb-3', {
                         'ml-3':!isSidebarOpen,

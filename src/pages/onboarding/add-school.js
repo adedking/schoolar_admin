@@ -30,13 +30,12 @@ const AddSchoolPage = () => {
 
 
     return (
-        <AuthLayout
-        >
+        <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form className='bg-white md:w-[550px] w-screen md:min-h-fit md:h-fit h-screen md:p-4 p-8 pb-[15px] md:mt-16'>
                     <Stack gap={4}>
                         <div className='text-[18px] font-normal'>
-                            Add all your schools
+                            Add all your school locations
                         </div>
                         {schools.length > 0?
                         <div className='flex flex-col gap-3 mt-2'>
@@ -79,7 +78,7 @@ const AddSchoolPage = () => {
                         </div>
                         :
                         <div className='flex justify-center items-center text-[14px] min-h-[80px] w-full bg-[#F4F4F4] p-3 gap-2 mt-2'>
-                            No school added yet <InformationDisabled />
+                            No school location added yet <InformationDisabled />
                         </div>
                         }
                         <hr className='divider mb-2' />

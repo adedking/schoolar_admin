@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import MenuSVG from '../assets/svg/menu.svg';
-import CloseSVG from '../assets/svg/close.svg';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar } from '../redux/components/components-slice';
-import classNames from 'classnames';
+import { Calendar, Close, Help, Menu, UserAvatar } from '@carbon/icons-react';
+import { Header, HeaderName } from 'carbon-components-react';
 
 const NavBar = ({profile=false, isSidebarOpen}) => {
-
+  // const [profileOpen, setProfileOpen] = useState(false)
+  // const align = document?.dir === 'rtl' ? 'bottom-left' : 'bottom-right';
   const dispatch = useDispatch();
   const handleSidebarToggle = () => {
     dispatch(IsTogglingSidebar());
@@ -24,37 +24,43 @@ const NavBar = ({profile=false, isSidebarOpen}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSidebarOpen])
     return (
-      <div className='flex justify-between min-h-[48px] max-h-[48px] min-w-full max-w-full items-center px-3 !border-b border-gray-400'>
-          <div className='flex flex-row items-center pl-4 md:pl-0'>
-            {window.innerWidth < 600?
-            <React.Fragment>
-              <button onClick={() => handleSidebarToggle()}>
-                <img src={CloseSVG} alt='menu' 
-                className={classNames('mr-3', {
-                  'flex': isSidebarOpen,
-                  'hidden': !isSidebarOpen
-                })}
-                  />
-              </button>
-              <button onClick={() => handleSidebarToggle()}>
-                <img src={MenuSVG} alt='menu' className={classNames('mr-3', {
-                  'flex': !isSidebarOpen,
-                  'hidden': isSidebarOpen
-                })} />
-              </button>
-            </React.Fragment>
-            :
-            null
-            }
-            <div className='font-bold text-[16px]'>Schoolar</div>
-          </div>
-          {profile?
-              <div></div>
-          :
-              null
-          }
+      <Header aria-label="Schoolar" className='flex justify-between w-full px-4'>
+        <div 
+          className='flex justify-start items-center cursor-pointer'
+          >
           
-      </div>
+          {isSidebarOpen && window.innerWidth < 800 ? 
+          <div
+            onClick={() => {
+              handleSidebarToggle()
+            }}
+          >
+            <Close width={20} height={25} />  
+          </div>
+          : !isSidebarOpen && window.innerWidth < 600 ? 
+          <div
+            onClick={() => {
+              handleSidebarToggle()
+            }}
+          >
+            <Menu width={20} height={25} />  
+          </div>
+          : null }
+          <HeaderName href="#" prefix={''}>
+            Schoolar
+          </HeaderName>
+        </div>
+        
+        {profile?
+        <div className='flex justify-end items-center gap-4'>
+          <Calendar width={20} height={20} />
+          <Help width={20} height={20} />
+          <UserAvatar width={20} height={20} />
+        </div>
+        :
+        null
+        } 
+      </Header>
     );
 };
 

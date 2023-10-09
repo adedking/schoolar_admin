@@ -33,7 +33,7 @@ const App = () => {
                   <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
                   <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
                   <Route exact path='/onboarding/verify-otp' Component={VerifyOTPPage} />
-                  <Route exact path='/onboarding/add-schools' Component={AddSchoolPage} />
+                  <Route exact path='/add-school-location' Component={AddSchoolPage} />
                   <Route exact path='/dashboard' Component={DashboardPage} />
                   <Route exact path='/teachers' Component={TeachersPage} />
                   <Route exact path='/students' Component={StudentsPage} />
