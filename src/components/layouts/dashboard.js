@@ -36,6 +36,8 @@ const DashboardLayout = ({children, justification}) => {
                 location.pathname !== '/reset-password' && 
                 location.pathname === '/onboarding/verify-otp') {
                 navigate('/'); 
+            } else {
+                navigate('/');  
             }
         }
     }, [location, user, navigate])
