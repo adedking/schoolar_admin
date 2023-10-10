@@ -13,9 +13,9 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
   };
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 600 && isSidebarOpen === true ) {
+      if (window.innerWidth < 800 && isSidebarOpen === true ) {
         handleSidebarToggle()
-      } else if (window.innerWidth > 600 && isSidebarOpen === false) {
+      } else if (window.innerWidth > 800 && isSidebarOpen === false) {
         handleSidebarToggle()
       }
     }
