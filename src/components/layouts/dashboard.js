@@ -4,6 +4,7 @@ import Sidebar from '../sidebar';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Header } from 'carbon-components-react';
 
 const DashboardLayout = ({children, justification}) => {
     const { user } = useSelector((state) => state.userSlice);
@@ -45,17 +46,19 @@ const DashboardLayout = ({children, justification}) => {
     const { isSidebarOpen } = useSelector((state) => state.componentsSlice);
     return (
         <div className='flex flex-col bg-white !max-h-screen !min-h-screen relative overflow-hidden'>
-            <NavBar
-                isSidebarOpen={isSidebarOpen}
-                profile={true}
-            />
+            <Header aria-label="Schoolar" className='flex justify-between w-full px-4'>
+                <NavBar
+                    isSidebarOpen={isSidebarOpen}
+                    profile={true}
+                />
             <Sidebar isSidebarOpen={isSidebarOpen} />
+            </Header>
             <div className='flex overflow-auto mt-[50px]'>
                 {/* <Sidebar isSidebarOpen={isSidebarOpen} /> */}
                 <div 
                     className={classNames('flex flex-col mt-2 w-full mr-3 max-w-calc[(100%-266px)] !min-h-fit h-fit duration-300 gap-3 ml-3 z-30 pb-3 overflow-x-auto', {
                         'ml-3':!isSidebarOpen || window.innerWidth <= 600,
-                        'ml-[266px]':isSidebarOpen || window.innerWidth >= 600 ,
+                        'ml-[266px]':isSidebarOpen || window.innerWidth >= 1000 ,
                     })}
                 >
                     {children}

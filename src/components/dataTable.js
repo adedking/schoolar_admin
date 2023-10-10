@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, DataTable, Pagination, Table, TableBatchAction, TableBatchActions, TableBody, TableCell, TableContainer, TableExpandHeader, TableExpandRow, TableExpandedRow, TableHead, TableHeader, TableRow, TableSelectAll, TableSelectRow, TableToolbar, TableToolbarAction, TableToolbarContent, TableToolbarMenu, TableToolbarSearch } from 'carbon-components-react';
 import { Add, Edit, Information, TrashCan } from '@carbon/icons-react';
 
@@ -30,10 +30,23 @@ const AppDataTable = ({
     mainButtonAction,
     mainButtonText
 }) => {
+    const [size, setSize] = useState(1000)
 
+    useEffect(() => {
+        const handleResize = () => {
+          if (window.innerWidth < 600) {
+            setSize(window.innerWidth)
+          } else if (window.innerWidth > 600) {
+            setSize(window.innerWidth)
+          }
+        }
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [window])
     return (
         <React.Fragment>
-            {window.innerWidth > 600?
+            {size > 600?
             <DataTable rows={data?.data} headers={tableHeader} isSortable render={({
                 rows,
                 headers,

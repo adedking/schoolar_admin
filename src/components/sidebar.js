@@ -84,7 +84,7 @@ const Sidebar = ({isSidebarOpen}) => {
           <React.Fragment key={index}>
             {item.has_sub?
             <SideNavMenu 
-              large
+              large={true}
               isActive={item.sub_routes_list.includes(location.pathname.split('/')[1])? true : false}
               className='!cursor-pointer'
               renderIcon={item.icon} 
@@ -97,9 +97,9 @@ const Sidebar = ({isSidebarOpen}) => {
                   to={subItem.route}
                   className='-ml-4 cursor-pointer'
                   isActive={location.pathname.split('/')[1] === (subItem.route).split('/')[1] ? true : false}
-                  large
+                  large={true}
                   onClick={() => {
-                    if (window.innerWidth < 600) {
+                    if (window.innerWidth < 800) {
                       handleSidebarToggle()
                     }
                   }}
@@ -114,9 +114,9 @@ const Sidebar = ({isSidebarOpen}) => {
               className='cursor-pointer'
               element={Link} to={item.route}
               renderIcon={item.icon}
-              large
+              large={true}
               onClick={() => {
-                if (window.innerWidth < 600) {
+                if (window.innerWidth < 800) {
                   handleSidebarToggle()
                 }
               }}

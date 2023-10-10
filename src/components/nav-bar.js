@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar } from '../redux/components/components-slice';
-import { Calendar, Close, Help, Menu, UserAvatar } from '@carbon/icons-react';
-import { Header, HeaderName } from 'carbon-components-react';
+import { Calendar, Help, UserAvatar } from '@carbon/icons-react';
+import { HeaderMenuButton, HeaderName } from 'carbon-components-react';
 
 const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
   // const [profileOpen, setProfileOpen] = useState(false)
@@ -24,46 +24,13 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSidebarOpen])
     return (
-      <Header aria-label="Schoolar" className='flex justify-between w-full px-4'>
-        <div 
-          className='flex justify-start items-center cursor-pointer'
-          >
-          {toggle?
-          <React.Fragment>
-            {isSidebarOpen ? 
-            <div
-              onClick={() => {
-                handleSidebarToggle()
-              }}
-            >
-              <Close width={20} height={25} />  
-            </div>
-            : !isSidebarOpen && window.innerWidth < 600 ? 
-            <div
-              onClick={() => {
-                handleSidebarToggle()
-              }}
-            >
-              <Menu width={20} height={25} />  
-            </div>
-            : 
-            <div
-              onClick={() => {
-                handleSidebarToggle()
-              }}
-            >
-              <Close width={20} height={25} />  
-            </div> 
-            }
-          </React.Fragment>
-          :
-          null
-          }
-          <HeaderName href="#" prefix={''}>
-            Schoolar
-          </HeaderName>
-        </div>
-        
+      <React.Fragment>
+        {toggle?
+        <HeaderMenuButton aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'} onClick={handleSidebarToggle} isActive={isSidebarOpen} aria-expanded={isSidebarOpen} />
+        : null}
+        <HeaderName href="#" prefix={''}>
+          Schoolar
+        </HeaderName>
         {profile?
         <div className='flex justify-end items-center gap-4'>
           <Calendar width={20} height={20} />
@@ -73,7 +40,7 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
         :
         null
         } 
-      </Header>
+      </React.Fragment>
     );
 };
 
