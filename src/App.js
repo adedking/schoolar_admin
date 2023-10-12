@@ -17,8 +17,13 @@ import VerifyOTPPage from './pages/onboarding/verify-otp';
 import AddSchoolPage from './pages/onboarding/add-school';
 import AdmissionPage from './pages/admission';
 import StudentRecordsPage from './pages/student-records';
+import { useSelector } from 'react-redux';
+import Alert from './components/alert';
+
+// /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
 
 const App = () => {
+  const { alert } = useSelector((state) => state.componentsSlice);
   
   return (
       <React.Fragment>
@@ -46,6 +51,14 @@ const App = () => {
               </Routes>
           </BrowserRouter>
         </div>
+        {/* Other components */}
+        {alert?.show && (
+          <Alert
+            title={alert?.title}
+            type={alert?.type}
+            message={alert?.message}
+          />
+        )}
       </React.Fragment>
   );
 };

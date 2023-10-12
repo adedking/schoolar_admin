@@ -6,6 +6,7 @@ import AddTeacherStepOne from './add-teacher-step-one';
 import AddTeacherStepTwo from './add-teacher-step-two';
 import AddTeacherStepThree from './add-teacher-step-three';
 import { ArrowRight } from '@carbon/icons-react';
+import { useAddTeacher } from '../../../../../redux/teachers/hook';
 // import { useEffect } from 'react';
 
 
@@ -50,7 +51,18 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
       },
     ]);
 
+    const {mutateAsync: addTeacher, isLoading: addTeacherLoading} = useAddTeacher()
+
     const requestSubmit = () => {
+      if (currentStep === 0) {
+        const formData = new FormData();
+        // if (uploadFile) {
+        //     formData.append('file', data?.file[0]);
+        // } else {
+        //     formData.append('file', null);
+        // }
+        addTeacher(formData)
+      }
       let newArray = steps;
       let curStep = currentStep + 1
       newArray.forEach((element, index) => {
@@ -103,13 +115,13 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
       hasScrollingContent={false}
       passiveModal
       isFullWidth
+      className='!overflow-auto backdrop-blur-sm'
       open={isOpen} 
-      className='!md:pt-[50px] md:pl-[15%] !mt-4 min-h-fit'
       preventCloseOnClickOutside={true}
       onRequestClose={() => closeModal()}
-      size={window.innerWidth < 800 ?'md' : 'md'}
+      size={'lg'}
     > 
-      <div className='flex flex-col justify-between w-full min-h-fit px-4 mb-4 mt-3'>
+      <div className='flex flex-col justify-between w-full md:w-[600px] min-h-fit px-4 mb-4 mt-3 '>
         <ProgressIndicator>
           {steps?.map((item, index) => (
             <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} description={item.description} />
@@ -156,9 +168,8 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
             Continue
         </Button>
       </div>
-      
     </Modal>
-    )   
+)   
 }
 
 export default AddTeacherModal;

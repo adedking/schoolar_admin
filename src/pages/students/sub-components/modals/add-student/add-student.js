@@ -111,12 +111,11 @@ const AddStudentModal = ({isOpen, closeModal}) => {
     passiveModal
     isFullWidth
     open={isOpen} 
-    className='!md:pt-[50px] md:pl-[15%] !mt-4 min-h-fit'
     preventCloseOnClickOutside={true}
     onRequestClose={() => closeModal()}
-    size={window.innerWidth < 800 ?'md' : 'md'}
+    size={'lg'}
   > 
-    <div className='flex flex-col justify-between w-full min-h-fit px-4 mb-4 mt-3'>
+    <div className='flex flex-col justify-between w-full md:w-[600px] min-h-fit px-4 mb-4 mt-3'>
       <ProgressIndicator>
         {steps?.map((item, index) => (
           <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} description={item.description} />

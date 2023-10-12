@@ -5,7 +5,7 @@ import { Axios } from '../../api/axios'
 import { queryClient } from '../..';
 import { setAlert, setIsLoading } from '../components/components-slice';
 import { useMutation } from '@tanstack/react-query';
-import { setSchools } from '../school/reducer';
+import { clearSchools, setSchools } from '../school/reducer';
 
 export function useLogin() {
   return useMutation(
@@ -17,7 +17,7 @@ export function useLogin() {
         store.dispatch(setToken(response.data.authorization.token));
         store.dispatch(setSchools(response.data?.schools));
         store.dispatch(setUser(response.data));
-        store.dispatch(setAlert(true, 'success', 'You have successfully logged in'));
+        store.dispatch(setAlert(true, 'Login successful', 'success', 'You have successfully logged in'));
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
@@ -52,7 +52,39 @@ export function useSignUp() {
         store.dispatch(setToken(response.data.authorization.token));
         store.dispatch(setUser(response.data));
         store.dispatch(setSchools(response.data.schools));
-        store.dispatch(setAlert(true, 'success', 'You have successfully added your school'));
+        store.dispatch(setAlert(true, 'Signup successful', 'success', 'You have successfully added your school'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useForgetPassword() {
+  return useMutation(
+    (payload) => {
+      return user.forgotPassword(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        store.dispatch(setAlert(true, 'Email Sent ', 'success', 'Password Reset Email Sent Successfully'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useResetPassword() {
+  return useMutation(
+    (payload) => {
+      return user.resetPassword(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        store.dispatch(setAlert(true, 'Email Sent ', 'success', 'Password Reset Email Sent Successfully'));
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
@@ -69,7 +101,7 @@ export function UseVerifyOTP() {
     {
       onSuccess: (response, variables, context) => {
         updateUser({reload: false})
-        store.dispatch(setAlert(true, 'success', 'You have successfully verified your email. Welcome to Schoolar'));
+        store.dispatch(setAlert(true, 'OTP verification successful', 'success', 'You have successfully verified your email. Welcome to Schoolar'));
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
@@ -80,9 +112,10 @@ export function UseVerifyOTP() {
 
 export const logout = async () => {
   store.dispatch(clearUser());
+  store.dispatch(clearSchools());
   store.dispatch(clearToken());
   // store.dispatch(clearTwoFaToken());
   queryClient.invalidateQueries();
   delete Axios.defaults.headers.common['Authorization'];
-  store.dispatch(setAlert(true, 'warning', 'You are successfully logged out.'));
+  store.dispatch(setAlert(true, 'Logout successful', 'warning', 'You are successfully logged out.'));
 };

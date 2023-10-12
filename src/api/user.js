@@ -23,9 +23,21 @@ const verify_otp = async (payload) => {
   return data;
 };
 
+const forgotPassword = async (payload) => {
+  const { data } = await Axios.post(`/forgot-password`, payload);
+  return data;
+};
+
+const resetPassword = async (payload) => {
+  const { data } = await Axios.post(`/reset-password`, payload);
+  return data;
+};
+
 export const user = {
     login,
     register,
     verify_otp,
-    profile
+    profile,
+    forgotPassword,
+    resetPassword
 }

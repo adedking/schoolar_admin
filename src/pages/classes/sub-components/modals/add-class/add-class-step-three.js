@@ -2,7 +2,7 @@ import React from 'react';
 import profilePix from '../../../../../assets/svg/profile-pix-placeholder.svg';
 import { FileUploaderItem } from 'carbon-components-react';
 
-const AddStudentStepFour = () => {
+const AddClassStepThree = () => {
 
     // const navigate = useNavigate();
     return (
@@ -66,4 +66,4 @@ const AddStudentStepFour = () => {
     );
 };
 
-export default AddStudentStepFour;
+export default AddClassStepThree;

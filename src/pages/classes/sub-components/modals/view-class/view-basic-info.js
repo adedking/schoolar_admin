@@ -1,14 +1,14 @@
 import React from 'react';
 
 
-const TeacherBasicInfo = () => {
+const SortRankInfo = () => {
 
     // const navigate = useNavigate();
     return (
         <React.Fragment>
-            Basic Information
+            Sort Rank Information
         </React.Fragment>
     );
 };
 
-export default TeacherBasicInfo;
+export default SortRankInfo;

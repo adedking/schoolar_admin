@@ -3,9 +3,19 @@ import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
+import ViewTeacher from './sub-components/modals/view-teacher';
+import { useGetTeachers } from '../../redux/teachers/hook';
+import { PAGINATION_DEFAULT } from '../../utils';
 
 const TeachersPage = () => {
 
+    const { data: teachers } = useGetTeachers(9, 1, -1, '');
+    const [pagination, setPagination] = useState({
+        limit: PAGINATION_DEFAULT.limit,
+        page: PAGINATION_DEFAULT.page,
+        statusFilter: PAGINATION_DEFAULT.statusFilter,
+        search: '',
+    });
     const cardData = {
         columns: 2,
         items: [
@@ -13,6 +23,7 @@ const TeachersPage = () => {
            { title: 'Active', value: 20},
         ]
     }
+
     const [showAddTeacher, setShowAddTeacher] = useState(false);
     const data = {
         data: [
@@ -126,7 +137,7 @@ const TeachersPage = () => {
     };
 
     return (
-        <DashboardLayout>
+        <React.Fragment>
             {showAddTeacher ?
             <AddTeacherModal
                 isOpen={showAddTeacher}
@@ -135,25 +146,27 @@ const TeachersPage = () => {
             :
             null
             }
-            <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
-                <WidgetCard 
-                    cardData={cardData}
-                />
-                <div className='min-w-full bg-login-background rounded-sm'>
-                    <AppDataTable 
-                        title={'List of Teachers'}
-                        description={'List of all teachers in your school'}
-                        tableHeader={tableConfig}
-                        mobileTableHeader={mobileTableHeader}
-                        data={data}
-                        mainButtonText='Add Teacher'
-                        mainButtonAction={() => {
-                            setShowAddTeacher(true)
-                        }}
+            <DashboardLayout viewComponent={<ViewTeacher />} viewTitle={'View teacher'}>
+                <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
+                    <WidgetCard 
+                        cardData={cardData}
                     />
+                    <div className='min-w-full bg-background rounded-sm'>
+                        <AppDataTable
+                            title={'List of Teachers'}
+                            description={'List of all teachers in your school'}
+                            tableHeader={tableConfig}
+                            mobileTableHeader={mobileTableHeader}
+                            data={teachers}
+                            mainButtonText='Add Teacher'
+                            mainButtonAction={() => {
+                                setShowAddTeacher(true)
+                            }}
+                        />
+                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </React.Fragment>
     );
 };
 

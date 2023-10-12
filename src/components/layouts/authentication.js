@@ -20,21 +20,21 @@ const AuthLayout = ({children, justification}) => {
             } else {
                 if (
                 location.pathname === '/' ||
-                location.pathname === '/register' ||
-                location.pathname === '/forgot-password' ||
-                location.pathname === '/set-password' ||
-                location.pathname === '/reset-password' ||
-                location.pathname === '/onboarding/verify-otp') {
+                location.pathname.split('/')[1] === 'register' ||
+                location.pathname.split('/')[1] === 'forgot-password' ||
+                location.pathname.split('/')[1] === 'set-password' ||
+                location.pathname.split('/')[1] === 'reset-password' ||
+                location.pathname.split('/')[1] === '/onboarding/verify-otp') {
                     navigate('/dashboard');
                 }
             }
         } else {
             if (
                 location.pathname !== '/' &&
-                location.pathname !== '/register' &&
-                location.pathname !== '/forgot-password' &&
-                location.pathname !== '/set-password' &&
-                location.pathname !== '/reset-password'
+                location.pathname.split('/')[1] !== 'register' &&
+                location.pathname.split('/')[1] !== 'forgot-password' &&
+                location.pathname.split('/')[1] !== 'set-password' &&
+                location.pathname.split('/')[1] !== 'reset-password'
                 ) {
                     navigate('/'); 
                 }
@@ -42,7 +42,7 @@ const AuthLayout = ({children, justification}) => {
     }, [location, user])
 
     return (
-        <div className='flex flex-col bg-login-background max-w-screen min-w-screen max-h-screen min-h-screen overflow-y-auto'>
+        <div className='flex flex-col bg-background max-w-screen min-w-screen max-h-screen min-h-screen overflow-y-auto'>
             <Header aria-label="Schoolar" className='flex justify-between w-full px-4'>
                 <NavBar 
                     profile={false} toggle={false}

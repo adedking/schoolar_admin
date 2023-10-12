@@ -1,25 +1,29 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { IsTogglingSidebar } from '../redux/components/components-slice';
-import { SideNav, SideNavItems, SideNavLink, SideNavMenu, SideNavMenuItem } from 'carbon-components-react';
-import { Dashboard, Education, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
+import { IsTogglingRightPanel, IsTogglingSidebar } from '../redux/components/components-slice';
+import { SideNav, SideNavItems, SideNavLink } from 'carbon-components-react';
+import { Dashboard, Document, Education, GroupPresentation, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
 
 const Sidebar = ({isSidebarOpen}) => {
 
   const dispatch = useDispatch();
   const location = useLocation();
+
   const handleSidebarToggle = () => {
     if (window.innerWidth < 600) {
       dispatch(IsTogglingSidebar());
     }
   };
 
+  const handleRightPanelToggle = () => {
+    dispatch(IsTogglingRightPanel());
+  };
+
   const sideBar = [
     {
       name: 'Dashboard',
       id: 'dashboard',
-      has_sub: false,
       icon: Dashboard,
       route: '/dashboard',
       active: true,
@@ -27,40 +31,32 @@ const Sidebar = ({isSidebarOpen}) => {
     {
       name: 'Teachers',
       id: 'teachers',
-      has_sub: false,
       icon: UserMultiple,
       route: '/teachers',
       
     },
     {
-      name: 'Academics',
+      name: 'Students',
       id: 'students',
-      has_sub: true,
-      sub_routes_list: ['students', 'classes', 'student-records'],
       icon: Education,
-      sub_route: [
-        {
-          name: 'Students',
-          id: 'students',
-          route: '/students',
-        },
-        {
-          name: 'Classes',
-          id: 'classes',
-          route: '/classes',
-        },
-        {
-          name: 'Student Records',
-          id: 'student-records',
-          route: '/student-records',
-        },
-      ]
+      route: '/students',
+    },
+    {
+      name: 'Classes',
+      id: 'classes',
+      icon: GroupPresentation,
+      route: '/classes',
+    },
+    {
+      name: 'Student Records',
+      id: 'student-records',
+      icon: Document,
+      route: '/student-records',
     },
     {
       name: 'Parents/Guardians',
       id: 'parents-guardians',
       icon: Person,
-      has_sub: false,
       route: '/parents-guardians',
     },
     {
@@ -79,51 +75,24 @@ const Sidebar = ({isSidebarOpen}) => {
 
   return (
     <SideNav expanded={isSidebarOpen} isChildOfHeader={true} aria-label="Side navigation">
-      <SideNavItems className='bg-login-background'>
+      <SideNavItems className='bg-background'>
         {sideBar?.map((item, index) =>
           <React.Fragment key={index}>
-            {item.has_sub?
-            <SideNavMenu 
-              large={true}
-              isActive={item.sub_routes_list.includes(location.pathname.split('/')[1])? true : false}
-              className='!cursor-pointer'
-              renderIcon={item.icon} 
-              title={item.name}
-            >
-              {item.sub_route?.map((subItem, subIndex) => (
-                <SideNavMenuItem 
-                  key={subIndex}
-                  element={Link} 
-                  to={subItem.route}
-                  className='-ml-4 cursor-pointer'
-                  isActive={location.pathname.split('/')[1] === (subItem.route).split('/')[1] ? true : false}
-                  large={true}
-                  onClick={() => {
-                    if (window.innerWidth < 800) {
-                      handleSidebarToggle()
-                    }
-                  }}
-                >
-                  {subItem.name}
-                </SideNavMenuItem>
-              ))}
-            </SideNavMenu>
-            :
             <SideNavLink 
               isActive={location.pathname.split('/')[1] === (item.route).split('/')[1] ? true : false}
               className='cursor-pointer'
               element={Link} to={item.route}
               renderIcon={item.icon}
-              large={true}
+              large
               onClick={() => {
                 if (window.innerWidth < 800) {
                   handleSidebarToggle()
+                  handleRightPanelToggle()
                 }
               }}
             >
               {item.name}
             </SideNavLink>
-            }
           </React.Fragment>
         )}
       </SideNavItems>

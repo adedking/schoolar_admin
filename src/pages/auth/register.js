@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
 import { ArrowRight } from '@carbon/icons-react';
-import { Button, Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select, InlineLoading } from 'carbon-components-react';
+import { Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '../../redux/user/hook';
+import AppButton from '../../components/app-button';
 
 const SignupPage = () => {
     const [schoolType, setSchoolType] = useState('independent')
@@ -126,6 +127,7 @@ const SignupPage = () => {
                                     invalidText="Invalid password format entered"
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                     placeholder="Enter Your Password"
+                                    helperText="Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters."
                                     onChange={(e) => {
                                         setPassword(e.target.value)
                                     }}
@@ -264,25 +266,14 @@ const SignupPage = () => {
                             </Stack>
                         </FormGroup>
                         <div className='flex justify-end w-full'>
-                            {isLoading ? 
-                            <InlineLoading
-                                style={{
-                                marginLeft: '1rem'
-                                }} 
-                                description='Loading' 
-                            /> : 
-                            <Button
+                            <AppButton
                                 type="button" 
                                 kind={'primary'} 
                                 renderIcon={ArrowRight}
-                                onClick={() => {
-                                    submitForm()
-                                }}
-                            >
-                                Create Account
-                            </Button>
-                            }
-                            
+                                action={submitForm}
+                                loading={isLoading}
+                                text={'Create Account'}
+                            />
                         </div>
                     </Stack>
                 </Form>

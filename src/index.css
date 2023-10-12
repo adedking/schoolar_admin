@@ -4,6 +4,7 @@
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/breakpoint' as *;
 @use '@carbon/react/scss/theme' as *;
+@use '@carbon/charts-react/styles.css'
 
  /* Tailwind equlavent scss variables */
  @layer components {
@@ -278,8 +279,6 @@ margin: -16px;
   font-size: 14px;
   padding:  15px 40px;
   border-radius: 5px;
-  border-color:  theme('colors.hr-primary-1');
-  background-color: theme('colors.hr-primary-1');
   float: right;
   margin: -16px;
   }
@@ -641,7 +640,7 @@ i {
   max-height: 70px !important; 
 }
 
-
+/* 
 @media screen and (max-width: 800px) {
   .cds--modal-container {
     margin-top: 48px;
@@ -649,4 +648,4 @@ i {
     min-height: 100%;
     max-height: 100%;
   }
-}
+} */

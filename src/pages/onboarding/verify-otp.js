@@ -32,10 +32,10 @@ const VerifyOTPPage = () => {
                             <div className='flex justify-between items-center w-full mt-4 h-[50px]'>
                                 <div className='flex flex-col items-start w-[75%] gap-2 h-full'>
                                     <span className='text-[13px] font-normal'>OTP sent to</span>
-                                    <span className='text-[14px] font-normal text-[#0F62FE]'>adedokun@schoolar.com</span>
+                                    <span className='text-[14px] font-normal text-primary'>adedokun@schoolar.com</span>
                                 </div>
                                 <div className='flex justify-end w-[25%] underline cursor-pointer '>
-                                    <span className='hover:underline cursor-pointer text-[#0F62FE] text-[15px]'>Edit</span>
+                                    <span className='hover:underline cursor-pointer text-primary text-[15px]'>Edit</span>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@ const VerifyOTPPage = () => {
                                 setOTP(e.target.value)
                             }}
                         />
-                        <div className='flex justify-end w-full text-[12px] underline cursor-pointer text-[#0F62FE]'>
+                        <div className='flex justify-end w-full text-[12px] underline cursor-pointer text-primary'>
                             Resend OTP
                         </div>
                         {isLoading ? 

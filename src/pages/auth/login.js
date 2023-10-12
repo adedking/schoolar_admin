@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Checkbox, Form, Stack, TextInput } from '@carbon/react';
+import { Checkbox, Form, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { useLogin } from '../../redux/user/hook';
-import { InlineLoading } from 'carbon-components-react';
+import AppButton from '../../components/app-button';
 
 const LogInPage = () => {
 
@@ -70,24 +70,14 @@ const LogInPage = () => {
                         />
                         </div>
                         <Checkbox labelText={`Stay Logged In`} id="checkbox-label-1" />
-                        {isLoading ? 
-                        <InlineLoading 
-                            style={{
-                            marginLeft: '1rem'
-                            }} 
-                            description='Loading' 
-                        /> : 
-                        <Button 
+                        <AppButton
                             type="button" 
                             kind={'primary'} 
                             renderIcon={ArrowRight}
-                            onClick={() => {
-                                submitForm()
-                            }}
-                        >
-                            Continue
-                        </Button>
-                        }
+                            action={submitForm}
+                            loading={isLoading}
+                            text={'Sign in'}
+                        />
                         <hr className='divider -mb-2' />
                         <labelText> 
                             Don't have an account?&nbsp;

@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, Stack, TextInput } from 'carbon-components-react';
+import { Form, Stack, TextInput } from 'carbon-components-react';
 import { ArrowRight } from '@carbon/icons-react';
+import { useResetPassword } from '../../redux/user/hook';
+import { useNavigate, useParams } from 'react-router-dom';
+import AppButton from '../../components/app-button';
 
 const ResetPasswordPage = () => {
+
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setConfirmPassword] = useState('')
+
+    const {token} = useParams()
+
+    const {mutateAsync: resetPassword, isLoading: resetPasswordLoading} = useResetPassword()
+    const navigate = useNavigate();
+
+    const submitForm = async () => {
+        let payload = {
+            token,
+            password,
+            password_confirmation: passwordConfirmation
+        }
+        await resetPassword(payload).then(() => {
+            navigate('/')
+        })
+    }
+
     return (
         <AuthLayout
         >
@@ -11,7 +34,7 @@ const ResetPasswordPage = () => {
                 <Form className='bg-white md:w-[450px] w-screen md:min-h-[400px] md:max-h-[400px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'>
                     <Stack gap={7}>
                         <div className='header-3'>Reset password to continue</div>
-                        <TextInput
+                        <TextInput.PasswordInput
                             type="password"
                             required
                             name={'password'}
@@ -20,18 +43,29 @@ const ResetPasswordPage = () => {
                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                             placeholder="Enter Your Password"
                             helperText="Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters."
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
                         />
-                        <TextInput
+                        <TextInput.PasswordInput
                             type="password"
                             required
                             name={'confirm_password'}
                             id="confirm_password"
                             labelText="Confirm Password"
                             placeholder="Enter Your Password"
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value)
+                            }}
                         />
-                        <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
-                            Reset Password
-                        </Button>
+                        <AppButton
+                            type="button" 
+                            kind={'primary'} 
+                            renderIcon={ArrowRight}
+                            action={submitForm}
+                            loading={resetPasswordLoading}
+                            text={'Reset Password'}
+                        />
                     </Stack>
                 </Form>
                 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Stack, TextInput } from '@carbon/react';
 import { Select, SelectItem } from 'carbon-components-react';
 
-const AddStudentStepTwo = () => {
+const AddClassStepTwo = () => {
 
     // const navigate = useNavigate();
     return (
@@ -105,4 +105,4 @@ const AddStudentStepTwo = () => {
     );
 };
 
-export default AddStudentStepTwo;
+export default AddClassStepTwo;

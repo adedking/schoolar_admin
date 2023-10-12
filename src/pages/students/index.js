@@ -134,7 +134,7 @@ const StudentsPage = () => {
     };
 
     return (
-        <DashboardLayout>
+        <React.Fragment>
             {showAddStudent ?
             <AddStudentModal
                 isOpen={showAddStudent}
@@ -143,25 +143,28 @@ const StudentsPage = () => {
             :
             null
             }
-            <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
-                <WidgetCard 
-                    cardData={cardData}
-                />
-                <div className='min-w-full max-w-full bg-login-background rounded-sm'>
-                    <AppDataTable 
-                        title={'List of Students'}
-                        description={'List of all students in your school'}
-                        tableHeader={tableConfig}
-                        mobileTableHeader={mobileTableHeader}
-                        data={data}
-                        mainButtonText='Add Student'
-                        mainButtonAction={() => {
-                            setShowAddStudent(true)
-                        }}
+            <DashboardLayout>
+                <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
+                    <WidgetCard 
+                        cardData={cardData}
                     />
+                    <div className='min-w-full max-w-full bg-background rounded-sm'>
+                        <AppDataTable 
+                            title={'List of Students'}
+                            description={'List of all students in your school'}
+                            tableHeader={tableConfig}
+                            mobileTableHeader={mobileTableHeader}
+                            data={data}
+                            mainButtonText='Add Student'
+                            mainButtonAction={() => {
+                                setShowAddStudent(true)
+                            }}
+                        />
+                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </React.Fragment>
+        
     );
 };
 

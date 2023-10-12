@@ -178,7 +178,6 @@ const AddStudentStepOne = () => {
                             />
                         </Select>
                     </div>
-                    
                 </div>
             </Stack>
         </Form>

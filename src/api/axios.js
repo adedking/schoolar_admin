@@ -27,7 +27,7 @@ Axios.interceptors.response.use(
 
     if (error.response && error.response.data && error.response.data.message) {
       //error message
-      store.dispatch(setAlert(true, 'error', typeof error.response.data.message === 'string'? error.response.data.message: JSON.stringify(error.response.data.message)));
+      store.dispatch(setAlert(true, 'Error', 'error', typeof error.response.data.message === 'string'? error.response.data.message: JSON.stringify(error.response.data.message)));
     }
 
     return Promise.reject(error.response.data);

@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, Stack, TextInput } from '@carbon/react';
+import { Form, Stack, TextInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+import { useForgetPassword } from '../../redux/user/hook';
+import AppButton from '../../components/app-button';
 
 const PasswordRecoveryPage = () => {
 
     const navigate = useNavigate();
+
+    const [email, setEmail] = useState('')
+
+    const {mutateAsync: register, isLoading} = useForgetPassword()
+
+    const submitForm = async () => {
+        let user_email = DOMPurify.sanitize(email);
+        let payload = {
+            email: user_email,
+        }
+        await register(payload).then((response) => {
+            navigate('/')
+        })
+    }
     return (
         <AuthLayout
         >
@@ -18,17 +35,25 @@ const PasswordRecoveryPage = () => {
                             className='min-w-full'
                             kind={'email'}
                             name={'email'}
-                            id="email"
-                            invalidText="Invalid error message."
-                            labelText="Email"
-                            placeholder="Enter Your Email"
+                            required
+                            invalidText="Invalid email entered"
+                            labelText="Enter your email and a password reset link will be sent to your email"
+                            placeholder="Enter your recovery email"
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
                         />
-                        <Button type="submit" kind={'primary'} renderIcon={ArrowRight}>
-                            Send Recovery Email
-                        </Button>
-                        <labelText className=''> 
+                        <AppButton
+                            type="button" 
+                            kind={'primary'} 
+                            renderIcon={ArrowRight}
+                            action={submitForm}
+                            loading={isLoading}
+                            text={'Send Recovery Email'}
+                        />
+                        <labelText > 
                             Remember Password?&nbsp;
-                            <span className='link-color hover:underline duration-300 cursor-pointer' 
+                            <span className='text-primary underline cursor-pointer text-[14px]' 
                                 onClick={() => {navigate("/")}}
                             >
                                 Login

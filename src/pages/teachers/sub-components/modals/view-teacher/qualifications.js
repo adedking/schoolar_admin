@@ -1,14 +1,13 @@
 import React from 'react';
 
-
-const TeacherBasicInfo = () => {
+const Qualifications = () => {
 
     // const navigate = useNavigate();
     return (
         <React.Fragment>
-            Basic Information
+            Qualifications
         </React.Fragment>
     );
 };
 
-export default TeacherBasicInfo;
+export default Qualifications;

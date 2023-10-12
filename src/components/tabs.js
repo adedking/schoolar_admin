@@ -13,8 +13,8 @@ const TabView = ({ componentTabs }) => {
         isFullWidth={true}
       >
         {componentTabs?.map((item, index) => (
-          <Tab key={index}>
-            {item.title}
+          <Tab key={index} renderIcon={item.icon} >
+            {item.title} 
           </Tab>
         ))}
       </TabList>

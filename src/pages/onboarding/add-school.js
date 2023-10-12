@@ -159,7 +159,7 @@ const AddSchoolPage = () => {
                             >
                                 Add school
                             </Button>
-                            <div className='text-[14px] text-[#0F62FE] hover:underline cursor-pointer'>
+                            <div className='text-[14px] text-primary hover:underline cursor-pointer'>
                                 Continue To Dashboard
                             </div>
                         </div>

@@ -10,10 +10,14 @@ const slice = createSlice({
     setSchools: (state, { payload }) => {
       state.schools = payload;
     },
+
+    clearSchools: (state, { payload }) => {
+      state.schools = null;
+    },
   },
 });
 
 // Actions
-export const { setSchools } = slice.actions;
+export const { setSchools, clearSchools } = slice.actions;
 
 export default slice.reducer;
