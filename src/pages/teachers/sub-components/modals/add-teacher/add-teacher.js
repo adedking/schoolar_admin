@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import { Button, Modal, ProgressIndicator, ProgressStep } from 'carbon-components-react';
 import React, { useState } from 'react';
