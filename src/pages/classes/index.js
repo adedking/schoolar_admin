@@ -6,56 +6,18 @@ import { Settings } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../../redux/components/components-slice';
 import ViewClassRank from './sub-components/modals/view-class/view-class-rank';
+import { useGetClasses } from '../../redux/classes/hook';
 
 const ClassesPage = () => {
     const [showAddClass, setShowAddClass] = useState(false);
 
     const dispatch = useDispatch();
+    const { data: classes } = useGetClasses(9, 1, -1, '');
 
     const handleRightPanelToggle = () => {
         dispatch(IsTurnRightPanelOn());
     };
     
-    const data = {
-        data: [
-        {
-            id: '1',
-            first_name: 'Adedokun',
-            last_name: 'Agunbiade',
-            full_name: 'Adedokun Agunbiade',
-            email: 'adedokun@schoolar.com',
-            gender: 'Male',
-            class: 'SS3',
-            enrolment_id: '01@SCHOOLAR',
-            primary_guardian: 'Active',
-            status: 'Active',
-        },
-        {
-            id: '2',
-            first_name: 'Oladotun',
-            last_name: 'Aboaba',
-            full_name: 'Oladotun Aboaba',
-            email: 'dotun@schoolar.com',
-            gender: 'Male',
-            class: 'SS3',
-            enrolment_id: '01@SCHOOLAR',
-            primary_guardian: 'Active',
-            status: 'Active',
-        },
-        {
-            id: '3',
-            first_name: 'Omotolani',
-            last_name: 'Olurotimi',
-            full_name: 'Omotolani Olurotimi',
-            email: 'tola@schoolar.com',
-            gender: 'Male',
-            class: 'SS3',
-            enrolment_id: '01@SCHOOLAR',
-            primary_guardian: 'Active',
-            status: 'Active',
-        },
-    ]};
-
     const tableConfig = [
         {
             key: 'first_name',
@@ -160,7 +122,7 @@ const ClassesPage = () => {
                             title={'All Classes'}
                             tableHeader={tableConfig}
                             mobileTableHeader={mobileTableHeader}
-                            data={data}
+                            data={classes}
                             mainButtonText='Add Class'
                             mainButtonAction={() => {
                                 setShowAddClass(true)

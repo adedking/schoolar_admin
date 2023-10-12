@@ -6,7 +6,6 @@ import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { UseVerifyOTP, useResendVerificationOTP } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
-// import { useNavigate } from 'react-router-dom';
 
 const VerifyOTPPage = () => {
     const [otp, setOTP] = useState()

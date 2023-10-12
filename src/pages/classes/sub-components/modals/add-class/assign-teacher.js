@@ -5,17 +5,16 @@ import { ArrowRight } from '@carbon/icons-react';
 import DOMPurify from 'dompurify';
 import { useNavigate } from 'react-router-dom';
 import AppButton from '../../../../../components/app-button';
-import { useAddClass } from '../../../../../redux/classes/hook';
 
 
-const AddClassModal = ({isOpen, closeModal}) => {
+const AssignTeacherToClass = ({isOpen, closeModal}) => {
 
   const [name, setName] = useState('')
   const [classLevel, setClassLevel] = useState(6)
   const [subClasses, setSubClasses] = useState(1)
 
   const navigate = useNavigate();
-  const {mutateAsync: addClass, isLoading} = useAddClass()
+  // const {mutateAsync: login, isLoading} = useLogin()
 
   const submitForm = async () => {
     let payload = {
@@ -23,10 +22,10 @@ const AddClassModal = ({isOpen, closeModal}) => {
       class_level: DOMPurify.sanitize(classLevel),
       sub_classes: DOMPurify.sanitize(subClasses),
     }
-    await addClass(payload).then(() => {
-      closeModal()
-    })
-  };
+    // await login(payload).then((response) => {
+    //     closeModal()
+    // })
+  }
     
  return (
   <Modal 
@@ -48,18 +47,18 @@ const AddClassModal = ({isOpen, closeModal}) => {
         <Stack gap={4}>
           <div className='flex flex-col gap-4 w-full mt-6'>
               <TextInput
-                className='min-w-full'
-                kind={'text'}
-                name={'class_name'}
-                id="class_name"
-                required
-                invalidText="Please enter a valid class name"
-                labelText="Class Name"
-                placeholder="Input class name / number"
-                value={name}
-                onChange={(e) => {
-                    setName(e.target.value)
-                }}
+                  className='min-w-full'
+                  kind={'text'}
+                  name={'class_name'}
+                  id="class_name"
+                  required
+                  invalidText="Please enter a valid class name"
+                  labelText="Class Name"
+                  placeholder="Input class name / number"
+                  value={setName}
+                  onChange={(e) => {
+                      setName(e.target.value)
+                  }}
               />
               <NumberInput
                   className='min-w-full'
@@ -139,4 +138,4 @@ const AddClassModal = ({isOpen, closeModal}) => {
   )   
 }
 
-export default AddClassModal;
+export default AssignTeacherToClass;

@@ -70,7 +70,7 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
                 <div className='flex overflow-auto mt-[50px]'>
                     {/* <Sidebar isSidebarOpen={isSidebarOpen} /> */}
                     <div 
-                        className={classNames('flex flex-col mt-2 w-full mr-3 max-w-calc[(100%-266px)] !min-h-fit h-fit duration-300 gap-3 ml-3 z-30 pb-3 overflow-x-auto px-3', {
+                        className={classNames('flex flex-col mt-4 w-full mr-3 max-w-calc[(100%-266px)] !min-h-fit h-fit duration-300 gap-3 ml-3 z-30 pb-3 overflow-x-auto px-3', {
                             'ml-3':!isSidebarOpen || window.innerWidth <= 600,
                             'ml-[266px]':isSidebarOpen || window.innerWidth >= 1000 ,
                         })}

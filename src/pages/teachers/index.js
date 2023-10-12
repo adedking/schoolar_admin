@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
@@ -8,14 +9,18 @@ import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT } from '../../utils';
 
 const TeachersPage = () => {
-
-    const { data: teachers } = useGetTeachers(9, 1, -1, '');
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
+    const { data: teachers } = useGetTeachers(
+        pagination.limit,
+        pagination.page,
+        pagination.statusFilter,
+        pagination.search,
+    );
     const cardData = {
         columns: 2,
         items: [

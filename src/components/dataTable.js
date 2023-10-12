@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, DataTable, Pagination, Table, TableBatchAction, TableBatchActions, TableBody, TableCell, TableContainer, TableExpandHeader, TableExpandRow, TableExpandedRow, TableHead, TableHeader, TableRow, TableSelectAll, TableSelectRow, TableToolbar, TableToolbarAction, TableToolbarContent, TableToolbarMenu, TableToolbarSearch } from 'carbon-components-react';
-import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
+import { Add, OrderDetails} from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../redux/components/components-slice';
 
@@ -129,10 +129,11 @@ const AppDataTable = ({
                                 </TableHead>
                                 <TableBody
                                 >
-                                {rows.map(row => 
+                                    {rows.map(row => 
                                     <TableRow className='!text-[13px] cursor-pointer min-h-[62px]' onClick={() => {handleRightPanelToggle()}} key={row.id} {...getRowProps({
                                         row
-                                    })}>
+                                    })}
+                                    >
                                         {check?
                                             <TableSelectRow {...getSelectionProps({row})} />
                                         :null}
@@ -149,9 +150,9 @@ const AppDataTable = ({
                     </TableContainer>
                     {!data?.data && !loading?
                     <div className=' bg-white py-4'>
-                        <div className='flex flex-col p-8 px-16 md:min-h-[605px] w-full bg-background gap-3 justify-center items-center'>
+                        <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
                             <div>
-                                <OrderDetails width={160} height={160} className='text-primary' />
+                                <OrderDetails width={120} height={120} className='text-primary' />
                             </div>
                             <div className='text-[15px] font-semibold'>
                                 No data fetched
@@ -267,9 +268,9 @@ const AppDataTable = ({
                     </TableContainer>
                     {!data?.data && !loading?
                     <div className=' bg-white py-4'>
-                        <div className='flex flex-col p-8 px-16 md:min-h-[605px] w-full bg-background gap-3 justify-center items-center'>
+                        <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-3 justify-center items-center'>
                             <div>
-                                <OrderDetails width={160} height={160} className='text-primary' />
+                                <OrderDetails width={120} height={120} className='text-primary' />
                             </div>
                             <div className='text-[15px] font-semibold'>
                                 No data fetched
