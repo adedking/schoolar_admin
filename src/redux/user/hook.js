@@ -110,6 +110,23 @@ export function UseVerifyOTP() {
   );
 }
 
+export function useResendVerificationOTP() {
+  return useMutation(
+    (payload) => {
+      return user.resend_verification_otp(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        updateUser({reload: false})
+        store.dispatch(setAlert(true, 'OTP Resent', 'success', 'OTP has been successfully resent to your email'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
 export const logout = async () => {
   store.dispatch(clearUser());
   store.dispatch(clearSchools());

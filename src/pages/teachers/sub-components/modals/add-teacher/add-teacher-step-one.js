@@ -3,7 +3,8 @@ import { Form, Stack, TextInput } from '@carbon/react';
 // import { useNavigate } from 'react-router-dom';
 import { FileUploaderDropContainer, FormGroup, Select, SelectItem } from 'carbon-components-react';
 
-const AddTeacherStepOne = () => {
+const AddTeacherStepOne = (payload) => {
+    
 
     // const navigate = useNavigate();
     return (

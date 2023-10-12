@@ -22,6 +22,10 @@ const verify_otp = async (payload) => {
   const { data } = await Axios.get(`/verify-email/${payload}`);
   return data;
 };
+const resend_verification_otp = async (payload) => {
+  const { data } = await Axios.get(`/resend-verification-pin`);
+  return data;
+};
 
 const forgotPassword = async (payload) => {
   const { data } = await Axios.post(`/forgot-password`, payload);
@@ -37,6 +41,7 @@ export const user = {
     login,
     register,
     verify_otp,
+    resend_verification_otp,
     profile,
     forgotPassword,
     resetPassword

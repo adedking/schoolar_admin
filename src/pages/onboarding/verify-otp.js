@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
-import { Button, Form, InlineLoading, Stack, TextInput } from 'carbon-components-react';
+import { Form, Stack, TextInput } from 'carbon-components-react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
-import { UseVerifyOTP } from '../../redux/user/hook';
+import { UseVerifyOTP, useResendVerificationOTP } from '../../redux/user/hook';
+import AppButton from '../../components/app-button';
 // import { useNavigate } from 'react-router-dom';
 
 const VerifyOTPPage = () => {
     const [otp, setOTP] = useState()
 
     const navigate = useNavigate();
-    const {mutateAsync: verify_otp, isLoading} = UseVerifyOTP()
-
+    const {mutateAsync: verify_otp, isLoading: verifyOTPLoading} = UseVerifyOTP()
+    const {mutateAsync: resend_otp, isLoading:  resendOTPLoading} = useResendVerificationOTP()
+    
     const submitForm = async () => {
         let email_otp = DOMPurify.sanitize(otp);
         await verify_otp(email_otp).then(() => {
             navigate('/dashboard')
         })
     }
+
     return (
         <AuthLayout
         >
@@ -51,27 +54,27 @@ const VerifyOTPPage = () => {
                                 setOTP(e.target.value)
                             }}
                         />
-                        <div className='flex justify-end w-full text-[12px] underline cursor-pointer text-primary'>
+                        {!resendOTPLoading
+                        ?
+                        <div 
+                            className='flex justify-end w-full text-[12px] underline cursor-pointer text-primary'
+                            onCanPlay={() => {
+                                resend_otp()
+                            }}
+                        >
                             Resend OTP
                         </div>
-                        {isLoading ? 
-                        <InlineLoading
-                            style={{
-                            marginLeft: '1rem'
-                            }} 
-                            description='Loading' 
-                        /> : 
-                        <Button 
+                        :
+                        null}
+                        
+                        <AppButton
                             type="button" 
                             kind={'primary'} 
                             renderIcon={ArrowRight}
-                            onClick={() => {
-                                submitForm()
-                            }}
-                        >
-                            Submit OTP
-                        </Button>
-                        }
+                            action={submitForm}
+                            loading={resendOTPLoading || verifyOTPLoading}
+                            text={'Submit OTP'}
+                        />
                     </Stack>
                 </Form>
             </div>
