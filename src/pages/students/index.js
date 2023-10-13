@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import AddStudentModal from './sub-components/modals/add-student/add-student';
+import { PAGINATION_DEFAULT } from '../../utils';
+import { useGetStudents } from '../../redux/students/hook';
 
 const StudentsPage = () => {
 
@@ -15,45 +18,18 @@ const StudentsPage = () => {
         ]
     }
     const [showAddStudent, setShowAddStudent] = useState(false);
-    const data = {
-        data: [
-        {
-            id: '1',
-            first_name: 'Adedokun',
-            last_name: 'Agunbiade',
-            full_name: 'Adedokun Agunbiade',
-            email: 'adedokun@schoolar.com',
-            gender: 'Male',
-            class: 'SS3',
-            enrolment_id: '01@SCHOOLAR',
-            primary_guardian: 'Active',
-            status: 'Active',
-        },
-        {
-            id: '2',
-            first_name: 'Oladotun',
-            last_name: 'Aboaba',
-            full_name: 'Oladotun Aboaba',
-            email: 'dotun@schoolar.com',
-            gender: 'Male',
-            class: 'SS3',
-            enrolment_id: '01@SCHOOLAR',
-            primary_guardian: 'Active',
-            status: 'Active',
-        },
-        {
-            id: '3',
-            first_name: 'Omotolani',
-            last_name: 'Olurotimi',
-            full_name: 'Omotolani Olurotimi',
-            email: 'tola@schoolar.com',
-            gender: 'Male',
-            class: 'SS3',
-            enrolment_id: '01@SCHOOLAR',
-            primary_guardian: 'Active',
-            status: 'Active',
-        },
-    ]};
+    const [pagination, setPagination] = useState({
+        limit: PAGINATION_DEFAULT.limit,
+        page: PAGINATION_DEFAULT.page,
+        statusFilter: PAGINATION_DEFAULT.statusFilter,
+        search: '',
+    });
+    const { data: students } = useGetStudents(
+        pagination.limit,
+        pagination.page,
+        pagination.statusFilter,
+        pagination.search,
+    );
 
     const tableConfig = [
         {
@@ -153,12 +129,16 @@ const StudentsPage = () => {
                             title={'List of Students'}
                             description={'List of all students in your school'}
                             tableHeader={tableConfig}
+                            pagination={pagination}
+                            setPagination={setPagination}
                             mobileTableHeader={mobileTableHeader}
-                            data={data}
+                            data={students}
                             mainButtonText='Add Student'
                             mainButtonAction={() => {
                                 setShowAddStudent(true)
                             }}
+                            emptyText={'No student added'}
+                            emptySubText={'Please add students to your school by clicking the button below'}
                         />
                     </div>
                 </div>

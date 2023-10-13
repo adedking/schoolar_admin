@@ -34,6 +34,9 @@ const slice = createSlice({
     IsTurnRightPanelOn: (state) => {
       state.isRightPanelOpen = true;
     },
+    IsTurnRightPanelOff: (state) => {
+      state.isRightPanelOpen = false;
+    },
     setIsLoading(state, { payload }) {
       state.isLoading = payload;
     },
@@ -46,6 +49,7 @@ export const {
   IsTogglingSidebar,
   IsTurnRightPanelOn,
   IsTogglingRightPanel,
+  IsTurnRightPanelOff,
   setIsLoading,
 } = slice.actions;
 
@@ -75,6 +79,9 @@ export const toggleRightPanel = () => (dispatch) => {
 };
 export const turnRightPanelOn = () => (dispatch) => {
   dispatch(IsTurnRightPanelOn());
+};
+export const turnRightPanelOff = () => (dispatch) => {
+  dispatch(IsTurnRightPanelOff());
 };
 
 export default slice.reducer;

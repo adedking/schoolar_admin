@@ -2,19 +2,19 @@ import React from 'react';
 import { HeaderPanel} from 'carbon-components-react';
 import classNames from 'classnames';
 import { Close } from '@carbon/icons-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IsTogglingRightPanel } from '../redux/components/components-slice';
 
-const RightView = ({isRightPanelOpen, children, viewTitle}) => {
-
+const RightView = ({ children, viewTitle}) => {
     const dispatch = useDispatch();
-
+    const { isRightPanelOpen } = useSelector((state) => state.componentsSlice);
     const handleRightPanelToggle = () => {
         dispatch(IsTogglingRightPanel());
     };
     return (
         <React.Fragment>
             <HeaderPanel
+                withOverlay={true}
                 expanded={isRightPanelOpen} 
                 className={classNames('',{'md:min-w-[451px] min-w-full -mt-[48px] backdrop-blur-sm bg-black' : isRightPanelOpen})}
             >

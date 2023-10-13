@@ -218,6 +218,7 @@ const DashboardPage = () => {
                         <AppDataTable 
                             showToolBar={false}
                             title={'Top performing students'}
+                            check={false}
                             tableHeader={tableConfig}
                             mobileTableHeader={mobileTableHeader}
                             data={data}

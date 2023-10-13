@@ -15,7 +15,7 @@ const TeachersPage = () => {
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
-    const { data: teachers } = useGetTeachers(
+    const { data: teachers, isLoading: teachersLoading } = useGetTeachers(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
@@ -152,9 +152,10 @@ const TeachersPage = () => {
             null
             }
             <DashboardLayout viewComponent={<ViewTeacher />} viewTitle={'View teacher'}>
-                <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
+                <div className='flex flex-col items-center jusify-center min-w-full gap-4 relative'>
                     <WidgetCard 
                         cardData={cardData}
+                        loading={teachersLoading}
                     />
                     <div className='min-w-full bg-background rounded-sm'>
                         <AppDataTable
@@ -167,6 +168,8 @@ const TeachersPage = () => {
                             mainButtonAction={() => {
                                 setShowAddTeacher(true)
                             }}
+                            loading={teachersLoading}
+                            emptyText={'No teacher added'}
                         />
                     </div>
                 </div>

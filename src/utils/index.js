@@ -1,10 +1,11 @@
 
 export const APP_NAME = 'Ropay';
 export const PAGINATION_DEFAULT = {
-  limit: 9,
+  limit: 10,
   page: 1,
   statusFilter: -1,
   type: '',
+  pageSizes: [10, 20, 30, 40, 50, 100],
 };
 
 //employees

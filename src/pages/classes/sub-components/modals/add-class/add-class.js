@@ -15,13 +15,13 @@ const AddClassModal = ({isOpen, closeModal}) => {
   const [subClasses, setSubClasses] = useState(1)
 
   const navigate = useNavigate();
-  const {mutateAsync: addClass, isLoading} = useAddClass()
+  const {mutateAsync: addClass, isLoading: addClassLoading} = useAddClass()
 
   const submitForm = async () => {
     let payload = {
       name: DOMPurify.sanitize(name),
-      class_level: DOMPurify.sanitize(classLevel),
-      sub_classes: DOMPurify.sanitize(subClasses),
+      class_level: parseInt(DOMPurify.sanitize(classLevel)),
+      sub_classes: parseInt(DOMPurify.sanitize(subClasses)),
     }
     await addClass(payload).then(() => {
       closeModal()
@@ -62,25 +62,25 @@ const AddClassModal = ({isOpen, closeModal}) => {
                 }}
               />
               <NumberInput
-                  className='min-w-full'
-                  kind={'text'}
-                  name={'number_of_subclasses'}
-                  id="number_of_subclasses"
-                  label="Enter number of subclasses"
-                  placeholder="Enter number of subclasses"
-                  value={subClasses}
-                  onChange={(e) => {
-                    setSubClasses(e.target.value)
+                className='min-w-full'
+                kind={'text'}
+                name={'number_of_subclasses'}
+                id="number_of_subclasses"
+                label="Enter number of subclasses"
+                placeholder="Enter number of subclasses"
+                value={subClasses}
+                onChange={(e) => {
+                  setSubClasses(e.target.value)
                   }}
               />
               <Select
-                  id="class_rank"
-                  defaultValue={20}
-                  labelText="Class rank"
-                  value={classLevel}
-                  onChange={(e) => {
-                    setClassLevel(e.target.value)
-                  }}
+                id="class_rank"
+                defaultValue={20}
+                labelText="Class rank"
+                value={classLevel}
+                onChange={(e) => {
+                  setClassLevel(e.target.value)
+                }}
               >
                   <SelectItem
                     value={0}
@@ -132,6 +132,7 @@ const AddClassModal = ({isOpen, closeModal}) => {
         action={submitForm}
         // loading={isLoading}
         text={'Continue'}
+        loading={addClassLoading}
       />
       
     </div>

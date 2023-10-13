@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import AddClassModal from './sub-components/modals/add-class/add-class';
-import ClassesDataCard from './classes-data-card';
+import ClassesDataCard from '../../components/dataTableCard';
 import { Settings } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../../redux/components/components-slice';
@@ -12,7 +12,7 @@ const ClassesPage = () => {
     const [showAddClass, setShowAddClass] = useState(false);
 
     const dispatch = useDispatch();
-    const { data: classes } = useGetClasses(9, 1, -1, '');
+    const { data: classes, isLoading: classLoading } = useGetClasses(9, 1, -1, '');
 
     const handleRightPanelToggle = () => {
         dispatch(IsTurnRightPanelOn());
@@ -107,7 +107,7 @@ const ClassesPage = () => {
             null
             }
             <DashboardLayout viewComponent={<ViewClassRank />} viewTitle={`View teacher`}>
-                <div className='flex flex-col items-center jusify-center min-w-full max-w-full min-h-full gap-4 mb-3 mt-2'>
+                <div className='flex flex-col items-center jusify-center min-w-full max-w-full min-h-full gap-4 mb-3'>
                     <div 
                         className='w-full flex min-h-[40px] justify-between items-center'
                         onClick={() => {
@@ -127,6 +127,9 @@ const ClassesPage = () => {
                             mainButtonAction={() => {
                                 setShowAddClass(true)
                             }}
+                            loading={classLoading}
+                            emptyText={'No classes added'}
+                            emptySubText={'Please add class to your school by clicking any buttons below'}
                         />
                     </div>
                 </div>

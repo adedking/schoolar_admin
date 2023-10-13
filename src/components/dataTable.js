@@ -1,25 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, DataTable, Pagination, Table, TableBatchAction, TableBatchActions, TableBody, TableCell, TableContainer, TableExpandHeader, TableExpandRow, TableExpandedRow, TableHead, TableHeader, TableRow, TableSelectAll, TableSelectRow, TableToolbar, TableToolbarAction, TableToolbarContent, TableToolbarMenu, TableToolbarSearch } from 'carbon-components-react';
-import { Add, OrderDetails} from '@carbon/icons-react';
+import { Button, DataTable, Loading, Pagination, Table, TableBatchAction, TableBatchActions, TableBody, TableCell, TableContainer, TableExpandHeader, TableExpandRow, TableExpandedRow, TableHead, TableHeader, TableRow, TableSelectAll, TableSelectRow, TableToolbar, TableToolbarAction, TableToolbarContent, TableToolbarMenu, TableToolbarSearch } from 'carbon-components-react';
+import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../redux/components/components-slice';
-
-const props = () => ({
-    disabled: false,
-    page: 1,
-    totalItems: 103,
-    pagesUnknown: false,
-    pageInputDisabled: false,
-    pageSizeInputDisabled: false,
-    backwardText: 'Previous page',
-    forwardText: 'Next page',
-    pageSize: 10,
-    pageSizes: [10, 20, 30, 40, 50],
-    itemsPerPageText: '',
-    onChange: () => {
-        
-    }
-});
+import { PAGINATION_DEFAULT } from '../utils';
 
 const AppDataTable = ({
     tableHeader, 
@@ -31,8 +15,30 @@ const AppDataTable = ({
     check=true, 
     mainButtonAction,
     mainButtonText,
-    showToolBar=true
+    showToolBar=true,
+    pagination,
+    setPagination,
+    emptyText,
+    emptySubText,
+    emptyLinkText
 }) => {
+
+    const props = () => ({
+        disabled: false,
+        page: pagination? pagination.page : PAGINATION_DEFAULT.page,
+        totalItems: data? data.total : 0,
+        pagesUnknown: false,
+        pageInputDisabled: false,
+        pageSizeInputDisabled: false,
+        backwardText: 'Previous page',
+        forwardText: 'Next page',
+        pageSize: pagination? pagination.limit : PAGINATION_DEFAULT.limit,
+        pageSizes: PAGINATION_DEFAULT.pageSizes,
+        itemsPerPageText: '',
+        onChange: () => {
+            
+        }
+    });
     const [size, setSize] = useState(1000)
 
     const dispatch = useDispatch();
@@ -55,6 +61,14 @@ const AppDataTable = ({
     }, [window])
     return (
         <React.Fragment>
+            {loading?
+            <div className=' bg-white py-4'>
+                <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
+                    <Loading active={loading} className={''} withOverlay={false} small={false} />
+                </div>
+            </div>
+            :
+            <React.Fragment>
             {size > 600 ?
             <DataTable rows={data?.data? data?.data : []} experimentalAutoAlign headers={tableHeader} size='lg' isSortable render={({
                 rows,
@@ -142,22 +156,38 @@ const AppDataTable = ({
                                 )}
                                 </TableBody>
                             </Table>
+                            {pagination && setPagination?
                             <Pagination {...props()} />
+                            :
+                            null
+                            }
                         </React.Fragment>
                         :
                         null
                         }
                     </TableContainer>
-                    {!data?.data && !loading?
-                    <div className=' bg-white py-4'>
-                        <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
-                            <div>
-                                <OrderDetails width={120} height={120} className='text-primary' />
-                            </div>
-                            <div className='text-[15px] font-semibold'>
-                                No data fetched
-                            </div>
+                    {!data?.data && !loading ?
+                    <div className='flex flex-col p-4 md:min-h-[250px] w-full bg-background gap-3 justify-center items-start'>
+                        <div>
+                            <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
+                        <div className='text-[20px] px-3'>
+                            {emptyText}
+                        </div>
+                        <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                            {emptySubText}
+                        </div>
+                        <div className='px-3 mt-2'>
+                            <Button 
+                                renderIcon={ArrowRight} 
+                                onClick={() => {
+                                    mainButtonAction()
+                                }}
+                            >{mainButtonText}</Button>
+                        </div>
+                        {/* <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                            {emptyLinkText}
+                        </div> */}
                     </div>
                     :
                     null
@@ -260,22 +290,38 @@ const AppDataTable = ({
                                     </React.Fragment>)}
                                 </TableBody>
                             </Table>
+                            {pagination && setPagination?
                             <Pagination {...props()} />
+                            :
+                            null
+                            }
                         </React.Fragment>
                         :
                         null}
                         
                     </TableContainer>
-                    {!data?.data && !loading?
-                    <div className=' bg-white py-4'>
-                        <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-3 justify-center items-center'>
-                            <div>
-                                <OrderDetails width={120} height={120} className='text-primary' />
-                            </div>
-                            <div className='text-[15px] font-semibold'>
-                                No data fetched
-                            </div>
+                    {!data?.data && !loading ?
+                    <div className='flex flex-col p-4  md:min-h-[250px] w-full bg-background gap-3 justify-center items-start'>
+                        <div>
+                            <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
+                        <div className='text-[20px] px-3'>
+                            {emptyText}
+                        </div>
+                        <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                            {emptySubText}
+                        </div>
+                        <div className='px-3 mt-2'>
+                            <Button 
+                                renderIcon={ArrowRight} 
+                                onClick={() => {
+                                    mainButtonAction()
+                                }}
+                            >{mainButtonText}</Button>
+                        </div>
+                        {/* <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                            {emptyLinkText}
+                        </div> */}
                     </div>
                     :
                     null
@@ -284,6 +330,8 @@ const AppDataTable = ({
                 </React.Fragment>
             } />
             }
+            </React.Fragment>}
+            
         </React.Fragment>
     )
 };

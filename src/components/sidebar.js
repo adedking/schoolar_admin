@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { IsTogglingRightPanel, IsTogglingSidebar } from '../redux/components/components-slice';
+import { IsTogglingSidebar, IsTurnRightPanelOff } from '../redux/components/components-slice';
 import { SideNav, SideNavItems, SideNavLink } from 'carbon-components-react';
 import { Dashboard, Document, Education, GroupPresentation, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
 
@@ -17,7 +17,7 @@ const Sidebar = ({isSidebarOpen}) => {
   };
 
   const handleRightPanelToggle = () => {
-    dispatch(IsTogglingRightPanel());
+    dispatch(IsTurnRightPanelOff());
   };
 
   const sideBar = [
@@ -85,9 +85,9 @@ const Sidebar = ({isSidebarOpen}) => {
               renderIcon={item.icon}
               large
               onClick={() => {
+                handleRightPanelToggle()
                 if (window.innerWidth < 800) {
                   handleSidebarToggle()
-                  handleRightPanelToggle()
                 }
               }}
             >

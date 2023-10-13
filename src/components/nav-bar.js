@@ -43,7 +43,7 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
           <Help width={20} height={20} />
         </HeaderGlobalAction>
         <HeaderGlobalAction aria-label="Profile">
-          <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} className='!bg-white'>
+          <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} iconClass='scale-125' className='!bg-white '>
             <OverflowMenuItem 
               itemText="My Profile" 
               className=' !bg-white' 

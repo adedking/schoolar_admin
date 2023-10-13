@@ -7,6 +7,7 @@ import { useGetClass } from '../../redux/classes/hook';
 import { useParams } from 'react-router-dom';
 import AppButton from '../../components/app-button';
 import { ArrowRight, Edit, TrashCan, UserMultiple } from '@carbon/icons-react';
+import { Loading } from '@carbon/react';
 
 const ViewClassPage = () => {
     const [pagination, setPagination] = useState({
@@ -17,7 +18,7 @@ const ViewClassPage = () => {
     });
 
     const {id} = useParams();
-    const { data: classInfo } = useGetClass(id);
+    const { data: classInfo, isLoading: classLoading } = useGetClass(id);
 
     console.log(classInfo)
     const [showAddTeacher, setShowAddTeacher] = useState(false);
@@ -144,6 +145,12 @@ const ViewClassPage = () => {
             } */}
             <DashboardLayout viewComponent={null} viewTitle={'View teacher'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
+                    {classLoading ?
+                    <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
+                        <Loading active={classLoading} className={''} withOverlay={false} small={false} />
+                    </div>
+                    :
+                    <React.Fragment>
                     <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                         <div className='px-4'>
                             {classInfo?.name}
@@ -171,13 +178,13 @@ const ViewClassPage = () => {
                         </div>
 
                         <div className='flex items-center min-h-[48px] justify-start w-full bg-white'>
-                            {classInfo?.teacher_id?
+                            {!classInfo?.teacher_id?
                             <div className='flex flex-col px-4 bg-white gap-1 py-3'>
                                 <div className='text-[15px]'>Mr Aboaba Oladotun</div>
                                 <div className='text-[12px] font-light'>aboabaoladotun@gmail.com</div>
                                 <div className='text-[12px] font-light'>080613673000</div>
                                 <div className='flex gap-4 items-center mt-2'>
-                                    <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class <TrashCan /></div>
+                                    <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class teacher <TrashCan /></div>
                                     <AppButton
                                         type="button" 
                                         kind={'primary'} 
@@ -192,7 +199,7 @@ const ViewClassPage = () => {
                             :
                             <React.Fragment>
                                 
-                                <div className='flex gap-2 text-[13px] items-center w-[100%] bg-red-500 h-[48px] text-white px-4'>No class teacher</div>
+                                <div className='flex gap-2 text-[14px] items-center w-[100%] bg-red-500 h-[48px] text-white px-4'>No class teacher</div>
                                 <div className='flex justify-end'>
                                     <AppButton
                                         type="button" 
@@ -207,6 +214,8 @@ const ViewClassPage = () => {
                             
                         </div>
                     </div>
+                    </React.Fragment>
+                    }
                     <div className='min-w-full bg-background rounded-sm'>
                         <AppDataTable
                             title={'Manage class subjects'}
