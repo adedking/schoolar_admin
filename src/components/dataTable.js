@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Button, DataTable, Loading, Pagination, Table, TableBatchAction, TableBatchActions, TableBody, TableCell, TableContainer, TableExpandHeader, TableExpandRow, TableExpandedRow, TableHead, TableHeader, TableRow, TableSelectAll, TableSelectRow, TableToolbar, TableToolbarAction, TableToolbarContent, TableToolbarMenu, TableToolbarSearch } from 'carbon-components-react';
 import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
@@ -98,12 +99,12 @@ const AppDataTable = ({
                                     Assign To Class
                                 </TableBatchAction>
                                 <TableBatchAction iconDescription="Download the selected rows" >
-                                    Remove Teacher
+                                    Remove
                                 </TableBatchAction>
                             </TableBatchActions>
                             <TableToolbarContent>
                                 <TableToolbarSearch onChange={onInputChange} />
-                                <TableToolbarMenu>
+                                {/* <TableToolbarMenu>
                                     <TableToolbarAction 
                                     onClick={() => {
                                         
@@ -117,13 +118,17 @@ const AppDataTable = ({
                                     >
                                     Add header
                                     </TableToolbarAction>
-                                </TableToolbarMenu>
+                                </TableToolbarMenu> */}
+                                {data?.data?
                                 <Button 
                                     renderIcon={Add} 
                                     onClick={() => {
                                         mainButtonAction()
                                     }}
                                 >{mainButtonText}</Button>
+                                :
+                                null
+                                }
                             </TableToolbarContent>
                         </TableToolbar>
                         :
@@ -214,10 +219,10 @@ const AppDataTable = ({
                         {showToolBar?
                         <TableToolbar {...getToolbarProps()}>
                             <TableBatchActions {...getBatchActionProps()}>
-                                <TableBatchAction iconDescription="Delete the selected rows" >
+                                <TableBatchAction iconDescription="Delete the selected rows" className='flex flex-col ' >
                                     Edit
                                 </TableBatchAction>
-                                <TableBatchAction iconDescription="Save the selected rows" >
+                                {/* <TableBatchAction iconDescription="Save the selected rows" >
                                     Send Announcement
                                 </TableBatchAction>
                                 <TableBatchAction iconDescription="Download the selected rows" >
@@ -225,11 +230,11 @@ const AppDataTable = ({
                                 </TableBatchAction>
                                 <TableBatchAction iconDescription="Download the selected rows" >
                                     Remove Teacher
-                                </TableBatchAction>
+                                </TableBatchAction> */}
                             </TableBatchActions>
                             <TableToolbarContent>
                                 <TableToolbarSearch onChange={onInputChange} />
-                                <TableToolbarMenu>
+                                {/* <TableToolbarMenu>
                                     <TableToolbarAction 
                                     onClick={() => {
                                         
@@ -242,13 +247,18 @@ const AppDataTable = ({
                                     }}>
                                     Add header
                                     </TableToolbarAction>
-                                </TableToolbarMenu>
+                                </TableToolbarMenu> */}
+                                {data?.data?
                                 <Button 
                                     renderIcon={Add} 
                                     onClick={() => {
                                         mainButtonAction()
                                     }}
                                 >{mainButtonText}</Button>
+                                :
+                                null
+                                }
+                                
                             </TableToolbarContent>
                         </TableToolbar>
                         :

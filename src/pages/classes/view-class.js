@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import AppButton from '../../components/app-button';
 import { ArrowRight, Edit, TrashCan, UserMultiple } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
+import { Pen } from '@carbon/icons-react';
 
 const ViewClassPage = () => {
     const [pagination, setPagination] = useState({
@@ -153,7 +154,7 @@ const ViewClassPage = () => {
                     <React.Fragment>
                     <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                         <div className='px-4'>
-                            {classInfo?.name}
+                            {classInfo?.name} - A
                         </div>
                         <div className='flex gap-4 items-center'>
                             <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class <TrashCan /></div>
@@ -188,11 +189,11 @@ const ViewClassPage = () => {
                                     <AppButton
                                         type="button" 
                                         kind={'primary'} 
-                                        renderIcon={UserMultiple}
+                                        renderIcon={Edit}
                                         className={'!h-[42px]'}
                                         // action={submitForm}
                                         // loading={isLoading}
-                                        text={'Change teacher'}
+                                        text={'Change class teacher'}
                                     />
                                 </div>
                             </div>
@@ -224,7 +225,7 @@ const ViewClassPage = () => {
                             mobileTableHeader={mobileTableHeader}
                             showToolBar={false}
                             // data={teachers}
-                            mainButtonText='Add Teacher'
+                            mainButtonText='Add subject to class'
                             mainButtonAction={() => {
                                 setShowAddTeacher(true)
                             }}
