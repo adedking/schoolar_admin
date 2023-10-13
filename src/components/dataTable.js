@@ -276,11 +276,9 @@ const AppDataTable = ({
                                             row
                                         })}
                                     >
-                                        <TableSelectRow 
-                                            {...getSelectionProps({
-                                                row
-                                            })} 
-                                        />
+                                        {check?
+                                            <TableSelectRow {...getSelectionProps({row})} />
+                                        :null}
                                         {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
                                     </TableExpandRow>
                                     <TableExpandedRow colSpan={headers.length + 3} className="demo-expanded-td">
