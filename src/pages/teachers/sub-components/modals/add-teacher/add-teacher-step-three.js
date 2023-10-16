@@ -1,6 +1,8 @@
 import React from 'react';
 import profilePix from '../../../../../assets/svg/profile-pix-placeholder.svg';
 import { FileUploaderItem } from 'carbon-components-react';
+import { Button } from '@carbon/react';
+import { ArrowRight } from '@carbon/icons-react';
 
 const AddTeacherStepThree = () => {
 
@@ -61,6 +63,30 @@ const AddTeacherStepThree = () => {
                     <FileUploaderItem className='flex items-center p-2 -pr-2 justify-between w-full bg-white rounded-sm !text-[13px]' errorBody="500kb max file size. Select a new file and try again." errorSubject="File size exceeds limit" iconDescription="Delete file" invalid={false} name="README.md" status="edit" size="sm" />
                 </div>
                 
+            </div>
+            <div className='flex justify-end -mx-4 mt-8'>
+                <Button
+                    type="submit" 
+                    className='min-w-[180px] h-[60px]'
+                    kind={'secondary'} 
+                    onClick={() => {
+                        // secondaryRequestSubmit()
+                    }}
+                >
+                Back
+                </Button>
+                
+                <Button
+                    type="submit" 
+                    kind={'primary'} 
+                    className='min-w-[180px] h-[60px]'
+                    renderIcon={ArrowRight}
+                    onClick={() => {
+                    //   requestSubmit()
+                    }}
+                >
+                    Save and Complete
+                </Button>
             </div>
         </div>
     );

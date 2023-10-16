@@ -6,9 +6,11 @@ import { PAGINATION_DEFAULT } from '../../utils';
 import { useGetClass } from '../../redux/classes/hook';
 import { useParams } from 'react-router-dom';
 import AppButton from '../../components/app-button';
-import { ArrowRight, Edit, TrashCan, UserMultiple } from '@carbon/icons-react';
+import { ArrowRight, Edit, Settings, TrashCan, UserMultiple } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
 import { Pen } from '@carbon/icons-react';
+import { useDispatch } from 'react-redux';
+import { IsTurnRightPanelOn } from '../../redux/components/components-slice';
 
 const ViewClassPage = () => {
     const [pagination, setPagination] = useState({
@@ -18,8 +20,14 @@ const ViewClassPage = () => {
         search: '',
     });
 
+    const dispatch = useDispatch();
+
     const {id} = useParams();
     const { data: classInfo, isLoading: classLoading } = useGetClass(id);
+
+    const handleRightPanelToggle = () => {
+        dispatch(IsTurnRightPanelOn());
+    };
 
     console.log(classInfo)
     const [showAddTeacher, setShowAddTeacher] = useState(false);
@@ -152,6 +160,14 @@ const ViewClassPage = () => {
                     </div>
                     :
                     <React.Fragment>
+                    <div 
+                        className='w-full flex min-h-[40px] justify-end items-center'
+                        onClick={() => {
+                            handleRightPanelToggle()
+                        }}
+                    >
+                        <div className='flex gap-3 items-center text-primary text-[14px] cursor-pointer hover:underline hover:scale-105 duration-300 hover:pr-4'>Class settings <Settings /></div>
+                    </div>
                     <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                         <div className='px-4'>
                             {classInfo?.name} - A

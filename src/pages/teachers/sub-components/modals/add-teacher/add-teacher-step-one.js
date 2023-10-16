@@ -1,15 +1,15 @@
 import React from 'react';
 import { Form, Stack, TextInput } from '@carbon/react';
-// import { useNavigate } from 'react-router-dom';
 import { FileUploaderDropContainer, FormGroup, Select, SelectItem } from 'carbon-components-react';
+import { ArrowRight } from '@carbon/icons-react';
+import AppButton from '../../../../../components/app-button';
 
-const AddTeacherStepOne = (payload) => {
+const AddTeacherStepOne = (payload, setPayload, primaryButtonAction) => {
     
-
-    // const navigate = useNavigate();
     return (
         <Form 
             onSubmit={() => {  
+
             }}
             isFullWidth
         >
@@ -28,6 +28,7 @@ const AddTeacherStepOne = (payload) => {
                             kind={'text'}
                             name={'first_name'}
                             required
+                            value={payload.payload.first_name}
                             invalidText="Please enter a valid first name"
                             labelText="First Name"
                             placeholder="Enter Your First Name"
@@ -137,6 +138,18 @@ const AddTeacherStepOne = (payload) => {
                     />
                 </Select>
             </Stack>
+            <div className='flex justify-end -mx-4 mt-8'>
+            <div className='flex justify-end w-full'>
+                <AppButton
+                    type="button" 
+                    kind={'primary'} 
+                    className='!min-w-[220px] h-[60px]'
+                    renderIcon={ArrowRight}
+                    // action={submitForm}
+                    text={'Continue'}
+                />
+            </div>
+            </div>
         </Form>
     );
 };

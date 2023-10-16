@@ -29,10 +29,8 @@ const ClassesDataCard = ({
                 <React.Fragment>
                     
                     {loading ?
-                    <div className=' bg-white py-4'>
-                        <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
-                            <Loading className={''} withOverlay={false} small={false} />
-                        </div>
+                    <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
+                        <Loading className={''} withOverlay={false} small={false} />
                     </div>
                     : !data && !loading ?
                     <div className='flex flex-col p-4 md:min-h-[250px] w-full bg-background gap-3 justify-center items-start'>
