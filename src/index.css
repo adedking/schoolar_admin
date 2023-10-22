@@ -650,3 +650,7 @@ i {
     z-index: auto !important;
   }
 }
+
+.cds--accordion__item {
+  border: none !important;
+}

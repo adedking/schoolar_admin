@@ -59,9 +59,13 @@ const SignupPage = () => {
         <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        submitForm()
+                    }}
                     className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-2'
                 >
-                    <Stack gap={4}>
+                    <Stack gap={5}>
                         <labelText className='!text-[14px]'> 
                             Do you have an account?&nbsp;
                             <span className='link-color hover:underline duration-300 cursor-pointer underline' 
@@ -267,10 +271,10 @@ const SignupPage = () => {
                         </FormGroup>
                         <div className='flex justify-end w-full'>
                             <AppButton
-                                type="button" 
+                                type="submit" 
                                 kind={'primary'} 
                                 renderIcon={ArrowRight}
-                                action={submitForm}
+                                // action={submitForm}
                                 loading={isLoading}
                                 text={'Create Account'}
                             />

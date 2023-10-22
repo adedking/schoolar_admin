@@ -14,7 +14,7 @@ const AppDataTable = ({
     title, 
     description, 
     check=true, 
-    mainButtonAction,
+    mainButtonAction=()=>{},
     mainButtonText,
     showToolBar=true,
     pagination,
@@ -176,13 +176,13 @@ const AppDataTable = ({
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
-                        <div className='text-[20px] px-3'>
+                        <div className='text-[18px] px-3'>
                             {emptyText}
                         </div>
-                        <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                        <div className='text-[12px] font-normal px-3 max-w-[400px]'>
                             {emptySubText}
                         </div>
-                        <div className='px-3 mt-2'>
+                        <div className='px-3'>
                             <Button 
                                 renderIcon={ArrowRight} 
                                 onClick={() => {
@@ -313,13 +313,13 @@ const AppDataTable = ({
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
-                        <div className='text-[20px] px-3'>
+                        <div className='text-[18px] px-3'>
                             {emptyText}
                         </div>
-                        <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                        <div className='text-[12px] font-normal px-3 max-w-[400px]'>
                             {emptySubText}
                         </div>
-                        <div className='px-3 mt-2'>
+                        <div className='px-3'>
                             <Button 
                                 renderIcon={ArrowRight} 
                                 onClick={() => {

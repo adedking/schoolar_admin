@@ -17,12 +17,12 @@ const getClass = async (payload) => {
 };
 
 const addClass = async (payload) => {
-    const { data } = await Axios.post('/classes', payload,
-    {
-      timeout: 0
-    });
-    return data;
-  };
+  const { data } = await Axios.post('/classes', payload,
+  {
+    timeout: 0
+  });
+  return data;
+};
 
 export const classes = {
     getClasses,

@@ -6,23 +6,14 @@ import { PAGINATION_DEFAULT } from '../../utils';
 import { useGetClass } from '../../redux/classes/hook';
 import { useParams } from 'react-router-dom';
 import AppButton from '../../components/app-button';
-import { Edit, TrashCan } from '@carbon/icons-react';
+import { Edit, Settings, TrashCan, UserMultiple } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
+import { Pen } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../../redux/components/components-slice';
-import AssignTeacherToSubjectModal from './sub-components/modals/assign-teacher-to-subject';
-import AddSubjectToClassModal from './sub-components/modals/assign-subject-to-class';
-import AssignTeacherToClassModal from './sub-components/modals/assign-teacher-to-class';
-import EditSubClassModal from './sub-components/modals/edit-sub-class';
+import { useGetStudent } from '../../redux/students/hook';
 
-const ViewClassPage = () => {
-
-    const [showAssignTeacherToSubject, setShowAssignTeacherToSubject] = useState(false);
-    const [showAddSubjectToClass, setShowAddSubjectToClass] = useState(false);
-    const [showAssignTeacherToClass, setShowAssignTeacherToClass] = useState(true);
-    const [showAddClass, setShowAddClass] = useState(false);
-    const [type, setType] = useState('add');
-
+const ViewStudentPage = () => {
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
@@ -33,50 +24,11 @@ const ViewClassPage = () => {
     const dispatch = useDispatch();
 
     const {id} = useParams();
-    const { data: classInfo, isLoading: classLoading } = useGetClass(id);
+    const { data: student, isLoading: studentLoading } = useGetStudent(id);
 
     const handleRightPanelToggle = () => {
         dispatch(IsTurnRightPanelOn());
     };
-
-    console.log(classInfo)
-    const [showAddTeacher, setShowAddTeacher] = useState(false);
-    const data = {
-        data: [
-        {
-            id: '1',
-            first_name: 'Adedokun',
-            last_name: 'Agunbiade',
-            full_name: 'Adedokun Agunbiade',
-            email: 'adedokun@schoolar.com',
-            phone_number: '08106668220',
-            teaching_class: 'SS2, SS3',
-            teaching_subject: 'Mathematics',
-            status: 'Active',
-        },
-        {
-            id: '2',
-            first_name: 'Oladotun',
-            last_name: 'Aboaba',
-            full_name: 'Oladotun Aboaba',
-            email: 'dotun@schoolar.com',
-            phone_number: '08106668220',
-            teaching_class: 'SS2, SS3',
-            teaching_subject: 'Mathematics',
-            status: 'Active',
-        },
-        {
-            id: '3',
-            first_name: 'Omotolani',
-            last_name: 'Olurotimi',
-            full_name: 'Omotolani Olurotimi',
-            email: 'tola@schoolar.com',
-            phone_number: '08106668220',
-            teaching_class: 'SS2, SS3',
-            teaching_subject: 'Mathematics',
-            status: 'Active',
-        },
-    ]};
 
     const tableConfig = [
         {
@@ -154,69 +106,33 @@ const ViewClassPage = () => {
 
     return (
         <React.Fragment>
-            {showAddClass ?
-            <EditSubClassModal
-                isOpen={showAddClass}
-                closeModal={()=> setShowAddClass(false)}
-            />
-            :
-            null
-            }
-            {showAssignTeacherToSubject ?
-            <AssignTeacherToSubjectModal
-                isOpen={showAssignTeacherToSubject}
-                closeModal={()=> setShowAssignTeacherToSubject(false)}
-            />
-            :
-            null
-            }
-            {showAddSubjectToClass ?
-            <AddSubjectToClassModal
-                isOpen={showAddSubjectToClass}
-                closeModal={()=> setShowAddSubjectToClass(false)}
-            />
-            :
-            null
-            }
-            {showAssignTeacherToClass ?
-            <AssignTeacherToClassModal
-                isOpen={showAssignTeacherToClass}
-                closeModal={()=> setShowAssignTeacherToClass(false)}
-            />
-            :
-            null
-            }
-            
             <DashboardLayout viewComponent={null} viewTitle={'View teacher'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
-                    {classLoading ?
+                    {studentLoading ?
                     <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={classLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={studentLoading} className={''} withOverlay={false} small={false} />
                     </div>
                     :
                     <React.Fragment>
-                    {/* <div 
+                    <div 
                         className='w-full flex min-h-[40px] justify-end items-center'
                         onClick={() => {
                             handleRightPanelToggle()
                         }}
                     >
                         <div className='flex gap-3 items-center text-primary text-[14px] cursor-pointer hover:underline hover:scale-105 duration-300 hover:pr-4'>Class settings <Settings /></div>
-                    </div> */}
+                    </div>
                     <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                         <div className='px-4'>
-                            {classInfo?.name} - A
+                            {student?.name} - A
                         </div>
                         <div className='flex gap-4 items-center'>
-                            <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove sub-class <TrashCan /></div>
+                            <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class <TrashCan /></div>
                             <AppButton
                                 type="button" 
                                 kind={'primary'} 
                                 renderIcon={Edit}
-                                action={() => {
-                                    setType('edit')
-                                    setShowAddClass(true)
-                                }}
+                                // action={submitForm}
                                 // loading={isLoading}
                                 text={'Edit class'}
                             />
@@ -233,7 +149,7 @@ const ViewClassPage = () => {
                         </div>
 
                         <div className='flex items-center min-h-[48px] justify-start w-full bg-white'>
-                            {classInfo?.teacher_id?
+                            {!student?.teacher_id?
                             <div className='flex flex-col px-4 bg-white gap-1 py-3'>
                                 <div className='text-[15px]'>Mr Aboaba Oladotun</div>
                                 <div className='text-[12px] font-light'>aboabaoladotun@gmail.com</div>
@@ -245,25 +161,22 @@ const ViewClassPage = () => {
                                         kind={'primary'} 
                                         renderIcon={Edit}
                                         className={'!h-[42px]'}
-                                        action={() => {
-                                            setShowAssignTeacherToClass(true)
-                                        }}
+                                        // action={submitForm}
                                         // loading={isLoading}
-                                        text={'Change assigned teacher '}
+                                        text={'Change class teacher'}
                                     />
                                 </div>
                             </div>
                             :
                             <React.Fragment>
-                                
                                 <div className='flex gap-2 text-[14px] items-center w-[100%] bg-red-500 h-[48px] text-white px-4'>No class teacher</div>
                                 <div className='flex justify-end'>
                                     <AppButton
                                         type="button" 
                                         kind={'primary'} 
-                                        action={() => {
-                                            setShowAssignTeacherToClass(true)
-                                        }}
+                                        // renderIcon={Edit}
+                                        // action={submitForm}
+                                        // loading={isLoading}
                                         text={'Assign teacher to class'}
                                     />
                                 </div>
@@ -282,11 +195,9 @@ const ViewClassPage = () => {
                             showToolBar={false}
                             // data={teachers}
                             mainButtonText='Add subject to class'
-                            mainButtonAction={() => {
-                                setShowAddSubjectToClass(true)
-                            }}
-                            emptyText={'No subject added to class'}
-                            emptySubText={'Please add subjects by clicking the button below'}
+                            // mainButtonAction={() => {
+                            //     setShowAddTeacher(true)
+                            // }}
                         />
                     </div>
                     <div className='min-w-full bg-background rounded-sm'>
@@ -298,11 +209,9 @@ const ViewClassPage = () => {
                             showToolBar={false}
                             // data={teachers}
                             mainButtonText='Add student to class'
-                            mainButtonAction={() => {
-                                setShowAddTeacher(true)
-                            }}
-                            emptyText={'No student added to class'}
-                            emptySubText={'Please add students to this class by clicking the button below'}
+                            // mainButtonAction={() => {
+                            //     setShowAddTeacher(true)
+                            // }}
                         />
                     </div>
                 </div>
@@ -311,4 +220,4 @@ const ViewClassPage = () => {
     );
 };
 
-export default ViewClassPage;
+export default ViewStudentPage;

@@ -20,7 +20,7 @@ const PasswordRecoveryPage = () => {
         let payload = {
             email: user_email,
         }
-        await register(payload).then((response) => {
+        await register(payload).then(() => {
             navigate('/')
         })
     }
@@ -28,7 +28,13 @@ const PasswordRecoveryPage = () => {
         <AuthLayout
         >
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
-                <Form className='bg-white md:w-[450px] w-screen md:max-h-[320px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'>
+                <Form 
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        submitForm()
+                    }}
+                    className='bg-white md:w-[450px] w-screen md:max-h-[320px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'
+                >
                     <Stack gap={7}>
                         <div className='header-2'>Recover Password</div>
                         <TextInput
@@ -44,15 +50,14 @@ const PasswordRecoveryPage = () => {
                             }}
                         />
                         <AppButton
-                            type="button" 
+                            type="submit" 
                             kind={'primary'} 
                             renderIcon={ArrowRight}
-                            action={submitForm}
                             loading={isLoading}
                             text={'Send Recovery Email'}
                         />
-                        <labelText > 
-                            Remember Password?&nbsp;
+                        <labelText> 
+                            <span className='text-[14px]'>Remember Password?&nbsp;</span>
                             <span className='text-primary underline cursor-pointer text-[14px]' 
                                 onClick={() => {navigate("/")}}
                             >

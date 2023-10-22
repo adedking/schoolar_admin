@@ -29,17 +29,23 @@ const Sidebar = ({isSidebarOpen}) => {
       active: true,
     },
     {
+      name: 'Students',
+      id: 'students',
+      icon: Education,
+      route: '/students',
+    },
+    {
+      name: 'Parents/Guardians',
+      id: 'parents-guardians',
+      icon: Person,
+      route: '/parents-guardians',
+    },
+    {
       name: 'Teachers',
       id: 'teachers',
       icon: UserMultiple,
       route: '/teachers',
       
-    },
-    {
-      name: 'Students',
-      id: 'students',
-      icon: Education,
-      route: '/students',
     },
     {
       name: 'Classes',
@@ -52,12 +58,6 @@ const Sidebar = ({isSidebarOpen}) => {
       id: 'student-records',
       icon: Document,
       route: '/student-records',
-    },
-    {
-      name: 'Parents/Guardians',
-      id: 'parents-guardians',
-      icon: Person,
-      route: '/parents-guardians',
     },
     {
       name: 'Admissions',

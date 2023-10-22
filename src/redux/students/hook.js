@@ -23,7 +23,28 @@ export function useGetStudents( limit, page, statusFilter, search ) {
   );
 }
 
-export function useAddTeacher() {
+
+export function useGetStudent(id) {
+  return useQuery(
+    ['student', {id}],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return students.getStudent(id);
+    },
+    {
+      isEnabled: id !== null,
+      select: (data) => {
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+      // keepPreviousData: true
+    },
+  );
+}
+
+export function useAddStudent() {
   return useMutation(
     (payload) => {
       return students.addStudent(payload);

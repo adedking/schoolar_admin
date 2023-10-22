@@ -22,6 +22,7 @@ export function useGetClasses() {
     },
   );
 }
+
 export function useGetClass(id) {
   return useQuery(
     ['class', {id}],
@@ -41,7 +42,6 @@ export function useGetClass(id) {
     },
   );
 }
-
 
 export function useAddClass() {
   return useMutation(
