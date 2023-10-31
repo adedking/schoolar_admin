@@ -2,81 +2,12 @@ import React from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
-import { DatePicker, DatePickerInput, Dropdown } from 'carbon-components-react';
+import { DatePicker, DatePickerInput } from 'carbon-components-react';
+import { ComboBox } from '@carbon/react';
 // import { StackedAreaChart } from '@carbon/charts-react'
 // import '@carbon/charts/styles.css'
 
 const DashboardPage = () => {
-
-    // const options = {
-    //     title: 'Jan 23 to Jun 23',
-    //     axes: {
-    //       left: {
-    //         stacked: true,
-    //         scaleType: 'linear',
-    //         mapsTo: 'value'
-    //       },
-    //       bottom: {
-    //         scaleType: 'date',
-    //         mapsTo: 'date'
-    //       }
-    //     },
-    //     curve: 'curveMonotoneX',
-    //     height: '300px'
-    // }
-
-    // const chartData = [
-    //     {
-    //       group: 'Dataset 1',
-    //       date: new Date(2019, 0, 1),
-    //       value: 10000
-    //     },
-    //     {
-    //       group: 'Dataset 1',
-    //       date: new Date(2019, 0, 5),
-    //       value: 65000
-    //     },
-    //     {
-    //       group: 'Dataset 1',
-    //       date: new Date(2019, 0, 8),
-    //       value: 10000
-    //     },
-    //     {
-    //       group: 'Dataset 1',
-    //       date: new Date(2019, 0, 13),
-    //       value: 49213
-    //     },
-    //     {
-    //       group: 'Dataset 1',
-    //       date: new Date(2019, 0, 17),
-    //       value: 51213
-    //     },
-    //     {
-    //       group: 'Dataset 2',
-    //       date: new Date(2019, 0, 1),
-    //       value: 20000
-    //     },
-    //     {
-    //       group: 'Dataset 2',
-    //       date: new Date(2019, 0, 5),
-    //       value: 25000
-    //     },
-    //     {
-    //       group: 'Dataset 2',
-    //       date: new Date(2019, 0, 8),
-    //       value: 60000
-    //     },
-    //     {
-    //       group: 'Dataset 2',
-    //       date: new Date(2019, 0, 13),
-    //       value: 30213
-    //     },
-    //     {
-    //       group: 'Dataset 2',
-    //       date: new Date(2019, 0, 17),
-    //       value: 55213
-    //     },
-    // ]
 
     const cardData = {
         columns: 3,
@@ -168,7 +99,7 @@ const DashboardPage = () => {
     const items = [
         {
             id: 'option-0',
-            text: 'Choose An Option'
+            text: 'Choose a class'
         }, 
         {
             id: 'option-1',
@@ -199,7 +130,22 @@ const DashboardPage = () => {
                         <div className='flex md:flex-row flex-col justify-between min-h-[56px] md:items-center w-full gap-3'>
                             <div className='md:min-w-1/3 w-full text-[18px]'>Class statistics</div>
                             <div className='flex md:flex-row flex-col gap-4 md:min-w-2/3 w-full justify-end'>
-                                <Dropdown id="default" titleText="Class" initialSelectedItem={items[0]} size="sm" label="Class" items={items} itemToString={item => item ? item.text : ''} className='md:w-[288px] w-full' />
+                            <ComboBox
+                                onChange={() => {}} 
+                                id="assigned_teacher" 
+                                items={items} 
+                                downshiftProps={{
+                                onStateChange: () => {
+                                    console.log('the state has changed');
+                                }
+                                }} 
+                                placeholder='Select class'
+                                itemToString={item => item ? item.text : ''} 
+                                titleText="Class"
+                                size="sm" 
+                                className='!w-[300px] text-[13px]'
+                            />
+                                {/* <Dropdown id="default" titleText="Class" initialSelectedItem={items[0]} size="sm" label="Class" items={items} itemToString={item => item ? item.text : ''} className='md:w-[288px] w-full' /> */}
                                 <DatePicker datePickerType="range">
                                     <DatePickerInput id="date-picker-input-id-start" placeholder="mm/dd/yyyy" labelText="From" size="sm" />
                                     <DatePickerInput id="date-picker-input-id-finish" placeholder="mm/dd/yyyy" labelText="To" size="sm" />
