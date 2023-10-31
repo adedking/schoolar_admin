@@ -4,7 +4,7 @@ import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
-import ViewTeacher from './sub-components/modals/view-teacher';
+import ViewTeacher from './sub-components/view-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT } from '../../utils';
 

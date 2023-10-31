@@ -20,6 +20,7 @@ import StudentRecordsPage from './pages/student-records';
 import { useSelector } from 'react-redux';
 import Alert from './components/alert';
 import ViewClassPage from './pages/classes/view-class';
+import ViewStudentPage from './pages/students/sub-components/view-student';
 
 // /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
 
@@ -43,6 +44,7 @@ const App = () => {
                   <Route exact path='/dashboard' Component={DashboardPage} />
                   <Route exact path='/teachers' Component={TeachersPage} />
                   <Route exact path='/students' Component={StudentsPage} />
+                  <Route exact path='/students/:id' Component={ViewStudentPage} />
                   <Route exact path='/classes' Component={ClassesPage} />
                   <Route exact path='/classes/:id' Component={ViewClassPage} />
                   <Route exact path='/parents-guardians' Component={ParentsPage} />

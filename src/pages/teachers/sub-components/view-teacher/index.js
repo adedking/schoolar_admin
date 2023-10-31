@@ -1,6 +1,6 @@
 
 import React from 'react';
-import TabView from '../../../../../components/tabs';
+import TabView from '../../../../components/tabs';
 import TeacherBasicInfo from './view-basic-info';
 import TeachingClasses from './teaching-classes';
 import Qualifications from './qualifications';

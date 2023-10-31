@@ -1,31 +1,35 @@
 
 import React from 'react';
-import { Tabs, Tab, TabList, TabPanels, TabPanel } from "carbon-components-react";
+import { Tabs, Tab, TabList, TabPanels, TabPanel, Grid, Column } from "carbon-components-react";
 
 const TabView = ({ componentTabs }) => {
 
   return (
-    <Tabs
-      isFullWidth={true}
-    >
-      <TabList 
-        aria-label="List of tabs"
-        isFullWidth={true}
-      >
-        {componentTabs?.map((item, index) => (
-          <Tab key={index} renderIcon={item.icon} >
-            {item.title} 
-          </Tab>
-        ))}
-      </TabList>
-      <TabPanels>
-        {componentTabs?.map((item, index) => (
-          <TabPanel key={index}>
-            {item.content}
-          </TabPanel>
-        ))}
-      </TabPanels>
-    </Tabs>
+    <Grid condensed className='!bg-background p-3 min-h-[500px]'>
+      <Column lg={16} md={16} sm={4}>
+        <Tabs>
+          <TabList 
+            aria-label="List of tabs"
+            fullWidth
+            activation="manual"
+            className='!min-w-[2000px]'
+          >
+            {componentTabs?.map((item, index) => (
+              <Tab key={index} renderIcon={item.icon} className={`md:min-w-[300px] !text-[15px] !h-[40px]`} >
+                {item.title} 
+              </Tab>
+            ))}
+          </TabList>
+          <TabPanels>
+            {componentTabs?.map((item, index) => (
+              <TabPanel key={index}>
+                {item.content}
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </Tabs>
+      </Column>
+    </Grid>
   );
 };
 
