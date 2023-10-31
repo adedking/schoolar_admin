@@ -6,6 +6,8 @@ import AppDataTable from '../../components/dataTable';
 import AddStudentModal from './sub-components/modals/add-student/add-student';
 import { PAGINATION_DEFAULT } from '../../utils';
 import { useGetStudents } from '../../redux/students/hook';
+import AppButton from '../../components/app-button';
+import { useNavigate } from 'react-router-dom';
 
 const StudentsPage = () => {
 
@@ -109,6 +111,8 @@ const StudentsPage = () => {
         ]
     };
 
+    const navigate = useNavigate();
+
     return (
         <React.Fragment>
             {showAddStudent ?
@@ -121,6 +125,15 @@ const StudentsPage = () => {
             }
             <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
+                    <AppButton
+                        type="button" 
+                        kind={'primary'} 
+                        // renderIcon={ArrowRight}
+                        action={()=> {
+                            navigate('/students/1')
+                        }}
+                        text={'View Single Student (temporary button)'}
+                    />
                     <WidgetCard 
                         cardData={cardData}
                     />

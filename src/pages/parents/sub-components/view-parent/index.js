@@ -49,7 +49,7 @@ const ViewParentPage = () => {
                         deleteFunction={''} 
                         editText={'Edit parent'} 
                         editFunction={''} 
-                        route='Parent/Guardians' 
+                        route='Parents/Guardians' 
                         routeLink='/parents-guardians'
                     />
                     <TabView 

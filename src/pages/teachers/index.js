@@ -7,6 +7,8 @@ import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
 import ViewTeacher from './sub-components/view-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT } from '../../utils';
+import { useNavigate } from 'react-router-dom';
+import AppButton from '../../components/app-button';
 
 const TeachersPage = () => {
     const [pagination, setPagination] = useState({
@@ -141,6 +143,8 @@ const TeachersPage = () => {
         ]
     };
 
+    const navigate = useNavigate();
+
     return (
         <React.Fragment>
             {showAddTeacher ?
@@ -153,6 +157,14 @@ const TeachersPage = () => {
             }
             <DashboardLayout viewComponent={<ViewTeacher />} viewTitle={'View teacher'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4 relative'>
+                    <AppButton
+                        type="button" 
+                        kind={'primary'}
+                        action={() => {
+                            navigate('/teachers/1')
+                        }}
+                        text={'View Single teacher (temporary button)'}
+                    />
                     <WidgetCard 
                         cardData={cardData}
                         loading={teachersLoading}
