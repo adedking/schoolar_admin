@@ -4,10 +4,25 @@ import profilePix from '../assets/svg/profile-pix-placeholder.svg';
 import AppButton from './app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
 
-const ViewProfile = ({profileImage, firstName='Adedokun', lastName='Agunbiade', email='adedokun@schoolar.com', mobile='+2348106668220', deleteText, deleteFunction, editText, editFunction, route='Student', routeLink='/students'}) => {
+const ViewProfile = (
+    {
+        profileImage, 
+        firstName, 
+        lastName, 
+        email, 
+        mobile, 
+        deleteText, 
+        deleteFunction, 
+        editText, 
+        editFunction, 
+        route, 
+        routeLink,
+        showNavigation=true
+    }) => {
 
     return (
         <div className='flex flex-col gap-[20px] my-[20px]'>
+            {showNavigation?
             <div className='flex gap-2 min-h-[18px] max-h-[18px] w-full items-center'>
                 <Link to={routeLink} className='hover:underline duration-300'>
                     {route}
@@ -19,7 +34,11 @@ const ViewProfile = ({profileImage, firstName='Adedokun', lastName='Agunbiade', 
                     {firstName} {lastName}
                 </span>
             </div>
-            <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] w-full !bg-white p-6 gap-4'>
+            :
+            null
+            }
+            
+            <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] min-w-full !bg-white p-6 gap-4'>
                 <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                     <div className='w-1/4'>
                         <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background'>
@@ -45,16 +64,16 @@ const ViewProfile = ({profileImage, firstName='Adedokun', lastName='Agunbiade', 
                             deleteFunction()
                         }}
                     >
-                        Delete Student <TrashCan />
+                        {deleteText} <TrashCan />
                     </div>
                     <AppButton
-                        type="button" 
+                        type="button"
                         kind={'primary'} 
                         renderIcon={Edit}
                         action={() => {
                             editFunction()
                         }}
-                        text={'Edit student'}
+                        text={editText}
                     />
                 </div>
             </div>

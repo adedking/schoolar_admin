@@ -12,10 +12,10 @@ const TabView = ({ componentTabs }) => {
             aria-label="List of tabs"
             fullWidth
             activation="manual"
-            className='!min-w-[2000px]'
+            className='!min-w-[100%]'
           >
             {componentTabs?.map((item, index) => (
-              <Tab key={index} renderIcon={item.icon} className={`md:min-w-[300px] !text-[15px] !h-[40px]`} >
+              <Tab key={index} renderIcon={item.icon} className={`md:min-w-[250px] !text-[15px] !h-[40px]`} >
                 {item.title} 
               </Tab>
             ))}

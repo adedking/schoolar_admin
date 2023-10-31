@@ -19,8 +19,10 @@ import AdmissionPage from './pages/admission';
 import StudentRecordsPage from './pages/student-records';
 import { useSelector } from 'react-redux';
 import Alert from './components/alert';
-import ViewClassPage from './pages/classes/view-class';
 import ViewStudentPage from './pages/students/sub-components/view-student';
+import ViewClassPage from './pages/classes/sub-components/view-sub-class';
+import ViewParentPage from './pages/parents/sub-components/view-parent';
+import ViewTeacherPage from './pages/teachers/sub-components/view-teacher';
 
 // /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
 
@@ -43,11 +45,13 @@ const App = () => {
                   <Route exact path='/add-school-location' Component={AddSchoolPage} />
                   <Route exact path='/dashboard' Component={DashboardPage} />
                   <Route exact path='/teachers' Component={TeachersPage} />
+                  <Route exact path='/teachers/:id' Component={ViewTeacherPage} />
                   <Route exact path='/students' Component={StudentsPage} />
                   <Route exact path='/students/:id' Component={ViewStudentPage} />
                   <Route exact path='/classes' Component={ClassesPage} />
                   <Route exact path='/classes/:id' Component={ViewClassPage} />
                   <Route exact path='/parents-guardians' Component={ParentsPage} />
+                  <Route exact path='/parents-guardians/:id' Component={ViewParentPage} />
                   <Route exact path='/student-records' Component={StudentRecordsPage} />
                   <Route exact path='/admission' Component={AdmissionPage} />
                   <Route exact path='/administration' Component={AdministrationPage} />

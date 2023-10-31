@@ -35,10 +35,6 @@ const ViewClassPage = () => {
     const {id} = useParams();
     const { data: classInfo, isLoading: classLoading } = useGetClass(id);
 
-    const handleRightPanelToggle = () => {
-        dispatch(IsTurnRightPanelOn());
-    };
-
     console.log(classInfo)
     const [showAddTeacher, setShowAddTeacher] = useState(false);
     const data = {
@@ -289,22 +285,7 @@ const ViewClassPage = () => {
                             emptySubText={'Please add subjects by clicking the button below'}
                         />
                     </div>
-                    <div className='min-w-full bg-background rounded-sm'>
-                        <AppDataTable
-                            title={'Manage students'}
-                            description={'Add or remove students for the class'}
-                            tableHeader={tableConfig}
-                            mobileTableHeader={mobileTableHeader}
-                            showToolBar={false}
-                            // data={teachers}
-                            mainButtonText='Add student to class'
-                            mainButtonAction={() => {
-                                setShowAddTeacher(true)
-                            }}
-                            emptyText={'No student added to class'}
-                            emptySubText={'Please add students to this class by clicking the button below'}
-                        />
-                    </div>
+                    
                 </div>
             </DashboardLayout>
         </React.Fragment>

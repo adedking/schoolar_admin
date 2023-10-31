@@ -100,7 +100,7 @@ const ClassesDataCard = ({
                                     </TableToolbarMenu>
                                     <Button 
                                         renderIcon={Add} 
-                                        className='cursor-pointer'
+                                        className='!w-[200px]'
                                         onClick={() => {
                                             mainButtonAction()
                                         }}
