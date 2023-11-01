@@ -29,11 +29,11 @@ const ClassesDataCard = ({
                 <React.Fragment>
                     
                     {loading ?
-                    <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
+                    <div className='flex flex-col p-8 px-16 min-h-[530px] w-full bg-background gap-4 justify-center items-center'>
                         <Loading className={''} withOverlay={false} small={false} />
                     </div>
                     : !data && !loading ?
-                    <div className='flex flex-col p-4 md:min-h-[250px] w-full bg-background gap-3 justify-center items-start'>
+                    <div className='flex flex-col p-4 px-8 min-h-[530px] w-full bg-background gap-3 justify-center items-start'>
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>

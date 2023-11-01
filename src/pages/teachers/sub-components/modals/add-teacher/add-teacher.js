@@ -126,7 +126,7 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
       hasScrollingContent={false}
       passiveModal
       isFullWidth
-      className='!overflow-auto backdrop-blur-sm'
+      className='!overflow-auto !backdrop-blur-sm bg-black/30'
       open={isOpen} 
       preventCloseOnClickOutside={true}
       onRequestClose={() => closeModal()}

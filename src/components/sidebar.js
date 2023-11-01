@@ -74,7 +74,7 @@ const Sidebar = ({isSidebarOpen}) => {
   ]
 
   return (
-    <SideNav expanded={isSidebarOpen} isChildOfHeader={true} aria-label="Side navigation">
+    <SideNav expanded={isSidebarOpen} isChildOfHeader={true} aria-label="Side navigation"  className='bg-background !backdrop-blur-sm bg-black/30'>
       <SideNavItems className='bg-background'>
         {sideBar?.map((item, index) =>
           <React.Fragment key={index}>

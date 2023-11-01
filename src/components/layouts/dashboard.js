@@ -48,17 +48,15 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
 
     return (
         <React.Fragment>
-            
-            <div className='flex flex-col bg-white !max-h-screen !min-h-screen relative overflow-hidden'>
-                {isRightPanelOpen?
-                <div className='absolute inset-0 left-0 bg-black min-w-full max-w-screen min-h-screen max-h-screen opacity-50 z-50 duration-300'>
+            {isRightPanelOpen ?
+            <div className='absolute inset-0 left-0 backdrop-blur-sm bg-black/30 min-w-full max-w-screen min-h-screen max-h-screen !z-50 !duration-300'>
 
-                </div>
-                :
-                null
-                }
-                
-                <Header aria-label="Schoolar" className='flex justify-between w-full px-4'>
+            </div>
+            :
+            null
+            }
+            <div className='flex flex-col bg-white !max-h-screen !min-h-screen relative overflow-hidden'>
+                <Header aria-label="Schoolar" className='flex justify-between w-full px-4 !z-40'>
                     <NavBar
                         isSidebarOpen={isSidebarOpen}
                         isRightPanelOpen={isRightPanelOpen}

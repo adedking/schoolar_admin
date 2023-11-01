@@ -111,6 +111,7 @@ const AddStudentModal = ({isOpen, closeModal}) => {
     passiveModal
     isFullWidth
     open={isOpen} 
+    className='!overflow-auto !backdrop-blur-sm bg-black/30'
     preventCloseOnClickOutside={true}
     onRequestClose={() => closeModal()}
     size={'lg'}

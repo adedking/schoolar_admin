@@ -125,7 +125,7 @@ const StudentsPage = () => {
             }
             <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
-                    <AppButton
+                    {/* <AppButton
                         type="button" 
                         kind={'primary'} 
                         // renderIcon={ArrowRight}
@@ -133,7 +133,7 @@ const StudentsPage = () => {
                             navigate('/students/1')
                         }}
                         text={'View Single Student (temporary button)'}
-                    />
+                    /> */}
                     <WidgetCard 
                         cardData={cardData}
                     />
@@ -145,7 +145,7 @@ const StudentsPage = () => {
                             pagination={pagination}
                             setPagination={setPagination}
                             mobileTableHeader={mobileTableHeader}
-                            data={students}
+                            data={null}
                             mainButtonText='Add Student'
                             mainButtonAction={() => {
                                 setShowAddStudent(true)

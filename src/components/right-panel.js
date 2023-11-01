@@ -16,7 +16,7 @@ const RightView = ({ children, viewTitle}) => {
             <HeaderPanel
                 withOverlay={true}
                 expanded={isRightPanelOpen} 
-                className={classNames('',{'md:min-w-[451px] min-w-full -mt-[48px] backdrop-blur-sm bg-black' : isRightPanelOpen})}
+                className={classNames('',{'md:min-w-[451px] min-w-full -mt-[48px] bg-black' : isRightPanelOpen})}
             >
                 <div className='h-[48px] flex justify-between items-center px-4'>
                     <div className=' text-lg'>{viewTitle}</div>
@@ -29,7 +29,7 @@ const RightView = ({ children, viewTitle}) => {
                         className='cursor-pointer'
                     />
                 </div>
-                <div className='px-4'>
+                <div className='px-2'>
                     {children}
                 </div>
                 

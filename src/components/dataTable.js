@@ -64,7 +64,7 @@ const AppDataTable = ({
         <React.Fragment>
             {loading?
             <div className=' bg-white py-4'>
-                <div className='flex flex-col p-8 px-16 md:min-h-[250px] w-full bg-background gap-4 justify-center items-center'>
+                <div className='flex flex-col p-8 px-16 min-h-[450px] w-full bg-background gap-4 justify-center items-center'>
                     <Loading active={loading} className={''} withOverlay={false} small={false} />
                 </div>
             </div>
@@ -172,7 +172,7 @@ const AppDataTable = ({
                         }
                     </TableContainer>
                     {!data?.data && !loading ?
-                    <div className='flex flex-col p-4 md:min-h-[250px] w-full bg-background gap-3 justify-center items-start'>
+                    <div className='flex flex-col p-4 px-8 md:min-h-[350px] w-full bg-background gap-3 justify-center items-start pt-0'>
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
@@ -309,7 +309,7 @@ const AppDataTable = ({
                         
                     </TableContainer>
                     {!data?.data && !loading ?
-                    <div className='flex flex-col p-4  md:min-h-[250px] w-full bg-background gap-3 justify-center items-start'>
+                    <div className='flex flex-col p-4  md:min-h-[450px] w-full bg-background gap-3 justify-center items-start'>
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
