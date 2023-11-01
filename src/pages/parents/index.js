@@ -25,7 +25,7 @@ const ParentsPage = () => {
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
-    const { data: students } = useGetStudents(
+    const { data: parents } = useGetStudents(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
@@ -143,7 +143,7 @@ const ParentsPage = () => {
                             pagination={pagination}
                             setPagination={setPagination}
                             mobileTableHeader={mobileTableHeader}
-                            data={students}
+                            data={parents}
                             mainButtonText='Add Parent'
                             mainButtonAction={() => {
                                 setShowAddParent(true)

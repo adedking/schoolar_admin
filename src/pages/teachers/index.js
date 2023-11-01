@@ -157,14 +157,14 @@ const TeachersPage = () => {
             }
             <DashboardLayout viewComponent={<ViewTeacher />} viewTitle={'View teacher'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4 relative'>
-                    {/* <AppButton
+                    <AppButton
                         type="button" 
                         kind={'primary'}
                         action={() => {
                             navigate('/teachers/1')
                         }}
                         text={'View Single teacher (temporary button)'}
-                    /> */}
+                    />
                     <WidgetCard 
                         cardData={cardData}
                         loading={teachersLoading}
