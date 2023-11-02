@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
 import { ArrowRight } from '@carbon/icons-react';
-import { Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select } from 'carbon-components-react';
+import { Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select, Toggle } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
 
 const SignupPage = () => {
     const [schoolType, setSchoolType] = useState('independent')
-    const [locationType, setLocationType] = useState('Primary')
+    const [locationType, setLocationType] = useState('primary')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -19,9 +19,16 @@ const SignupPage = () => {
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setConfirmPassword] = useState('')
     const [address, setAddress] = useState('')
+    const [loadDefault, setLoadDefault] = useState(false)
 
     const navigate = useNavigate();
     const {mutateAsync: register, isLoading} = useSignUp()
+
+    const locationTypeOptions = [
+        {value: 'pre-primary', text:'Pre-primary'},
+        {value: 'primary', text:'Primary'},
+        {value: 'secondary', text:'Secondary'},
+    ]
 
     const submitForm = async () => {
         let first_name = DOMPurify.sanitize(firstName);
@@ -49,6 +56,7 @@ const SignupPage = () => {
             password_confirmation,
             address: school_address,
             syllabus: "waec",
+            load_default: loadDefault ? 1 : 0
         }
         await register(payload).then((response) => {
             navigate('/dashboard')
@@ -57,7 +65,7 @@ const SignupPage = () => {
 
     return (
         <AuthLayout>
-            <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
+            <div className='flex flex-col items-center jusify-center min-w-screen !max-h-screen !min-h-screen'>
                 <Form 
                     onSubmit={(e) => {
                         e.preventDefault()
@@ -186,8 +194,9 @@ const SignupPage = () => {
                                     className='min-w-full'
                                     kind={'text'}
                                     name={'school_name'}
+                                    required
                                     id="school_name"
-                                    invalidText="Invalid error message."
+                                    invalidText="Invalid school name entered."
                                     labelText="School Name"
                                     placeholder="Enter Your School Name"
                                     onChange={(e) => {
@@ -199,6 +208,7 @@ const SignupPage = () => {
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="select-1"
+                                            required
                                             value={country}
                                             labelText="Country"
                                             onChange={(e) => {
@@ -220,6 +230,7 @@ const SignupPage = () => {
                                         <Select
                                             id="select-1"
                                             value={state}
+                                            required
                                             labelText="State"
                                             onChange={(e) => {
                                                 setState(e.target.value)
@@ -238,20 +249,19 @@ const SignupPage = () => {
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="school_type"
+                                            required
                                             value={locationType}
                                             labelText="School Type"
                                             onChange={(e) => {
                                                 setLocationType(e.target.value)
                                             }}
                                         >
-                                            <SelectItem
-                                                value="Primary"
-                                                text="Primary"
-                                            />
-                                            <SelectItem
-                                                value="Secondary"
-                                                text="Secondary"
-                                            />
+                                            {locationTypeOptions.map(item => (
+                                                <SelectItem
+                                                    value={item.value}
+                                                    text={item.text}
+                                                />
+                                            ))}
                                         </Select>
                                     </div>
                                 </div>
@@ -260,6 +270,7 @@ const SignupPage = () => {
                                     kind={'text'}
                                     name={'address'}
                                     id="address"
+                                    required
                                     invalidText="Invalid error message."
                                     labelText="School Address"
                                     placeholder="Enter Your School Address"
@@ -267,14 +278,26 @@ const SignupPage = () => {
                                         setAddress(e.target.value)
                                     }}
                                 />
+                                <div className='flex flex-row justify-between items-center gap-4'>
+                                    <span className='text-[14px]'>Do you want to preload default classes and subjects?</span>
+                                    <Toggle 
+                                        size="md"  
+                                        defaultToggled={loadDefault}
+                                        id="load_default" 
+                                        hideLabel
+                                        onToggle={() => {
+                                            setLoadDefault(!loadDefault)
+                                        }}
+                                    />
+                                </div>
                             </Stack>
+                            
                         </FormGroup>
                         <div className='flex justify-end w-full'>
                             <AppButton
                                 type="submit" 
                                 kind={'primary'} 
                                 renderIcon={ArrowRight}
-                                // action={submitForm}
                                 loading={isLoading}
                                 text={'Create Account'}
                             />

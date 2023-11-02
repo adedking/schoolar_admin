@@ -35,12 +35,20 @@ const ViewClassPage = () => {
 
     const tabs = [
         {
-          title: 'Students',
-          content: <SubClassStudents setShowAddStudent={setShowAddStudent} />,
+            title: 'Students',
+            content: <SubClassStudents setShowAddStudent={setShowAddStudent} />,
         },
         {
-          title: 'Subjects',
-          content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+            title: 'Subjects',
+            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+        },
+        {
+            title: 'Academic Records',
+            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+        },
+        {
+            title: 'Class Register',
+            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
         },
       ];
 
@@ -183,38 +191,6 @@ const ViewClassPage = () => {
                     </React.Fragment>
                     }
                     <TabView componentTabs={tabs}/>
-                    {/* <div className='min-w-full bg-background rounded-sm'>
-                        <AppDataTable
-                            title={'Manage class subjects'}
-                            description={'Add/remove subjects for the class and assign teachers to respective subjects'}
-                            tableHeader={tableConfig}
-                            mobileTableHeader={mobileTableHeader}
-                            showToolBar={false}
-                            // data={teachers}
-                            mainButtonText='Add subject to class'
-                            mainButtonAction={() => {
-                                setShowAddSubjectToClass(true)
-                            }}
-                            emptyText={'No subject added to class'}
-                            emptySubText={'Please add subjects by clicking the button below'}
-                        />
-                    </div>
-                    <div className='min-w-full bg-background rounded-sm'>
-                        <AppDataTable
-                            title={'Manage students'}
-                            description={'Add or remove students for the class'}
-                            tableHeader={tableConfig}
-                            mobileTableHeader={mobileTableHeader}
-                            showToolBar={false}
-                            // data={teachers}
-                            mainButtonText='Add student to class'
-                            mainButtonAction={() => {
-                                setShowAddTeacher(true)
-                            }}
-                            emptyText={'No student added to class'}
-                            emptySubText={'Please add students to this class by clicking the button below'}
-                        />
-                    </div> */}
                 </div>
             </DashboardLayout>
         </React.Fragment>

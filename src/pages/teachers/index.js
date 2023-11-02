@@ -11,17 +11,17 @@ import { useNavigate } from 'react-router-dom';
 import AppButton from '../../components/app-button';
 
 const TeachersPage = () => {
-    const [pagination, setPagination] = useState({
+    const [paginationData, setPaginationData] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
     const { data: teachers, isLoading: teachersLoading } = useGetTeachers(
-        pagination.limit,
-        pagination.page,
-        pagination.statusFilter,
-        pagination.search,
+        paginationData.limit,
+        paginationData.page,
+        paginationData.statusFilter,
+        paginationData.search,
     );
     const cardData = {
         columns: 2,
@@ -176,6 +176,7 @@ const TeachersPage = () => {
                             tableHeader={tableConfig}
                             mobileTableHeader={mobileTableHeader}
                             data={teachers}
+                            setPagination={setPaginationData}
                             mainButtonText='Add Teacher'
                             mainButtonAction={() => {
                                 setShowAddTeacher(true)

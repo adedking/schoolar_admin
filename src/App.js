@@ -35,12 +35,7 @@ const App = () => {
           <BrowserRouter>
               <Routes>
                 {/* <React.Fragment> */}
-                  <Route exact path='/' Component={LogInPage} />
-                  <Route exact path='/register' Component={SignupPage} />
-                  <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
-                  <Route exact path='/set-password/:token' Component={SetPasswordPage} />
-                  <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
-                  <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
+                {/* <Route element={<useCheckOnboarding />}> */}
                   <Route exact path='/onboarding/verify-otp' Component={VerifyOTPPage} />
                   <Route exact path='/add-school-location' Component={AddSchoolPage} />
                   <Route exact path='/dashboard' Component={DashboardPage} />
@@ -55,6 +50,13 @@ const App = () => {
                   <Route exact path='/student-records' Component={StudentRecordsPage} />
                   <Route exact path='/admission' Component={AdmissionPage} />
                   <Route exact path='/administration' Component={AdministrationPage} />
+                {/* </Route> */}
+                <Route exact path='/' Component={LogInPage} />
+                <Route exact path='/register' Component={SignupPage} />
+                <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
+                <Route exact path='/set-password/:token' Component={SetPasswordPage} />
+                <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
+                <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
                 {/* </React.Fragment> */}
               </Routes>
           </BrowserRouter>

@@ -6,9 +6,12 @@ import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { UseVerifyOTP, useResendVerificationOTP } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
+import { useSelector } from 'react-redux';
 
 const VerifyOTPPage = () => {
     const [otp, setOTP] = useState()
+
+    const { user } = useSelector((state) => state.userSlice);
 
     const navigate = useNavigate();
     const {mutateAsync: verify_otp, isLoading: verifyOTPLoading} = UseVerifyOTP()
@@ -34,7 +37,7 @@ const VerifyOTPPage = () => {
                             <div className='flex justify-between items-center w-full mt-4 h-[50px]'>
                                 <div className='flex flex-col items-start w-[75%] gap-2 h-full'>
                                     <span className='text-[13px] font-normal'>OTP sent to</span>
-                                    <span className='text-[14px] font-normal text-primary'>adedokun@schoolar.com</span>
+                                    <span className='text-[14px] font-normal text-primary'>{user?.email}</span>
                                 </div>
                                 <div className='flex justify-end w-[25%] underline cursor-pointer '>
                                     <span className='hover:underline cursor-pointer text-primary text-[15px]'>Edit</span>
@@ -57,15 +60,15 @@ const VerifyOTPPage = () => {
                         ?
                         <div 
                             className='flex justify-end w-full text-[12px] underline cursor-pointer text-primary'
-                            onCanPlay={() => {
+                            onClick={() => {
                                 resend_otp()
                             }}
                         >
                             Resend OTP
                         </div>
                         :
-                        null}
-                        
+                        null
+                        }
                         <AppButton
                             type="button" 
                             kind={'primary'} 

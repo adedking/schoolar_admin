@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react';
 import NavBar from '../nav-bar';
 import Sidebar from '../sidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from 'carbon-components-react';
 import RightView from '../right-panel';
+import { IsTogglingRightPanel } from '../../redux/components/components-slice';
 
 const DashboardLayout = ({children, viewComponent, viewTitle}) => {
     const { user } = useSelector((state) => state.userSlice);
     const location = useLocation();
     const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const handleRightPanelToggle = () => {
+        dispatch(IsTogglingRightPanel());
+    };
     useEffect(() => {
         if (user) {
             if (user.email_verified === 0) {
@@ -49,7 +55,10 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
     return (
         <React.Fragment>
             {isRightPanelOpen ?
-            <div className='absolute inset-0 left-0 backdrop-blur-sm bg-black/30 min-w-full max-w-screen min-h-screen max-h-screen !z-50 !duration-300'>
+            <div 
+                className='absolute inset-0 left-0 backdrop-blur-sm bg-black/30 min-w-full max-w-screen min-h-screen max-h-screen !z-50 !duration-300'
+                onClick={() => handleRightPanelToggle()}
+            >
 
             </div>
             :

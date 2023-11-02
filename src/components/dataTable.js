@@ -1,6 +1,29 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Button, DataTable, Loading, Pagination, Table, TableBatchAction, TableBatchActions, TableBody, TableCell, TableContainer, TableExpandHeader, TableExpandRow, TableExpandedRow, TableHead, TableHeader, TableRow, TableSelectAll, TableSelectRow, TableToolbar, TableToolbarAction, TableToolbarContent, TableToolbarMenu, TableToolbarSearch } from 'carbon-components-react';
+import { 
+    Button, 
+    DataTable, 
+    Loading, 
+    Pagination, 
+    Table, 
+    TableBatchAction, 
+    TableBatchActions, 
+    TableBody, 
+    TableCell, 
+    TableContainer, 
+    TableExpandHeader, 
+    TableExpandRow, 
+    TableExpandedRow, 
+    TableHead, 
+    TableHeader, 
+    TableRow, 
+    TableSelectAll, 
+    TableSelectRow, 
+    TableToolbar, 
+    TableToolbarAction, 
+    TableToolbarContent, 
+    TableToolbarMenu, 
+    TableToolbarSearch } from 'carbon-components-react';
 import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../redux/components/components-slice';
@@ -172,7 +195,7 @@ const AppDataTable = ({
                         }
                     </TableContainer>
                     {!data?.data && !loading ?
-                    <div className='flex flex-col p-4 px-8 md:min-h-[350px] w-full bg-background gap-3 justify-center items-start pt-0'>
+                    <div className='flex flex-col p-4 px-8 md:min-h-[350px] w-full bg-background gap-3 justify-center items-start -pt-8'>
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
@@ -190,9 +213,14 @@ const AppDataTable = ({
                                 }}
                             >{mainButtonText}</Button>
                         </div>
-                        {/* <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                        {emptyLinkText?
+                        <div className='text-[14px] font-normal px-3 max-w-[400px]'>
                             {emptyLinkText}
-                        </div> */}
+                        </div>
+                        :
+                        null
+                        }
+                        
                     </div>
                     :
                     null
