@@ -6,8 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { useLogin } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
+import { useForm } from 'react-hook-form';
+import { checkError } from '../../utils/functions';
 
 const LogInPage = () => {
+
+    const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -33,10 +37,7 @@ const LogInPage = () => {
         >
             <div className='flex flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        submitForm()
-                    }}
+                    onSubmit={handleSubmit(submitForm)}
                     className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[430px] h-screen md:p-4 p-8 pb-[15px] md:mt-16 rounded'
                 >
                     <Stack gap={6}>
@@ -46,11 +47,13 @@ const LogInPage = () => {
                             kind={'email'}
                             name={'email'}
                             id="email"
+                            value={email}
+                            {...register('email', { required: true })}
+                            invalid={errors?.email? true : false}
+                            invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
                             onChange={(e) => {
-                                e.preventDefault()
-                                setEmail(e.target.value)
+                                checkError(true, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
                             }}
-                            invalidText="Enter a valid email."
                             labelText="Email"
                             placeholder="Enter Your Email"
                         />
@@ -61,22 +64,24 @@ const LogInPage = () => {
                         </labelText>
                         <TextInput.PasswordInput
                             type="password"
-                            required
                             name={'password'}
+                            labelText={''}
                             id="passsword"
+                            value={password}
+                            {...register('passsword', { required: true })}
+                            invalid={errors?.passsword? true : false}
+                            invalidText={errors?.passsword?.message? errors?.passsword?.message : 'This field is required'}
                             onChange={(e) => {
-                                setPassword(e.target.value)
+                                checkError(true, e.target.value, 'passsword', setError, clearErrors, setPassword, 'password')
                             }}
                             placeholder="Enter Your Password"
-                            // helperText="Optional helper text here; if message is more than one line text should wrap (~100 character count maximum)"
                         />
                         </div>
-                        <Checkbox labelText={`Stay Logged In`} id="stay_logged_in" />
+                        <Checkbox className={'text-[13px]'} labelText={`Stay Logged In`} id="stay_logged_in" />
                         <AppButton
                             type="submit" 
                             kind={'primary'} 
                             renderIcon={ArrowRight}
-                            // action={submitForm}
                             loading={isLoading}
                             text={'Sign in'}
                         />

@@ -471,6 +471,7 @@ body {
   margin: 0;
   max-width: 100% !important;
   min-width: 100%;
+  max-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -640,7 +641,6 @@ i {
   max-height: 70px !important; 
 }
 
-
 @media screen and (max-width: 800px) {
   .cds--modal-container--lg {
     min-height: fit-content;
@@ -653,4 +653,8 @@ i {
 
 .cds--accordion__item {
   border: none !important;
+}
+
+.cds--file__selected-file {
+  display: none !important;
 }

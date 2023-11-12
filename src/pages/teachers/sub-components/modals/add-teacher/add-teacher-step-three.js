@@ -1,19 +1,24 @@
 import React from 'react';
 import profilePix from '../../../../../assets/svg/profile-pix-placeholder.svg';
-import { FileUploaderItem } from 'carbon-components-react';
-import { Button } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
+import AppButton from '../../../../../components/app-button';
 
-const AddTeacherStepThree = () => {
-
-    // const navigate = useNavigate();
+const AddTeacherStepThree = ({addTeacherLoading, payload, submit, backActionFn}) => {
+    const action = () => {
+        submit()
+    }
     return (
-        <div className='flex flex-row gap-4 mt-8'>
+        <div className='flex flex-col gap-4 mt-8'>
+        <div className='flex flex-row gap-4'>
             <div className='w-[25%] '>
                 <div className='flex items-center justify-center h-[96px] w-[96px] !bg-white'>
+                    {payload.fileURL?
+                    <img src={payload.fileURL} alt='' />
+                    :
                     <img src={profilePix} alt='' />
+                    }
+                    
                 </div>
-                
             </div>
             <div className='flex flex-col gap-3 w-[75%]'>
                 <div className='flex flex-col gap-1'>
@@ -21,7 +26,7 @@ const AddTeacherStepThree = () => {
                         Full Name
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        Adedokun Agunbiade
+                       {payload.first_name} {payload.last_name}
                     </div>
                 </div>
                 <div className='flex flex-col gap-1'>
@@ -29,7 +34,7 @@ const AddTeacherStepThree = () => {
                         Mobile
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        08106668220
+                        {payload.mobile}
                     </div>
                 </div>
                 <div className='flex flex-col gap-1'>
@@ -37,7 +42,7 @@ const AddTeacherStepThree = () => {
                         Email
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        adedokun@schoolar.com
+                        {payload.email}
                     </div>
                 </div>
                 <div className='flex flex-col gap-1'>
@@ -45,7 +50,7 @@ const AddTeacherStepThree = () => {
                         TRN identification number
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        CO-123450
+                        {payload.trcn_registration_number}
                     </div>
                 </div>
                 <div className='flex flex-col gap-1'>
@@ -53,40 +58,43 @@ const AddTeacherStepThree = () => {
                         Form class
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        SS2
+                        {payload.form_class_name}
                     </div>
                 </div>
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-4'>
                     <div className='text-color-gray text-[12px]'>
-                        Certificates
+                        Certifications
                     </div>
-                    <FileUploaderItem className='flex items-center p-2 -pr-2 justify-between w-full bg-white rounded-sm !text-[13px]' errorBody="500kb max file size. Select a new file and try again." errorSubject="File size exceeds limit" iconDescription="Delete file" invalid={false} name="README.md" status="edit" size="sm" />
+                    {payload?.certifications && payload?.certifications.length > 0 ? 
+                    <React.Fragment>
+                        {payload.certifications.map((item, index) => (
+                            <div key={index} className='-mt-2 flex items-center p-3 justify-between w-full !bg-white h-[40px] !text-[14px]'>{item.file.name}</div>
+                        ))}
+                    </React.Fragment>
+                    :
+                    null
+                    }
                 </div>
-                
-            </div>
-            <div className='flex justify-end -mx-4 mt-8'>
-                <Button
-                    type="submit" 
-                    className='min-w-[180px] h-[60px]'
+            </div> 
+        </div>
+            <div className='flex justify-end -mx-4 mt-8 gap-0.5'>
+                <AppButton
+                    type="button" 
                     kind={'secondary'} 
-                    onClick={() => {
-                        // secondaryRequestSubmit()
-                    }}
-                >
-                Back
-                </Button>
-                
-                <Button
-                    type="submit" 
+                    className='!min-w-[180px] h-[60px]'
+                    // renderIcon={ArrowRight}
+                    action={() => {backActionFn()}}
+                    text={'Back'}
+                />
+                <AppButton
+                    type="button" 
                     kind={'primary'} 
-                    className='min-w-[180px] h-[60px]'
+                    className='!min-w-[180px] h-[60px]'
                     renderIcon={ArrowRight}
-                    onClick={() => {
-                    //   requestSubmit()
-                    }}
-                >
-                    Save and Complete
-                </Button>
+                    loading={addTeacherLoading}
+                    action={() => {action()}}
+                    text={'Continue'}
+                />
             </div>
         </div>
     );

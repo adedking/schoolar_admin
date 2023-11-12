@@ -6,7 +6,7 @@ import { HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName, Over
 import { OverflowMenuItem } from '@carbon/react';
 import { logout } from '../redux/user/hook';
 
-const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
+const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => {
   const dispatch = useDispatch();
 
   const handleSidebarToggle = () => {
@@ -34,20 +34,34 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
       <HeaderName href="#" prefix={''}>
         Schoolar
       </HeaderName>
-      {profile?
       <HeaderGlobalBar>
-        <HeaderGlobalAction aria-label="Calendar" onClick={() => {}}>
-          <Calendar width={20} height={20} />
-        </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label="Help" onClick={() => {}}>
-          <Help width={20} height={20} />
-        </HeaderGlobalAction>
+        {profile?
+        <>
+          <HeaderGlobalAction aria-label="Calendar" onClick={() => {}}>
+            <Calendar width={20} height={20} />
+          </HeaderGlobalAction>
+          <HeaderGlobalAction aria-label="Help" onClick={() => {}}>
+            <Help width={20} height={20} />
+          </HeaderGlobalAction>
+          <HeaderGlobalAction aria-label="Profile">
+            <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} iconClass='scale-125' className='!bg-white '>
+              <OverflowMenuItem 
+                itemText="My Profile" 
+                className=' !bg-white' 
+              />
+              <OverflowMenuItem 
+                itemText="Log out"  
+                className='!text-red-500 !bg-white'
+                onClick={() => {
+                  logout()
+                }} 
+              />
+            </OverflowMenu>
+          </HeaderGlobalAction>
+        </>
+        : !profile && loggedIn?
         <HeaderGlobalAction aria-label="Profile">
           <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} iconClass='scale-125' className='!bg-white '>
-            <OverflowMenuItem 
-              itemText="My Profile" 
-              className=' !bg-white' 
-            />
             <OverflowMenuItem 
               itemText="Log out"  
               className='!text-red-500 !bg-white'
@@ -57,10 +71,11 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true}) => {
             />
           </OverflowMenu>
         </HeaderGlobalAction>
+        :
+        null
+        }
+        
       </HeaderGlobalBar>
-      :
-      null
-      } 
     </React.Fragment>
   );
 };

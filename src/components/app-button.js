@@ -30,9 +30,9 @@ const AppButton = ({ text, type, kind, className, renderIcon, action=()=>{}, loa
                 kind={kind} 
                 className={className}
                 renderIcon={renderIcon}
-                // onClick={() => {
-                //     action()
-                // }}
+                onClick={() => {
+                    action()
+                }}
             >
                 {text}
             </Button>

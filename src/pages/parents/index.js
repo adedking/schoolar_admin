@@ -123,7 +123,7 @@ const ParentsPage = () => {
             }
             <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
-                    <AppButton
+                    {/* <AppButton
                         type="button" 
                         kind={'primary'} 
                         // renderIcon={ArrowRight}
@@ -131,7 +131,7 @@ const ParentsPage = () => {
                             navigate('/parents-guardians/1')
                         }}
                         text={'View Single parent (temporary button)'}
-                    />
+                    /> */}
                     <WidgetCard 
                         cardData={cardData}
                     />

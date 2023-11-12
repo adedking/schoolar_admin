@@ -127,21 +127,6 @@ const AppDataTable = ({
                             </TableBatchActions>
                             <TableToolbarContent>
                                 <TableToolbarSearch onChange={onInputChange} />
-                                {/* <TableToolbarMenu>
-                                    <TableToolbarAction 
-                                    onClick={() => {
-                                        
-                                    }}>
-                                    Add row
-                                    </TableToolbarAction>
-                                    <TableToolbarAction 
-                                        onClick={() => {
-                                            
-                                        }}
-                                    >
-                                    Add header
-                                    </TableToolbarAction>
-                                </TableToolbarMenu> */}
                                 {data?.data?
                                 <Button 
                                     renderIcon={Add} 
@@ -250,39 +235,18 @@ const AppDataTable = ({
                                 <TableBatchAction iconDescription="Delete the selected rows" className='flex flex-col ' >
                                     Edit
                                 </TableBatchAction>
-                                {/* <TableBatchAction iconDescription="Save the selected rows" >
-                                    Send Announcement
-                                </TableBatchAction>
-                                <TableBatchAction iconDescription="Download the selected rows" >
-                                    Assign To Class
-                                </TableBatchAction>
-                                <TableBatchAction iconDescription="Download the selected rows" >
-                                    Remove Teacher
-                                </TableBatchAction> */}
                             </TableBatchActions>
                             <TableToolbarContent>
                                 <TableToolbarSearch onChange={onInputChange} />
-                                {/* <TableToolbarMenu>
-                                    <TableToolbarAction 
-                                    onClick={() => {
-                                        
-                                    }}>
-                                    Add row
-                                    </TableToolbarAction>
-                                    <TableToolbarAction 
-                                    onClick={() => {
-                                        
-                                    }}>
-                                    Add header
-                                    </TableToolbarAction>
-                                </TableToolbarMenu> */}
                                 {data?.data?
                                 <Button 
                                     renderIcon={Add} 
                                     onClick={() => {
                                         mainButtonAction()
                                     }}
-                                >{mainButtonText}</Button>
+                                >
+                                    {mainButtonText}
+                                </Button>
                                 :
                                 null
                                 }

@@ -136,7 +136,7 @@ const DashboardPage = () => {
                                 items={items} 
                                 downshiftProps={{
                                 onStateChange: () => {
-                                    console.log('the state has changed');
+                                    // console.log('the state has changed');
                                 }
                                 }} 
                                 placeholder='Select class'

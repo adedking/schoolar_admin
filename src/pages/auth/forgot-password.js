@@ -6,21 +6,25 @@ import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { useForgetPassword } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
+import { useForm } from 'react-hook-form';
+import { checkError } from '../../utils/functions';
 
 const PasswordRecoveryPage = () => {
+
+    const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
 
-    const {mutateAsync: register, isLoading} = useForgetPassword()
+    const {mutateAsync: forgot_password, isLoading} = useForgetPassword()
 
     const submitForm = async () => {
         let user_email = DOMPurify.sanitize(email);
         let payload = {
             email: user_email,
         }
-        await register(payload).then(() => {
+        await forgot_password(payload).then(() => {
             navigate('/')
         })
     }
@@ -29,10 +33,7 @@ const PasswordRecoveryPage = () => {
         >
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        submitForm()
-                    }}
+                    onSubmit={handleSubmit(submitForm)}
                     className='bg-white md:w-[450px] w-screen md:max-h-[320px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'
                 >
                     <Stack gap={7}>
@@ -41,13 +42,16 @@ const PasswordRecoveryPage = () => {
                             className='min-w-full'
                             kind={'email'}
                             name={'email'}
-                            required
-                            invalidText="Invalid email entered"
-                            labelText="Enter your email and a password reset link will be sent to your email"
-                            placeholder="Enter your recovery email"
+                            id="email"
+                            value={email}
+                            {...register('email', { required: true })}
+                            invalid={errors?.email? true : false}
+                            invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
                             onChange={(e) => {
-                                setEmail(e.target.value)
+                                checkError(true, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
                             }}
+                            labelText="Email"
+                            placeholder="Enter Your Email"
                         />
                         <AppButton
                             type="submit" 

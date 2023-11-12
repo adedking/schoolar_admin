@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import NavBar from '../nav-bar';
 import Sidebar from '../sidebar';
@@ -17,36 +18,46 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
     const handleRightPanelToggle = () => {
         dispatch(IsTogglingRightPanel());
     };
+    
+    const checkLocation = (type) => {
+        let currentLocation = location.pathname.split('/')[1]
+        
+        if (type === 'user') {
+            if (
+                location.pathname === '/' ||
+                currentLocation === 'register' ||
+                currentLocation === 'forgot-password' ||
+                currentLocation === 'set-password' ||
+                currentLocation === 'reset-password' ||
+                location.pathname === '/onboarding/verify-otp'
+                ) {
+                navigate('/dashboard');
+            }
+        } else {
+            if (
+                location.pathname !== '/' &&
+                currentLocation !== 'register' &&
+                currentLocation !== 'forgot-password' &&
+                currentLocation !== 'set-password' &&
+                currentLocation !== 'reset-password'
+                ) {
+                navigate('/'); 
+            }
+        }
+    }
+
     useEffect(() => {
         if (user) {
             if (user.email_verified === 0) {
                 if (location.pathname !== '/onboarding/verify-otp') {
-                navigate('/onboarding/verify-otp');
+                    navigate('/onboarding/verify-otp');
                 }
                 return;
             } else {
-                if (
-                location.pathname === '/' ||  
-                location.pathname.split('/')[1] === '/register' || 
-                location.pathname.split('/')[1] === '/forgot-password' ||  
-                location.pathname.split('/')[1] === '/set-password' ||  
-                location.pathname.split('/')[1] === '/reset-password') 
-                {
-                    navigate('/dashboard');
-                }
+                checkLocation('user')
             }
         } else {
-            if (
-                location.pathname !== '/' &&  
-                location.pathname.split('/')[1] !== 'register' && 
-                location.pathname.split('/')[1] !== 'forgot-password' && 
-                location.pathname.split('/')[1] !== 'set-password' &&
-                location.pathname.split('/')[1] !== 'reset-password' && 
-                location.pathname.split('/')[1] === 'onboarding/verify-otp') {
-                navigate('/'); 
-            } else {
-                navigate('/');  
-            }
+            checkLocation('nouser')
         }
     }, [location, user, navigate])
 

@@ -6,8 +6,15 @@ import { Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButton
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
+import { useForm } from 'react-hook-form';
+import { checkError } from '../../utils/functions';
+import { AllCountries } from '../../utils/constants/countries';
 
 const SignupPage = () => {
+
+    const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
+    console.log(errors)
+
     const [schoolType, setSchoolType] = useState('independent')
     const [locationType, setLocationType] = useState('primary')
     const [firstName, setFirstName] = useState('')
@@ -22,7 +29,7 @@ const SignupPage = () => {
     const [loadDefault, setLoadDefault] = useState(false)
 
     const navigate = useNavigate();
-    const {mutateAsync: register, isLoading} = useSignUp()
+    const {mutateAsync: signup, isLoading} = useSignUp()
 
     const locationTypeOptions = [
         {value: 'pre-primary', text:'Pre-primary'},
@@ -58,25 +65,22 @@ const SignupPage = () => {
             syllabus: "waec",
             load_default: loadDefault ? 1 : 0
         }
-        await register(payload).then((response) => {
+        await signup(payload).then((response) => {
             navigate('/dashboard')
         })
     }
 
     return (
         <AuthLayout>
-            <div className='flex flex-col items-center jusify-center min-w-screen !max-h-screen !min-h-screen'>
+            <div className='flex flex-col items-center jusify-center min-w-screen overflow-y-auto'>
                 <Form 
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        submitForm()
-                    }}
-                    className='bg-white md:w-[490px] w-screen md:min-h-fit  md:p-4 p-8 pb-[25px] md:mt-2'
+                    onSubmit={handleSubmit(submitForm)}
+                    className='bg-white md:w-[490px] w-screen md:min-h-screen md:p-4 p-8 md:mt-2'
                 >
-                    <Stack gap={5}>
-                        <labelText className='!text-[14px]'> 
+                    <Stack gap={6}>
+                        <labelText className='!text-[15px]'> 
                             Do you have an account?&nbsp;
-                            <span className='link-color hover:underline duration-300 cursor-pointer underline' 
+                            <span className='link-color hover:underline duration-300 text-primary underline cursor-pointer text-[15px]' 
                                 onClick={() => {navigate("/")}}
                             >
                                 Login
@@ -89,13 +93,14 @@ const SignupPage = () => {
                                     className='min-w-full'
                                     kind={'text'}
                                     name={'first_name'}
-                                    required
-                                    invalidText="Please enter a valid first name"
+                                    {...register('first_name', { required: true })}
+                                    invalid={errors?.first_name? true : false}
+                                    invalidText={errors?.first_name?.message? errors?.first_name?.message : 'This field is required'}
                                     labelText="First Name"
                                     placeholder="Enter Your First Name"
                                     value={firstName}
                                     onChange={(e) => {
-                                        setFirstName(e.target.value)
+                                        checkError(true, e.target.value, 'first_name', setError, clearErrors, setFirstName)
                                     }}
                                 />
                             </div>
@@ -103,15 +108,15 @@ const SignupPage = () => {
                                 <TextInput
                                     className='min-w-full'
                                     kind={'text'}
-                                    required
                                     name={'last_name'}
-                                    id="last_name"
-                                    invalidText="Please enter a valid last name"
-                                    labelText="Last Name"
+                                    {...register('last_name', { required: true })}
+                                    invalid={errors?.last_name? true : false}
+                                    invalidText={errors?.last_name?.message? errors?.last_name?.message : 'This field is required'}
+                                    labelText="Last Name (Surname)"
                                     placeholder="Enter Your Surname"
                                     value={lastName}
                                     onChange={(e) => {
-                                        setLastName(e.target.value)
+                                        checkError(true, e.target.value, 'last_name', setError, clearErrors, setLastName)
                                     }}
                                 />
                             </div>
@@ -120,45 +125,50 @@ const SignupPage = () => {
                             className='min-w-full'
                             kind={'email'}
                             name={'email'}
-                            required
-                            invalidText="Invalid email entered"
+                            {...register('email', { required: true })}
+                            invalid={errors?.email? true : false}
+                            invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
                             labelText="Email"
                             placeholder="Enter Your Email"
                             onChange={(e) => {
-                                setEmail(e.target.value)
+                                checkError(true, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
                             }}
                         />
                         <div className='flex md:flex-row flex-col gap-4'>
                             <div className='md:w-1/2 w-full mb-2'>
                                 <TextInput.PasswordInput
                                     type="password"
-                                    required
                                     name={'password'}
+                                    value={password}
                                     id="passsword"
-                                    labelText="Password"
-                                    invalidText="Invalid password format entered"
-                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                    labelText="Create Password"
+                                    {...register('password', { required: true })}
+                                    invalid={errors?.password? true : false}
+                                    invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
                                     placeholder="Enter Your Password"
-                                    helperText="Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters."
                                     onChange={(e) => {
-                                        setPassword(e.target.value)
+                                        checkError(true, e.target.value, 'passsword', setError, clearErrors, setPassword, 'password')
                                     }}
                                 />
                             </div>
                             <div className='md:w-1/2 w-full'>
                                 <TextInput.PasswordInput
                                     type="password"
-                                    required
                                     name={'confirm_password'}
+                                    value={passwordConfirmation}
                                     id="confirm_passsword"
                                     labelText="Password Confirmation"
                                     placeholder="Confirm Your Password"
+                                    {...register('confirm_password', { required: true })}
+                                    invalid={errors?.confirm_password? true : false}
+                                    invalidText={errors?.confirm_password?.message? errors?.confirm_password?.message : 'This field is required'}
                                     onChange={(e) => {
-                                        setConfirmPassword(e.target.value)
+                                        checkError(true, e.target.value, 'confirm_password', setError, clearErrors, setConfirmPassword, 'password_confirmation', password)
                                     }}
                                 />
                             </div>
                         </div>
+                        <labelText className="text-[12px] text-[#525252] -mt-5">Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters.</labelText>
                         <RadioButtonGroup
                             defaultSelected="independent"
                             legendText="Select School Type"
@@ -194,13 +204,14 @@ const SignupPage = () => {
                                     className='min-w-full'
                                     kind={'text'}
                                     name={'school_name'}
-                                    required
                                     id="school_name"
-                                    invalidText="Invalid school name entered."
+                                    {...register('school_name', { required: true })}
+                                    invalid={errors?.school_name? true : false}
+                                    invalidText={errors?.school_name?.message? errors?.school_name?.message : 'This field is required'}
                                     labelText="School Name"
                                     placeholder="Enter Your School Name"
                                     onChange={(e) => {
-                                        setSchoolName(e.target.value)
+                                        checkError(true, e.target.value, 'school_name', setError, clearErrors, setSchoolName)
                                     }}
                                 />
                                 
@@ -208,32 +219,29 @@ const SignupPage = () => {
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="select-1"
-                                            required
+                                            name={'country'}
                                             value={country}
-                                            labelText="Country"
+                                            labelText="Nationality"
                                             onChange={(e) => {
-                                                setCountry(e.target.value)
-                                            }}
-                                            
+                                                checkError(true, e.target.value, 'country', setError, clearErrors, setCountry)
+                                            }}  
                                         >
-                                            <SelectItem
-                                                value="Nigeria"
-                                                text="Nigeria"
-                                            />
-                                            <SelectItem
-                                                value="Ghana"
-                                                text="Ghana"
-                                            />
+                                            {AllCountries.map((item, index) => (
+                                                <SelectItem
+                                                    value={item.value}
+                                                    text={item.label}
+                                                />
+                                            ))}
                                         </Select>
                                     </div>
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="select-1"
                                             value={state}
-                                            required
+                                            name='state'
                                             labelText="State"
                                             onChange={(e) => {
-                                                setState(e.target.value)
+                                                checkError(true, e.target.value, 'state', setError, clearErrors, setState)
                                             }}
                                         >
                                             <SelectItem
@@ -249,11 +257,11 @@ const SignupPage = () => {
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="school_type"
-                                            required
                                             value={locationType}
+                                            name='school_type'
                                             labelText="School Type"
                                             onChange={(e) => {
-                                                setLocationType(e.target.value)
+                                                checkError(true, e.target.value, 'school_type', setError, clearErrors, setLocationType)
                                             }}
                                         >
                                             {locationTypeOptions.map(item => (
@@ -270,12 +278,14 @@ const SignupPage = () => {
                                     kind={'text'}
                                     name={'address'}
                                     id="address"
-                                    required
-                                    invalidText="Invalid error message."
-                                    labelText="School Address"
-                                    placeholder="Enter Your School Address"
+                                    {...register('address', { required: true })}
+                                    invalid={errors?.address? true : false}
+                                    invalidText={errors?.address?.message? errors?.address?.message : 'This field is required'}
+                                    labelText="Address **"
+                                    placeholder="Enter the teacher's address"
+                                    value={address}
                                     onChange={(e) => {
-                                        setAddress(e.target.value)
+                                        checkError(true, e.target.value, 'address', setError, clearErrors, setAddress)
                                     }}
                                 />
                                 <div className='flex flex-row justify-between items-center gap-4'>

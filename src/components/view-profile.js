@@ -21,24 +21,20 @@ const ViewProfile = (
     }) => {
 
     return (
-        <div className='flex flex-col gap-[20px] my-[20px]'>
+        <div className='flex flex-col gap-[20px] my-[20px] mt-[0px]'>
             {showNavigation?
             <div className='flex gap-2 min-h-[18px] max-h-[18px] w-full items-center'>
-                <Link to={routeLink} className='hover:underline duration-300'>
+                <Link to={routeLink} className='hover:underline duration-300 text-[15px]'>
                     {route}
                 </Link>
-                <span>
-                    /
-                </span>
-                <span>
-                    {firstName} {lastName}
+                <span className='text-[14px]'>
+                    / {firstName} {lastName}
                 </span>
             </div>
             :
             null
             }
-            
-            <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] min-w-full !bg-white p-6 gap-4'>
+            <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] min-w-full !bg-white p-4 gap-4'>
                 <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                     <div className='w-1/4'>
                         <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background'>

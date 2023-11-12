@@ -5,8 +5,12 @@ import { ArrowRight } from '@carbon/icons-react';
 import { useResetPassword } from '../../redux/user/hook';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppButton from '../../components/app-button';
+import { useForm } from 'react-hook-form';
+import { checkError } from '../../utils/functions';
 
 const ResetPasswordPage = () => {
+
+    const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setConfirmPassword] = useState('')
@@ -32,35 +36,36 @@ const ResetPasswordPage = () => {
         >
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        submitForm()
-                    }}
+                    onSubmit={handleSubmit(submitForm)}
                     className='bg-white md:w-[450px] w-screen md:min-h-[400px] md:max-h-[400px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'>
                     <Stack gap={7}>
                         <div className='header-3'>Reset password to continue</div>
                         <TextInput.PasswordInput
                             type="password"
-                            required
                             name={'password'}
+                            value={password}
                             id="passsword"
-                            labelText="Password"
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            labelText="Create Password"
+                            {...register('password', { required: true })}
+                            invalid={errors?.password? true : false}
+                            invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
                             placeholder="Enter Your Password"
-                            helperText="Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters."
                             onChange={(e) => {
-                                setPassword(e.target.value)
+                                checkError(true, e.target.value, 'passsword', setError, clearErrors, setPassword, 'password')
                             }}
                         />
                         <TextInput.PasswordInput
                             type="password"
-                            required
                             name={'confirm_password'}
-                            id="confirm_password"
-                            labelText="Confirm Password"
-                            placeholder="Enter Your Password"
+                            value={passwordConfirmation}
+                            id="confirm_passsword"
+                            labelText="Password Confirmation"
+                            placeholder="Confirm Your Password"
+                            {...register('confirm_password', { required: true })}
+                            invalid={errors?.confirm_password? true : false}
+                            invalidText={errors?.confirm_password?.message? errors?.confirm_password?.message : 'This field is required'}
                             onChange={(e) => {
-                                setConfirmPassword(e.target.value)
+                                checkError(true, e.target.value, 'confirm_password', setError, clearErrors, setConfirmPassword, 'password_confirmation', password)
                             }}
                         />
                         <AppButton

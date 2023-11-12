@@ -39,3 +39,23 @@ export function useAddTeacher() {
     },
   );
 }
+
+export function useGetTeacher(id) {
+  return useQuery(
+    ['teacher', {id}],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return teachers.getTeacher(id);
+    },
+    {
+      isEnabled: id !== null,
+      select: (data) => {
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+      // keepPreviousData: true
+    },
+  );
+}

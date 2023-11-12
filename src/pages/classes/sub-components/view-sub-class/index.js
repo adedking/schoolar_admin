@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT } from '../../../../utils';
-import { useGetClass } from '../../../../redux/classes/hook';
+import { useGetClass, useGetSubClass } from '../../../../redux/classes/hook';
 import { useParams } from 'react-router-dom';
 import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
@@ -26,14 +26,18 @@ const ViewClassPage = () => {
     const [showAddSubjectToClass, setShowAddSubjectToClass] = useState(false);
     const [type, setType] = useState('add');
 
-    const [pagination, setPagination] = useState({
-        limit: PAGINATION_DEFAULT.limit,
-        page: PAGINATION_DEFAULT.page,
-        statusFilter: PAGINATION_DEFAULT.statusFilter,
-        search: '',
-    });
+    // const [pagination, setPagination] = useState({
+    //     limit: PAGINATION_DEFAULT.limit,
+    //     page: PAGINATION_DEFAULT.page,
+    //     statusFilter: PAGINATION_DEFAULT.statusFilter,
+    //     search: '',
+    // });
 
     const tabs = [
+        {
+            title: 'Class Register',
+            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+        },
         {
             title: 'Students',
             content: <SubClassStudents setShowAddStudent={setShowAddStudent} />,
@@ -46,14 +50,11 @@ const ViewClassPage = () => {
             title: 'Academic Records',
             content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
         },
-        {
-            title: 'Class Register',
-            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
-        },
+        
       ];
 
     const {id} = useParams();
-    const { data: classInfo, isLoading: classLoading } = useGetClass(id);
+    const { data: classInfo, isLoading: classLoading } = useGetSubClass(id);
 
     return (
         <React.Fragment>
@@ -107,7 +108,7 @@ const ViewClassPage = () => {
                     <React.Fragment>
                         <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                             <div className='px-4'>
-                                {classInfo?.name} - A
+                                {classInfo?.class_name} - {classInfo?.name}
                             </div>
                             <div className='flex gap-4 items-center'>
                                 <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class <TrashCan /></div>
@@ -135,7 +136,7 @@ const ViewClassPage = () => {
                             </div>
 
                             <div className='flex items-center min-h-[48px] justify-start min-w-full bg-white'>
-                                {!classInfo?.teacher_id?
+                                {classInfo?.teacher_id?
                                 <div className='flex md:flex-row flex-col md:items-center px-4 bg-white gap-1 py-3 w-full  md:min-h-[136px] md:max-h-[136px] '>
                                     <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                                         <div className='w-1/4'>
