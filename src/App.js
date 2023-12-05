@@ -31,32 +31,30 @@ const App = () => {
   
   return (
       <React.Fragment>
-        <div>
-          <BrowserRouter>
-              <Routes>
-                <Route exact path='/onboarding/verify-otp' Component={VerifyOTPPage} />
-                <Route exact path='/add-school-location' Component={AddSchoolPage} />
-                <Route exact path='/dashboard' Component={DashboardPage} />
-                <Route exact path='/teachers' Component={TeachersPage} />
-                <Route exact path='/teachers/:id' Component={ViewTeacherPage} />
-                <Route exact path='/students' Component={StudentsPage} />
-                <Route exact path='/students/:id' Component={ViewStudentPage} />
-                <Route exact path='/classes' Component={ClassesPage} />
-                <Route exact path='/classes/:id' Component={ViewClassPage} />
-                <Route exact path='/parents-guardians' Component={ParentsPage} />
-                <Route exact path='/parents-guardians/:id' Component={ViewParentPage} />
-                <Route exact path='/student-records' Component={StudentRecordsPage} />
-                <Route exact path='/admission' Component={AdmissionPage} />
-                <Route exact path='/administration' Component={AdministrationPage} />
-                <Route exact path='/' Component={LogInPage} />
-                <Route exact path='/register' Component={SignupPage} />
-                <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
-                <Route exact path='/set-password/:token' Component={SetPasswordPage} />
-                <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
-                <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
-              </Routes>
-          </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <Routes>
+              <Route exact path='/onboarding/verify-otp' Component={VerifyOTPPage} />
+              <Route exact path='/add-school-location' Component={AddSchoolPage} />
+              <Route exact path='/dashboard' Component={DashboardPage} />
+              <Route exact path='/teachers' Component={TeachersPage} />
+              <Route exact path='/teachers/:id' Component={ViewTeacherPage} />
+              <Route exact path='/students' Component={StudentsPage} />
+              <Route exact path='/students/:id' Component={ViewStudentPage} />
+              <Route exact path='/classes' Component={ClassesPage} />
+              <Route exact path='/classes/:id' Component={ViewClassPage} />
+              <Route exact path='/parents-guardians' Component={ParentsPage} />
+              <Route exact path='/parents-guardians/:id' Component={ViewParentPage} />
+              <Route exact path='/student-records' Component={StudentRecordsPage} />
+              <Route exact path='/admission' Component={AdmissionPage} />
+              <Route exact path='/administration' Component={AdministrationPage} />
+              <Route exact path='/' Component={LogInPage} />
+              <Route exact path='/register' Component={SignupPage} />
+              <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
+              <Route exact path='/set-password/:token' Component={SetPasswordPage} />
+              <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
+              <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
+            </Routes>
+        </BrowserRouter>
         {/* Other components */}
         {alert?.show && (
           <Alert

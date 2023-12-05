@@ -1,36 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComboBox, Form, Modal } from 'carbon-components-react';
 import AppButton from '../../../../components/app-button';
+import { useGetTeachersList } from '../../../../redux/teachers/hook';
 
 const AssignTeacherToClassModal = ({isOpen, closeModal}) => {
   // const navigate = useNavigate();
 
-  const items = [{
-    id: 'option-0',
-    text: 'An example option that is really long to show what should be done to handle long text'
-  }, 
-  {
-    id: 'option-1',
-    text: 'Option 1'
-  }, 
-  {
-    id: 'option-2',
-    text: 'Option 2'
-  }, 
-  {
-    id: 'option-3',
-    text: 'Option 3 - a disabled item',
-    disabled: true
-  }, 
-  {
-    id: 'option-4',
-    text: 'Option 4'
-  }, 
-  {
-    id: 'option-5',
+  const { data: teachers } = useGetTeachersList(
+    1000,
+    1,
+  );
+
+  const [teacherId, setTeacherId] = useState(null)
+
+  // const [teachers, setTeachers] = useState([{
+  //   id: 'option-0',
+  //   text: 'An example option that is really long to show what should be done to handle long text'
+  // }, 
+  // {
+  //   id: 'option-1',
+  //   text: 'Option 1'
+  // }, 
+  // {
+  //   id: 'option-2',
+  //   text: 'Option 2'
+  // },
+  // {
+  //   id: 'option-4',
+  //   text: 'Option 4'
+  // }, 
+  // {
+  //   id: 'option-5',
     
-    text: 'Option 5'
-  }];
+  //   text: 'Option 5'
+  // }]);
   return (
     <Modal 
       modalHeading="Assign a class teacher to 12 - A" 
@@ -54,10 +57,10 @@ const AssignTeacherToClassModal = ({isOpen, closeModal}) => {
               <ComboBox 
                 onChange={() => {}} 
                 id="assigned_teacher" 
-                items={items} 
+                items={teachers} 
                 downshiftProps={{
-                  onStateChange: () => {
-                    // console.log('the state has changed');
+                  onStateChange: (e) => {
+                    console.log(e?.selectedItem?.value)
                   }
                 }} 
                 placeholder='Select teacher'

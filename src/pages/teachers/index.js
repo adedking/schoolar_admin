@@ -6,9 +6,9 @@ import AppDataTable from '../../components/dataTable';
 import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
 import ViewTeacher from './sub-components/view-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
-import { PAGINATION_DEFAULT } from '../../utils';
+import { PAGINATION_DEFAULT, teacherStatusConfig } from '../../utils';
 import { useNavigate } from 'react-router-dom';
-import AppButton from '../../components/app-button';
+// import AppButton from '../../components/app-button';
 
 const TeachersPage = () => {
     const [paginationData, setPaginationData] = useState({
@@ -32,42 +32,42 @@ const TeachersPage = () => {
     }
 
     const [showAddTeacher, setShowAddTeacher] = useState(false);
-    const data = {
-        data: [
-        {
-            id: '1',
-            first_name: 'Adedokun',
-            last_name: 'Agunbiade',
-            full_name: 'Adedokun Agunbiade',
-            email: 'adedokun@schoolar.com',
-            phone_number: '08106668220',
-            teaching_class: 'SS2, SS3',
-            teaching_subject: 'Mathematics',
-            status: 'Active',
-        },
-        {
-            id: '2',
-            first_name: 'Oladotun',
-            last_name: 'Aboaba',
-            full_name: 'Oladotun Aboaba',
-            email: 'dotun@schoolar.com',
-            phone_number: '08106668220',
-            teaching_class: 'SS2, SS3',
-            teaching_subject: 'Mathematics',
-            status: 'Active',
-        },
-        {
-            id: '3',
-            first_name: 'Omotolani',
-            last_name: 'Olurotimi',
-            full_name: 'Omotolani Olurotimi',
-            email: 'tola@schoolar.com',
-            phone_number: '08106668220',
-            teaching_class: 'SS2, SS3',
-            teaching_subject: 'Mathematics',
-            status: 'Active',
-        },
-    ]};
+    // const data = {
+    //     data: [
+    //     {
+    //         id: '1',
+    //         first_name: 'Adedokun',
+    //         last_name: 'Agunbiade',
+    //         full_name: 'Adedokun Agunbiade',
+    //         email: 'adedokun@schoolar.com',
+    //         phone_number: '08106668220',
+    //         teaching_class: 'SS2, SS3',
+    //         teaching_subject: 'Mathematics',
+    //         status: 'Active',
+    //     },
+    //     {
+    //         id: '2',
+    //         first_name: 'Oladotun',
+    //         last_name: 'Aboaba',
+    //         full_name: 'Oladotun Aboaba',
+    //         email: 'dotun@schoolar.com',
+    //         phone_number: '08106668220',
+    //         teaching_class: 'SS2, SS3',
+    //         teaching_subject: 'Mathematics',
+    //         status: 'Active',
+    //     },
+    //     {
+    //         id: '3',
+    //         first_name: 'Omotolani',
+    //         last_name: 'Olurotimi',
+    //         full_name: 'Omotolani Olurotimi',
+    //         email: 'tola@schoolar.com',
+    //         phone_number: '08106668220',
+    //         teaching_class: 'SS2, SS3',
+    //         teaching_subject: 'Mathematics',
+    //         status: 'Active',
+    //     },
+    // ]};
 
     const tableConfig = [
         {
@@ -83,17 +83,17 @@ const TeachersPage = () => {
             header: 'Email',
         },
         {
-            key: 'phone_number',
+            key: 'mobile',
             header: 'Phone Number',
         },
-        {
-            key: 'teaching_subject',
-            header: 'Teaching Subject',
-        },
-        {
-            key: 'teaching_class',
-            header: 'Teaching Class',
-        },
+        // {
+        //     key: 'teaching_subject',
+        //     header: 'Teaching Subject',
+        // },
+        // {
+        //     key: 'teaching_class',
+        //     header: 'Teaching Class',
+        // },
         {
             key: 'status',
             header: 'Status',
@@ -176,11 +176,17 @@ const TeachersPage = () => {
                             tableHeader={tableConfig}
                             mobileTableHeader={mobileTableHeader}
                             data={teachers}
+                            pagination={paginationData}
                             setPagination={setPaginationData}
                             mainButtonText='Add Teacher'
                             mainButtonAction={() => {
                                 setShowAddTeacher(true)
                             }}
+                            viewActionType={'teacher'}
+                            statusConfig={teacherStatusConfig}
+                            // viewAction={() => {
+                            //     navigate(`/school-teachers/${subClassInfo.id}`)
+                            // }}
                             loading={teachersLoading}
                             emptyText={'No teacher added'}
                         />

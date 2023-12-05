@@ -8,14 +8,12 @@ import { useGetSubClassesList } from '../../../../../redux/classes/hook';
 import { useForm } from 'react-hook-form';
 import { checkError } from '../../../../../utils/functions';
 
-const AddTeacherStepTwo = ({payload, setPayload, submit, backActionFn}) => {
+const AddTeacherStepTwo = ({certifications, setCertifications, payload, setPayload, submit, backActionFn}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
     const [trcnRegistrationNumber, setTrcnRegistrationNumber] = useState(payload?.trcn_registration_number)
     const [formClass, setFormClass] = useState(null)
     const [formClassName, setFormClassName] = useState('')
-    const [certifications, setCertifications] = useState([
-    ])
 
     const { data: classes } = useGetSubClassesList(
         1000,
@@ -23,14 +21,13 @@ const AddTeacherStepTwo = ({payload, setPayload, submit, backActionFn}) => {
     );
     useEffect(() => {
         if (payload) {
-            setCertifications(payload.certifications)
             setFormClass(payload.form_class)
             setFormClassName(payload.form_class_name)
         }
     }, [payload])
 
     const onFileChange = (e) => {
-        let newCert = certifications
+        let newCert = certifications ? certifications : []
         let curFile = [
             {
                 certification: 'BSc.',
@@ -45,12 +42,11 @@ const AddTeacherStepTwo = ({payload, setPayload, submit, backActionFn}) => {
             trcn_registration_number:  DOMPurify.sanitize(trcnRegistrationNumber),
             form_class:  DOMPurify.sanitize(formClass),
             form_class_name:  DOMPurify.sanitize(formClassName),
-            certifications: certifications
         }
         setPayload(payload)
         submit()
     }
-    // console.log(certificates)
+
     return (
         <Form 
             onSubmit={handleSubmit(action)}
@@ -111,7 +107,7 @@ const AddTeacherStepTwo = ({payload, setPayload, submit, backActionFn}) => {
                         onFileChange(e)
                     }}
                 />
-                {certifications && certifications.length > 0 ? 
+                {certifications?.length > 0 ? 
                 <React.Fragment>
                     {certifications.map((item, index) => (
                     <FileUploaderItem 

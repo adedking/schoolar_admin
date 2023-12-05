@@ -3,7 +3,9 @@ import { Axios } from './axios';
 const getTeachers = async (payload) => {
     let search = payload.search ? '&search=' + payload.search : '';
     let filter = payload.statusFilter && payload.statusFilter !== -1 ? '&filter=' + payload.statusFilter : '';
-    const { data } = await Axios.get(`/school-teachers?limit=${payload.limit}&page=${payload.page}${search}${filter}`,
+    let limit = payload.limit ? 'limit=' + payload.limit : 'limit=10';
+    let page = payload.page ? '&page=' + payload.page : '&page=1';
+    const { data } = await Axios.get(`/school-teachers?${limit}${page}${search}${filter}`,
     {
       timeout: 0
     });
@@ -21,6 +23,7 @@ const getTeacher = async (payload) => {
 const addTeacher = async (payload) => {
   const { data } = await Axios.post('/school-teachers', payload,
   {
+    headers: { 'Content-Type': 'multipart/form-data' },
     timeout: 0
   });
   return data;

@@ -22,12 +22,14 @@ import {
     TableToolbar, 
     TableToolbarAction, 
     TableToolbarContent, 
-    TableToolbarMenu, 
+    TableToolbarMenu,
     TableToolbarSearch } from 'carbon-components-react';
 import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../redux/components/components-slice';
 import { PAGINATION_DEFAULT } from '../utils';
+import { StatusCell } from './statusCell';
+import { useNavigate } from 'react-router-dom';
 
 const AppDataTable = ({
     tableHeader, 
@@ -38,13 +40,15 @@ const AppDataTable = ({
     description, 
     check=true, 
     mainButtonAction=()=>{},
+    viewActionType=null,
     mainButtonText,
     showToolBar=true,
     pagination,
     setPagination,
     emptyText,
     emptySubText,
-    emptyLinkText
+    emptyLinkText,
+    statusConfig=null,
 }) => {
 
     const props = () => ({
@@ -52,6 +56,7 @@ const AppDataTable = ({
         page: pagination? pagination.page : PAGINATION_DEFAULT.page,
         totalItems: data? data.total : 0,
         pagesUnknown: false,
+        nextPage: null,
         pageInputDisabled: false,
         pageSizeInputDisabled: false,
         backwardText: 'Previous page',
@@ -71,6 +76,14 @@ const AppDataTable = ({
         dispatch(IsTurnRightPanelOn());
     };
 
+    const navigate = useNavigate();
+
+    const viewAction = (id) => {
+        if (viewActionType === 'teacher') {
+            navigate(`/teachers/${id}`)
+        }
+    }
+
     useEffect(() => {
         const handleResize = () => {
           if (window.innerWidth < 600) {
@@ -83,6 +96,7 @@ const AppDataTable = ({
         return () => window.removeEventListener("resize", handleResize)
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window])
+
     return (
         <React.Fragment>
             {loading?
@@ -157,14 +171,31 @@ const AppDataTable = ({
                                 <TableBody
                                 >
                                     {rows.map(row => 
-                                    <TableRow className='!text-[13px] cursor-pointer min-h-[62px]' onClick={() => {handleRightPanelToggle()}} key={row.id} {...getRowProps({
-                                        row
-                                    })}
+                                    <TableRow 
+                                        className='!text-[14px] cursor-pointer min-h-[64px]' 
+                                        onClick={() => {viewAction(row.id)}}
+                                        key={row.id} 
+                                        {...getRowProps({
+                                            row
+                                        })}
                                     >
                                         {check?
                                             <TableSelectRow {...getSelectionProps({row})} />
                                         :null}
-                                        {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
+                                        {row.cells.map(cell => (
+                                            // <div>{cell.id.split(":")[1]}</div>
+                                            <React.Fragment>
+                                                {cell.id.split(":")[1] === 'status'?
+                                                <StatusCell
+                                                    code={cell.value}
+                                                    statusConfig={statusConfig}
+                                                />
+                                                :
+                                                <TableCell key={cell.id}>{cell.value}</TableCell>
+                                                }
+                                                
+                                            </React.Fragment>
+                                        ))}
                                     </TableRow>
                                 )}
                                 </TableBody>
@@ -273,7 +304,7 @@ const AppDataTable = ({
                                 <TableBody>
                                 {rows.map(row => <React.Fragment key={row.id}>
                                     <TableExpandRow  
-                                        className='!text-[13px]' 
+                                        className='!text-[14px]' 
                                         {...getRowProps({
                                             row
                                         })}
@@ -286,6 +317,11 @@ const AppDataTable = ({
                                     <TableExpandedRow colSpan={headers.length + 3} className="demo-expanded-td">
                                         <h6>Expandable row content</h6>
                                         <div>Description here</div>
+                                        <div 
+                                            className='flex gap-2 text-primary text-[13px] cursor-pointer justify-end'
+                                        >
+                                            View <ArrowRight />
+                                        </div>
                                     </TableExpandedRow>
                                     </React.Fragment>)}
                                 </TableBody>

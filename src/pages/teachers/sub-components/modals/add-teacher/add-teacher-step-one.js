@@ -8,8 +8,9 @@ import AppButton from '../../../../../components/app-button';
 import { useForm } from 'react-hook-form';
 import { checkError } from '../../../../../utils/functions';
 import { AllCountries } from '../../../../../utils/constants/countries';
+import { useGetSubClassesList } from '../../../../../redux/classes/hook';
 
-const AddTeacherStepOne = ({payload, setPayload, submit}) => {
+const AddTeacherStepOne = ({file, setFile, payload, setPayload, submit}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
@@ -21,11 +22,20 @@ const AddTeacherStepOne = ({payload, setPayload, submit}) => {
     const [state, setState] = useState(payload?.state)
     const [city, setCity] = useState(payload?.city)
     const [address, setAddress] = useState(payload?.address)
-    const [file, setFile] = useState(payload?.file)
     const [fileURL, setFileURL] = useState(payload?.fileURL)
     const [fileSelected, setFileSelected] = useState(file ? true : false)
 
+    const [trcnRegistrationNumber, setTrcnRegistrationNumber] = useState(payload?.trcn_registration_number)
+    const [formClass, setFormClass] = useState(null)
+    const [formClassName, setFormClassName] = useState('')
+
+    const { data: classes } = useGetSubClassesList(
+        1000,
+        1,
+    );
+
     const onFileChange = (e) => {
+        console.log(e.target.files)
         setFileURL(URL.createObjectURL(e.target.files[0]))
         setFile(e.target.files[0]);
         setFileSelected(true)
@@ -41,7 +51,6 @@ const AddTeacherStepOne = ({payload, setPayload, submit}) => {
             city : DOMPurify.sanitize(city),
             state : DOMPurify.sanitize(state),
             country : DOMPurify.sanitize(country),
-            file: file,
             fileURL,
         }
         setPayload(payload)
@@ -69,8 +78,8 @@ const AddTeacherStepOne = ({payload, setPayload, submit}) => {
                                     size='md' 
                                     required={false}
                                     labelText={"Drag and drop files here or click to upload" }
-                                    multiple={false} 
-                                    accept={['image/jpeg', 'image/png', 'image/jpg']} 
+                                    multiple={true} 
+                                    accept={['.jpeg', '.png', '.jpg']} 
                                     onAddFiles={(e) => {
                                         onFileChange(e)
                                     }}
@@ -177,6 +186,46 @@ const AddTeacherStepOne = ({payload, setPayload, submit}) => {
                                 checkError(false, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
                             }}
                         />
+                    </div>
+                </div>
+                <div className='flex md:flex-row flex-col gap-4 w-full mt-8'>
+                    <div className='md:w-1/2 w-full'>
+                        <TextInput
+                            className='min-w-full'
+                            kind={'text'}
+                            required={false}
+                            name={'trcn_registration_number'}
+                            {...register('trcn_registration_number', { required: false })}
+                            invalid={errors?.trcn_registration_number ? true : false}
+                            invalidText={errors?.first_name?.message? errors?.trcn_registration_number?.message : 'This field is required'}
+                            labelText="TRCN identification number"
+                            placeholder="Enter TRCN number"
+                            value={trcnRegistrationNumber}
+                            onChange={(e) => {
+                                checkError(false, e.target.value, 'trcn_registration_number', setError, clearErrors, setTrcnRegistrationNumber)
+                            }}
+                        />
+                    </div>
+                    <div className='md:w-1/2 w-full'>
+                        <Select
+                            id="form_class"
+                            name='form_class'
+                            labelText="Form class"
+                            value={formClass}
+                            onChange={(e) => {
+                                checkError(false, e.target.value, 'form_class', setError, clearErrors, setFormClass)
+                                let index = e.nativeEvent.target.selectedIndex;
+                                setFormClassName(e.nativeEvent.target[index].text)
+                            }}
+                        >
+                            {classes?.map((item, index) => (
+                            <SelectItem
+                                key={index}
+                                value={item.value}
+                                text={item.label}
+                            />
+                            ))}
+                        </Select>
                     </div>
                 </div>
                 <Select

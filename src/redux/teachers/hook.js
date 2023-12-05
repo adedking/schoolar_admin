@@ -59,3 +59,31 @@ export function useGetTeacher(id) {
     },
   );
 }
+
+export function useGetTeachersList(limit, page, search) {
+  return useQuery(
+    ['teachers-list', { limit, page, search }],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return teachers.getTeachers({
+        limit,
+        page,
+        search,
+      });
+    },
+    {
+      select: (data) => {
+        let newData = [];
+        newData.push({ id: null, text: 'Select a teacher', value: null });
+        data?.forEach((item) => {
+          newData.push({ id: item.id, text: item.first_name + ' ' + item.last_name+ ', ' + item.mobile });
+        });
+        return newData;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+      // keepPreviousData: true
+    },
+  );
+}

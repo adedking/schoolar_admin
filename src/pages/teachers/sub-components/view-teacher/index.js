@@ -6,7 +6,7 @@ import TeacherBasicInfo from './view-basic-info';
 import TeachingClasses from './teaching-classes';
 import Qualifications from './qualifications';
 import DashboardLayout from '../../../../components/layouts/dashboard';
-import { useGetTeachers } from '../../../../redux/teachers/hook';
+import { useGetTeacher, useGetTeachers } from '../../../../redux/teachers/hook';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import ViewProfile from '../../../../components/view-profile';
@@ -25,9 +25,14 @@ const ViewTeacherPage = () => {
         title: 'Qualifications',
         content: <Qualifications />
       },
+      {
+        title: 'Lesson Plan',
+        content: <Qualifications />
+      },
     ];
     const {id} = useParams();
-    const { data: teacher, isLoading: teacherLoading } = useGetTeachers(id);
+    const { data: teacher, isLoading: teacherLoading } = useGetTeacher(id);
+    console.log(teacher)
 
     return (
       <React.Fragment>
