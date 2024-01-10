@@ -81,6 +81,8 @@ const AppDataTable = ({
     const viewAction = (id) => {
         if (viewActionType === 'teacher') {
             navigate(`/teachers/${id}`)
+        } else if (viewActionType === 'student') {
+            navigate(`/students/${id}`)
         }
     }
 
@@ -173,7 +175,9 @@ const AppDataTable = ({
                                     {rows.map(row => 
                                     <TableRow 
                                         className='!text-[14px] cursor-pointer min-h-[64px]' 
-                                        onClick={() => {viewAction(row.id)}}
+                                        onClick={() => 
+                                            {viewAction(row.id)}
+                                        }
                                         key={row.id} 
                                         {...getRowProps({
                                             row
@@ -190,6 +194,10 @@ const AppDataTable = ({
                                                     code={cell.value}
                                                     statusConfig={statusConfig}
                                                 />
+                                                : cell.id.split(":")[1] === 'primary_guardian'?
+                                                <div>
+                                                    
+                                                </div>
                                                 :
                                                 <TableCell key={cell.id}>{cell.value}</TableCell>
                                                 }

@@ -1,187 +1,249 @@
-import React from 'react';
-import { Form, Stack, TextInput } from '@carbon/react';
-// import { useNavigate } from 'react-router-dom';
-import { FileUploader, FileUploaderDropContainer, FormGroup, Select, SelectItem } from 'carbon-components-react';
+import React, { useState } from 'react';
+import { FilterableMultiSelect, Form, Stack, TextInput } from '@carbon/react';
+import { FormGroup, Select, SelectItem } from 'carbon-components-react';
+import { useGetStudentsList } from '../../../../../redux/students/hook';
+// import { Close } from '@carbon/icons-react';
 
-const AddStudentStepOne = () => {
+const AddParentStepOne = () => {
+    const { data: students } = useGetStudentsList(
+    20000,
+    1,
+    );
 
-    // const navigate = useNavigate();
+    const items = [{
+        id: 'downshift-1-item-0',
+        text: 'Option 1'
+      }, {
+        id: 'downshift-1-item-1',
+        text: 'Option 2'
+      }, {
+        id: 'downshift-1-item-2',
+        text: 'Option 3 - a disabled item',
+        disabled: true
+      }, {
+        id: 'downshift-1-item-3',
+        text: 'Option 4'
+      }, {
+        id: 'downshift-1-item-4',
+        text: 'An example option that is really long to show what should be done to handle long text'
+      }, {
+        id: 'downshift-1-item-5',
+        text: 'Option 5'
+      }];
+
+    const [selectedStudents, setSelectedStudents] = useState(null)
+
+    const onChange = (newSelectedItems) => {
+        setSelectedStudents(newSelectedItems.selectedItems)
+    }
+
+    // const removeSelectedStudent = (index) => {
+    //     let newSelectedStudents = JSON.parse(JSON.stringify(selectedStudents))
+    //     newSelectedStudents.splice(index, 1)
+    //     setSelectedStudents(newSelectedStudents)
+    // }
+
     return (
         <Form 
             onSubmit={() => {  
             }}
+            className='mt-4'
             isFullWidth
         >
-            <Stack gap={4}>
-                <FormGroup>
-                    <Stack gap={4}>
-                        <labelTitle className='text-[14px] font-bold mt-3 -mb-2'>Bulk upload students</labelTitle>
-                        <FileUploaderDropContainer size='sm' labelTitle="Upload profile image" labelDescription="Max file size is 500mb. Only .jpg files are supported." labelText="Drag and drop files here or click to upload" multiple={false} accept={['image/jpeg', 'image/png']} />
-                    </Stack>
-                </FormGroup>
-                <div className='flex justify-center items-center flex-row -mt-6 -mb-8 font-bold text-[15px]'>
-                    <div className='bg-color-border w-[100%] h-[1px] mr-[6px]'></div>
-                    <p className='!text-[15px]'>or</p>
-                    <div className='bg-color-border w-[100%] h-[1px] ml-[6px]'></div>
-                </div>
-                <FormGroup className='duration-300'>
-                    <Stack gap={3}>
-                        <FileUploader labelTitle="Upload profile image" labelDescription="Max file size is 500mb. Only .jpg files are supported." buttonLabel="Upload" buttonKind="primary" size="md" filenameStatus="edit" accept={['.jpg', '.png']} multiple={true} disabled={false} iconDescription="Delete file" name="" />
-                        {/* <FileUploaderItem className='-mt-2 flex items-center p-3 justify-between w-full bg-white' errorBody="500kb max file size. Select a new file and try again." errorSubject="File size exceeds limit" iconDescription="Delete file" invalid={false} name="README.md" status="edit" size="md" /> */}
-                    </Stack>
-                </FormGroup>
-                
-                <div className='flex md:flex-row flex-col gap-4 w-full -mt-3'>
-                    <div className='md:w-1/3 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            name={'first_name'}
-                            required
-                            invalidText="Please enter a valid first name"
-                            labelText="First Name"
-                            placeholder="Student First Name"
-                            // value={firstName}
-                            // onChange={(e) => {
-                            //     setFirstName(e.target.value)
-                            // }}
-                        />
-                    </div>
-                    <div className='md:w-1/3 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            name={'middle_name'}
-                            id="student_id"
-                            labelText="Middle Name"
-                            placeholder="Student Middle Name"
-                            // value={lastName}
-                            // onChange={(e) => {
-                            //     setLastName(e.target.value)
-                            // }}
-                        />
-                    </div>
-                    <div className='md:w-1/3 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            required
-                            name={'last_name'}
-                            id="last_name"
-                            invalidText="Please enter a valid last name"
-                            labelText="Last Name"
-                            placeholder="Student Surname"
-                            // value={lastName}
-                            // onChange={(e) => {
-                            //     setLastName(e.target.value)
-                            // }}
-                        />
-                    </div>
+            <FormGroup>
+                <Stack gap={4}>
+                    <FilterableMultiSelect 
+                        id="students" 
+                        titleText="What student is this guardian for?" 
+                        // helperText="This is helper text" 
+                        items={items} 
+                        selectedItems={selectedStudents}
+                        placeholder='Search and select student(s)'
+                        itemToString={item => item ? item.text : ''} 
+                        selectionFeedback="top-after-reopen" 
+                        onChange={onChange}
+                        value={selectedStudents}
+                        renderSelectedItem
+                    />
+                    {selectedStudents && selectedStudents.length > 0 && selectedStudents.map((item, index) => (
+                        <div className='flex flex-col gap-3' key={index}>
+                            <div className='h-[48px] w-full flex items-center justify-between px-2 bg-white rounded-md'>
+                                <span>{item.text}</span>
+                                {/* <Close
+                                    width={25} 
+                                    height={25} 
+                                    onClick={() => {
+                                        removeSelectedStudent(index)
+                                    }}
+                                    className='cursor-pointer'
+                                /> */}
+                            </div>
+                        </div>
+                    ))}
                     
-                </div>
-                <div className='flex md:flex-row flex-col gap-4 w-full'>
-                    <div className='md:w-1/3 w-full'>
+                    <hr className='divider'></hr>
+                    <div className='flex md:flex-row flex-col gap-4 w-full'>
+                        <div className='md:w-1/2 w-full'>
+                            <TextInput
+                                className='min-w-full'
+                                kind={'text'}
+                                name={'first_name'}
+                                required
+                                invalidText="Please enter a valid first name"
+                                labelText="First Name"
+                                placeholder="Parent First Name"
+                                // value={firstName}
+                                // onChange={(e) => {
+                                //     setFirstName(e.target.value)
+                                // }}
+                            />
+                        </div>
+                        <div className='md:w-1/2 w-full'>
+                            <TextInput
+                                className='min-w-full'
+                                kind={'text'}
+                                required
+                                name={'last_name'}
+                                id="last_name"
+                                invalidText="Please enter a valid last name"
+                                labelText="Last Name"
+                                placeholder="Parent Surname"
+                                // value={lastName}
+                                // onChange={(e) => {
+                                //     setLastName(e.target.value)
+                                // }}
+                            />
+                        </div>
+                    </div>
+                    <div className='flex md:flex-row flex-col gap-4 w-full'>
+                        <div className='md:w-1/2 w-full'>
+                            <TextInput
+                                className='min-w-full'
+                                kind={'text'}
+                                name={'email'}
+                                required
+                                invalidText="Please enter a valid first name"
+                                labelText="Email"
+                                placeholder="Parent Email"
+                                // value={firstName}
+                                // onChange={(e) => {
+                                //     setFirstName(e.target.value)
+                                // }}
+                            />
+                        </div>
+                        <div className='md:w-1/2 w-full'>
+                            <TextInput
+                                className='min-w-full'
+                                kind={'text'}
+                                name={'phone_number'}
+                                id="phone_number"
+                                required
+                                invalidText="Please enter a valid phone number"
+                                labelText="Phone Number"
+                                placeholder="+234 - 000 000 0000"
+                            />
+                        </div>
+                    </div>
+                    <div className='flex md:flex-row flex-col gap-4 w-full'>
+                        <div className='md:w-1/2 w-full'>
+                            <Select
+                                id="select-1"
+                                defaultValue="male"
+                                labelText="Nationality"
+                            >
+                                <SelectItem
+                                    value={null}
+                                    text="Select Nationality"
+                                />
+                                <SelectItem
+                                    value="SS1"
+                                    text="SS1"
+                                />
+                                <SelectItem
+                                    value="SS2"
+                                    text="SS2"
+                                />
+                            </Select>
+                        </div>
+                        <div className='md:w-1/2 w-full'>
+                            <Select
+                                id="occupation"
+                                defaultValue="occupation"
+                                labelText="Occupation"
+                            >
+                                <SelectItem
+                                    value={null}
+                                    text="Select Occupation"
+                                />
+                                <SelectItem
+                                    value="SS1"
+                                    text="SS1"
+                                />
+                                <SelectItem
+                                    value="SS2"
+                                    text="SS2"
+                                />
+                            </Select>
+                        </div>
+                    </div>
+                    <div className='flex md:flex-row flex-col gap-4 w-full'>
                         <TextInput
                             className='min-w-full'
                             kind={'text'}
-                            name={'email'}
+                            name={'address'}
+                            id="address"
                             required
-                            invalidText="Please enter a valid first name"
-                            labelText="Email"
-                            placeholder="Student Email"
-                            // value={firstName}
-                            // onChange={(e) => {
-                            //     setFirstName(e.target.value)
-                            // }}
+                            invalidText="Enter a valid address"
+                            labelText="Address"
+                            placeholder="Address of the parent/guardian"
                         />
                     </div>
-                    <div className='md:w-1/3 w-full'>
-                        <Select
-                            id="select-1"
-                            defaultValue="male"
-                            labelText="Gender"
-                        >
-                            <SelectItem
-                                value="Male"
-                                text="Male"
-                            />
-                            <SelectItem
-                                value="Female"
-                                text="Female"
-                            />
-                        </Select>
+                    <div className='flex md:flex-row flex-col gap-4 w-full'>
+                        <div className='md:w-1/2 w-full'>
+                            <Select
+                                id="select-1"
+                                defaultValue="male"
+                                labelText="City"
+                            >
+                                <SelectItem
+                                    value={null}
+                                    text="Select City"
+                                />
+                                <SelectItem
+                                    value="SS1"
+                                    text="SS1"
+                                />
+                                <SelectItem
+                                    value="SS2"
+                                    text="SS2"
+                                />
+                            </Select>
+                        </div>
+                        <div className='md:w-1/2 w-full'>
+                            <Select
+                                id="state"
+                                defaultValue="state"
+                                labelText="State"
+                            >
+                                <SelectItem
+                                    value={null}
+                                    text="Select State"
+                                />
+                                <SelectItem
+                                    value="SS1"
+                                    text="SS1"
+                                />
+                                <SelectItem
+                                    value="SS2"
+                                    text="SS2"
+                                />
+                            </Select>
+                        </div>
                     </div>
-                    <div className='md:w-1/3 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            required
-                            name={'enrolment_id'}
-                            id="student_id"
-                            invalidText="Please enter a valid the student ID"
-                            labelText="Enrolment ID"
-                            placeholder="Enrolment ID"
-                            // value={lastName}
-                            // onChange={(e) => {
-                            //     setLastName(e.target.value)
-                            // }}
-                        />
-                    </div>
-                </div>
-                <div className='flex md:flex-row flex-col gap-4 w-full'>
-                    <div className='md:w-1/3 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            name={'phone_number'}
-                            id="phone_number"
-                            required
-                            invalidText="Please enter a valid phone number"
-                            labelText="Phone Number"
-                            placeholder="+234 - 000 000 0000"
-                        />
-                    </div>
-                    <div className='md:w-1/3 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            type='date'
-                            required
-                            name={'date_of_birth'}
-                            id="student_id"
-                            invalidText="Please enter a valid the student ID"
-                            labelText="Date of Birth"
-                            placeholder="Date of Birth"
-                            // value={lastName}
-                            // onChange={(e) => {
-                            //     setLastName(e.target.value)
-                            // }}
-                        />
-                    </div>
-                    <div className='md:w-1/3 w-full'>
-                        <Select
-                            id="select-1"
-                            defaultValue="male"
-                            labelText="Class"
-                        >
-                            <SelectItem
-                                value={null}
-                                text="Select Class"
-                            />
-                            <SelectItem
-                                value="SS1"
-                                text="SS1"
-                            />
-                            <SelectItem
-                                value="SS2"
-                                text="SS2"
-                            />
-                        </Select>
-                    </div>
-                </div>
-            </Stack>
+                </Stack>
+            </FormGroup>
         </Form>
     );
 };
 
-export default AddStudentStepOne;
+export default AddParentStepOne;

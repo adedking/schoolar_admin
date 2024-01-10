@@ -6,7 +6,7 @@ import TeacherBasicInfo from './view-basic-info';
 import TeachingClasses from './teaching-classes';
 import Qualifications from './qualifications';
 import DashboardLayout from '../../../../components/layouts/dashboard';
-import { useGetTeacher, useGetTeachers } from '../../../../redux/teachers/hook';
+import { useGetTeacher } from '../../../../redux/teachers/hook';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import ViewProfile from '../../../../components/view-profile';

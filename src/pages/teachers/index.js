@@ -4,11 +4,8 @@ import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
-import ViewTeacher from './sub-components/view-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT, teacherStatusConfig } from '../../utils';
-import { useNavigate } from 'react-router-dom';
-// import AppButton from '../../components/app-button';
 
 const TeachersPage = () => {
     const [paginationData, setPaginationData] = useState({
@@ -32,43 +29,7 @@ const TeachersPage = () => {
     }
 
     const [showAddTeacher, setShowAddTeacher] = useState(false);
-    // const data = {
-    //     data: [
-    //     {
-    //         id: '1',
-    //         first_name: 'Adedokun',
-    //         last_name: 'Agunbiade',
-    //         full_name: 'Adedokun Agunbiade',
-    //         email: 'adedokun@schoolar.com',
-    //         phone_number: '08106668220',
-    //         teaching_class: 'SS2, SS3',
-    //         teaching_subject: 'Mathematics',
-    //         status: 'Active',
-    //     },
-    //     {
-    //         id: '2',
-    //         first_name: 'Oladotun',
-    //         last_name: 'Aboaba',
-    //         full_name: 'Oladotun Aboaba',
-    //         email: 'dotun@schoolar.com',
-    //         phone_number: '08106668220',
-    //         teaching_class: 'SS2, SS3',
-    //         teaching_subject: 'Mathematics',
-    //         status: 'Active',
-    //     },
-    //     {
-    //         id: '3',
-    //         first_name: 'Omotolani',
-    //         last_name: 'Olurotimi',
-    //         full_name: 'Omotolani Olurotimi',
-    //         email: 'tola@schoolar.com',
-    //         phone_number: '08106668220',
-    //         teaching_class: 'SS2, SS3',
-    //         teaching_subject: 'Mathematics',
-    //         status: 'Active',
-    //     },
-    // ]};
-
+    
     const tableConfig = [
         {
             key: 'first_name',
@@ -86,14 +47,6 @@ const TeachersPage = () => {
             key: 'mobile',
             header: 'Phone Number',
         },
-        // {
-        //     key: 'teaching_subject',
-        //     header: 'Teaching Subject',
-        // },
-        // {
-        //     key: 'teaching_class',
-        //     header: 'Teaching Class',
-        // },
         {
             key: 'status',
             header: 'Status',
@@ -104,7 +57,7 @@ const TeachersPage = () => {
         main:[
             {
                 key: 'full_name',
-                header: 'Student Name',
+                header: "Teacher's Name",
             },
             {
                 key: 'email',
@@ -143,7 +96,7 @@ const TeachersPage = () => {
         ]
     };
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <React.Fragment>
@@ -155,16 +108,8 @@ const TeachersPage = () => {
             :
             null
             }
-            <DashboardLayout viewComponent={<ViewTeacher />} viewTitle={'View teacher'}>
+            <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4 relative'>
-                    {/* <AppButton
-                        type="button" 
-                        kind={'primary'}
-                        action={() => {
-                            navigate('/teachers/1')
-                        }}
-                        text={'View Single teacher (temporary button)'}
-                    /> */}
                     <WidgetCard 
                         cardData={cardData}
                         loading={teachersLoading}
@@ -184,9 +129,6 @@ const TeachersPage = () => {
                             }}
                             viewActionType={'teacher'}
                             statusConfig={teacherStatusConfig}
-                            // viewAction={() => {
-                            //     navigate(`/school-teachers/${subClassInfo.id}`)
-                            // }}
                             loading={teachersLoading}
                             emptyText={'No teacher added'}
                         />

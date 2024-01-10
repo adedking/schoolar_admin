@@ -1,15 +1,12 @@
 import { Axios } from './axios';
 
 const getTeachers = async (payload) => {
-    let search = payload.search ? '&search=' + payload.search : '';
-    let filter = payload.statusFilter && payload.statusFilter !== -1 ? '&filter=' + payload.statusFilter : '';
-    let limit = payload.limit ? 'limit=' + payload.limit : 'limit=10';
-    let page = payload.page ? '&page=' + payload.page : '&page=1';
-    const { data } = await Axios.get(`/school-teachers?${limit}${page}${search}${filter}`,
-    {
-      timeout: 0
-    });
-    return data?.data;
+  let search = payload.search ? '&search=' + payload.search : '';
+  let filter = payload.statusFilter && payload.statusFilter !== -1 ? '&filter=' + payload.statusFilter : '';
+  let limit = payload.limit ? 'limit=' + payload.limit : 'limit=10';
+  let page = payload.page ? '&page=' + payload.page : '&page=1';
+  const { data } = await Axios.get(`/school-teachers?${limit}${page}${search}${filter}`,);
+  return data?.data;
 };
 
 const getTeacher = async (payload) => {

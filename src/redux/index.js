@@ -15,12 +15,14 @@ import storage from 'redux-persist/lib/storage'; // localStorage
 import componentsSlice from './components/components-slice';
 import userSlice from './user/user-slice';
 import schoolsSlice from './school/reducer';
+import studentsSlice from './students/reducer';
 
 const reducer = combineReducers({
   // add all reducers here
   componentsSlice,
   userSlice,
   schoolsSlice,
+  studentsSlice,
 });
 
 const persistConfig = {

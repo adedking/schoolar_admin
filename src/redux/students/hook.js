@@ -60,3 +60,30 @@ export function useAddStudent() {
     },
   );
 }
+
+export function useGetStudentsList(limit, page, search) {
+  return useQuery(
+    ['students-list', { limit, page, search }],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return students.getStudents({
+        limit,
+        page,
+        search,
+      });
+    },
+    {
+      select: (data) => {
+        let newData = [];
+        data?.forEach((item) => {
+          newData.push({ id: item.id, text: item.first_name + ' ' + item.last_name+ ', ' + item.mobile });
+        });
+        return newData;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+      // keepPreviousData: true
+    },
+  );
+}

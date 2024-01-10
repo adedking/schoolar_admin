@@ -15,7 +15,11 @@ const AddStudentStepOne = () => {
             <Stack gap={4}>
                 <FormGroup>
                     <Stack gap={4}>
-                        <labelTitle className='text-[14px] font-bold mt-3 -mb-2'>Bulk upload students</labelTitle>
+                        <div className='flex justify-between'>
+                            <labelTitle className='text-[14px] font-bold mt-3 -mb-2'>Bulk upload students</labelTitle>
+                            <labelTitle className='text-[14px] mt-3 -mb-2 text-primary'>Download excel template</labelTitle>
+                        </div>
+                        
                         <FileUploaderDropContainer size='sm' labelTitle="Upload profile image" labelDescription="Max file size is 500mb. Only .jpg files are supported." labelText="Drag and drop files here or click to upload" multiple={false} accept={['image/jpeg', 'image/png']} />
                     </Stack>
                 </FormGroup>

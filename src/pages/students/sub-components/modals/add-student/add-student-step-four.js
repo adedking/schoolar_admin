@@ -1,6 +1,5 @@
 import React from 'react';
 import profilePix from '../../../../../assets/svg/profile-pix-placeholder.svg';
-import { FileUploaderItem } from 'carbon-components-react';
 
 const AddStudentStepFour = () => {
 
@@ -16,7 +15,15 @@ const AddStudentStepFour = () => {
             <div className='flex flex-col gap-3 w-[75%]'>
                 <div className='flex flex-col gap-1'>
                     <div className='text-color-gray text-[12px]'>
-                        Full Name
+                        Student ID
+                    </div>
+                    <div className='text-black text-[13px] font-semibold'>
+                        SCH-001
+                    </div>
+                </div>
+                <div className='flex flex-col gap-1'>
+                    <div className='text-color-gray text-[12px]'>
+                        Student full name
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
                         Adedokun Agunbiade
@@ -24,7 +31,7 @@ const AddStudentStepFour = () => {
                 </div>
                 <div className='flex flex-col gap-1'>
                     <div className='text-color-gray text-[12px]'>
-                        Mobile
+                        Phone number
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
                         08106668220
@@ -40,27 +47,44 @@ const AddStudentStepFour = () => {
                 </div>
                 <div className='flex flex-col gap-1'>
                     <div className='text-color-gray text-[12px]'>
-                        TRN identification number
+                        Class
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        CO-123450
+                        SS3
                     </div>
                 </div>
                 <div className='flex flex-col gap-1'>
                     <div className='text-color-gray text-[12px]'>
-                        Form class
+                        Date of birth
                     </div>
                     <div className='text-black text-[13px] font-semibold'>
-                        SS2
+                        12/03/2000
                     </div>
                 </div>
                 <div className='flex flex-col gap-1'>
                     <div className='text-color-gray text-[12px]'>
-                        Certificates
+                        Primary guardian's name
                     </div>
-                    <FileUploaderItem className='flex items-center p-2 -pr-2 justify-between w-full bg-white rounded-sm !text-[13px]' errorBody="500kb max file size. Select a new file and try again." errorSubject="File size exceeds limit" iconDescription="Delete file" invalid={false} name="README.md" status="edit" size="sm" />
+                    <div className='text-black text-[13px] font-semibold'>
+                        Oladotun Aboaba Senior
+                    </div>
                 </div>
-                
+                <div className='flex flex-col gap-1'>
+                    <div className='text-color-gray text-[12px]'>
+                        Contact Details
+                    </div>
+                    <div className='text-black text-[13px] font-semibold'>
+                        08076888772
+                    </div>
+                </div>
+                <div className='flex flex-col gap-1'>
+                    <div className='text-color-gray text-[12px]'>
+                        Ocupation
+                    </div>
+                    <div className='text-black text-[13px] font-semibold'>
+                        Accountant
+                    </div>
+                </div>
             </div>
         </div>
     );

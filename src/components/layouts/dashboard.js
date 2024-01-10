@@ -21,7 +21,6 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
     
     const checkLocation = (type) => {
         let currentLocation = location.pathname.split('/')[1]
-        
         if (type === 'user') {
             if (
                 location.pathname === '/' ||

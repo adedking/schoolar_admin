@@ -1,18 +1,14 @@
 
 import { Button, Modal, ProgressIndicator, ProgressStep } from 'carbon-components-react';
 import React, { useState } from 'react';
-import AddStudentStepOne from './add-parent-step-one';
-import AddStudentStepTwo from './add-parent-step-two';
-import AddStudentStepThree from './add-parent-step-three';
-import AddStudentStepFour from './add-parent-step-four';
+import AddParentStepOne from './add-parent-step-one';
+import AddParentStepTwo from './add-parent-step-two';
 import { ArrowRight } from '@carbon/icons-react';
 
 
 const AddParentModal = ({isOpen, closeModal}) => {
     const [payloadOne, setPayloadOne] = useState(null);
     const [payloadTwo, setPayloadTwo] = useState(null);
-    const [payloadThree, setPayloadThree] = useState(null);
-    const [payloadFour, setPayloadFour] = useState(null);
 
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -30,30 +26,16 @@ const AddParentModal = ({isOpen, closeModal}) => {
         title: 'Step 1',
         complete: false,
         current: true,
-        description: "Basic Information",
-        content: <AddStudentStepOne payload={payloadOne} setPayload={setPayloadOne} />,
+        description: "Guardian Information",
+        content: <AddParentStepOne payload={payloadOne} setPayload={setPayloadOne} />,
         action: buttonAction('step_one')
       },
       {
         title: 'Step 2',
         complete: false,
         current: false,
-        description: "Health Details",
-        content: <AddStudentStepTwo payload={payloadTwo} setPayload={setPayloadTwo} />
-      },
-      {
-        title: 'Step 3',
-        complete: false,
-        current: false,
-        description: "Guardian Details",
-        content: <AddStudentStepThree payload={payloadThree} setPayload={setPayloadThree} />
-      },
-      {
-        title: 'Step 4',
-        complete: false,
-        current: false,
         description: "Confirmation",
-        content: <AddStudentStepFour payload={payloadFour} setPayload={setPayloadFour} />
+        content: <AddParentStepTwo payload={payloadTwo} setPayload={setPayloadTwo} />
       },
     ]);
 
@@ -104,7 +86,7 @@ const AddParentModal = ({isOpen, closeModal}) => {
 
  return (
   <Modal 
-    modalHeading="Add Student" 
+    modalHeading="Add Parent/Guardian" 
     primaryButtonText="Continue" 
     secondaryButtonText={currentStep > 0 ? "Back" : ''}
     hasScrollingContent={false}
@@ -153,7 +135,7 @@ const AddParentModal = ({isOpen, closeModal}) => {
       <Button
           type="submit" 
           kind={'primary'} 
-          className='min-w-[180px] h-[60px]'
+          className='min-w-[220px] h-[60px] mt-2'
           renderIcon={ArrowRight}
           onClick={() => {
             requestSubmit()
