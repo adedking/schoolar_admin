@@ -1,4 +1,4 @@
-import { Form, Modal, Select, SelectItem, TextInput } from 'carbon-components-react';
+import { Form, Modal, TextInput } from 'carbon-components-react';
 import React from 'react';
 import AppButton from '../../../../components/app-button';
 import { Stack } from '@carbon/react';
