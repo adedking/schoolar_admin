@@ -1,4 +1,4 @@
-import { Axios } from './axios';
+import { Axios } from './axios.js';
 
 const getClasses = async (payload) => {
     const { data } = await Axios.get(`/classes`,

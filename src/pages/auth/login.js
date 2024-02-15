@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Checkbox, Form, Stack, TextInput } from '@carbon/react';
+import { Checkbox, Form, Stack, TextInput, FormLabel, PasswordInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
@@ -13,15 +13,25 @@ const LogInPage = () => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    })
+
+    const handleChange = (e) => {
+        console.log(e)
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const navigate = useNavigate();
     const {mutateAsync: login, isLoading} = useLogin()
 
     const submitForm = async () => {
-        let user_email = DOMPurify.sanitize(email);
-        let user_password = DOMPurify.sanitize(password);
+        let user_email = DOMPurify.sanitize(form.email);
+        let user_password = DOMPurify.sanitize(form.password);
         
         let payload = {
             email: user_email,
@@ -47,35 +57,36 @@ const LogInPage = () => {
                             kind={'email'}
                             name={'email'}
                             id="email"
-                            value={email}
+                            value={form.email}
                             {...register('email', { required: true })}
                             invalid={errors?.email? true : false}
                             invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
                             onChange={(e) => {
-                                checkError(true, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
+                                checkError(true, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                             }}
                             labelText="Email"
                             placeholder="Enter Your Email"
                         />
                         <div className='w-full mb-2'>
-                        <labelText className='flex flex-row justify-between text-[12px] mb-[10px] text-gray-600'> 
-                            <span>Password</span>
-                            <span className=' text-primary hover:underline duration-300 cursor-pointer' onClick={() => {navigate("/forgot-password")}}>Forget Password?</span>
-                        </labelText>
-                        <TextInput.PasswordInput
-                            type="password"
-                            name={'password'}
-                            labelText={''}
-                            id="passsword"
-                            value={password}
-                            {...register('passsword', { required: true })}
-                            invalid={errors?.passsword? true : false}
-                            invalidText={errors?.passsword?.message? errors?.passsword?.message : 'This field is required'}
-                            onChange={(e) => {
-                                checkError(true, e.target.value, 'passsword', setError, clearErrors, setPassword, 'password')
-                            }}
-                            placeholder="Enter Your Password"
-                        />
+                            <div className='flex flex-row justify-between text-[12px] mb-[8px] text-gray-600 !w-full'> 
+                                <span>Password</span>
+                                <span className=' text-primary hover:underline duration-300 cursor-pointer' onClick={() => {navigate("/forgot-password")}}>Forget Password?</span>
+                            </div>
+                            <PasswordInput
+                                type="password"
+                                name={'password'}
+                                value={form.password}
+                                id="passsword"
+                                
+                                labelText=""
+                                {...register('password', { required: true })}
+                                invalid={errors?.password? true : false}
+                                invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
+                                placeholder="Enter Your Password"
+                                onChange={(e) => {
+                                    checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange, 'password')
+                                }}
+                            />
                         </div>
                         <Checkbox className={'text-[13px]'} labelText={`Stay Logged In`} id="stay_logged_in" />
                         <AppButton
@@ -86,14 +97,14 @@ const LogInPage = () => {
                             text={'Sign in'}
                         />
                         <hr className='divider -mb-2' />
-                        <labelText> 
+                        <FormLabel> 
                             <span className='text-[14px]'>Don't have an account?&nbsp;</span>
                             <span className='text-primary underline cursor-pointer text-[14px]' 
                                 onClick={() => {navigate("/register")}}
                             >
                                 Create a schoolar account
                             </span>
-                        </labelText>
+                        </FormLabel>
                     </Stack>
                 </Form>
                 

@@ -5,7 +5,7 @@ import { Tabs, Tab, TabList, TabPanels, TabPanel, Grid, Column } from "carbon-co
 const TabView = ({ componentTabs }) => {
 
   return (
-    <Grid condensed className='!bg-background p-3 min-h-[500px]'>
+    <Grid condensed className='!bg-background p-3 px-2 min-h-[500px]'>
       <Column lg={16} md={16} sm={4}>
         <Tabs>
           <TabList 

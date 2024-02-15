@@ -2,53 +2,57 @@ import React, { useState } from 'react';
 import DOMPurify from 'dompurify';
 import AuthLayout from '../../components/layouts/authentication';
 import { ArrowRight } from '@carbon/icons-react';
-import { Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select, Toggle } from 'carbon-components-react';
+import { Form, SelectItem, Stack, TextInput, FormGroup, RadioButton, RadioButtonGroup, Select, Toggle, FormLabel, PasswordInput } from 'carbon-components-react';
 import { useNavigate } from 'react-router-dom';
 import { useSignUp } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
 import { useForm } from 'react-hook-form';
 import { checkError } from '../../utils/functions';
 import { AllCountries } from '../../utils/constants/countries';
+import { locationTypeOptions } from '../../utils/constants';
 
 const SignupPage = () => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
-    console.log(errors)
 
-    const [schoolType, setSchoolType] = useState('independent')
-    const [locationType, setLocationType] = useState('primary')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [schoolName, setSchoolName] = useState('')
-    const [country, setCountry] = useState('Nigeria')
-    const [state, setState] = useState('Lagos')
-    const [password, setPassword] = useState('')
-    const [passwordConfirmation, setConfirmPassword] = useState('')
-    const [address, setAddress] = useState('')
-    const [loadDefault, setLoadDefault] = useState(false)
+    const [form, setForm] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        school_name: '',
+        school_type: 'independent',
+        location_type: 'primary',
+        country: 'Nigeria',
+        state: 'Lagos',
+        password: '',
+        password_confirmation: '',
+        address: '',
+        syllabus: 'waec',
+        load_default: false,
+    })
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const navigate = useNavigate();
     const {mutateAsync: signup, isLoading} = useSignUp()
 
-    const locationTypeOptions = [
-        {value: 'pre-primary', text:'Pre-primary'},
-        {value: 'primary', text:'Primary'},
-        {value: 'secondary', text:'Secondary'},
-    ]
-
     const submitForm = async () => {
-        let first_name = DOMPurify.sanitize(firstName);
-        let last_name = DOMPurify.sanitize(lastName);
-        let user_email = DOMPurify.sanitize(email);
-        let school_name = DOMPurify.sanitize(schoolName);
-        let school_type = DOMPurify.sanitize(schoolType);
-        let location_type = DOMPurify.sanitize(locationType);
-        let user_country = DOMPurify.sanitize(country);
-        let user_state = DOMPurify.sanitize(state);
-        let user_password = DOMPurify.sanitize(password);
-        let password_confirmation = DOMPurify.sanitize(passwordConfirmation);
-        let school_address = DOMPurify.sanitize(address);
+        let first_name = DOMPurify.sanitize(form.first_name);
+        let last_name = DOMPurify.sanitize(form.last_name);
+        let user_email = DOMPurify.sanitize(form.email);
+        let school_name = DOMPurify.sanitize(form.school_name);
+        let school_type = DOMPurify.sanitize(form.school_type);
+        let location_type = DOMPurify.sanitize(form.location_type);
+        let user_country = DOMPurify.sanitize(form.country);
+        let user_state = DOMPurify.sanitize(form.state);
+        let user_password = DOMPurify.sanitize(form.password);
+        let password_confirmation = DOMPurify.sanitize(form.password_confirmation);
+        let school_address = DOMPurify.sanitize(form.school_address);
         
         let payload = {
             first_name,
@@ -63,9 +67,9 @@ const SignupPage = () => {
             password_confirmation,
             address: school_address,
             syllabus: "waec",
-            load_default: loadDefault ? 1 : 0
+            load_default: form.load_default ? 1 : 0
         }
-        await signup(payload).then((response) => {
+        await signup(payload).then(() => {
             navigate('/dashboard')
         })
     }
@@ -78,14 +82,14 @@ const SignupPage = () => {
                     className='bg-white md:w-[490px] w-screen md:min-h-screen md:p-4 p-8 md:mt-2'
                 >
                     <Stack gap={6}>
-                        <labelText className='!text-[15px]'> 
+                        <FormLabel className='!text-[15px]'> 
                             Do you have an account?&nbsp;
                             <span className='link-color hover:underline duration-300 text-primary underline cursor-pointer text-[15px]' 
                                 onClick={() => {navigate("/")}}
                             >
                                 Login
                             </span>
-                        </labelText>
+                        </FormLabel>
                         <div className='header-4'>Create a account and elevate your school management process</div>
                         <div className='flex md:flex-row flex-col gap-4'>
                             <div className='md:w-1/2 w-full'>
@@ -98,9 +102,9 @@ const SignupPage = () => {
                                     invalidText={errors?.first_name?.message? errors?.first_name?.message : 'This field is required'}
                                     labelText="First Name"
                                     placeholder="Enter Your First Name"
-                                    value={firstName}
+                                    value={form.first_name}
                                     onChange={(e) => {
-                                        checkError(true, e.target.value, 'first_name', setError, clearErrors, setFirstName)
+                                        checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                                     }}
                                 />
                             </div>
@@ -114,9 +118,9 @@ const SignupPage = () => {
                                     invalidText={errors?.last_name?.message? errors?.last_name?.message : 'This field is required'}
                                     labelText="Last Name (Surname)"
                                     placeholder="Enter Your Surname"
-                                    value={lastName}
+                                    value={form.last_name}
                                     onChange={(e) => {
-                                        checkError(true, e.target.value, 'last_name', setError, clearErrors, setLastName)
+                                        checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                                     }}
                                 />
                             </div>
@@ -130,16 +134,17 @@ const SignupPage = () => {
                             invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
                             labelText="Email"
                             placeholder="Enter Your Email"
+                            value={form.email}
                             onChange={(e) => {
-                                checkError(true, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
+                                checkError(true, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                             }}
                         />
                         <div className='flex md:flex-row flex-col gap-4'>
                             <div className='md:w-1/2 w-full mb-2'>
-                                <TextInput.PasswordInput
+                                <PasswordInput
                                     type="password"
                                     name={'password'}
-                                    value={password}
+                                    value={form.password}
                                     id="passsword"
                                     labelText="Create Password"
                                     {...register('password', { required: true })}
@@ -147,43 +152,47 @@ const SignupPage = () => {
                                     invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
                                     placeholder="Enter Your Password"
                                     onChange={(e) => {
-                                        checkError(true, e.target.value, 'passsword', setError, clearErrors, setPassword, 'password')
+                                        checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange, 'password')
                                     }}
                                 />
                             </div>
                             <div className='md:w-1/2 w-full'>
-                                <TextInput.PasswordInput
+                                <PasswordInput
                                     type="password"
-                                    name={'confirm_password'}
-                                    value={passwordConfirmation}
-                                    id="confirm_passsword"
+                                    name={'password_confirmation'}
+                                    value={form.password_confirmation}
+                                    id="password_confirmation"
                                     labelText="Password Confirmation"
                                     placeholder="Confirm Your Password"
-                                    {...register('confirm_password', { required: true })}
-                                    invalid={errors?.confirm_password? true : false}
-                                    invalidText={errors?.confirm_password?.message? errors?.confirm_password?.message : 'This field is required'}
+                                    {...register('password_confirmation', { required: true })}
+                                    invalid={errors?.password_confirmation? true : false}
+                                    invalidText={errors?.password_confirmation?.message? errors?.password_confirmation?.message : 'This field is required'}
                                     onChange={(e) => {
-                                        checkError(true, e.target.value, 'confirm_password', setError, clearErrors, setConfirmPassword, 'password_confirmation', password)
+                                        checkError(true, e, e.target.value, 'password_confirmation', setError, clearErrors, handleChange, 'password_confirmation', form.password)
                                     }}
                                 />
                             </div>
                         </div>
-                        <labelText className="text-[12px] text-[#525252] -mt-5">Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters.</labelText>
+                        <FormLabel className="text-[12px] text-[#525252] -mt-5">Password must be alphanumeric, contain at least 8 characters and must contain both uppercase and lower case letters.</FormLabel>
                         <RadioButtonGroup
                             defaultSelected="independent"
                             legendText="Select School Type"
                             name="school_type"
                             id="school_type"
-                            valueSelected={schoolType}
+                            valueSelected={form.school_type}
                         >
                             <RadioButton
                                 labelText="Indepent school"
                                 value={'independent'}
                                 id="independent"
                                 onClick={() => {
-                                    if (schoolType !== 'independent') {
-                                        setSchoolType('independent')
+                                    if (form.school_type !== 'independent') {
+                                        setForm({
+                                            ...form,
+                                            school_type: 'independent' 
+                                        })
                                     } 
+                                    
                                     
                                 }}
                             />
@@ -191,8 +200,11 @@ const SignupPage = () => {
                                 labelText="Group of schools"
                                 value='group'
                                 onClick={() => {
-                                    if (schoolType !== 'group') {
-                                        setSchoolType('group')
+                                    if (form.school_type !== 'group') {
+                                        setForm({
+                                            ...form,
+                                            school_type: 'group' 
+                                        })
                                     } 
                                 }}
                                 id="group"
@@ -210,8 +222,9 @@ const SignupPage = () => {
                                     invalidText={errors?.school_name?.message? errors?.school_name?.message : 'This field is required'}
                                     labelText="School Name"
                                     placeholder="Enter Your School Name"
+                                    value={form.school_name}
                                     onChange={(e) => {
-                                        checkError(true, e.target.value, 'school_name', setError, clearErrors, setSchoolName)
+                                        checkError(true, e, e.target.value, 'school_name', setError, clearErrors, handleChange)
                                     }}
                                 />
                                 
@@ -220,10 +233,10 @@ const SignupPage = () => {
                                         <Select
                                             id="select-1"
                                             name={'country'}
-                                            value={country}
+                                            value={form.country}
                                             labelText="Nationality"
                                             onChange={(e) => {
-                                                checkError(true, e.target.value, 'country', setError, clearErrors, setCountry)
+                                                checkError(true, e, e.target.value, 'country', setError, clearErrors, handleChange)
                                             }}  
                                         >
                                             {AllCountries.map((item, index) => (
@@ -237,11 +250,11 @@ const SignupPage = () => {
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="select-1"
-                                            value={state}
+                                            value={form.state}
                                             name='state'
                                             labelText="State"
                                             onChange={(e) => {
-                                                checkError(true, e.target.value, 'state', setError, clearErrors, setState)
+                                                checkError(true, e, e.target.value, 'state', setError, clearErrors, handleChange)
                                             }}
                                         >
                                             <SelectItem
@@ -257,11 +270,11 @@ const SignupPage = () => {
                                     <div className='md:w-1/2 w-full'>
                                         <Select
                                             id="school_type"
-                                            value={locationType}
+                                            value={form.location_type}
                                             name='school_type'
                                             labelText="School Type"
                                             onChange={(e) => {
-                                                checkError(true, e.target.value, 'school_type', setError, clearErrors, setLocationType)
+                                                checkError(true, e, e.target.value, 'school_type', setError, clearErrors, handleChange)
                                             }}
                                         >
                                             {locationTypeOptions.map(item => (
@@ -283,20 +296,23 @@ const SignupPage = () => {
                                     invalidText={errors?.address?.message? errors?.address?.message : 'This field is required'}
                                     labelText="Address **"
                                     placeholder="Enter the teacher's address"
-                                    value={address}
+                                    value={form.address}
                                     onChange={(e) => {
-                                        checkError(true, e.target.value, 'address', setError, clearErrors, setAddress)
+                                        checkError(true, e, e.target.value, 'address', setError, clearErrors, handleChange)
                                     }}
                                 />
                                 <div className='flex flex-row justify-between items-center gap-4'>
                                     <span className='text-[14px]'>Do you want to preload default classes and subjects?</span>
                                     <Toggle 
                                         size="md"  
-                                        defaultToggled={loadDefault}
                                         id="load_default" 
                                         hideLabel
+                                        toggled={form.load_default}
                                         onToggle={() => {
-                                            setLoadDefault(!loadDefault)
+                                            setForm({
+                                                ...form,
+                                                load_default: !form.load_default
+                                            })
                                         }}
                                     />
                                 </div>

@@ -17,7 +17,7 @@ export const queryClient = new QueryClient({
     },
   },
 });
-const container = document.getElementById('root');
+const container = document.getElementById('root') || document.createElement('div');
 const root = createRoot(container)
 
 root.render(

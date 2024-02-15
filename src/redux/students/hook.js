@@ -13,12 +13,15 @@ export function useGetStudents( limit, page, statusFilter, search ) {
     },
     {
       select: (data) => {
+        data?.data?.forEach((student) => {
+          student.class = `${student.main_class} (${student.sub_class})`
+        });
+        console.log(data)
         return data;
       },
       onSettled: (data, error, variables, context) => {
         store.dispatch(setIsLoading(false));
       },
-      // keepPreviousData: true
     },
   );
 }
@@ -51,8 +54,8 @@ export function useAddStudent() {
     },
     {
       onSuccess: (response, variables, context) => {
-        queryClient.invalidateQueries('teachers');
-        store.dispatch(setAlert(true, 'Add Teacher Successful', 'success', 'You have successfully added teacher'));
+        queryClient.invalidateQueries('students');
+        store.dispatch(setAlert(true, 'Add Student Successful', 'success', 'You have successfully added a student'));
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
@@ -60,6 +63,79 @@ export function useAddStudent() {
     },
   );
 }
+
+export function useAddStudentRecords() {
+  return useMutation(
+    (payload) => {
+      return students.addStudentRecords(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('students');
+        store.dispatch(setAlert(true, 'Add Student Record Successful', 'success', 'You have successfully added student records'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useAddStudentParentsNew() {
+  return useMutation(
+    (payload) => {
+      return students.addStudentParentsNew(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('student');
+        store.dispatch(setAlert(true, 'Add student parent successful', 'success', 'You have successfully added student parent'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useAddStudentParentsOld() {
+  return useMutation(
+    (payload) => {
+      return students.addStudentParentsExisting(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('student');
+        store.dispatch(setAlert(true, 'Add Student Record Successful', 'success', 'You have successfully added student records'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useUpdateStudent() {
+  return useMutation(
+    (payload) => {
+      store.dispatch(setIsLoading(true));
+      return students.updateStudent(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('employee-bonuses');
+        store.dispatch(setAlert(true, 'success', 'Student updated successfully'));
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+
 
 export function useGetStudentsList(limit, page, search) {
   return useQuery(

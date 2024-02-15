@@ -4,7 +4,7 @@ import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import AddStudentModal from './sub-components/modals/add-student/add-student';
-import { PAGINATION_DEFAULT } from '../../utils';
+import { PAGINATION_DEFAULT, studentStatusConfig  } from '../../utils';
 import { useGetStudents } from '../../redux/students/hook';
 
 const StudentsPage = () => {
@@ -17,14 +17,17 @@ const StudentsPage = () => {
            { title: 'Absent', value: 20},
         ]
     }
+
     const [showAddStudent, setShowAddStudent] = useState(false);
+    
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
-    const { data: students } = useGetStudents(
+
+    const { data: students, isLoading: studentLoading } = useGetStudents(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
@@ -32,6 +35,10 @@ const StudentsPage = () => {
     );
 
     const tableConfig = [
+        {
+            key: 'uuid',
+            header: 'id',
+        },
         {
             key: 'first_name',
             header: 'First Name',
@@ -53,11 +60,11 @@ const StudentsPage = () => {
             header: 'Class',
         },
         {
-            key: 'enrolment_id',
+            key: 'registration_id',
             header: 'Enrolment ID',
         },
         {
-            key: 'primary_guardian',
+            key: 'parents',
             header: 'Primary Guardian',
         },
         {
@@ -69,6 +76,10 @@ const StudentsPage = () => {
     const mobileTableHeader = {
         main:[
             {
+                key: 'uuid',
+                header: 'id',
+            },
+            {
                 key: 'full_name',
                 header: 'Student Name',
             },
@@ -78,6 +89,10 @@ const StudentsPage = () => {
             },
         ],
         full: [
+            {
+                key: 'uuid',
+                header: 'id',
+            },
             {
                 key: 'first_name',
                 header: 'First Name',
@@ -103,7 +118,7 @@ const StudentsPage = () => {
                 header: 'Enrolment ID',
             },
             {
-                key: 'primary_guardian',
+                key: 'parents',
                 header: 'Primary Guardian',
             },
             {
@@ -129,7 +144,7 @@ const StudentsPage = () => {
                         cardData={cardData}
                     />
                     <div className='min-w-full max-w-full bg-background rounded-sm'>
-                        <AppDataTable 
+                        <AppDataTable
                             title={'List of Students'}
                             description={'List of all students in your school'}
                             tableHeader={tableConfig}
@@ -143,6 +158,9 @@ const StudentsPage = () => {
                             }}
                             emptyText={'No student added'}
                             emptySubText={'Please add students to your school by clicking the button below'}
+                            viewActionType={'student'}
+                            statusConfig={studentStatusConfig}
+                            loading={studentLoading}
                         />
                     </div>
                 </div>

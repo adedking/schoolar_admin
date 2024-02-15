@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-lone-blocks */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { 
@@ -28,8 +30,9 @@ import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../redux/components/components-slice';
 import { PAGINATION_DEFAULT } from '../utils';
-import { StatusCell } from './statusCell';
+import { StatusCell } from './fragments/data-table-fragments/status-cell';
 import { useNavigate } from 'react-router-dom';
+import { ParentCell } from './fragments/data-table-fragments/parent-cell';
 
 const AppDataTable = ({
     tableHeader, 
@@ -83,6 +86,8 @@ const AppDataTable = ({
             navigate(`/teachers/${id}`)
         } else if (viewActionType === 'student') {
             navigate(`/students/${id}`)
+        } else if (viewActionType === 'parent') {
+            navigate(`/parents-guardians/${id}`)
         }
     }
 
@@ -163,21 +168,27 @@ const AppDataTable = ({
                                 <TableHead>
                                     <TableRow>
                                         {check?<TableSelectAll {...getSelectionProps()} />:null}
-                                        {tableHeader.map((header, i) => <TableHeader key={i} {...getHeaderProps({
-                                            header
-                                        })}>
-                                            {header.header}
-                                        </TableHeader>)}
+                                        {tableHeader.map((header, i) => (
+                                            <>
+                                            {header.header === 'id' ?
+                                            null :
+                                            <TableHeader key={i} {...getHeaderProps({
+                                                header
+                                            })}>
+                                                {header.header}
+                                            </TableHeader>}
+                                            </>))
+                                        }
+                                        
                                     </TableRow>
                                 </TableHead>
-                                <TableBody
-                                >
+                                <TableBody>
                                     {rows.map(row => 
                                     <TableRow 
-                                        className='!text-[14px] cursor-pointer min-h-[64px]' 
-                                        onClick={() => 
-                                            {viewAction(row.id)}
-                                        }
+                                        className='!text-[13px] cursor-pointer' 
+                                        onClick={() => { 
+                                            {viewAction(row.cells[0].value)}
+                                        }}
                                         key={row.id} 
                                         {...getRowProps({
                                             row
@@ -188,21 +199,23 @@ const AppDataTable = ({
                                         :null}
                                         {row.cells.map(cell => (
                                             // <div>{cell.id.split(":")[1]}</div>
-                                            <React.Fragment>
-                                                {cell.id.split(":")[1] === 'status'?
+                                            <>
+                                                {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid' ?
+                                                null 
+                                                : cell.id.split(":")[1] === 'status'?
                                                 <StatusCell
                                                     code={cell.value}
                                                     statusConfig={statusConfig}
                                                 />
-                                                : cell.id.split(":")[1] === 'primary_guardian'?
-                                                <div>
-                                                    
-                                                </div>
+                                                : cell.id.split(":")[1] === 'parents'?
+                                                <ParentCell 
+                                                    guardian_info={cell.value}
+                                                />
                                                 :
-                                                <TableCell key={cell.id}>{cell.value}</TableCell>
+                                                <TableCell key={cell.id}>{cell.value ? cell.value : '-' }</TableCell>
                                                 }
                                                 
-                                            </React.Fragment>
+                                            </>
                                         ))}
                                     </TableRow>
                                 )}
@@ -219,17 +232,17 @@ const AppDataTable = ({
                         }
                     </TableContainer>
                     {!data?.data && !loading ?
-                    <div className='flex flex-col p-4 px-8 md:min-h-[350px] w-full bg-background gap-3 justify-center items-start -pt-8'>
+                    <div className='flex flex-col p-4 !px-2 md:min-h-[350px] w-full bg-background gap-3 justify-center items-start -mt-16'>
                         <div>
-                            <OrderDetails width={80} height={80} className='text-primary' />
+                            <OrderDetails width={80} height={120} className='text-primary'/>
                         </div>
                         <div className='text-[18px] px-3'>
                             {emptyText}
                         </div>
-                        <div className='text-[12px] font-normal px-3 max-w-[400px]'>
+                        <div className='text-[12px] font-normal max-w-[400px] px-3'>
                             {emptySubText}
                         </div>
-                        <div className='px-3'>
+                        <div className=' px-3'>
                             <Button 
                                 renderIcon={ArrowRight} 
                                 onClick={() => {
@@ -238,7 +251,7 @@ const AppDataTable = ({
                             >{mainButtonText}</Button>
                         </div>
                         {emptyLinkText?
-                        <div className='text-[14px] font-normal px-3 max-w-[400px]'>
+                        <div className='text-[14px] font-normal max-w-[400px]'>
                             {emptyLinkText}
                         </div>
                         :
@@ -302,6 +315,17 @@ const AppDataTable = ({
                                     <TableRow>
                                         <TableExpandHeader />
                                         <TableSelectAll {...getSelectionProps()} />
+                                        {mobileTableHeader.main.map((header, i) => (
+                                            <>
+                                            {header.header === 'id' ?
+                                            null :
+                                            <TableHeader key={i} {...getHeaderProps({
+                                                header
+                                            })}>
+                                                {header.header}
+                                            </TableHeader>}
+                                            </>))
+                                        }
                                         {mobileTableHeader.main.map((header, i) => <TableHeader key={i} {...getHeaderProps({
                                             header
                                         })}>
@@ -320,7 +344,27 @@ const AppDataTable = ({
                                         {check?
                                             <TableSelectRow {...getSelectionProps({row})} />
                                         :null}
-                                        {row.cells.map(cell => <TableCell key={cell.id}>{cell.value}</TableCell>)}
+                                        {row.cells.map(cell => (
+                                            // <div>{cell.id.split(":")[1]}</div>
+                                            <>
+                                                {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid' ?
+                                                null 
+                                                : cell.id.split(":")[1] === 'status'?
+                                                <StatusCell
+                                                    code={cell.value}
+                                                    statusConfig={statusConfig}
+                                                />
+                                                : cell.id.split(":")[1] === 'primary_guardian' && cell.value?
+                                                <ParentCell 
+                                                    name={`${cell.value.first_name} ${cell.value.first_name}`}
+                                                    mobile={cell.value.mobile}
+                                                />
+                                                :
+                                                <TableCell key={cell.id}>{cell.value ? cell.value : '-' }</TableCell>
+                                                }
+                                                
+                                            </>
+                                        ))}
                                     </TableExpandRow>
                                     <TableExpandedRow colSpan={headers.length + 3} className="demo-expanded-td">
                                         <h6>Expandable row content</h6>
@@ -345,17 +389,17 @@ const AppDataTable = ({
                         
                     </TableContainer>
                     {!data?.data && !loading ?
-                    <div className='flex flex-col p-4  md:min-h-[450px] w-full bg-background gap-3 justify-center items-start'>
+                    <div className='flex flex-col p-2 md:min-h-[450px] w-full bg-background gap-3 justify-center items-start'>
                         <div>
                             <OrderDetails width={80} height={80} className='text-primary' />
                         </div>
-                        <div className='text-[18px] px-3'>
+                        <div className='text-[18px]'>
                             {emptyText}
                         </div>
-                        <div className='text-[12px] font-normal px-3 max-w-[400px]'>
+                        <div className='text-[12px] font-normal max-w-[400px]'>
                             {emptySubText}
                         </div>
-                        <div className='px-3'>
+                        <div>
                             <Button 
                                 renderIcon={ArrowRight} 
                                 onClick={() => {

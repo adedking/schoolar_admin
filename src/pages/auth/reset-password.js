@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Form, Stack, TextInput } from 'carbon-components-react';
+import { Form, Stack, PasswordInput } from 'carbon-components-react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useResetPassword } from '../../redux/user/hook';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,8 +12,17 @@ const ResetPasswordPage = () => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
-    const [password, setPassword] = useState('')
-    const [passwordConfirmation, setConfirmPassword] = useState('')
+    const [form, setForm] = useState({
+        password: '',
+        password_confirmation: '',
+    })
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const {token} = useParams()
 
@@ -23,8 +32,8 @@ const ResetPasswordPage = () => {
     const submitForm = async () => {
         let payload = {
             token,
-            password,
-            password_confirmation: passwordConfirmation
+            password: form.password,
+            password_confirmation: form.password_confirmation
         }
         await resetPassword(payload).then(() => {
             navigate('/')
@@ -40,10 +49,10 @@ const ResetPasswordPage = () => {
                     className='bg-white md:w-[450px] w-screen md:min-h-[400px] md:max-h-[400px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'>
                     <Stack gap={7}>
                         <div className='header-3'>Reset password to continue</div>
-                        <TextInput.PasswordInput
+                        <PasswordInput
                             type="password"
                             name={'password'}
-                            value={password}
+                            value={form.password}
                             id="passsword"
                             labelText="Create Password"
                             {...register('password', { required: true })}
@@ -51,13 +60,13 @@ const ResetPasswordPage = () => {
                             invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
                             placeholder="Enter Your Password"
                             onChange={(e) => {
-                                checkError(true, e.target.value, 'passsword', setError, clearErrors, setPassword, 'password')
+                                checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange, 'password')
                             }}
                         />
-                        <TextInput.PasswordInput
+                        <PasswordInput
                             type="password"
                             name={'confirm_password'}
-                            value={passwordConfirmation}
+                            value={form.password_confirmation}
                             id="confirm_passsword"
                             labelText="Password Confirmation"
                             placeholder="Confirm Your Password"
@@ -65,7 +74,7 @@ const ResetPasswordPage = () => {
                             invalid={errors?.confirm_password? true : false}
                             invalidText={errors?.confirm_password?.message? errors?.confirm_password?.message : 'This field is required'}
                             onChange={(e) => {
-                                checkError(true, e.target.value, 'confirm_password', setError, clearErrors, setConfirmPassword, 'password_confirmation', password)
+                                checkError(true, e, e.target.value, 'confirm_password', setError, clearErrors, handleChange, 'password_confirmation', form.password)
                             }}
                         />
                         <AppButton

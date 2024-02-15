@@ -1,4 +1,4 @@
-import { Axios } from './axios';
+import { Axios } from './axios.js';
 
 const login = async (payload) => {
   const { data } = await Axios.post('/login', payload);

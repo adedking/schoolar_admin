@@ -7,22 +7,41 @@ import AppButton from '../../../../components/app-button';
 import { useAddClass } from '../../../../redux/classes/hook';
 import { useForm } from 'react-hook-form';
 import { checkError } from '../../../../utils/functions';
+import { classRanks } from '../../../../utils/constants';
 
 const AddClassModal = ({isOpen, closeModal, type='add'}) => {
 
   const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
-  const [name, setName] = useState('')
-  const [classLevel, setClassLevel] = useState(6)
-  const [subClasses, setSubClasses] = useState(1)
+  const [form, setForm] = useState({
+    class_name: '',
+    class_level: 6,
+    sub_classes: 1,
+  })
+
+  const handleChange = (e, type='text', name='') => {
+    if (type === 'number') {
+      setForm({
+        ...form,
+        [name]: e.value
+      })
+    } else {
+      console.log(e.target.name)
+      console.log(e.target.value)
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value
+      })
+    }
+  }
 
   const {mutateAsync: addClass, isLoading: addClassLoading} = useAddClass()
 
   const submitForm = async () => {
     let payload = {
-      name: DOMPurify.sanitize(name),
-      class_level: parseInt(DOMPurify.sanitize(classLevel)),
-      sub_classes: parseInt(DOMPurify.sanitize(subClasses)),
+      name: DOMPurify.sanitize(form.class_name),
+      class_level: parseInt(DOMPurify.sanitize(form.class_level)),
+      sub_classes: parseInt(DOMPurify.sanitize(form.sub_classes)),
     }
     await addClass(payload).then(() => {
       closeModal()
@@ -57,72 +76,50 @@ const AddClassModal = ({isOpen, closeModal, type='add'}) => {
               {...register('class_name', { required: true })}
               invalid={errors?.class_name ? true : false}
               invalidText={errors?.class_name?.message? errors?.class_name?.message : 'This field is required'}
-              value={name}
+              value={form.class_name}
               labelText="Class Name"
               placeholder="Input class name / number"
               onChange={(e) => {
-                checkError(true, e.target.value, 'class_name', setError, clearErrors, setName)
+                checkError(true, e, e.target.value, 'class_name', setError, clearErrors, handleChange)
               }}
             />
             <NumberInput
               className='min-w-full'
               kind={'text'}
-              name={'number_of_subclasses'}
-              id="number_of_subclasses"
+              name={'sub_classes'}
+              id="sub_classes"
               {...register('number_of_subclasses', { required: true })}
-              invalid={errors?.number_of_subclasses ? true : false}
-              invalidText={errors?.number_of_subclasses?.message? errors?.number_of_subclasses?.message : 'This field is required'}
+              invalid={errors?.sub_classes ? true : false}
+              invalidText={errors?.sub_classes?.message? errors?.sub_classes?.message : 'This field is required'}
               min={1} 
               max={100}
               label="Enter number of subclasses"
               placeholder="Enter number of subclasses"
-              value={subClasses}
-              onChange={(event, state) => {
-                if (subClasses) {
-                  checkError(true, state.value, 'number_of_subclasses', setError, clearErrors, setSubClasses, 'number')
+              value={form.sub_classes}
+              onChange={(e, state) => {
+                if (form.sub_classes) {
+                  checkError(true, e, state.value, 'sub_classes', setError, clearErrors, handleChange, 'number')
                 } else {
-                  checkError(true, 1, 'number_of_subclasses', setError, clearErrors, setSubClasses, 'number')
+                  checkError(true, e, 1, 'sub_classes', setError, clearErrors, handleChange, 'number')
                 }
               }}
             />
             <Select
-              id="class_rank"
-              defaultValue={20}
-              required
+              id="class_level"
+              name='class_level'
               labelText="Class rank"
-              value={classLevel}
+              value={form.class_level}
               onChange={(e) => {
-                setClassLevel(e.target.value)
+                checkError(true, e, e.target.value, 'class_level', setError, clearErrors, handleChange)
               }}
             >
-              <SelectItem
-                value={null}
-                text="Select rank"
-              />
-              <SelectItem
-                value={1}
-                text={1}
-              />
-              <SelectItem
-                value={2}
-                text={2}
-              />
-              <SelectItem
-                value={3}
-                text={3}
-              />
-              <SelectItem
-                value={4}
-                text={4}
-              />
-              <SelectItem
-                value={5}
-                text={5}
-              />
-              <SelectItem
-                value={6}
-                text={6}
-              />
+              {classRanks.map((item, index) => (
+                  <SelectItem
+                      key={index}
+                      value={item.value}
+                      text={item.text}
+                  />
+              ))}
             </Select>
           </div>
         </Stack>

@@ -4,10 +4,9 @@ import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import AddParentModal from './sub-components/modals/add-parent/add-parent';
-import { PAGINATION_DEFAULT } from '../../utils';
-import { useGetStudents } from '../../redux/students/hook';
-import AppButton from '../../components/app-button';
+import { PAGINATION_DEFAULT, parentStatusConfig } from '../../utils';
 import { useNavigate } from 'react-router-dom';
+import { useGetParents } from '../../redux/parents/hook';
 
 const ParentsPage = () => {
 
@@ -25,7 +24,7 @@ const ParentsPage = () => {
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
-    const { data: parents } = useGetStudents(
+    const { data: parents, isLoading: parentsLoading } = useGetParents(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
@@ -33,6 +32,10 @@ const ParentsPage = () => {
     );
 
     const tableConfig = [
+        {
+            key: 'uuid',
+            header: 'id',
+        },
         {
             key: 'first_name',
             header: 'First Name',
@@ -46,29 +49,17 @@ const ParentsPage = () => {
             header: 'Email',
         },
         {
-            key: 'gender',
-            header: 'Gender',
-        },
-        {
-            key: 'class',
-            header: 'Class',
-        },
-        {
-            key: 'enrolment_id',
-            header: 'Enrolment ID',
-        },
-        {
-            key: 'primary_guardian',
-            header: 'Primary Guardian',
-        },
-        {
-            key: 'status',
-            header: 'Status',
+            key: 'mobile',
+            header: 'Contact Number',
         },
     ];
 
     const mobileTableHeader = {
         main:[
+            {
+                key: 'uuid',
+                header: 'id',
+            },
             {
                 key: 'full_name',
                 header: 'Student Name',
@@ -79,6 +70,10 @@ const ParentsPage = () => {
             },
         ],
         full: [
+            {
+                key: 'uuid',
+                header: 'id',
+            },
             {
                 key: 'first_name',
                 header: 'First Name',
@@ -92,20 +87,8 @@ const ParentsPage = () => {
                 header: 'Email',
             },
             {
-                key: 'phone_number',
-                header: 'Phone Number',
-            },
-            {
-                key: 'teaching_subject',
-                header: 'Teaching Subject',
-            },
-            {
-                key: 'teaching_class',
-                header: 'Teaching Class',
-            },
-            {
-                key: 'status',
-                header: 'Status',
+                key: 'mobile',
+                header: 'Contact Number',
             },
         ]
     };
@@ -123,17 +106,9 @@ const ParentsPage = () => {
             }
             <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
-                    {/* <AppButton
-                        type="button" 
-                        kind={'primary'} 
-                        // renderIcon={ArrowRight}
-                        action={()=> {
-                            navigate('/parents-guardians/1')
-                        }}
-                        text={'View Single parent (temporary button)'}
-                    /> */}
                     <WidgetCard 
                         cardData={cardData}
+                        loading={parentsLoading}
                     />
                     <div className='min-w-full max-w-full bg-background rounded-sm'>
                         <AppDataTable 
@@ -150,6 +125,9 @@ const ParentsPage = () => {
                             }}
                             emptyText={'No parent added'}
                             emptySubText={'Please add parents by clicking the button below'}
+                            viewActionType={'parent'}
+                            statusConfig={parentStatusConfig}
+                            loading={parentsLoading}
                         />
                     </div>
                 </div>

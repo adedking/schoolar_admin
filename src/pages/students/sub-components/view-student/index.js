@@ -9,6 +9,7 @@ import StudentGuardian from './student-guardians';
 import HealthDetails from './health-details';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
+import AddStudentModal from '../modals/add-student/add-student';
 
 const ViewStudentPage = () => {
     const tabs = [
@@ -29,8 +30,19 @@ const ViewStudentPage = () => {
     const {id} = useParams();
     const { data: student, isLoading: studentLoading } = useGetStudent(id);
 
+    const [showEditStudent, setShowEditStudent] =useState(false)
+
     return (
         <React.Fragment>
+            {showEditStudent ?
+            <AddStudentModal
+                isOpen={showEditStudent}
+                closeModal={()=> setShowEditStudent(false)}
+                student={student}
+            />
+            :
+            null
+            }
             <DashboardLayout viewComponent={null} viewTitle={'View student'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {studentLoading ?
@@ -40,15 +52,15 @@ const ViewStudentPage = () => {
                     :
                     <div className='w-full flex flex-col'>
                         <ViewProfile 
-                            profileImage={''} 
-                            firstName={'Adedokun'} 
-                            lastName={'Agunbiade'} 
-                            email={'adedokun@schoolar.com'} 
-                            mobile={'+2348106668220'} 
+                            profileImage={student.file_url} 
+                            firstName={student?.first_name} 
+                            lastName={student?.last_name} 
+                            email={student?.email} 
+                            mobile={student?.mobile} 
                             deleteText={'Delete student'}
                             deleteFunction={''} 
                             editText={'Edit student'} 
-                            editFunction={''} 
+                            editFunction={() => setShowEditStudent(true)} 
                             route='Student' 
                             routeLink='/students'
                         />

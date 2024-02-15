@@ -1,7 +1,7 @@
 import { user } from '../../api/user';
 import { store } from '..';
 import { clearToken, clearUser, setToken, setUser } from './user-slice';
-import { Axios } from '../../api/axios'
+import { Axios } from '../../api/axios.js'
 import { queryClient } from '../..';
 import { setAlert, setIsLoading } from '../components/components-slice';
 import { useMutation } from '@tanstack/react-query';

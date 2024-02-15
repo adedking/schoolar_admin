@@ -35,7 +35,6 @@ const AddTeacherStepOne = ({file, setFile, payload, setPayload, submit}) => {
     );
 
     const onFileChange = (e) => {
-        console.log(e.target.files)
         setFileURL(URL.createObjectURL(e.target.files[0]))
         setFile(e.target.files[0]);
         setFileSelected(true)
@@ -56,9 +55,6 @@ const AddTeacherStepOne = ({file, setFile, payload, setPayload, submit}) => {
         setPayload(payload)
         submit()
     }
-
-    
-    
     return (
         <Form 
             onSubmit={handleSubmit(action)}
@@ -127,7 +123,7 @@ const AddTeacherStepOne = ({file, setFile, payload, setPayload, submit}) => {
                             invalid={errors?.first_name ? true : false}
                             invalidText={errors?.first_name?.message? errors?.first_name?.message : 'This field is required'}
                             value={firstName}
-                            labelText="First Name "
+                            labelText="First Name"
                             placeholder="Enter Your First Name"
                             onChange={(e) => {
                                 checkError(true, e.target.value, 'first_name', setError, clearErrors, setFirstName)

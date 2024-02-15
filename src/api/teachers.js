@@ -1,4 +1,4 @@
-import { Axios } from './axios';
+import { Axios } from './axios.js';
 
 const getTeachers = async (payload) => {
   let search = payload.search ? '&search=' + payload.search : '';

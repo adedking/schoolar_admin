@@ -8,6 +8,8 @@ module.exports = {
       },
       colors: {
         'background': '#F4F4F4',
+        'parent-thick': '#6929C4',
+        'parent-background': '#E8DAFF',
         'primary': '#0F62FE',
         'primary-1': '#0267C1',
         'primary-2': '#061A40',

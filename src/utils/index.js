@@ -37,3 +37,49 @@ export const teacherStatusConfig = [
   },
 ];
 
+export const studentStatusConfig = [
+  {
+    label: 'Inactive',
+    value: 0,
+    color: 'red',
+  },
+  {
+    label: 'Active',
+    value: 1,
+    color: 'green',
+  },
+  {
+    label: 'Pending',
+    value: 2,
+    color: 'orange',
+  },
+  {
+    label: 'Awaiting Activation',
+    value: 4,
+    color: 'orange',
+  },
+  {
+    label: 'Pre Registered',
+    value: 5,
+    color: 'orange',
+  },
+];
+
+export const parentStatusConfig = [
+  {
+    label: 'Inactive',
+    value: 0,
+    color: 'red',
+  },
+  {
+    label: 'Active',
+    value: 1,
+    color: 'green',
+  },
+  {
+    label: 'Pending',
+    value: 2,
+    color: 'orange',
+  },
+];
+

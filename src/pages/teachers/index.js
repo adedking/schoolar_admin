@@ -14,12 +14,15 @@ const TeachersPage = () => {
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
+
     const { data: teachers, isLoading: teachersLoading } = useGetTeachers(
         paginationData.limit,
         paginationData.page,
         paginationData.statusFilter,
         paginationData.search,
     );
+    console.log(teachers)
+
     const cardData = {
         columns: 2,
         items: [
@@ -31,6 +34,10 @@ const TeachersPage = () => {
     const [showAddTeacher, setShowAddTeacher] = useState(false);
     
     const tableConfig = [
+        {
+            key: 'id',
+            header: 'id',
+        },
         {
             key: 'first_name',
             header: 'First Name',
@@ -95,8 +102,6 @@ const TeachersPage = () => {
             },
         ]
     };
-
-    // const navigate = useNavigate();
 
     return (
         <React.Fragment>

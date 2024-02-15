@@ -1,34 +1,24 @@
-import { Axios } from './axios';
+import { Axios } from './axios.js';
 
-const getStudents = async (payload) => {
+const getParents = async (payload) => {
     let search = payload.search ? '&search=' + payload.search : '';
     let filter = payload.statusFilter && payload.statusFilter !== -1 ? '&filter=' + payload.statusFilter : '';
-    const { data } = await Axios.get(`/school-students?limit=${payload.limit}&page=${payload.page}${search}${filter}`,
-    {
-      timeout: 0
-    });
+    const { data } = await Axios.get(`/school-parents?limit=${payload.limit}&page=${payload.page}${search}${filter}`);
     return data?.data;
 };
 
-
-const getStudent = async (payload) => {
-  const { data } = await Axios.get(`/school-students/${payload}`,
-  {
-    timeout: 0
-  });
+const getParent = async (payload) => {
+  const { data } = await Axios.get(`/school-parents/${payload}`);
   return data?.data;
 };
 
-const addStudent = async (payload) => {
-const { data } = await Axios.post('/school-students', payload,
-{
-  timeout: 0
-});
+const addParent = async (payload) => {
+const { data } = await Axios.post('/school-parents', payload,);
 return data;
 };
 
-export const students = {
-  getStudents,
-  getStudent,
-  addStudent
+export const parents = {
+  getParents,
+  getParent,
+  addParent
 }

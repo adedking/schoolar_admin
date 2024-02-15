@@ -16,6 +16,8 @@ import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
 import AssignTeacherToClassModal from '../modals/assign-teacher-to-class';
 import AddStudentModal from '../../../students/sub-components/modals/add-student/add-student';
 import AddSubjectToClassModal from '../modals/assign-subject-to-class';
+import ClassRegister from './class-register';
+import MarkAttendance from '../modals/mark-attendance';
 
 const ViewClassPage = () => {
 
@@ -24,6 +26,7 @@ const ViewClassPage = () => {
     const [showAddClass, setShowAddClass] = useState(false);
     const [showAddStudent, setShowAddStudent] = useState(false)
     const [showAddSubjectToClass, setShowAddSubjectToClass] = useState(false);
+    const [showAddAttendance, setShowAddAttendance] = useState(false);
     const [type, setType] = useState('add');
 
     // const [pagination, setPagination] = useState({
@@ -36,7 +39,7 @@ const ViewClassPage = () => {
     const tabs = [
         {
             title: 'Class Register',
-            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+            content: <ClassRegister  setShowAddAttendance={setShowAddAttendance} />
         },
         {
             title: 'Students',
@@ -58,6 +61,14 @@ const ViewClassPage = () => {
 
     return (
         <React.Fragment>
+            {showAddAttendance ?
+            <MarkAttendance
+                isOpen={showAddAttendance}
+                closeModal={()=> setShowAddAttendance(false)}
+            />
+            :
+            null
+            }
             {showAddSubjectToClass ?
             <AddSubjectToClassModal
                 isOpen={showAddSubjectToClass}
@@ -173,7 +184,6 @@ const ViewClassPage = () => {
                                 </div>
                                 :
                                 <React.Fragment>
-                                    
                                     <div className='flex gap-2 text-[14px] items-center w-[100%] bg-red-500 h-[48px] text-white px-4'>No class teacher</div>
                                     <div className='flex justify-end'>
                                         <AppButton
@@ -191,7 +201,9 @@ const ViewClassPage = () => {
                         </div>
                     </React.Fragment>
                     }
-                    <TabView componentTabs={tabs}/>
+                    <TabView 
+                        componentTabs={tabs}
+                    />
                 </div>
             </DashboardLayout>
         </React.Fragment>

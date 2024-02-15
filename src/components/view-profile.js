@@ -14,7 +14,7 @@ const ViewProfile = (
         deleteText, 
         deleteFunction, 
         editText, 
-        editFunction, 
+        editFunction=() => {}, 
         route, 
         routeLink,
         showNavigation=true
@@ -37,7 +37,7 @@ const ViewProfile = (
             <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] min-w-full !bg-white p-4 gap-4'>
                 <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                     <div className='w-1/4'>
-                        <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background'>
+                        <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background text-[13px]'>
                             <img src={profileImage ? profileImage : profilePix} alt='profileImage' />
                         </div>
                     </div>

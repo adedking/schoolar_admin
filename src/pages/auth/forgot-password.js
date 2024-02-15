@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthLayout from '../../components/layouts/authentication';
-import { Form, Stack, TextInput } from '@carbon/react';
+import { Form, Stack, TextInput, FormLabel } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
@@ -60,14 +60,14 @@ const PasswordRecoveryPage = () => {
                             loading={isLoading}
                             text={'Send Recovery Email'}
                         />
-                        <labelText> 
+                        <FormLabel> 
                             <span className='text-[14px]'>Remember Password?&nbsp;</span>
                             <span className='text-primary underline cursor-pointer text-[14px]' 
                                 onClick={() => {navigate("/")}}
                             >
                                 Login
                             </span>
-                        </labelText>
+                        </FormLabel>
                     </Stack>
                 </Form>
                 

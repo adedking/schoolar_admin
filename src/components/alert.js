@@ -15,7 +15,6 @@ const Alert = ({
   useEffect(() => {
     const notification = notificationSystem.current;
     if (message && type) {
-      
       notification.addNotification({
         title: title,
         message: message,
@@ -23,10 +22,10 @@ const Alert = ({
       });
     }
     return () => {
+      notification.removeNotification();
       store.dispatch(
         setAlert(
           false,
-          '',
           '',
           '',
           '',
