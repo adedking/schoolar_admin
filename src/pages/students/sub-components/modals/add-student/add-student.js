@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, ProgressIndicator, ProgressStep } from 'carbon-components-react';
 import AddStudentStepOne from './add-student-step-one';
 import AddStudentStepTwo from './add-student-step-two';
 import AddStudentStepThree from './add-student-step-three';
 
-const AddStudentModal = ({isOpen, closeModal, student}) => {
+const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const [studentUUID, setStudentUUID] = useState(null)
 
@@ -30,6 +30,25 @@ const AddStudentModal = ({isOpen, closeModal, student}) => {
       description: "Guardian Details",
     },
   ]);
+
+  useEffect(() => {
+    if (type === 'update') {
+      setSteps([
+        {
+          title: 'Step 1',
+          complete: false,
+          current: true,
+          description: "Basic Information",
+        },
+        {
+          title: 'Step 2',
+          complete: false,
+          current: false,
+          description: "Health Details",
+        },
+      ])
+    }
+  }, [type])
 
   const changeStep = (type) => {
     let newArray = steps;

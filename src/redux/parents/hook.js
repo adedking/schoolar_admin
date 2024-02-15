@@ -66,7 +66,7 @@ export function useGetParentsList(limit, page, search) {
     ['parents-list', { limit, page, search }],
     () => {
       store.dispatch(setIsLoading(true));
-      return parents.getStudents({
+      return parents.getParents({
         limit,
         page,
         search,
@@ -75,8 +75,8 @@ export function useGetParentsList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
-        data?.forEach((item) => {
-          newData.push({ id: item.id, text: item.first_name + ' ' + item.last_name+ ', ' + item.mobile });
+        data?.data.forEach((item) => {
+          newData.push({ id: item.id, text: item.title + '. ' + item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
         });
         return newData;
       },

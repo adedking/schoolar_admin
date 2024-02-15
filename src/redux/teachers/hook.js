@@ -75,8 +75,8 @@ export function useGetTeachersList(limit, page, search) {
       select: (data) => {
         let newData = [];
         newData.push({ id: null, text: 'Select a teacher', value: null });
-        data?.forEach((item) => {
-          newData.push({ id: item.id, text: item.first_name + ' ' + item.last_name+ ', ' + item.mobile });
+        data?.data.forEach((item) => {
+          newData.push({ id: item.id, text: item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
         });
         return newData;
       },

@@ -1,39 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ComboBox, Form, Modal } from 'carbon-components-react';
 import AppButton from '../../../../components/app-button';
 import { useGetTeachersList } from '../../../../redux/teachers/hook';
+// import { useAssignTeacherToClass } from '../../../../redux/classes/hook';
 
-const AssignTeacherToClassModal = ({isOpen, closeModal}) => {
+const AssignTeacherToClassModal = ({isOpen, closeModal, className}) => {
   // const navigate = useNavigate();
 
   const { data: teachers } = useGetTeachersList(
     1000,
     1,
   );
-
-  const [teacherId, setTeacherId] = useState(null)
-
-  // const [teachers, setTeachers] = useState([{
-  //   id: 'option-0',
-  //   text: 'An example option that is really long to show what should be done to handle long text'
-  // }, 
-  // {
-  //   id: 'option-1',
-  //   text: 'Option 1'
-  // }, 
-  // {
-  //   id: 'option-2',
-  //   text: 'Option 2'
-  // },
-  // {
-  //   id: 'option-4',
-  //   text: 'Option 4'
-  // }, 
-  // {
-  //   id: 'option-5',
-    
-  //   text: 'Option 5'
-  // }]);
+  // const {mutateAsync: assignTeacher, isLoading: assignTeacherLoading} = useAssignTeacherToClass()
+  // const [teacherId, setTeacherId] = useState(null)
   return (
     <Modal 
       modalHeading="Assign a class teacher to 12 - A" 
@@ -57,7 +36,7 @@ const AssignTeacherToClassModal = ({isOpen, closeModal}) => {
               <ComboBox 
                 onChange={() => {}} 
                 id="assigned_teacher" 
-                items={teachers} 
+                items={teachers ? teachers : []} 
                 downshiftProps={{
                   onStateChange: (e) => {
                     console.log(e?.selectedItem?.value)

@@ -108,3 +108,21 @@ export function useGetSubClass(id) {
     },
   );
 }
+
+export function useAssignTeacherToClass() {
+  return useMutation(
+    (payload) => {
+      return classes.assignTeacherToClass(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('classes');
+        queryClient.invalidateQueries('class');
+        store.dispatch(setAlert(true, 'Teacher assigned successful', 'success', 'You have successfully assigned teacher to class'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}

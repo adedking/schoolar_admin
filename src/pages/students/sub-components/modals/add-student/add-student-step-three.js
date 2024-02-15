@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from '@carbon/icons-react';
-import { FileUploaderDropContainer, FileUploaderItem, Form, FormGroup, FormLabel, Stack, TextInput, Toggle, Search, Select, SelectItem } from 'carbon-components-react';
+import { ComboBox, FileUploaderDropContainer, FileUploaderItem, Form, FormGroup, FormLabel, Stack, TextInput, Toggle, Select, SelectItem } from 'carbon-components-react';
 import { useState } from 'react';
 import { useAddStudentParentsNew, useAddStudentParentsOld } from '../../../../../redux/students/hook';
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import { checkError } from '../../../../../utils/functions';
 import { AllCountries } from '../../../../../utils/constants/countries';
 import { relationships, titles } from '../../../../../utils/constants';
 import AppButton from '../../../../../components/app-button';
+import { useGetParentsList } from '../../../../../redux/parents/hook';
 
 const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
     const [addNewParent, setAddNewParent] = useState(true)
@@ -35,6 +36,11 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
         relationship: 'Mother',
         file: '',
     })
+
+    const { data: parents } = useGetParentsList(
+        1000,
+        1,
+    );
 
     const handleChange = (e) => {
         setForm({
@@ -103,7 +109,7 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
             isFullWidth
         >
             <Stack gap={6} className='px-4'>
-                <div className='flex flex-col gap-4 w-full max-h-fit mt-8'>
+                <div className='flex flex-col gap-4 w-full max-h-fit mt-5'>
                     <div className='flex flex-row gap-4 items-center sm:justify-between'>
                         <label htmlFor="toggle-7" className=''>
                             Do you want to add a new parent?
@@ -441,7 +447,21 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
                     </>
                     :
                     <div>
-                        <Search 
+                        <ComboBox 
+                            onChange={() => {}} 
+                            id="assigned_parent" 
+                            items={parents ? parents : []} 
+                            downshiftProps={{
+                            onStateChange: (e) => {
+                                console.log(e?.selectedItem?.value)
+                            }
+                            }} 
+                            placeholder='select parent'
+                            itemToString={item => item ? item.text : ''} 
+                            titleText="Search and select parent"
+                            // helperText="Combobox helper text" 
+                        />
+                        {/* <Search 
                             size="lg" 
                             placeholder="Find your items" 
                             labelText="Search" 
@@ -453,7 +473,7 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
                             onKeyDown={() => {
 
                             }} 
-                        />
+                        /> */}
                     </div>
                     }
                 </div>
