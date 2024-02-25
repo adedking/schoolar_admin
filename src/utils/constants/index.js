@@ -66,11 +66,11 @@ export const genders = [
 export const weight_measurements = [
     {
         text: 'Kilograms (Kg)',
-        value: 'kilograms'
+        value: 'Kilograms'
     },
     {
         text: 'Pounds (Lb)',
-        value: 'pounds'
+        value: 'Pounds'
     },
 ]
 
@@ -78,19 +78,19 @@ export const weight_measurements = [
 export const height_measurements = [
     {
         text: 'Meters',
-        value: 'meters'
+        value: 'Meters'
     },
     {
         text: 'Centimeters',
-        value: 'centimeters'
+        value: 'Centimeters'
     },
     {
         text: 'Inches',
-        value: 'inches'
+        value: 'Inches'
     },
     {
         text: 'Feet',
-        value: 'feet'
+        value: 'Feet'
     },
 ]
 

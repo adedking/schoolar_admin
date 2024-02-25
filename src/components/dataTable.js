@@ -33,6 +33,7 @@ import { PAGINATION_DEFAULT } from '../utils';
 import { StatusCell } from './fragments/data-table-fragments/status-cell';
 import { useNavigate } from 'react-router-dom';
 import { ParentCell } from './fragments/data-table-fragments/parent-cell';
+import AppButton from './app-button';
 
 const AppDataTable = ({
     tableHeader, 
@@ -53,7 +54,8 @@ const AppDataTable = ({
     emptySubText,
     emptyLinkText,
     statusConfig=null,
-    addMultiple=false
+    addMultiple=false,
+    addMultipleAction=()=>{},
 }) => {
 
     const props = () => ({
@@ -152,25 +154,25 @@ const AppDataTable = ({
                                 <TableToolbarSearch onChange={onInputChange} />
                                 {data?.data?
                                 <>
-                                {addMultiple ? 
-                                <>
-                                    <Button 
+                                    {addMultiple ? 
+                                    <AppButton 
+                                        text={multipleButtonText}
                                         renderIcon={Add} 
-                                        onClick={() => {
+                                        kind={'tertiary'}
+                                        action={() => {
+                                            addMultipleAction()
+                                        }}
+                                    />
+                                    :
+                                    null}
+                                    <AppButton 
+                                        text={mainButtonText}
+                                        kind={'primary'} 
+                                        renderIcon={Add} 
+                                        action={() => {
                                             mainButtonAction()
                                         }}
-                                    >
-                                        {multipleButtonText}
-                                    </Button>
-                                </>
-                                :
-                                null}
-                                <Button 
-                                    renderIcon={Add} 
-                                    onClick={() => {
-                                        mainButtonAction()
-                                    }}
-                                >{mainButtonText}</Button>
+                                    />
                                 
                                 </>
                                 :
@@ -344,11 +346,6 @@ const AppDataTable = ({
                                             </TableHeader>}
                                             </>))
                                         }
-                                        {mobileTableHeader.main.map((header, i) => <TableHeader key={i} {...getHeaderProps({
-                                            header
-                                        })}>
-                                            {header.header}
-                                        </TableHeader>)}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

@@ -29,7 +29,7 @@ const DeleteModal = ({isOpen, closeModal, deleteTitle='Delete', deleteText="Are 
                 text={'Cancel'}
                 kind={'secondary'} 
                 className='min-w-[50%] h-[60px] mt-2'
-                onClick={() => closeModal()}
+                action={() => closeModal()}
             />
             <AppButton
                 type="button" 
@@ -37,7 +37,7 @@ const DeleteModal = ({isOpen, closeModal, deleteTitle='Delete', deleteText="Are 
                 kind={'primary'} 
                 loading={deleteLoading}
                 className='min-w-[50%] h-[60px] mt-2 !bg-red-600'
-                onClick={() => deleteAction()}
+                action={() => deleteAction()}
             />
         </div>
     </div>

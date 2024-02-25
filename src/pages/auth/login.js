@@ -18,7 +18,6 @@ const LogInPage = () => {
     })
 
     const handleChange = (e) => {
-        console.log(e)
         setForm({
             ...form,
             [e.target.name]: e.target.value
@@ -68,7 +67,7 @@ const LogInPage = () => {
                                 <span>Password</span>
                                 <span className=' text-primary hover:underline duration-300 cursor-pointer' onClick={() => {navigate("/forgot-password")}}>Forget Password?</span>
                             </div>
-                            <TextInput
+                            <PasswordInput
                                 type="password"
                                 name={'password'}
                                 value={form.password}

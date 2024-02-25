@@ -16,7 +16,6 @@ export function useGetStudents( limit, page, statusFilter, search ) {
         data?.data?.forEach((student) => {
           student.class = `${student.main_class} (${student.sub_class})`
         });
-        console.log(data)
         return data;
       },
       onSettled: (data, error, variables, context) => {
@@ -37,6 +36,9 @@ export function useGetStudent(id) {
     {
       isEnabled: id !== null,
       select: (data) => {
+        data?.parents?.forEach((parent) => {
+          parent.full_address = `${parent.address} ${parent.lga}, ${parent.state}, ${parent.country}`
+        });
         return data;
       },
       onSettled: (data, error, variables, context) => {

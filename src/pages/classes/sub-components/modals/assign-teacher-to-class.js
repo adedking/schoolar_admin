@@ -39,7 +39,7 @@ const AssignTeacherToClassModal = ({isOpen, closeModal, className}) => {
                 items={teachers ? teachers : []} 
                 downshiftProps={{
                   onStateChange: (e) => {
-                    console.log(e?.selectedItem?.value)
+                    // console.log(e?.selectedItem?.value)
                   }
                 }} 
                 placeholder='Select teacher'

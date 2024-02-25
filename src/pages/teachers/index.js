@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
-import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
+import AddTeacherModal from './sub-components/modals/add-teacher/add-single-teacher/add-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT, teacherStatusConfig } from '../../utils';
 
@@ -21,7 +21,6 @@ const TeachersPage = () => {
         paginationData.statusFilter,
         paginationData.search,
     );
-    console.log(teachers)
 
     const cardData = {
         columns: 2,

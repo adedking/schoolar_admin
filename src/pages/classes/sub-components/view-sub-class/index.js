@@ -14,7 +14,7 @@ import EditSubClassModal from '../modals/edit-sub-class';
 import profilePix from '../../../../assets/svg/profile-pix-placeholder.svg';
 import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
 import AssignTeacherToClassModal from '../modals/assign-teacher-to-class';
-import AddStudentModal from '../../../students/sub-components/modals/add-student/add-student';
+import AddStudentModal from '../../../students/sub-components/modals/add-student/add-single-student/add-student';
 import AddSubjectToClassModal from '../modals/assign-subject-to-class';
 import ClassRegister from './class-register';
 import MarkAttendance from '../modals/mark-attendance';

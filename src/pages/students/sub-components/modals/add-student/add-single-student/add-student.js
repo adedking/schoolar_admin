@@ -4,7 +4,7 @@ import AddStudentStepOne from './add-student-step-one';
 import AddStudentStepTwo from './add-student-step-two';
 import AddStudentStepThree from './add-student-step-three';
 
-const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
+const AddStudentModal = ({isOpen, closeModal, student=null, type='new'}) => {
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -96,16 +96,16 @@ const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
     > 
       <div className='flex flex-col justify-between w-full md:w-[600px] min-h-fit mt-3'>
         <div className='w-full px-4'>
-        <ProgressIndicator>
-          {steps?.map((item, index) => (
-            <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} secondaryLabel={item.description} description={item.description} />
-          ))}
-        </ProgressIndicator>
+          <ProgressIndicator className='w-full px-4'>
+            {steps?.map((item, index) => (
+              <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} secondaryLabel={item.description} description={item.description} />
+            ))}
+          </ProgressIndicator>
         </div>
         {steps?.map((item, index) => (
           <div key={index}>
           {item.current && currentStep === 0 ?
-          <AddStudentStepOne student={student} changeStep={changeStep} setStudentUUID={setStudentUUID}  />
+          <AddStudentStepOne student={student} changeStep={changeStep} setStudentUUID={setStudentUUID} studentUUID={studentUUID}  />
           : item.current && currentStep === 1 ?
           <AddStudentStepTwo student={student} changeStep={changeStep} studentUUID={studentUUID} />
           : item.current && currentStep === 2 ?

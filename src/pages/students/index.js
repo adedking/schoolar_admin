@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
-import AddStudentModal from './sub-components/modals/add-student/add-student';
+import AddStudentModal from './sub-components/modals/add-student/add-single-student/add-student';
 import { PAGINATION_DEFAULT, studentStatusConfig  } from '../../utils';
 import { useGetStudents } from '../../redux/students/hook';
 
@@ -163,6 +163,9 @@ const StudentsPage = () => {
                             viewActionType={'student'}
                             statusConfig={studentStatusConfig}
                             loading={studentLoading}
+                            multipleButtonText={'Add Multiple Students'}
+                            addMultiple={true}
+                            addMultipleAction={''}
                         />
                     </div>
                 </div>

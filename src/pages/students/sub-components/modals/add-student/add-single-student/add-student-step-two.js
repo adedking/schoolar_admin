@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Form, Stack, TextInput, Toggle, TextArea } from '@carbon/react';
+import { Form, Stack, Toggle, TextArea, NumberInput } from '@carbon/react';
 import { Select, SelectItem } from 'carbon-components-react';
-import { bloodGroupOptions, genotypes, height_measurements, weight_measurements } from '../../../../../utils/constants';
+import { bloodGroupOptions, genotypes, height_measurements, weight_measurements } from '../../../../../../utils/constants';
 import { useForm } from 'react-hook-form';
-import { checkError } from '../../../../../utils/functions';
-import { useAddStudentRecords } from '../../../../../redux/students/hook';
+import { checkError } from '../../../../../../utils/functions';
+import { useAddStudentRecords } from '../../../../../../redux/students/hook';
 import { ArrowRight } from '@carbon/icons-react';
-import AppButton from '../../../../../components/app-button';
+import AppButton from '../../../../../../components/app-button';
 
 const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
 
@@ -17,11 +17,11 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
 
     const [form, setForm] = useState({
         weight: '',
-        weight_measurement: '',
+        weight_measurement: 'ilograms',
         height: '',
-        height_measurement: '',
-        blood_group: '',
-        genotype: '',
+        height_measurement: 'Centimeters',
+        blood_group: 'O+',
+        genotype: 'AA',
         immunizations: [],
         disabled: false,
         disability: '',
@@ -29,20 +29,19 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
 
     useEffect(() => {
         if (student) {
-            console.log(student)
-            setForm({
-                ...form,
-                first_name: student.first_name,
-                middle_name: student.middle_name,
-                last_name: student.last_name,
-                mobile: student.mobile,
-                email: student.email,
-                registration_id: student.registration_id,
-                sub_class_id: student.sub_class_id,
-                dob: student.dob,
-                gender: student.gender,
-                file: null,
-            })
+            setForm(
+                {
+                    ...form,
+                    weight: student.health_info.weight,
+                    weight_measurement: student.health_info.weight_measurement,
+                    height: student.health_info.height,
+                    height_measurement: student.health_info.height_measurement,
+                    blood_group: student.health_info.blood_group,
+                    genotype: student.health_info.genotype,
+                    immunizations: student.health_info.immunizations,
+                    disabled: student.health_info.disabled === 1 ? true : false,
+                    disability: student.health_info.disability,
+                })
         }
     }, [student])
 
@@ -78,25 +77,30 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
     return (
         <Form 
             onSubmit={handleSubmit(requestSubmit)}
-            className='flex flex-col justify-between h-fit mt-2'
+            className='flex flex-col justify-between h-fit mt-6'
             isFullWidth
         >
             <Stack gap={6} className='px-4 mt-3'>
                 <div className='flex md:flex-row flex-col gap-4 w-full max-h-fit'>
                     <div className='md:w-1/2 w-full'>
-                        <TextInput
+                        <NumberInput
                             className='min-w-full'
-                            kind={'number'}
-                            type={'number'}
+                            kind={'text'}
                             name={'weight'}
+                            id="weight"
                             {...register('weight', { required: true })}
-                            invalid={errors?.weight? true : false}
-                            invalidText={errors?.weight?.message? errors?.weight?.message : 'Please enter a valid student weight'}
-                            labelText="Student Weight"
-                            placeholder="Enter Student Weight"
+                            invalid={errors?.weight ? true : false}
+                            invalidText={errors?.weight?.message? errors?.weight?.message : 'This field is required'}
+                            min={1} 
+                            label="Weight"
+                            placeholder="Enter student weight"
                             value={form.weight}
-                            onChange={(e) => {
-                                checkError(true, e, e.target.value, 'weight', setError, clearErrors, handleChange)
+                            onChange={(e, state) => {
+                                if (form.weight) {
+                                checkError(true, e, state.value, 'weight', setError, clearErrors, handleChange, 'number')
+                                } else {
+                                checkError(true, e, 1, 'weight', setError, clearErrors, handleChange, 'number')
+                                }
                             }}
                         />
                     </div>
@@ -122,19 +126,24 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
                 </div>
                 <div className='flex md:flex-row flex-col gap-4 w-full max-h-fit'>
                     <div className='md:w-1/2 w-full'>
-                        <TextInput
+                        <NumberInput
                             className='min-w-full'
-                            kind={'number'}
-                            type={'number'}
+                            kind={'text'}
                             name={'height'}
+                            id="height"
                             {...register('height', { required: true })}
-                            invalid={errors?.height? true : false}
-                            invalidText={errors?.height?.message? errors?.height?.message : 'Please enter a valid student height'}
-                            labelText="Student Height"
-                            placeholder="Enter Student Height"
+                            invalid={errors?.height ? true : false}
+                            invalidText={errors?.height?.message? errors?.height?.message : 'This field is required'}
+                            min={1} 
+                            label="Height"
+                            placeholder="Enter student height"
                             value={form.height}
-                            onChange={(e) => {
-                                checkError(true, e, e.target.value, 'height', setError, clearErrors, handleChange)
+                            onChange={(e, state) => {
+                                if (form.height) {
+                                checkError(true, e, state.value, 'height', setError, clearErrors, handleChange, 'number')
+                                } else {
+                                checkError(true, e, 1, 'height', setError, clearErrors, handleChange, 'number')
+                                }
                             }}
                         />
                     </div>
@@ -239,25 +248,35 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
                 null
                 }
             </Stack>
-            <div className='flex justify-end mt-4'>
-                <AppButton
-                    type="button" 
-                    className='min-w-[180px] h-[60px]'
-                    kind={'secondary'} 
-                    onClick={() => {
-                        secondaryRequestSubmit()
-                    }}
-                    text={'Back'}
-                />
-                <AppButton
-                    type="submit" 
-                    kind={'primary'} 
-                    className='min-w-[180px] h-[60px]'
-                    renderIcon={ArrowRight}
-                    loading={addStudentRecordsLoading}
-                    text={studentUUID? "Update & Continue" : "Save & Continue"}
-                />
+            <div className='flex justify-between w-full'>
+                <div 
+                    className='flex items-center h-[60px] w-[60px] text-[15px] font-normal cursor-pointer hover:underline text-primary px-4 pt-6'
+                    onClick={() => changeStep('add')}
+                >
+                    Skip
+                </div>
+                <div className='flex justify-end mt-4'>
+                    
+                    <AppButton
+                        type="button" 
+                        className='min-w-[180px] h-[60px]'
+                        kind={'secondary'} 
+                        action={() => {
+                            secondaryRequestSubmit()
+                        }}
+                        text={'Back'}
+                    />
+                    <AppButton
+                        type="submit" 
+                        kind={'primary'} 
+                        className='min-w-[180px] h-[60px]'
+                        renderIcon={ArrowRight}
+                        loading={addStudentRecordsLoading}
+                        text={studentUUID? "Update & Continue" : "Save & Continue"}
+                    />
+                </div>
             </div>
+            
         </Form>
     );
 };

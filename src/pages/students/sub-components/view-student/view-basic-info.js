@@ -12,64 +12,64 @@ const StudentBasicInfo = () => {
                 Student Details
             </div>
             <hr className='divider' />
-            {!student ?
+            {student ?
             <>
-            <div className='flex justify-between text-[20px] py-3 w-full'>
-                <div className='flex flex-col gap-2'>
-                    <div className='text-[14px]'>
-                        Student ID
+                <div className='flex justify-between text-[20px] py-3 w-full'>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Student ID
+                        </div>
+                        <div>
+                            {student?.registration_id}
+                        </div>
                     </div>
-                    <div>
-                        {student?.registration_id}
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Gender
+                        </div>
+                        <div>
+                            {student?.gender}
+                        </div>
                     </div>
-                </div>
-                <div className='flex flex-col gap-2'>
-                    <div className='text-[14px]'>
-                        Gender
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Date of Birth
+                        </div>
+                        <div>
+                            {student?.dob}
+                        </div>
                     </div>
-                    <div>
-                        {student?.gender}
-                    </div>
-                </div>
-                <div className='flex flex-col gap-2'>
-                    <div className='text-[14px]'>
-                        Date of Birth
-                    </div>
-                    <div>
-                        {student?.dob}
-                    </div>
-                </div>
-                <div className='flex flex-col gap-2'>
-                    <div className='text-[14px]'>
-                        Date of Admission
-                    </div>
-                    <div>
-                        {student?.registration_id}
-                    </div>
-                </div>
-            </div>
-            <hr className='divider' />
-            <div className='flex justify-between text-[20px] py-3 md:w-1/2 w-full'>
-                <div className='flex flex-col gap-2'>
-                    <div className='text-[14px]'>
-                        Class
-                    </div>
-                    <div>
-                        {student?.main_class}
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Date of Admission
+                        </div>
+                        <div>
+                            {student?.registration_id}
+                        </div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-2'>
-                    <div className='text-[14px]'>
-                        Sub-class
+                <hr className='divider' />
+                <div className='flex justify-between text-[20px] py-3 md:w-1/2 w-full'>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Class
+                        </div>
+                        <div>
+                            {student?.main_class}
+                        </div>
                     </div>
-                    <div>
-                        {student?.sub_class}
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Sub-class
+                        </div>
+                        <div>
+                            {student?.sub_class}
+                        </div>
                     </div>
                 </div>
-            </div>
             </>
             :
-            <div className='flex justify-center text-[20px] py-3 w-full'>
+            <div className='flex justify-center text-[20px] font-extrabold py-3 w-full'>
                 No student data fetched
             </div>
             }

@@ -9,8 +9,10 @@ import StudentGuardian from './student-guardians';
 import HealthDetails from './health-details';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
-import AddStudentModal from '../modals/add-student/add-student';
+import AddStudentModal from '../modals/add-student/add-single-student/add-student';
 import DeleteModal from '../../../../components/modals/deleteModal';
+import StudentAcademicRecords from './academic-records';
+import StudentAttendance from './attendance';
 
 const ViewStudentPage = () => {
     const tabs = [
@@ -19,12 +21,20 @@ const ViewStudentPage = () => {
             content: <StudentBasicInfo  />,
         },
         {
+            title: 'Health Details',
+            content: <HealthDetails />
+        },
+        {
             title: 'Guardians',
             content: <StudentGuardian  />
         },
         {
-            title: 'Health Details',
-            content: <HealthDetails />
+            title: 'Academic Records',
+            content: <StudentAcademicRecords  />
+        },
+        {
+            title: 'Attendance',
+            content: <StudentAttendance  />
         },
     ];
 

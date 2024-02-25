@@ -2,13 +2,13 @@ import React from 'react';
 import { ArrowRight } from '@carbon/icons-react';
 import { ComboBox, FileUploaderDropContainer, FileUploaderItem, Form, FormGroup, FormLabel, Stack, TextInput, Toggle, Select, SelectItem } from 'carbon-components-react';
 import { useState } from 'react';
-import { useAddStudentParentsNew, useAddStudentParentsOld } from '../../../../../redux/students/hook';
+import { useAddStudentParentsNew, useAddStudentParentsOld } from '../../../../../../redux/students/hook';
 import { useForm } from 'react-hook-form';
-import { checkError } from '../../../../../utils/functions';
-import { AllCountries } from '../../../../../utils/constants/countries';
-import { relationships, titles } from '../../../../../utils/constants';
-import AppButton from '../../../../../components/app-button';
-import { useGetParentsList } from '../../../../../redux/parents/hook';
+import { checkError } from '../../../../../../utils/functions';
+import { AllCountries } from '../../../../../../utils/constants/countries';
+import { relationships, titles } from '../../../../../../utils/constants';
+import AppButton from '../../../../../../components/app-button';
+import { useGetParentsList } from '../../../../../../redux/parents/hook';
 
 const AddStudentStepThree = ({changeStep, studentUUID}) => {
     const [addNewParent, setAddNewParent] = useState(true)
@@ -66,7 +66,6 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
     }
 
     const requestSubmit = async () => {
-        
         if (addNewParent) {
             const formData = new FormData();
             if (form.file) {
@@ -101,14 +100,13 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                 uuid: studentUUID,
                 body: {
                     parent_uuid : parentUUID,
-                    primary: Form.primary,
+                    primary: form.primary,
                     relationship: form.relationship
                 }
             }
-            await addStudentParentsNew(payload).then((response) => {
+            await addStudentParentsOld(payload).then(() => {
                 changeStep('add')
             })
-            addStudentParentsOld()
         }
         
     }
@@ -120,7 +118,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
             isFullWidth
         >
             <Stack gap={6} className='px-4'>
-                <div className='flex flex-col gap-4 w-full max-h-fit mt-5'>
+                <div className='flex flex-col gap-4 w-full max-h-fit mt-8'>
                     <div className='flex flex-row gap-4 items-center sm:justify-between'>
                         <label htmlFor="toggle-7" className=''>
                             Do you want to add a new parent?
@@ -132,6 +130,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                 setAddNewParent(!addNewParent)
                             }}
                             id="use_new_parent"
+                            hideLabel 
                         />
                     </div>
                     <hr className='divider' />
@@ -486,25 +485,35 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                     </Select>
                 </div>
             </Stack>
-            <div className='flex justify-end mt-6'>
-                <AppButton
-                    type="button" 
-                    className='min-w-[180px] h-[60px]'
-                    kind={'secondary'} 
-                    onClick={() => {
-                        secondaryRequestSubmit()
-                    }}
-                    text='Back'
-                />
-                <AppButton
-                    type="submit" 
-                    kind={'primary'}
-                    className='min-w-[180px] h-[60px]'
-                    renderIcon={ArrowRight}
-                    loading={addStudentParentsNewLoading || addStudentParentsOldLoading }
-                    text='Save & Complete'
-                />
+            <div className='flex justify-between w-full'>
+                <div 
+                    className='flex items-center h-[60px] w-[60px] text-[15px] font-normal cursor-pointer hover:underline text-primary px-4 pt-6'
+                    onClick={() => changeStep('add')}
+                >
+                    Skip
+                </div>
+                <div className='flex justify-end mt-6'>
+                    
+                    <AppButton
+                        type="button" 
+                        className='min-w-[180px] h-[60px]'
+                        kind={'secondary'} 
+                        action={() => {
+                            secondaryRequestSubmit()
+                        }}
+                        text='Back'
+                    />
+                    <AppButton
+                        type="submit" 
+                        kind={'primary'}
+                        className='min-w-[180px] h-[60px]'
+                        renderIcon={ArrowRight}
+                        loading={addStudentParentsNewLoading || addStudentParentsOldLoading }
+                        text='Save & Complete'
+                    />
+                </div>
             </div>
+            
         </Form>
     );
 };

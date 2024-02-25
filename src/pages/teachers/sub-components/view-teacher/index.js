@@ -32,7 +32,6 @@ const ViewTeacherPage = () => {
     ];
     const {id} = useParams();
     const { data: teacher, isLoading: teacherLoading } = useGetTeacher(id);
-    console.log(teacher)
 
     return (
       <React.Fragment>

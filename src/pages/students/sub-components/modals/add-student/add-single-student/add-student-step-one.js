@@ -4,17 +4,18 @@ import { Form, Stack, TextInput } from '@carbon/react';
 import { FileUploaderDropContainer, FileUploaderItem, FormGroup, Select, SelectItem, FormLabel } from 'carbon-components-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetSubClassesList } from '../../../../../redux/classes/hook';
-import { checkError } from '../../../../../utils/functions';
-import { genders } from '../../../../../utils/constants';
-import { useAddStudent } from '../../../../../redux/students/hook';
+import { useGetSubClassesList } from '../../../../../../redux/classes/hook';
+import { checkError } from '../../../../../../utils/functions';
+import { genders } from '../../../../../../utils/constants';
+import { useAddStudent, useUpdateStudent } from '../../../../../../redux/students/hook';
 import { ArrowRight } from '@carbon/icons-react';
-import AppButton from '../../../../../components/app-button';
+import AppButton from '../../../../../../components/app-button';
 
-const AddStudentStepOne = ({student, changeStep, setStudentUUID}) => {
+const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) => {
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
     const {mutateAsync: addStudent, isLoading: addStudentLoading} = useAddStudent()
+    const {mutateAsync: updateStudent, isLoading: updateStudentLoading} = useUpdateStudent()
 
     const [form, setForm] = useState({
         first_name: '',
@@ -87,10 +88,22 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID}) => {
         formData.append('sub_class_id', form.sub_class_id)
         formData.append('dob', form.dob)
         formData.append('gender', form.gender)
-        await addStudent(formData).then((response) => {
-            setStudentUUID(response.data.uuid)
-            changeStep('add')
-        })
+        if (student) {
+            let payload = {
+                id: student.uuid,
+                body: formData
+            }
+            await updateStudent(payload).then((response) => {
+                setStudentUUID(response.data.uuid)
+                changeStep('add')
+            })
+        } else {
+            await addStudent(formData).then((response) => {
+                setStudentUUID(response.data.uuid)
+                changeStep('add')
+            })
+        }
+        
     }
 
     return (
@@ -323,16 +336,33 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID}) => {
                     </div>
                 </div>
             </Stack>
-            <div className='flex justify-end mt-4'>
-                <AppButton
-                    type="submit" 
-                    kind={'primary'} 
-                    className='!min-w-[220px] h-[60px]'
-                    renderIcon={ArrowRight}
-                    loading={addStudentLoading}
-                    text={student? "Update & Continue" : "Save & Continue"}
-                />
+            <div className='flex justify-between w-full'>
+                
+                <div 
+                    className='flex items-center h-[60px] w-[60px] text-[15px] font-normal cursor-pointer hover:underline text-primary px-4 pt-6'
+                    onClick={() => changeStep('add')}
+                >
+                    {student || studentUUID?
+                    <>
+                        Skip
+                    </>
+                    :
+                    null
+                    }
+                </div>
+               
+                <div className='flex justify-end mt-4'>
+                    <AppButton
+                        type="submit" 
+                        kind={'primary'} 
+                        className='!min-w-[220px] h-[60px]'
+                        renderIcon={ArrowRight}
+                        loading={addStudentLoading || updateStudentLoading}
+                        text={student? "Update & Continue" : "Save & Continue"}
+                    />
+                </div>
             </div>
+            
         </Form>
     );
 };
