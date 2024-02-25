@@ -125,7 +125,8 @@ export function useUpdateStudent() {
     },
     {
       onSuccess: (response, variables, context) => {
-        queryClient.invalidateQueries('employee-bonuses');
+        queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('student');
         store.dispatch(setAlert(true, 'success', 'Student updated successfully'));
       },
       onSettled: (data, error, variables, context) => {
@@ -135,7 +136,24 @@ export function useUpdateStudent() {
   );
 }
 
-
+export function useDeleteStudent() {
+  return useMutation(
+    (payload) => {
+      store.dispatch(setIsLoading(true));
+      return students.deleteStudent(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('student');
+        store.dispatch(setAlert(true, 'success', 'Student information deleted successfully'));
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
 
 export function useGetStudentsList(limit, page, search) {
   return useQuery(

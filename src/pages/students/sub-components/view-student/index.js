@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
-import { useGetStudent } from '../../../../redux/students/hook';
+import { useDeleteStudent, useGetStudent } from '../../../../redux/students/hook';
 import StudentBasicInfo from './view-basic-info';
 import StudentGuardian from './student-guardians';
 import HealthDetails from './health-details';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
 import AddStudentModal from '../modals/add-student/add-student';
+import DeleteModal from '../../../../components/modals/deleteModal';
 
 const ViewStudentPage = () => {
     const tabs = [
@@ -31,14 +32,38 @@ const ViewStudentPage = () => {
     const { data: student, isLoading: studentLoading } = useGetStudent(id);
 
     const [showEditStudent, setShowEditStudent] =useState(false)
+    const [showDeleteStudent, setShowDeleteStudent] =useState(false)
+
+    const {mutateAsync: deleteStudent, isLoading: deleteStudentLoading} = useDeleteStudent()
+
+    const deleteStudentFn = async () => {
+        await deleteStudent(id).then((response) => {
+            setShowDeleteStudent(false)
+        })
+    }
 
     return (
         <React.Fragment>
             {showEditStudent ?
             <AddStudentModal
+                type={'update'}
                 isOpen={showEditStudent}
                 closeModal={()=> setShowEditStudent(false)}
                 student={student}
+            />
+            :
+            null
+            }
+            {showDeleteStudent ?
+            <DeleteModal
+                type={'update'}
+                isOpen={showDeleteStudent}
+                closeModal={()=> setShowDeleteStudent(false)}
+                deleteTitle='Delete Student Profile' 
+                deleteText="Are you sure you want to delete Oladotun from your student directory?"
+                deleteAction={() => {deleteStudentFn()}} 
+                deleteLoading={deleteStudentLoading}
+                buttonText='Delete Student'
             />
             :
             null
@@ -58,7 +83,7 @@ const ViewStudentPage = () => {
                             email={student?.email} 
                             mobile={student?.mobile} 
                             deleteText={'Delete student'}
-                            deleteFunction={''} 
+                            deleteFunction={() => setShowDeleteStudent(true)} 
                             editText={'Edit student'} 
                             editFunction={() => setShowEditStudent(true)} 
                             route='Student' 

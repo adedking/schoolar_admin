@@ -132,6 +132,8 @@ const StudentsPage = () => {
         <React.Fragment>
             {showAddStudent ?
             <AddStudentModal
+                student={null}
+                type={'new'}
                 isOpen={showAddStudent}
                 closeModal={()=> setShowAddStudent(false)}
             />

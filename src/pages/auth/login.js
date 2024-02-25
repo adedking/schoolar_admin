@@ -3,7 +3,6 @@ import AuthLayout from '../../components/layouts/authentication';
 import { Checkbox, Form, Stack, TextInput, FormLabel, PasswordInput } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
-import DOMPurify from 'dompurify';
 import { useLogin } from '../../redux/user/hook';
 import AppButton from '../../components/app-button';
 import { useForm } from 'react-hook-form';
@@ -30,12 +29,9 @@ const LogInPage = () => {
     const {mutateAsync: login, isLoading} = useLogin()
 
     const submitForm = async () => {
-        let user_email = DOMPurify.sanitize(form.email);
-        let user_password = DOMPurify.sanitize(form.password);
-        
         let payload = {
-            email: user_email,
-            password: user_password,
+            email: form.email,
+            password: form.password,
         }
         await login(payload).then((response) => {
             navigate('/dashboard')
@@ -72,19 +68,17 @@ const LogInPage = () => {
                                 <span>Password</span>
                                 <span className=' text-primary hover:underline duration-300 cursor-pointer' onClick={() => {navigate("/forgot-password")}}>Forget Password?</span>
                             </div>
-                            <PasswordInput
+                            <TextInput
                                 type="password"
                                 name={'password'}
                                 value={form.password}
                                 id="passsword"
-                                
-                                labelText=""
                                 {...register('password', { required: true })}
                                 invalid={errors?.password? true : false}
                                 invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
                                 placeholder="Enter Your Password"
                                 onChange={(e) => {
-                                    checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange, 'password')
+                                    checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange)
                                 }}
                             />
                         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { Form, Stack, TextInput, Toggle, TextArea } from '@carbon/react';
 import { Select, SelectItem } from 'carbon-components-react';
 import { bloodGroupOptions, genotypes, height_measurements, weight_measurements } from '../../../../../utils/constants';
@@ -25,6 +26,25 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
         disabled: false,
         disability: '',
     })
+
+    useEffect(() => {
+        if (student) {
+            console.log(student)
+            setForm({
+                ...form,
+                first_name: student.first_name,
+                middle_name: student.middle_name,
+                last_name: student.last_name,
+                mobile: student.mobile,
+                email: student.email,
+                registration_id: student.registration_id,
+                sub_class_id: student.sub_class_id,
+                dob: student.dob,
+                gender: student.gender,
+                file: null,
+            })
+        }
+    }, [student])
 
     const handleChange = (e) => {
         setForm({

@@ -47,7 +47,7 @@ const addStudentParentsNew = async (payload) => {
 };
 
 const addStudentParentsExisting = async (payload) => {
-  const { data } = await Axios.post(`/school-students/${payload.uuid}/parents/existing`, payload);
+  const { data } = await Axios.post(`/school-students/${payload.uuid}/parents/existing`, payload.body);
   return data;
 };
 
@@ -60,6 +60,11 @@ const updateStudent = async (payload) => {
   const { data } = await Axios.put('/school-students/'+payload.id, payload.body);
   return data;
 };
+const deleteStudent = async (payload) => {
+  const { data } = await Axios.delete(`/school-students/${payload}`);
+  return data;
+};
+
 
 export const students = {
   getStudents,
@@ -71,4 +76,5 @@ export const students = {
   addStudentParentsNew,
   addStudentParentsExisting,
   skipAddStudentParents,
+  deleteStudent
 }

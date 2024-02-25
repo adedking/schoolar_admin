@@ -103,7 +103,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID}) => {
                     legendText={''}
                 >
                     <Stack gap={5}>
-                        <div className='flex gap-3 items-center justify-between mt-4'>
+                        <div className='flex gap-3 items-center justify-between mt-6'>
                             <div className='flex flex-col justify-center item-start gap-4 w-full'>
                                 <FormLabel className='text-[15px] font-bold'>Upload profile image - (Optional)</FormLabel>
                                 <FormLabel className='text-[12px] font-normal -mt-3'>Max file size is 3mb. Supported file types are .jpg, .jpeg and .png.</FormLabel>

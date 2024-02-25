@@ -45,6 +45,7 @@ const AppDataTable = ({
     mainButtonAction=()=>{},
     viewActionType=null,
     mainButtonText,
+    multipleButtonText,
     showToolBar=true,
     pagination,
     setPagination,
@@ -52,6 +53,7 @@ const AppDataTable = ({
     emptySubText,
     emptyLinkText,
     statusConfig=null,
+    addMultiple=false
 }) => {
 
     const props = () => ({
@@ -149,12 +151,28 @@ const AppDataTable = ({
                             <TableToolbarContent>
                                 <TableToolbarSearch onChange={onInputChange} />
                                 {data?.data?
+                                <>
+                                {addMultiple ? 
+                                <>
+                                    <Button 
+                                        renderIcon={Add} 
+                                        onClick={() => {
+                                            mainButtonAction()
+                                        }}
+                                    >
+                                        {multipleButtonText}
+                                    </Button>
+                                </>
+                                :
+                                null}
                                 <Button 
                                     renderIcon={Add} 
                                     onClick={() => {
                                         mainButtonAction()
                                     }}
                                 >{mainButtonText}</Button>
+                                
+                                </>
                                 :
                                 null
                                 }

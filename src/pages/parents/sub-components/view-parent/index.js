@@ -13,16 +13,20 @@ import ParentMessages from './messages';
 const ViewParentPage = () => {
     const tabs = [
         {
-          title: 'Children/Wards',
-          content: <Children  />,
+            title: 'Children/Wards',
+            content: <Children  />,
         },
         {
-          title: 'Fees History',
-          content: <SchoolFees  />
+            title: 'Fees History',
+            content: <SchoolFees  />
         },
         {
-          title: 'Messages',
-          content: <ParentMessages />
+            title: 'Messages',
+            content: <ParentMessages />
+        },
+        {
+            title: 'Documents',
+            content: <ParentMessages />
         },
       ];
 

@@ -6,7 +6,7 @@ import AddStudentStepThree from './add-student-step-three';
 
 const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const [studentUUID, setStudentUUID] = useState(null)
 
@@ -32,7 +32,7 @@ const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
   ]);
 
   useEffect(() => {
-    if (type === 'update') {
+    if (type === 'update' && student.parents.length > 0) {
       setSteps([
         {
           title: 'Step 1',
@@ -48,7 +48,7 @@ const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
         },
       ])
     }
-  }, [type])
+  }, [type, student])
 
   const changeStep = (type) => {
     let newArray = steps;
@@ -98,7 +98,7 @@ const AddStudentModal = ({isOpen, closeModal, student, type='new'}) => {
         <div className='w-full px-4'>
         <ProgressIndicator>
           {steps?.map((item, index) => (
-            <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} description={item.description} />
+            <ProgressStep key={index} complete={item.complete} current={item.current} label={item.title} secondaryLabel={item.description} description={item.description} />
           ))}
         </ProgressIndicator>
         </div>

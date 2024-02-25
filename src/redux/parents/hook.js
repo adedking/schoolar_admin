@@ -75,8 +75,9 @@ export function useGetParentsList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
+        newData.push({ id: null, text: 'Select a parent', value: null });
         data?.data.forEach((item) => {
-          newData.push({ id: item.id, text: item.title + '. ' + item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
+          newData.push({ uuid: item.uuid, id: item.id, text: item.title + '. ' + item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
         });
         return newData;
       },

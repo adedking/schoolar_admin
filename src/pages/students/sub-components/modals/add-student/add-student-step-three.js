@@ -10,7 +10,7 @@ import { relationships, titles } from '../../../../../utils/constants';
 import AppButton from '../../../../../components/app-button';
 import { useGetParentsList } from '../../../../../redux/parents/hook';
 
-const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
+const AddStudentStepThree = ({changeStep, studentUUID}) => {
     const [addNewParent, setAddNewParent] = useState(true)
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
@@ -48,7 +48,7 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
             [e.target.name]: e.target.value
         })
     }
-
+    const [parentUUID, setAddNewParentUUID] = useState(null);
     const [fileURL, setFileURL] = useState();
     const [fileSelected, setFileSelected] = useState(false)
     
@@ -97,6 +97,17 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
                 changeStep('add')
             })
         } else {
+            let payload = {
+                uuid: studentUUID,
+                body: {
+                    parent_uuid : parentUUID,
+                    primary: Form.primary,
+                    relationship: form.relationship
+                }
+            }
+            await addStudentParentsNew(payload).then((response) => {
+                changeStep('add')
+            })
             addStudentParentsOld()
         }
         
@@ -105,7 +116,7 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
     return (
         <Form
             onSubmit={handleSubmit(requestSubmit)}
-            className='flex flex-col justify-between h-fit min-h-[300px]'
+            className='flex flex-col justify-between h-fit min-h-[280px]'
             isFullWidth
         >
             <Stack gap={6} className='px-4'>
@@ -410,50 +421,20 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
                                 />
                             </Stack>
                         </FormGroup>
-                        <hr className='divider' />
-                        <div className='flex flex-row gap-4 items-center sm:justify-between'>
-                            <label htmlFor="toggle-7" className=''>
-                                Is this the primary guardian?
-                            </label>
-                            <Toggle
-                                className='!outline-none'
-                                name={'primary'}
-                                id={'primary'}
-                                toggled={form.primary}
-                                onToggle={(e) => {
-                                    checkError(true, e, e.target.value, 'primary', setError, clearErrors, handleChange)
-                                }}
-                                hideLabel 
-                            />
-                        </div>
-                        <hr className='divider' />
-                        <Select
-                            id="relationship"
-                            name={'relationship'}
-                            value={form.relationship}
-                            labelText="Relationship"
-                            onChange={(e) => {
-                                checkError(true, e, e.target.value, 'relationship', setError, clearErrors, handleChange)
-                            }}
-                        >
-                            {relationships.map((item, index) => (
-                                <SelectItem
-                                    key={index}
-                                    value={item.value}
-                                    text={item.text}
-                                />
-                            ))}
-                        </Select>
+                        
                     </>
                     :
-                    <div>
+                    <div  className='flex flex-col gap-4'>
                         <ComboBox 
-                            onChange={() => {}} 
                             id="assigned_parent" 
                             items={parents ? parents : []} 
                             downshiftProps={{
                             onStateChange: (e) => {
-                                console.log(e?.selectedItem?.value)
+                                if (e?.selectedItem?.id) {
+                                    setAddNewParentUUID(e?.selectedItem?.uuid)
+                                } else {
+                                    setAddNewParentUUID(null)
+                                }
                             }
                             }} 
                             placeholder='select parent'
@@ -461,21 +442,48 @@ const AddStudentStepThree = ({student, changeStep, studentUUID}) => {
                             titleText="Search and select parent"
                             // helperText="Combobox helper text" 
                         />
-                        {/* <Search 
-                            size="lg" 
-                            placeholder="Find your items" 
-                            labelText="Search" 
-                            closeButtonLabelText="Clear search input" 
-                            id="search-1" 
-                            onChange={() => {
-                                
-                            }} 
-                            onKeyDown={() => {
-
-                            }} 
-                        /> */}
                     </div>
+                    
                     }
+                </div>
+                <hr className='divider -mb-3' />
+                <div className='flex flex-row gap-4 items-center sm:justify-between'>
+                    <label htmlFor="toggle-7" className=''>
+                        Is this the primary guardian?
+                    </label>
+                    <Toggle
+                        className='!outline-none'
+                        name={'primary'}
+                        id={'primary'}
+                        toggled={form.primary}
+                        onToggle={(e) => {
+                            setForm({
+                                ...form,
+                                primary: !form.primary
+                            })
+                        }}
+                        hideLabel 
+                    />
+                </div>
+                <hr className='divider -mt-3' />
+                <div className='flex md:flex-row flex-col gap-4 -mt-4'>
+                    <Select
+                        id="relationship"
+                        name={'relationship'}
+                        value={form.relationship}
+                        labelText="Relationship"
+                        onChange={(e) => {
+                            checkError(true, e, e.target.value, 'relationship', setError, clearErrors, handleChange)
+                        }}
+                    >
+                        {relationships.map((item, index) => (
+                            <SelectItem
+                                key={index}
+                                value={item.value}
+                                text={item.text}
+                            />
+                        ))}
+                    </Select>
                 </div>
             </Stack>
             <div className='flex justify-end mt-6'>
