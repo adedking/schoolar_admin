@@ -7,6 +7,10 @@ import { Edit, TrashCan } from '@carbon/icons-react';
 const ViewProfile = (
     {
         profileImage, 
+        type='student',
+        name,
+        startDate,
+        endDate,
         firstName, 
         lastName, 
         email, 
@@ -28,13 +32,14 @@ const ViewProfile = (
                     {route}
                 </Link>
                 <span className='text-[14px]'>
-                    / {firstName} {lastName}
+                    / {name}
                 </span>
             </div>
             :
             null
             }
             <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] min-w-full !bg-white p-4 gap-4'>
+                {type !== 'session'?
                 <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                     <div className='w-1/4'>
                         <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background text-[13px]'>
@@ -53,6 +58,19 @@ const ViewProfile = (
                         </span>
                     </div>
                 </div>
+                :
+                <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
+                    <div className='flex flex-col gap-2 md:w-3/4'>
+                        <span className='font-semibold text-[15px]'>
+                            {name}
+                        </span>
+                        <span className='font-normal text-[13px]'>
+                            {startDate} | {endDate}
+                        </span>
+                    </div>
+                </div>
+                }
+                
                 <div className='flex gap-3 items-center md:justify-end md:w-1/2 w-full'>
                     <div 
                         className='flex gap-2 text-[13px] text-red-500 items-center cursor-pointer'

@@ -1,16 +1,16 @@
 import React from 'react';
-import DashboardLayout from '../../components/layouts/dashboard';
+import DashboardLayout from '../../../components/layouts/dashboard';
 
-const AdministrationPage = () => {
+const SchoolTimeTablePage = () => {
 
     // const navigate = useNavigate();
     return (
         <DashboardLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
-                Administration
+                Time table setting
             </div>
         </DashboardLayout>
     );
 };
 
-export default AdministrationPage;
+export default SchoolTimeTablePage;

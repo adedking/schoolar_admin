@@ -112,8 +112,8 @@ const ParentsPage = () => {
                     />
                     <div className='min-w-full max-w-full bg-background rounded-sm'>
                         <AppDataTable 
-                            title={'List of Parents'}
-                            description={'List of all parents'}
+                            title={'Parents'}
+                            description={'Manage parents/guardians'}
                             tableHeader={tableConfig}
                             pagination={pagination}
                             setPagination={setPagination}

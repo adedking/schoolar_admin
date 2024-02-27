@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar, IsTurnRightPanelOff } from '../redux/components/components-slice';
-import { SideNav, SideNavItems, SideNavLink } from 'carbon-components-react';
-import { Dashboard, Document, Education, GroupPresentation, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
-import classNames from 'classnames';
-import { Collapse } from 'reactstrap';
-import CollapsingIcon from './collapsing-icon';
+import { SideNav, SideNavItems, SideNavLink, SideNavMenu } from 'carbon-components-react';
+import { Dashboard, Education, GroupPresentation, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
 
 const Sidebar = ({isSidebarOpen}) => {
 
@@ -23,7 +20,7 @@ const Sidebar = ({isSidebarOpen}) => {
     dispatch(IsTurnRightPanelOff());
   };
 
-  const [sideBar, setSideBar] =  useState([
+  const sideBar =  [
     {
       name: 'Dashboard',
       id: 'dashboard',
@@ -62,29 +59,35 @@ const Sidebar = ({isSidebarOpen}) => {
       id: 'administration',
       icon: ManageProtection,
       route: null,
-      isOpen: true,
+      paths: ['sessions', 'student-records', 'admission'],
       subroute: [
         {
-          name: 'Sessions Management',
+          name: 'Sessions',
           id: 'sessions',
           icon: UserFollow,
-          route: '/sessions-management',
+          route: '/sessions',
         },
+        // {
+        //   name: 'Student Records',
+        //   id: 'student-records',
+        //   icon: Document,
+        //   route: '/student-records',
+        // },
         {
-          name: 'Student Records',
-          id: 'student-records',
-          icon: Document,
-          route: '/student-records',
-        },
-        {
-          name: 'Admissions',
-          id: 'admissions',
+          name: 'Time Table',
+          id: 'time-table',
           icon: UserFollow,
-          route: '/admission',
+          route: '/time-table',
         },
+        // {
+        //   name: 'Admissions',
+        //   id: 'admission',
+        //   icon: UserFollow,
+        //   route: '/admission',
+        // },
       ]
     },
-  ])
+  ]
 
   return (
     <SideNav expanded={isSidebarOpen} isChildOfHeader={true} aria-label="Side navigation"  className='bg-background !backdrop-blur-sm bg-black/30'>
@@ -93,65 +96,32 @@ const Sidebar = ({isSidebarOpen}) => {
           {sideBar?.map((item, index) => (
             <div id={item.id} key={index}>
               {item.subroute && item.subroute.length > 0?
-              <>
-                <div
-                  className={classNames('flex flew-row gap-8 justify-between text-color-black font-normal text-[13px] leading-[20px] pl-[20px] !h-[35px] items-center hover:font-semibold hover:bg-white hover:bg-opacity-20 cursor-pointer select-none', {
-                    'font-extrabold text-[13px] text-color-black bg-white bg-opacity-10 border-l-4 border-l-white ': item.paths?.includes(location?.pathname.split('/')[1]),
-                  })}
+              <SideNavMenu 
+                large
+                title={item.name}
+                renderIcon={item.icon}
+                isActive={item.paths?.includes(location?.pathname.split('/')[1])}
+              >
+                {item.subroute?.map((subItem, subIndex) => (
+                <SideNavLink 
+                  key={subIndex}
+                  isActive={location.pathname.split('/')[1] === (subItem.route).split('/')[1] ? true : false}
+                  className='cursor-pointer -ml-[35px]'
+                  element={Link} 
+                  to={subItem.route}
+                  renderIcon={subItem.icon}
+                  large
                   onClick={() => {
-                    let newArray = JSON.parse(JSON.stringify(sideBar));
-                    newArray[index].isOpen = !item.isOpen;
-                    // console.log(newArray)
-                    setSideBar(newArray);
+                    handleRightPanelToggle()
+                    if (window.innerWidth < 800) {
+                      handleSidebarToggle()
+                    }
                   }}
                 >
-                  <div 
-                    className={classNames('flex text-black duration-300 ', {
-                      'font-bold': item.isOpen,
-                    })}
-                  >
-                    <img src={item.icon} alt={item.name} className={'pr-[15px] max-w-[50px] max-h-[50px]'} />
-                    {item.name}
-                  </div>
-                  
-                  <div className='pr-4'>
-                    <CollapsingIcon defaultPosition='left' isOpen={item.isOpen} />
-                  </div>
-                </div>
-                <div
-                  className={classNames('flex flex-col duration-300', {
-                    hidden: !item.isOpen,
-                  })}
-                >
-                  {item.isOpen}
-                  <Collapse 
-                    isOpen={item.isOpen}
-                  >
-                    <>
-                    {item.subroute.map((subItem, subIndex) => (
-                      <SideNavLink 
-                        isActive={location.pathname.split('/')[1] === (subItem.route).split('/')[1] ? true : false}
-                        className='cursor-pointer !ml-[15px]'
-                        element={Link} 
-                        key={subIndex}
-                        to={subItem.route}
-                        renderIcon={subItem.icon}
-                        large
-                        onClick={() => {
-                          handleRightPanelToggle()
-                          if (window.innerWidth < 800) {
-                            handleSidebarToggle()
-                          }
-                        }}
-                      >
-                        <img src={subItem.icon} alt={subItem.name} className={'pl-4 pr-[15px] max-w-[50px] max-h-[50px]'} />
-                        {subItem.name}
-                      </SideNavLink>
-                    ))}
-                    </>
-                  </Collapse>
-                </div>
-              </>
+                  {subItem.name}
+                </SideNavLink>
+                ))}
+                </SideNavMenu>
               :
               <SideNavLink 
                 key={index}

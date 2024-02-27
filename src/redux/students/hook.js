@@ -74,6 +74,8 @@ export function useAddStudentRecords() {
     {
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('student');
+        queryClient.invalidateQueries('students-list');
         store.dispatch(setAlert(true, 'Add Student Record Successful', 'success', 'You have successfully added student records'));
       },
       onSettled: (response, error, variables, context) => {
@@ -91,7 +93,9 @@ export function useAddStudentParentsNew() {
     {
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('parents');
         queryClient.invalidateQueries('student');
+        queryClient.invalidateQueries('students-list');
         store.dispatch(setAlert(true, 'Add student parent successful', 'success', 'You have successfully added student parent'));
       },
       onSettled: (response, error, variables, context) => {
@@ -110,6 +114,7 @@ export function useAddStudentParentsOld() {
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('students');
         queryClient.invalidateQueries('student');
+        queryClient.invalidateQueries('students-list');
         store.dispatch(setAlert(true, 'Add Student Record Successful', 'success', 'You have successfully added student records'));
       },
       onSettled: (response, error, variables, context) => {
@@ -129,6 +134,7 @@ export function useUpdateStudent() {
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('students');
         queryClient.invalidateQueries('student');
+        queryClient.invalidateQueries('students-list');
         store.dispatch(setAlert(true, 'success', 'Student updated successfully'));
       },
       onSettled: (data, error, variables, context) => {
@@ -148,6 +154,7 @@ export function useDeleteStudent() {
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('students');
         queryClient.invalidateQueries('student');
+        queryClient.invalidateQueries('students-list');
         store.dispatch(setAlert(true, 'success', 'Student information deleted successfully'));
       },
       onSettled: (data, error, variables, context) => {

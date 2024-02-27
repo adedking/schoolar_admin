@@ -83,3 +83,21 @@ export const parentStatusConfig = [
   },
 ];
 
+export const sessionStatusConfig = [
+  {
+    label: 'Inactive',
+    value: 0,
+    color: 'red',
+  },
+  {
+    label: 'Active',
+    value: 1,
+    color: 'green',
+  },
+  {
+    label: 'Pending',
+    value: 2,
+    color: 'orange',
+  },
+];
+

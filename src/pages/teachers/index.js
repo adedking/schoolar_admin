@@ -120,8 +120,8 @@ const TeachersPage = () => {
                     />
                     <div className='min-w-full bg-background rounded-sm'>
                         <AppDataTable
-                            title={'List of Teachers'}
-                            description={'List of all teachers in your school'}
+                            title={'Teachers'}
+                            description={'Manage teachers in your school'}
                             tableHeader={tableConfig}
                             mobileTableHeader={mobileTableHeader}
                             data={teachers}

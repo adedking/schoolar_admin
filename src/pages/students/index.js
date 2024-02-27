@@ -147,8 +147,8 @@ const StudentsPage = () => {
                     />
                     <div className='min-w-full max-w-full bg-background rounded-sm'>
                         <AppDataTable
-                            title={'List of Students'}
-                            description={'List of all students in your school'}
+                            title={'Students'}
+                            description={'Manage students in your school'}
                             tableHeader={tableConfig}
                             pagination={pagination}
                             setPagination={setPagination}

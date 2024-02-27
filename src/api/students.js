@@ -60,6 +60,7 @@ const updateStudent = async (payload) => {
   const { data } = await Axios.put('/school-students/'+payload.id, payload.body);
   return data;
 };
+
 const deleteStudent = async (payload) => {
   const { data } = await Axios.delete(`/school-students/${payload}`);
   return data;

@@ -12,7 +12,7 @@ export const StatusCell = ({ id, code, statusConfig, className }) => {
                 className,
                 'text-[14px] !text-color-white',
                 {
-                  'py-1 px-2 !bg-green-600':
+                  'py-1 px-2 !bg-[#1bc047de]':
                     statusConfig[code]?.color === 'green',
                 },
                 {

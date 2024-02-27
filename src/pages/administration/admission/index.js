@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardLayout from '../../components/layouts/dashboard';
+import DashboardLayout from '../../../components/layouts/dashboard';
 
 const AdmissionPage = () => {
 

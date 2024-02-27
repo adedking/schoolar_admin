@@ -92,6 +92,8 @@ const AppDataTable = ({
             navigate(`/students/${id}`)
         } else if (viewActionType === 'parent') {
             navigate(`/parents-guardians/${id}`)
+        } else if (viewActionType === 'session') {
+            navigate(`/sessions/${id}`)
         }
     }
 
@@ -151,7 +153,7 @@ const AppDataTable = ({
                                 </TableBatchAction>
                             </TableBatchActions>
                             <TableToolbarContent>
-                                <TableToolbarSearch onChange={onInputChange} />
+                                <TableToolbarSearch onChange={onInputChange} expanded />
                                 {data?.data?
                                 <>
                                     {addMultiple ? 

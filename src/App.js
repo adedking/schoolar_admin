@@ -10,12 +10,11 @@ import DashboardPage from './pages/dashboard';
 import TeachersPage from './pages/teachers';
 import StudentsPage from './pages/students';
 import ClassesPage from './pages/classes';
-import AdministrationPage from './pages/administration';
 import VerifyEmailPage from './pages/auth/verify-email';
 import ParentsPage from './pages/parents';
 import VerifyOTPPage from './pages/onboarding/verify-otp';
 import AddSchoolPage from './pages/onboarding/add-school';
-import AdmissionPage from './pages/admission';
+import AdmissionPage from './pages/administration/admission';
 import StudentRecordsPage from './pages/student-records';
 import { useSelector } from 'react-redux';
 import Alert from './components/alert';
@@ -23,6 +22,9 @@ import ViewStudentPage from './pages/students/sub-components/view-student';
 import ViewClassPage from './pages/classes/sub-components/view-sub-class';
 import ViewParentPage from './pages/parents/sub-components/view-parent';
 import ViewTeacherPage from './pages/teachers/sub-components/view-teacher';
+import SessionsPage from './pages/administration/sessions';
+import ViewSessionPage from './pages/administration/sessions/sub-components/view-session';
+import SchoolTimeTablePage from './pages/administration/time-table-settings';
 
 // /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
 
@@ -46,7 +48,9 @@ const App = () => {
               <Route exact path='/parents-guardians/:id' Component={ViewParentPage} />
               <Route exact path='/student-records' Component={StudentRecordsPage} />
               <Route exact path='/admission' Component={AdmissionPage} />
-              <Route exact path='/administration' Component={AdministrationPage} />
+              <Route exact path='/sessions' Component={SessionsPage} />
+              <Route exact path='/sessions/:id' Component={ViewSessionPage} />
+              <Route exact path='/time-table' Component={SchoolTimeTablePage} />
               <Route exact path='/' Component={LogInPage} />
               <Route exact path='/register' Component={SignupPage} />
               <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
