@@ -1,25 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComboBox, Form, Modal } from 'carbon-components-react';
 import AppButton from '../../../../components/app-button';
+import { ArrowRight } from '@carbon/icons-react';
 import { useGetTeachersList } from '../../../../redux/teachers/hook';
-// import { useAssignTeacherToClass } from '../../../../redux/classes/hook';
+import { useAssignTeacherToClass } from '../../../../redux/classes/hook';
+import { useParams } from 'react-router-dom';
 
-const AssignTeacherToClassModal = ({isOpen, closeModal, className}) => {
-  // const navigate = useNavigate();
+const AssignTeacherToClassModal = ({isOpen, closeModal, className, updateTeacherId}) => {
 
   const { data: teachers } = useGetTeachersList(
     1000,
     1,
   );
-  // const {mutateAsync: assignTeacher, isLoading: assignTeacherLoading} = useAssignTeacherToClass()
-  // const [teacherId, setTeacherId] = useState(null)
+  const {id} = useParams();
+  const {mutateAsync: assignTeacher, isLoading: assignTeacherLoading} = useAssignTeacherToClass()
+  const [teacherId, setTeacherId] = useState(updateTeacherId)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    let payload = {
+      id,
+      data: {
+        teacher_id: teacherId
+      }
+    }
+    await assignTeacher(payload).then(() => {
+      closeModal()
+    })
+  }
   return (
     <Modal 
-      modalHeading="Assign a class teacher to 12 - A" 
+      modalHeading={`Assign a class teacher to ${className}`}
       primaryButtonText="Continue" 
       secondaryButtonText={''}
       hasScrollingContent={false}
       passiveModal
+      className='!overflow-auto !backdrop-blur-sm bg-black/30'
       isFullWidth
       open={isOpen} 
       preventCloseOnClickOutside={true}
@@ -27,19 +43,20 @@ const AssignTeacherToClassModal = ({isOpen, closeModal, className}) => {
       size={'lg'}
     > 
         <Form
-          // onSubmit={(e) => {
-          //     e.preventDefault()
-          //     submitForm()
-          // }}
+          onSubmit={handleSubmit}
         >
-            <div className='flex flex-col justify-between w-full md:w-[500px] min-h-[150px] px-4 mb-4 mt-8'>
+            <div className='flex flex-col justify-between w-full md:w-[500px] min-h-[120px] px-4 mb-4 mt-8'>
               <ComboBox 
-                onChange={() => {}} 
+                value={teacherId}
                 id="assigned_teacher" 
                 items={teachers ? teachers : []} 
                 downshiftProps={{
                   onStateChange: (e) => {
-                    // console.log(e?.selectedItem?.value)
+                    if (e?.selectedItem?.id) {
+                      setTeacherId(e?.selectedItem?.id)
+                  } else {
+                    setTeacherId(null)
+                  }
                   }
                 }} 
                 placeholder='Select teacher'
@@ -52,12 +69,10 @@ const AssignTeacherToClassModal = ({isOpen, closeModal, className}) => {
                 <AppButton
                     type="submit" 
                     kind={'primary'} 
-                    // renderIcon={ArrowRight}
-                    // action={submitForm}
+                    renderIcon={ArrowRight}
                     className={'h-[64px] !w-[224px]'}
-                    // loading={isLoading}
+                    loading={assignTeacherLoading}
                     text={'Assign Teacher'}
-                    // loading={addClassLoading}
                 />
             </div>
         </Form>

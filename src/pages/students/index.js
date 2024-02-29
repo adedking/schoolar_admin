@@ -6,6 +6,7 @@ import AppDataTable from '../../components/dataTable';
 import AddStudentModal from './sub-components/modals/add-student/add-single-student/add-student';
 import { PAGINATION_DEFAULT, studentStatusConfig  } from '../../utils';
 import { useGetStudents } from '../../redux/students/hook';
+import AddMultipleStudentsModal from './sub-components/modals/add-student/add-multiple-students/add-multiple-students';
 
 const StudentsPage = () => {
 
@@ -19,6 +20,7 @@ const StudentsPage = () => {
     }
 
     const [showAddStudent, setShowAddStudent] = useState(false);
+    const [showAddMultipleStudent, setShowAddMultipleStudent] = useState(false);
     
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -140,6 +142,16 @@ const StudentsPage = () => {
             :
             null
             }
+            {showAddMultipleStudent ?
+            <AddMultipleStudentsModal
+                student={null}
+                type={'new'}
+                isOpen={showAddMultipleStudent}
+                closeModal={()=> setShowAddMultipleStudent(false)}
+            />
+            :
+            null
+            }
             <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
                     <WidgetCard 
@@ -165,7 +177,9 @@ const StudentsPage = () => {
                             loading={studentLoading}
                             multipleButtonText={'Add Multiple Students'}
                             addMultiple={true}
-                            addMultipleAction={''}
+                            addMultipleAction={() => {
+                                setShowAddMultipleStudent(true)
+                            }}
                         />
                     </div>
                 </div>

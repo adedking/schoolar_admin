@@ -8,33 +8,27 @@ import StudentBasicInfo from './view-basic-info';
 import StudentGuardian from './student-guardians';
 import HealthDetails from './health-details';
 import TabView from '../../../../components/tabs';
-import ViewProfile from '../../../../components/view-profile';
 import AddStudentModal from '../modals/add-student/add-single-student/add-student';
 import DeleteModal from '../../../../components/modals/deleteModal';
-import StudentAcademicRecords from './academic-records';
-import StudentAttendance from './attendance';
+import TermAcademicRecords from './academic-records';
 
 const ViewStudentPage = () => {
     const tabs = [
         {
-            title: 'Basic Information',
+            title: 'Term Activities',
             content: <StudentBasicInfo  />,
         },
         {
-            title: 'Health Details',
+            title: 'Test Dates',
             content: <HealthDetails />
         },
         {
-            title: 'Guardians',
+            title: 'Holidays',
             content: <StudentGuardian  />
         },
         {
-            title: 'Academic Records',
-            content: <StudentAcademicRecords  />
-        },
-        {
-            title: 'Attendance',
-            content: <StudentAttendance  />
+            title: 'Student Records',
+            content: <TermAcademicRecords  />
         },
     ];
 
@@ -86,20 +80,6 @@ const ViewStudentPage = () => {
                     </div>
                     :
                     <div className='w-full flex flex-col'>
-                        <ViewProfile 
-                            profileImage={student.file_url} 
-                            firstName={student?.first_name} 
-                            lastName={student?.last_name} 
-                            email={student?.email} 
-                            mobile={student?.mobile} 
-                            deleteText={'Delete student'}
-                            deleteFunction={() => setShowDeleteStudent(true)} 
-                            editText={'Edit student'} 
-                            editFunction={() => setShowEditStudent(true)} 
-                            route='Student' 
-                            routeLink='/students'
-                            name={`${student?.first_name} ${student?.last_name}`}
-                        />
                         <TabView componentTabs={tabs}/>
                     </div>
                     }

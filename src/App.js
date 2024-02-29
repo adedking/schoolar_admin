@@ -25,6 +25,7 @@ import ViewTeacherPage from './pages/teachers/sub-components/view-teacher';
 import SessionsPage from './pages/administration/sessions';
 import ViewSessionPage from './pages/administration/sessions/sub-components/view-session';
 import SchoolTimeTablePage from './pages/administration/time-table-settings';
+import AcademicTermsPage from './pages/administration/sessions/sub-components/terms';
 
 // /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
 
@@ -50,6 +51,7 @@ const App = () => {
               <Route exact path='/admission' Component={AdmissionPage} />
               <Route exact path='/sessions' Component={SessionsPage} />
               <Route exact path='/sessions/:id' Component={ViewSessionPage} />
+              <Route exact path='/sessions/:id/terms' Component={AcademicTermsPage} />
               <Route exact path='/time-table' Component={SchoolTimeTablePage} />
               <Route exact path='/' Component={LogInPage} />
               <Route exact path='/register' Component={SignupPage} />

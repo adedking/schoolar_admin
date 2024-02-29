@@ -6,7 +6,7 @@ import AddParentStepTwo from './add-parent-step-two';
 import { ArrowRight } from '@carbon/icons-react';
 
 
-const AddParentModal = ({isOpen, closeModal}) => {
+const AddParentModal = ({isOpen, closeModal, type}) => {
     const [payloadOne, setPayloadOne] = useState(null);
     const [payloadTwo, setPayloadTwo] = useState(null);
 

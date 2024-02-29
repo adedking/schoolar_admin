@@ -25,6 +25,8 @@ const AddClassModal = ({isOpen, closeModal, type='add'}) => {
         ...form,
         [name]: e.value
       })
+      
+    } else {
       setForm({
         ...form,
         [e.target.name]: e.target.value
@@ -95,9 +97,9 @@ const AddClassModal = ({isOpen, closeModal, type='add'}) => {
               value={form.sub_classes}
               onChange={(e, state) => {
                 if (form.sub_classes) {
-                  checkError(true, e, state.value, 'sub_classes', setError, clearErrors, handleChange, 'number')
+                  checkError(true, state, state.value, 'sub_classes', setError, clearErrors, handleChange, 'number')
                 } else {
-                  checkError(true, e, 1, 'sub_classes', setError, clearErrors, handleChange, 'number')
+                  checkError(true, state, 1, 'sub_classes', setError, clearErrors, handleChange, 'number')
                 }
               }}
             />

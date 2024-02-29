@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppDataTable from '../../../../components/dataTable';
+import { PAGINATION_DEFAULT } from '../../../../utils';
 
 
 const ClassRegister = ({setShowAddAttendance}) => {
@@ -20,6 +21,13 @@ const ClassRegister = ({setShowAddAttendance}) => {
         },
         
     ];
+
+    const [pagination, setPagination] = useState({
+        limit: PAGINATION_DEFAULT.limit,
+        page: PAGINATION_DEFAULT.page,
+        statusFilter: PAGINATION_DEFAULT.statusFilter,
+        search: '',
+    });
 
     const mobileTableHeader = {
         main:[
@@ -54,12 +62,13 @@ const ClassRegister = ({setShowAddAttendance}) => {
     
     return (
         <React.Fragment>
-            
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
                     title={'Manage class register'}
                     description={'Update the register of the class'}
                     tableHeader={tableConfig}
+                    pagination={pagination}
+                    setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
                     showToolBar={false}
                     // data={teachers}

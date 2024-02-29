@@ -6,6 +6,7 @@ import AppDataTable from '../../components/dataTable';
 import AddTeacherModal from './sub-components/modals/add-teacher/add-single-teacher/add-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT, teacherStatusConfig } from '../../utils';
+import AddMultipleTeachersModal from './sub-components/modals/add-teacher/add-multiple-teachers/add-multiple-teachers';
 
 const TeachersPage = () => {
     const [paginationData, setPaginationData] = useState({
@@ -31,6 +32,7 @@ const TeachersPage = () => {
     }
 
     const [showAddTeacher, setShowAddTeacher] = useState(false);
+    const [showAddMultipleTeachers, setShowAddMultipleTeachers] = useState(false);
     
     const tableConfig = [
         {
@@ -112,6 +114,14 @@ const TeachersPage = () => {
             :
             null
             }
+            {showAddMultipleTeachers ?
+            <AddMultipleTeachersModal
+                isOpen={showAddMultipleTeachers}
+                closeModal={()=> setShowAddMultipleTeachers(false)}
+            />
+            :
+            null
+            }
             <DashboardLayout>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4 relative'>
                     <WidgetCard 
@@ -132,9 +142,13 @@ const TeachersPage = () => {
                                 setShowAddTeacher(true)
                             }}
                             viewActionType={'teacher'}
+                            emptySubText={'Please add teachers to your school by clicking any of the buttons below'}
                             statusConfig={teacherStatusConfig}
                             loading={teachersLoading}
                             emptyText={'No teacher added'}
+                            multipleButtonText={'Add Multiple Teachers'}
+                            addMultiple={true}
+                            addMultipleAction={()=> setShowAddMultipleTeachers(true)}
                         />
                     </div>
                 </div>

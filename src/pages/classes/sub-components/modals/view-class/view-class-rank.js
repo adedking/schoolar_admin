@@ -1,8 +1,8 @@
 
 import React from 'react';
-import TabView from '../../../../../components/tabs';
 import SortRankInfo from './sort-class-rank';
 import { ChartColumn } from '@carbon/icons-react';
+import RightTabView from '../../../../../components/right-panel-tabs';
 
 const ViewClassRank = () => {
     const tabs = [
@@ -15,7 +15,7 @@ const ViewClassRank = () => {
 
     return (
         <div>
-            <TabView componentTabs={tabs}/>
+            <RightTabView componentTabs={tabs}/>
         </div>
         
     )   

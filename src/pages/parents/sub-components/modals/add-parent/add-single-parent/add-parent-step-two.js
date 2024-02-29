@@ -1,5 +1,5 @@
 import React from 'react';
-import profilePix from '../../../../../assets/svg/profile-pix-placeholder.svg';
+import profilePix from '../../../../../../assets/svg/profile-pix-placeholder.svg';
 import { FileUploaderItem } from 'carbon-components-react';
 
 const AddParentStepTwo = () => {

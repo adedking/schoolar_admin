@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../../../../components/layouts/dashboard';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
-import ViewProfile from '../../../../../components/view-profile';
+import { Settings } from '@carbon/icons-react';
 import DeleteModal from '../../../../../components/modals/deleteModal';
 import { useDeleteSession, useGetSession } from '../../../../../redux/administration/sessions/hook';
 import AddSessionModal from '../modals/add-session';
+import SessionCards from '../../../../../components/sessionCards';
 
 const ViewSessionPage = () => {
 
@@ -23,6 +24,54 @@ const ViewSessionPage = () => {
             setShowDeleteSession(false)
         })
     }
+
+    const sessionActivities = [
+        {
+            title: 'Configure Session Terms',
+            description: 'Manage all session terms. Configure term holidays, lecture dates and exam dates',
+            link: `/sessions/${id}/terms`
+        },
+        {
+            title: 'Time Table',
+            description: "Manage this academic session's lecture and exams time tables from here",
+            link: `/sessions/${id}/time-table`
+        },
+        {
+            title: 'Admissions',
+            description: "Manage this academic session's admissions. Configure admissions and create CBT tests for admission candidates",
+            link: `/sessions/${id}/admissions`
+        },
+        {
+            title: 'Student Records',
+            description: 'Manage and view all academic records of students in the academic session',
+            link: `/sessions/${id}/academic-records`
+        },
+        {
+            title: 'Lesson Plans',
+            description: 'Manage this academic session lecture and exams time tables here.',
+            link: `/sessions/${id}/lesson-plans`
+        },
+        {
+            title: 'Exam/Result Configuration',
+            description: 'Manage this academic session results and exams settings.',
+            link: `/sessions/${id}/exam-result-configuration`
+        },
+        {
+            title: 'Fees Configuration',
+            description: 'Manage the fees structure for this session.',
+            link: `/sessions/${id}/exam-result-configuration`
+        },
+        {
+            title: 'Transportation',
+            description: 'Manage and configure all school bus routes',
+            link: `/sessions/${id}/books`
+        },
+        {
+            title: 'Books',
+            description: 'Manage all recommended books for this academic session.',
+            link: `/sessions/${id}/books`
+        },
+    ]
 
     return (
         <React.Fragment>
@@ -56,22 +105,38 @@ const ViewSessionPage = () => {
                         <Loading active={sessionLoading} className={''} withOverlay={false} small={false} />
                     </div>
                     :
-                    <div className='w-full flex flex-col'>
-                        <ViewProfile
-                            type={'session'}
-                            name={'2023-2024'} 
-                            // name={session.name} 
-                            // startDate={session?.start_date} 
-                            // endDate={session?.end_date} 
-                            startDate={'2024-02-27'} 
-                            endDate={'2024-04-18'}
-                            deleteText={'Delete session'}
-                            deleteFunction={() => setShowDeleteSession(true)} 
-                            editText={'Edit session'} 
-                            editFunction={() => setShowEditSession(true)} 
-                            route='Session' 
-                            routeLink='/sessions'
-                        />
+                    <div className='w-full flex flex-col gap-4'>
+                        <div className='flex items-center justify-between w-full md:gap-0 gap-3 h-[68px] bg-background px-4'>
+                            <div className='flex flex-row gap-2'>
+                                <span className='text-[15px]'>
+                                    Academic Session:
+                                </span>
+                                <span className='text-[15px]'>
+                                    DEE 2094 (2024-02-27 to 2024-04-18)
+                                </span>
+                            </div>
+                            <div 
+                                className='flex gap-3 items-center text-primary text-[14px] cursor-pointer hover:underline hover:scale-105 duration-300 hover:pr-2'
+                                onClick={() => {setShowEditSession(true)}}
+                            >
+                                Edit Session <Settings />
+                            </div>
+                        </div>
+                        <div 
+                            className='py-2 text-[18px]'
+                        >
+                            Manage Session Activities
+                        </div>
+                        <div className='grid md:grid-cols-3 grid-cols-1 md:gap-8 gap-4 justify-items-stretch'>
+                            {sessionActivities.map((item, index) => (
+                                <SessionCards
+                                    key={index}
+                                    title={item.title}
+                                    description={item.description}
+                                    link={item.link}
+                                />
+                            ))}
+                        </div>
                     </div>
                     }
                 </div>

@@ -40,6 +40,23 @@ export function useAddTeacher() {
   );
 }
 
+export function useAddMultipleTeachers() {
+  return useMutation(
+    (payload) => {
+      return teachers.addMultipleTeacher(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('teachers');
+        store.dispatch(setAlert(true, 'Add Teacher Successful', 'success', 'You have successfully added teacher'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
 export function useGetTeacher(id) {
   return useQuery(
     ['teacher', {id}],
@@ -76,7 +93,7 @@ export function useGetTeachersList(limit, page, search) {
         let newData = [];
         newData.push({ id: null, text: 'Select a teacher', value: null });
         data?.data.forEach((item) => {
-          newData.push({ id: item.id, text: item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
+          newData.push({ id: item.id, uuid: item.uuid, text: item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
         });
         return newData;
       },
@@ -84,6 +101,26 @@ export function useGetTeachersList(limit, page, search) {
         store.dispatch(setIsLoading(false));
       },
       // keepPreviousData: true
+    },
+  );
+}
+
+export function useDeleteTeacher() {
+  return useMutation(
+    (payload) => {
+      store.dispatch(setIsLoading(true));
+      return teachers.deleteTeacher(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('classes');
+        queryClient.invalidateQueries('class');
+        queryClient.invalidateQueries('classes-list');
+        store.dispatch(setAlert(true, 'success', 'Class deleted successfully'));
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
     },
   );
 }

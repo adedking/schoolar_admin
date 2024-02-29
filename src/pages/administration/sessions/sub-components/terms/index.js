@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../../../components/layouts/dashboard';
-import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
-import AppDataTable from '../../../components/dataTable';
-import AddSessionModal from './sub-components/modals/add-session';
-import { useGetSessions } from '../../../redux/administration/sessions/hook';
+import DashboardLayout from '../../../../../components/layouts/dashboard';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../../../utils';
+import AppDataTable from '../../../../../components/dataTable';
+import AddTermModal from './sub-components/modals/add-term';
+import { useGetSession} from '../../../../../redux/administration/sessions/hook';
+import { useGetTerms } from '../../../../../redux/administration/sessions/terms/hook';
 
-const SessionsPage = () => {
+
+const AcademicTermsPage = () => {
+
+    const {id} = useParams();
+    const { data: session } = useGetSession(id);
 
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -14,14 +21,14 @@ const SessionsPage = () => {
         search: '',
     });
 
-    const { data: students, isLoading: sessionLoading } = useGetSessions(
+    const { data: terms, isLoading: sessionLoading } = useGetTerms(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
         pagination.search,
     );
 
-    const [showAddSession, setShowAddSession] = useState(false);
+    const [showAddTerm, setShowAddTerm] = useState(false);
 
     const tableConfig = [
         {
@@ -30,7 +37,7 @@ const SessionsPage = () => {
         },
         {
             key: 'name',
-            header: 'Session Name',
+            header: 'Term Name',
         },
         {
             key: 'start_date',
@@ -103,32 +110,48 @@ const SessionsPage = () => {
 
     return (
         <>
-        {showAddSession ?
-        <AddSessionModal
-            student={null}
+        {showAddTerm ?
+        <AddTermModal
+            term={null}
             type={'add'}
-            isOpen={showAddSession}
-            closeModal={()=> setShowAddSession(false)}
+            isOpen={showAddTerm}
+            closeModal={()=> setShowAddTerm(false)}
         />
         :
         null
         }
         <DashboardLayout>
-            <div className='min-w-full max-w-full bg-background rounded-sm'>
+            <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>
+                    {'Sessions'}
+                </Link>
+                {session?
+                <Link to={`/sessions/${session?.uuid}`} className='hover:underline duration-300 text-[15px]'>
+                    / {session?.name}
+                </Link> 
+                :
+                null
+                }
+                <span className='text-[14px]'>
+                    / {'Terms'}
+                </span>
+            </div>
+            <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>
+                
                 <AppDataTable
-                    title={'Sessions'}
-                    description={'Manage academic sessions of your school'}
+                    title={'Terms'}
+                    description={'Manage academic terms for this session'}
                     tableHeader={tableConfig}
                     pagination={pagination}
                     setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
-                    data={students}
-                    mainButtonText='Create Session'
+                    data={terms}
+                    mainButtonText='Create Term'
                     mainButtonAction={() => {
-                        setShowAddSession(true)
+                        setShowAddTerm(true)
                     }}
                     emptyText={'No session added'}
-                    emptySubText={'Please add sessions to your school by clicking the button below'}
+                    emptySubText={'Please add terms to this academic session by clicking the button below'}
                     viewActionType={'session'}
                     statusConfig={sessionStatusConfig}
                     loading={sessionLoading}
@@ -140,4 +163,4 @@ const SessionsPage = () => {
     );
 };
 
-export default SessionsPage;
+export default AcademicTermsPage;

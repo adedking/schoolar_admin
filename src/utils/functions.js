@@ -1,7 +1,7 @@
 export const checkError = (required=false, e, text, name, setError, clearErrors, setFunction, type='text', password=null) => {
     if (required) {
         if (type === 'text') {
-            if (text.length > 1) {
+            if (text.length > 0) {
                 clearErrors([name])
             } else {
                 setError(name, { type: 'text', message: 'This field is required' });

@@ -79,12 +79,12 @@ const Sidebar = ({isSidebarOpen}) => {
           icon: UserFollow,
           route: '/time-table',
         },
-        // {
-        //   name: 'Admissions',
-        //   id: 'admission',
-        //   icon: UserFollow,
-        //   route: '/admission',
-        // },
+        {
+          name: 'Admissions',
+          id: 'admission',
+          icon: UserFollow,
+          route: '/admission',
+        },
       ]
     },
   ]
@@ -97,6 +97,7 @@ const Sidebar = ({isSidebarOpen}) => {
             <div id={item.id} key={index}>
               {item.subroute && item.subroute.length > 0?
               <SideNavMenu 
+                className='outline-none'
                 large
                 title={item.name}
                 renderIcon={item.icon}

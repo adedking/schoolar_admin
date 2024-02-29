@@ -38,7 +38,7 @@ const ViewProfile = (
             :
             null
             }
-            <div className='flex md:flex-row flex-col items-start md:min-h-[136px] md:max-h-[136px] min-w-full !bg-white p-4 gap-4'>
+            <div className='flex md:flex-row flex-col items-start md:min-h-[100px] md:max-h-[110px] min-w-full !bg-white p-4 py-2 gap-4'>
                 {type !== 'session'?
                 <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                     <div className='w-1/4'>

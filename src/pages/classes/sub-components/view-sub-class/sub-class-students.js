@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppDataTable from '../../../../components/dataTable';
+import { useParams } from 'react-router-dom';
+import { PAGINATION_DEFAULT, studentStatusConfig } from '../../../../utils';
+import { useGetstudentsBySubClass } from '../../../../redux/classes/hook';
 
-const SubClassStudents = ({setShowAddStudent}) => {
+const SubClassStudents = ({setShowAddStudent, setShowAddMultipleStudents}) => {
+
+    const {id} = useParams();
+
+    const [pagination, setPagination] = useState({
+        limit: PAGINATION_DEFAULT.limit,
+        page: PAGINATION_DEFAULT.page,
+        statusFilter: PAGINATION_DEFAULT.statusFilter,
+        search: '',
+    });
+
+    const { data: students, isLoading: studentsLoading } = useGetstudentsBySubClass(
+        id,
+        pagination.limit,
+        pagination.page,
+        pagination.statusFilter,
+        pagination.search
+    );
 
     const tableConfig = [
+        {
+            key: 'uuid',
+            header: 'id',
+        },
         {
             key: 'first_name',
             header: 'First Name',
@@ -17,16 +41,16 @@ const SubClassStudents = ({setShowAddStudent}) => {
             header: 'Email',
         },
         {
-            key: 'phone_number',
-            header: 'Phone Number',
+            key: 'gender',
+            header: 'Gender',
         },
         {
-            key: 'teaching_subject',
-            header: 'Teaching Subject',
+            key: 'registration_id',
+            header: 'Enrolment ID',
         },
         {
-            key: 'teaching_class',
-            header: 'Teaching Class',
+            key: 'parents',
+            header: 'Primary Guardian',
         },
         {
             key: 'status',
@@ -37,6 +61,10 @@ const SubClassStudents = ({setShowAddStudent}) => {
     const mobileTableHeader = {
         main:[
             {
+                key: 'uuid',
+                header: 'id',
+            },
+            {
                 key: 'full_name',
                 header: 'Student Name',
             },
@@ -46,6 +74,10 @@ const SubClassStudents = ({setShowAddStudent}) => {
             },
         ],
         full: [
+            {
+                key: 'uuid',
+                header: 'id',
+            },
             {
                 key: 'first_name',
                 header: 'First Name',
@@ -59,16 +91,16 @@ const SubClassStudents = ({setShowAddStudent}) => {
                 header: 'Email',
             },
             {
-                key: 'phone_number',
-                header: 'Phone Number',
+                key: 'class',
+                header: 'Class',
             },
             {
-                key: 'teaching_subject',
-                header: 'Teaching Subject',
+                key: 'enrolment_id',
+                header: 'Enrolment ID',
             },
             {
-                key: 'teaching_class',
-                header: 'Teaching Class',
+                key: 'parents',
+                header: 'Primary Guardian',
             },
             {
                 key: 'status',
@@ -79,21 +111,29 @@ const SubClassStudents = ({setShowAddStudent}) => {
 
     return (
         <React.Fragment>
-            
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
-                    title={'Manage students'}
+                    title={'Students'}
                     description={'Add to or remove students from the class'}
                     tableHeader={tableConfig}
+                    pagination={pagination}
+                    setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
-                    showToolBar={false}
-                    // data={teachers}
-                    mainButtonText='Add student to class'
+                    data={students}
+                    mainButtonText='Add Student'
                     mainButtonAction={() => {
                         setShowAddStudent(true)
                     }}
-                    emptyText={'No student added to class'}
-                    emptySubText={'Please add students to this class by clicking the button below'}
+                    emptyText={'No student added'}
+                    emptySubText={'Please add students to your school by clicking the button below'}
+                    viewActionType={'student'}
+                    statusConfig={studentStatusConfig}
+                    loading={studentsLoading}
+                    multipleButtonText={'Add Multiple Students'}
+                    addMultiple={true}
+                    addMultipleAction={() => {
+                        setShowAddMultipleStudents(true)
+                    }}
                 />
             </div>
         </React.Fragment>

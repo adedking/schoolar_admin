@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppDataTable from '../../../../components/dataTable';
+import { useGetSubjectsBySubClass } from '../../../../redux/classes/hook';
+import { useParams } from 'react-router-dom';
+import { PAGINATION_DEFAULT } from '../../../../utils';
 
 
 const ClassSubjects = ({setShowAddSubjectToClass}) => {
 
+    const {id} = useParams();
+    const [pagination, setPagination] = useState({
+        limit: PAGINATION_DEFAULT.limit,
+        page: PAGINATION_DEFAULT.page,
+        statusFilter: PAGINATION_DEFAULT.statusFilter,
+        search: '',
+    });
+
+    const { data: subjects, isLoading: subjectsLoading } = useGetSubjectsBySubClass(
+        id,
+        pagination.limit,
+        pagination.page,
+        pagination.statusFilter,
+        pagination.search
+    );
+
     
     const tableConfig = [
         {
-            key: 'first_name',
-            header: 'First Name',
+            key: 'name',
+            header: 'Subject Name',
         },
         {
-            key: 'last_name',
-            header: 'Last Name',
+            key: 'subject_type',
+            header: 'Subject Type',
         },
         {
-            key: 'email',
-            header: 'Email',
+            key: 'primary_teacher',
+            header: 'Primary Teacher',
         },
         {
-            key: 'phone_number',
-            header: 'Phone Number',
-        },
-        {
-            key: 'teaching_subject',
-            header: 'Teaching Subject',
-        },
-        {
-            key: 'teaching_class',
-            header: 'Teaching Class',
-        },
-        {
-            key: 'status',
-            header: 'Status',
+            key: 'support_teacher',
+            header: 'Support Teacher',
         },
     ];
 
@@ -87,15 +94,18 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
                     title={'Manage class subjects'}
                     description={'Add/remove subjects for the class and assign teachers to respective subjects'}
                     tableHeader={tableConfig}
+                    pagination={pagination}
+                    setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
-                    showToolBar={false}
-                    // data={teachers}
-                    mainButtonText='Add subject to class'
+                    data={subjects}
+                    mainButtonText='Add Subject'
                     mainButtonAction={() => {
                         setShowAddSubjectToClass(true)
                     }}
                     emptyText={'No subject added to class'}
                     emptySubText={'Please add subjects by clicking the button below'}
+                    viewActionType={'subject'}
+                    loading={subjectsLoading}
                 />
             </div>
         </React.Fragment>

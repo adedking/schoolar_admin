@@ -24,6 +24,8 @@ const DeleteModal = ({isOpen, closeModal, deleteTitle='Delete', deleteText="Are 
             {deleteText}
         </div>
         <div className='flex justify-end min-w-full'>
+            {deleteLoading ?
+            null :
             <AppButton
                 type="button" 
                 text={'Cancel'}
@@ -31,6 +33,8 @@ const DeleteModal = ({isOpen, closeModal, deleteTitle='Delete', deleteText="Are 
                 className='min-w-[50%] h-[60px] mt-2'
                 action={() => closeModal()}
             />
+            }
+            
             <AppButton
                 type="button" 
                 text={buttonText}

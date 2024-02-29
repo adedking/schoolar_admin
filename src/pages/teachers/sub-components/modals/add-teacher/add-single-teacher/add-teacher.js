@@ -10,6 +10,7 @@ import { checkError } from '../../../../../../utils/functions';
 import { AllCountries } from '../../../../../../utils/constants/countries';
 import AppButton from '../../../../../../components/app-button';
 import { ArrowRight } from '@carbon/icons-react';
+import { genders } from '../../../../../../utils/constants';
 
 const AddTeacherModal = ({isOpen, closeModal}) => {
 
@@ -66,6 +67,7 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
         formData.append('last_name', form.last_name)
         formData.append('email', form.email)
         formData.append('mobile',form.mobile)
+        formData.append('gender',form.gender)
         formData.append('country', form.country)
         formData.append('state', form.state)
         formData.append('city', form.city)
@@ -187,6 +189,21 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
                         />
                     </div>
                 </div>
+                <TextInput
+                    className='min-w-full'
+                    kind={'text'}
+                    name={'email'}
+                    value={form.email}
+                    id="email"
+                    labelText="Email - (Optional)"
+                    {...register('email', { required: false })}
+                    invalid={errors?.email? true : false}
+                    invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
+                    placeholder="Teacher email"
+                    onChange={(e) => {
+                        checkError(false, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
+                    }}
+                />
                 <div className='flex md:flex-row flex-col gap-4 w-full'>
                     <div className='md:w-1/2 w-full'>
                         <TextInput
@@ -206,21 +223,23 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
                         />
                     </div>
                     <div className='md:w-1/2 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            name={'email'}
-                            value={form.email}
-                            id="email"
-                            labelText="Email - (Optional)"
-                            {...register('email', { required: false })}
-                            invalid={errors?.email? true : false}
-                            invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
-                            placeholder="Teacher email"
+                        <Select
+                            id="gender"
+                            name='gender'
+                            labelText="Gender"
+                            value={form.gender}
                             onChange={(e) => {
-                                checkError(false, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
+                                checkError(true, e, e.target.value, 'gender', setError, clearErrors, handleChange)
                             }}
-                        />
+                        >
+                            {genders.map((item, index) => (
+                                <SelectItem
+                                    key={index}
+                                    value={item.value}
+                                    text={item.text}
+                                />
+                            ))}
+                        </Select>
                     </div>
                 </div>
                 <hr className='divider'/>

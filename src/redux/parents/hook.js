@@ -88,3 +88,44 @@ export function useGetParentsList(limit, page, search) {
     },
   );
 }
+
+export function useGetstudentsByParent( id, limit, page, statusFilter, search ) {
+  return useQuery(
+    ['students-by-parent', { id, limit, page, statusFilter, search }],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return parents.getStudentsByParent({ id, limit, page, statusFilter, search });
+    },
+    {
+      select: (data) => {
+        data?.data?.forEach((student) => {
+          student.class = `${student.main_class} (${student.sub_class})`
+        });
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useDeleteParent() {
+  return useMutation(
+    (payload) => {
+      store.dispatch(setIsLoading(true));
+      return parents.deleteSubClass(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('classes');
+        queryClient.invalidateQueries('class');
+        queryClient.invalidateQueries('classes-list');
+        store.dispatch(setAlert(true, 'success', 'Class deleted successfully'));
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}

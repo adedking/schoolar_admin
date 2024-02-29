@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
-import { PAGINATION_DEFAULT } from '../../../../utils';
-import { useGetClass, useGetSubClass } from '../../../../redux/classes/hook';
+import { useDeleteSubClass, useGetSubClass, useRemoveTeacherFromClass } from '../../../../redux/classes/hook';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
 import SubClassStudents from './sub-class-students';
 import ClassSubjects from './class-subjects';
-import EditSubClassModal from '../modals/edit-sub-class';
 import profilePix from '../../../../assets/svg/profile-pix-placeholder.svg';
 import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
 import AssignTeacherToClassModal from '../modals/assign-teacher-to-class';
@@ -18,49 +17,89 @@ import AddStudentModal from '../../../students/sub-components/modals/add-student
 import AddSubjectToClassModal from '../modals/assign-subject-to-class';
 import ClassRegister from './class-register';
 import MarkAttendance from '../modals/mark-attendance';
+import AddSubClassModal from '../modals/add-sub-class';
+import AddMultipleStudentsModal from '../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students';
+import DeleteModal from '../../../../components/modals/deleteModal';
 
 const ViewClassPage = () => {
 
     const [showAssignTeacherToSubject, setShowAssignTeacherToSubject] = useState(false);
     const [showAssignTeacherToClass, setShowAssignTeacherToClass] = useState(false);
     const [showAddClass, setShowAddClass] = useState(false);
-    const [showAddStudent, setShowAddStudent] = useState(false)
+    const [showAddStudent, setShowAddStudent] = useState(false);
+    const [showAddMultipleStudents, setShowAddMultipleStudents] = useState(false);
     const [showAddSubjectToClass, setShowAddSubjectToClass] = useState(false);
     const [showAddAttendance, setShowAddAttendance] = useState(false);
+    const [teacherId, setTeacherId] = useState(null)
     const [type, setType] = useState('add');
+    const [showDelete, setShowDelete] =useState(false)
 
-    // const [pagination, setPagination] = useState({
-    //     limit: PAGINATION_DEFAULT.limit,
-    //     page: PAGINATION_DEFAULT.page,
-    //     statusFilter: PAGINATION_DEFAULT.statusFilter,
-    //     search: '',
-    // });
+    const [deleteTitle, setDeleteTitle] =useState('')
+    const [deleteText, setDeleteText] =useState('')
+    const [deleteButtonText, setDeleteButtonText] =useState('')
+    const [deleteType, setDeleteType] =useState('')
+
+    const navigate = useNavigate();
 
     const tabs = [
         {
-            title: 'Class Register',
-            content: <ClassRegister  setShowAddAttendance={setShowAddAttendance} />
-        },
-        {
             title: 'Students',
-            content: <SubClassStudents setShowAddStudent={setShowAddStudent} />,
+            content: <SubClassStudents setShowAddStudent={setShowAddStudent} setShowAddMultipleStudents={setShowAddMultipleStudents} />,
         },
         {
             title: 'Subjects',
             content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
         },
         {
+            title: 'Class Register',
+            content: <ClassRegister  setShowAddAttendance={setShowAddAttendance} />
+        },
+        {
             title: 'Academic Records',
             content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
         },
         
-      ];
+    ];
 
     const {id} = useParams();
     const { data: classInfo, isLoading: classLoading } = useGetSubClass(id);
+    const {mutateAsync: removeClass, isLoading: removeClassLoading} = useDeleteSubClass()
+    const {mutateAsync: removeTeacher, isLoading: removeTeacherLoading} = useRemoveTeacherFromClass()
+
+    const deleteClassFn = async () => {
+        await removeClass(id).then(() => {
+            setShowDelete(false)
+            navigate('/classes')
+        })
+    }
+
+    const removeTeacherFn = async () => {
+        await removeTeacher(id).then(() => {
+            setShowDelete(false)
+        })
+    }
 
     return (
         <React.Fragment>
+            {showDelete ?
+            <DeleteModal
+                isOpen={showDelete}
+                closeModal={()=> setShowDelete(false)}
+                deleteTitle={deleteTitle}
+                deleteText={deleteText}
+                deleteAction={() => {
+                    if (deleteType === 'class') {
+                        deleteClassFn()
+                    } else {
+                        removeTeacherFn()
+                    }
+                }} 
+                deleteLoading={removeClassLoading || removeTeacherLoading}
+                buttonText={deleteButtonText}
+            />
+            :
+            null
+            }
             {showAddAttendance ?
             <MarkAttendance
                 isOpen={showAddAttendance}
@@ -79,14 +118,24 @@ const ViewClassPage = () => {
             }
             {showAddStudent ?
             <AddStudentModal
+                student={null}
+                type={'add'}
                 isOpen={showAddStudent}
                 closeModal={()=> setShowAddStudent(false)}
             />
             :
             null
             }
+            {showAddMultipleStudents ?
+            <AddMultipleStudentsModal
+                isOpen={showAddMultipleStudents}
+                closeModal={()=> setShowAddMultipleStudents(false)}
+            />
+            :
+            null
+            }
             {showAddClass ?
-            <EditSubClassModal
+            <AddSubClassModal
                 isOpen={showAddClass}
                 closeModal={()=> setShowAddClass(false)}
             />
@@ -95,6 +144,7 @@ const ViewClassPage = () => {
             }
             {showAssignTeacherToSubject ?
             <AssignTeacherToSubjectModal
+                
                 isOpen={showAssignTeacherToSubject}
                 closeModal={()=> setShowAssignTeacherToSubject(false)}
             />
@@ -103,6 +153,8 @@ const ViewClassPage = () => {
             }
             {showAssignTeacherToClass ?
             <AssignTeacherToClassModal
+                className={`${classInfo?.class_name} - ${classInfo?.name}`}
+                updateTeacherId={teacherId}
                 isOpen={showAssignTeacherToClass}
                 closeModal={()=> setShowAssignTeacherToClass(false)}
             />
@@ -119,10 +171,19 @@ const ViewClassPage = () => {
                     <React.Fragment>
                         <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                             <div className='px-4'>
-                                {classInfo?.class_name} - {classInfo?.name}
+                                {classInfo?.class_name} - {classInfo?.name} {classInfo?.type === 'art' ? '(Art)' : classInfo?.type === 'commerce' ? '(Commercial)' : classInfo?.type === 'science' ? '(Science)' : null}
                             </div>
                             <div className='flex gap-4 items-center'>
-                                <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class <TrashCan /></div>
+                                <div 
+                                    className='flex gap-2 text-[13px] text-red-500 items-center cursor-pointer hover:underline duration-300'
+                                    onClick={() => {
+                                        setDeleteTitle('Delete Class Information')
+                                        setDeleteText(`Are you sure you want to delete ${classInfo?.class_name} - ${classInfo?.name} from your school?`)
+                                        setDeleteType('class')
+                                        setDeleteButtonText('Delete Class')
+                                        setShowDelete(true)
+                                    }}
+                                >Remove class <TrashCan /></div>
                                 <AppButton
                                     type="button" 
                                     kind={'primary'} 
@@ -147,34 +208,52 @@ const ViewClassPage = () => {
                             </div>
 
                             <div className='flex items-center min-h-[48px] justify-start min-w-full bg-white'>
-                                {classInfo?.teacher_id?
+                                {classInfo?.teacher_id && classInfo?.teacher?
                                 <div className='flex md:flex-row flex-col md:items-center px-4 bg-white gap-1 py-3 w-full  md:min-h-[136px] md:max-h-[136px] '>
                                     <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                                         <div className='w-1/4'>
+                                            {classInfo?.teacher?.profile_photo_url ?
+                                            <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background text-[12px] gap-2'>
+                                                <img src={classInfo?.teacher?.profile_photo_url} alt='profileImage' />
+                                            </div>
+                                            :
                                             <div className='flex items-center justify-center h-[96px] w-[96px] !bg-background'>
                                                 <img src={profilePix} alt='profileImage' />
                                             </div>
+                                            }
                                         </div>
                                         <div className='flex flex-col gap-2 md:w-3/4'>
                                             <span className='font-semibold text-[15px]'>
-                                                Mr Aboaba Oladotun
+                                                {classInfo?.teacher.first_name} {classInfo?.teacher.last_name}
                                             </span>
                                             <span className='font-normal text-[13px]'>
-                                                aboabaoladotun@gmail.com
+                                                {classInfo?.teacher.email}
                                             </span>
                                             <span className='font-normal text-[13px]'>
-                                                080613673000
+                                                {classInfo?.teacher.mobile}
                                             </span>
                                         </div>
                                     </div>
                                     <div className='flex gap-4 md:w-1/2 w-full justify-end items-center'>
-                                        <div className='flex gap-2 text-[13px] text-red-500 items-center'>Remove class teacher <TrashCan /></div>
+                                        <div 
+                                            className='flex gap-2 text-[13px] text-red-500 items-center cursor-pointer hover:underline duration-300'
+                                            onClick={() => {
+                                                setDeleteTitle('Remove Teacher From Class')
+                                                setDeleteText(`Are you sure you want to remove ${classInfo?.teacher.first_name} from this class?`)
+                                                setDeleteType('teacher')
+                                                setDeleteButtonText('Remove Teacher')
+                                                setShowDelete(true)
+                                            }}
+                                        >
+                                            Remove class teacher <TrashCan />
+                                        </div>
                                         <AppButton
                                             type="button" 
                                             kind={'primary'} 
                                             renderIcon={Edit}
                                             className={'!h-[42px]'}
                                             action={() => {
+                                                setTeacherId(classInfo?.teacher_id)
                                                 setShowAssignTeacherToClass(true)
                                             }}
                                             // loading={isLoading}

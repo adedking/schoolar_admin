@@ -66,6 +66,23 @@ export function useAddStudent() {
   );
 }
 
+export function useAddMultipleStudents() {
+  return useMutation(
+    (payload) => {
+      return students.addMultipleStudents(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('students');
+        store.dispatch(setAlert(true, 'Add Teacher Successful', 'success', 'You have successfully added students'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
 export function useAddStudentRecords() {
   return useMutation(
     (payload) => {

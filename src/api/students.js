@@ -21,11 +21,19 @@ const getStudent = async (payload) => {
 // Route::get('/school-students', 'index')->name('schoolStudent.index');
 // Route::get('/school-students/{uuid}', 'show')->name('schoolStudent.show');
 const addStudent = async (payload) => {
-const { data } = await Axios.post('/school-students', payload,
-{
-  headers: { 'Content-Type': 'multipart/form-data' },
-});
+  const { data } = await Axios.post('/school-students', payload,
+  {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
 return data;
+};
+
+const addMultipleStudents = async (payload) => {
+  const { data } = await Axios.post('/school-students', payload,
+  {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data;
 };
 
 const addStudentRecords = async (payload) => {
@@ -71,6 +79,7 @@ export const students = {
   getStudents,
   getStudent,
   addStudent,
+  addMultipleStudents,
   addStudentRecords,
   skipAddStudentRecords,
   updateStudent,

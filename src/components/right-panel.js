@@ -16,7 +16,7 @@ const RightView = ({ children, viewTitle}) => {
             <HeaderPanel
                 withOverlay={true}
                 expanded={isRightPanelOpen} 
-                className={classNames('',{'md:min-w-[451px] min-w-full -mt-[48px] bg-black' : isRightPanelOpen})}
+                className={classNames('',{'md:min-w-[500px] min-w-full -mt-[48px] bg-black' : isRightPanelOpen})}
             >
                 <div className='h-[48px] flex justify-between items-center px-4'>
                     <div className=' text-lg'>{viewTitle}</div>

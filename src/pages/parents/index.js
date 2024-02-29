@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
-import AddParentModal from './sub-components/modals/add-parent/add-parent';
+import AddParentModal from './sub-components/modals/add-parent/add-single-parent/add-parent';
 import { PAGINATION_DEFAULT, parentStatusConfig } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 import { useGetParents } from '../../redux/parents/hook';
+import AddMultipleParentsModal from './sub-components/modals/add-parent/add-multiple-parents/add-multiple-parents';
 
 const ParentsPage = () => {
 
@@ -18,6 +19,7 @@ const ParentsPage = () => {
         ]
     }
     const [showAddParent, setShowAddParent] = useState(false);
+    const [showAddMultipleParents, setShowAddMultipleParents] = useState(false);
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
@@ -92,7 +94,6 @@ const ParentsPage = () => {
             },
         ]
     };
-    const navigate = useNavigate();
 
     return (
         <React.Fragment>
@@ -100,6 +101,14 @@ const ParentsPage = () => {
             <AddParentModal
                 isOpen={showAddParent}
                 closeModal={()=> setShowAddParent(false)}
+            />
+            :
+            null
+            }
+            {showAddMultipleParents ?
+            <AddMultipleParentsModal
+                isOpen={showAddMultipleParents}
+                closeModal={()=> setShowAddMultipleParents(false)}
             />
             :
             null
@@ -128,6 +137,11 @@ const ParentsPage = () => {
                             viewActionType={'parent'}
                             statusConfig={parentStatusConfig}
                             loading={parentsLoading}
+                            multipleButtonText={'Add Multiple Parents'}
+                            addMultiple={true}
+                            addMultipleAction={() => {
+                                setShowAddMultipleParents(true)
+                            }}
                         />
                     </div>
                 </div>

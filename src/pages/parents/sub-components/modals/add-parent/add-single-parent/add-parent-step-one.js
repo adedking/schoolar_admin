@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FilterableMultiSelect, Form, Stack, TextInput } from '@carbon/react';
 import { FormGroup, Select, SelectItem } from 'carbon-components-react';
-import { useGetStudentsList } from '../../../../../redux/students/hook';
+import { useGetStudentsList } from '../../../../../../redux/students/hook';
 // import { Close } from '@carbon/icons-react';
 
 const AddParentStepOne = () => {

@@ -2,14 +2,14 @@ import React from 'react';
 import { useGetStudent } from '../../../../redux/students/hook';
 import { useParams } from 'react-router-dom';
 
-const HealthDetails = () => {
+const StudentBasicInfo = () => {
 
     const {id} = useParams();
     const { data: student } = useGetStudent(id);
     return (
         <div className='flex flex-col gap-4'>
             <div className='text-[20px] py-4'>
-                Health Details
+                Student Details
             </div>
             <hr className='divider' />
             {student ?
@@ -17,38 +17,56 @@ const HealthDetails = () => {
                 <div className='flex justify-between text-[20px] py-3 w-full'>
                     <div className='flex flex-col gap-2'>
                         <div className='text-[14px]'>
-                            Weight
+                            Student ID
                         </div>
                         <div>
-                            {student?.health_info?.weight} {student?.health_info?.weight_measurement}
+                            {student?.registration_id}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
                         <div className='text-[14px]'>
-                            Height
+                            Gender
                         </div>
                         <div>
-                            {student?.health_info?.height} {student?.health_info?.height_measurement}
+                            {student?.gender}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
                         <div className='text-[14px]'>
-                            Blood Group
+                            Date of Birth
                         </div>
                         <div>
-                            {student?.health_info?.blood_group}
+                            {student?.dob}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
                         <div className='text-[14px]'>
-                            Genotype
+                            Date of Admission
                         </div>
                         <div>
-                            {student?.health_info?.genotype}
+                            {student?.registration_id}
                         </div>
                     </div>
                 </div>
                 <hr className='divider' />
+                <div className='flex justify-between text-[20px] py-3 md:w-1/2 w-full'>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Class
+                        </div>
+                        <div>
+                            {student?.main_class}
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Sub-class
+                        </div>
+                        <div>
+                            {student?.sub_class}
+                        </div>
+                    </div>
+                </div>
             </>
             :
             <div className='flex justify-center text-[20px] font-extrabold py-3 w-full'>
@@ -59,4 +77,4 @@ const HealthDetails = () => {
     );
 };
 
-export default HealthDetails;
+export default StudentBasicInfo;

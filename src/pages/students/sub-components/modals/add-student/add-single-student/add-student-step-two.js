@@ -45,11 +45,19 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
         }
     }, [student])
 
-    const handleChange = (e) => {
-        setForm({
+    const handleChange = (e, type='text', name='') => {
+        if (type === 'number') {
+          setForm({
+            ...form,
+            [name]: e.value
+          })
+          
+        } else {
+          setForm({
             ...form,
             [e.target.name]: e.target.value
-        })
+          })
+        }
     }
 
     const secondaryRequestSubmit = () => {
@@ -97,7 +105,7 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
                             value={form.weight}
                             onChange={(e, state) => {
                                 if (form.weight) {
-                                checkError(true, e, state.value, 'weight', setError, clearErrors, handleChange, 'number')
+                                checkError(true, state, state.value, 'weight', setError, clearErrors, handleChange, 'number')
                                 } else {
                                 checkError(true, e, 1, 'weight', setError, clearErrors, handleChange, 'number')
                                 }
