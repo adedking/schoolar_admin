@@ -150,9 +150,9 @@ export function useGetSubClassesList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
-        newData.push({ value: null, label: 'Select a class' });
+        newData.push({ value: null, text: 'Select a class' });
         data?.forEach((item) => {
-          newData.push({ value: item.id, label: item.class_name + ' - ' + item.name });
+          newData.push({ value: item.id, text: item.class_name + ' - ' + item.name });
         });
         return newData;
       },
@@ -163,8 +163,6 @@ export function useGetSubClassesList(limit, page, search) {
     },
   );
 }
-
-
 
 export function useGetSubClass(id) {
   return useQuery(

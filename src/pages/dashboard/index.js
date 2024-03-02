@@ -19,6 +19,9 @@ const DashboardPage = () => {
         ]
     }
 
+    // const [startDate, setStartDate] = useState()
+    // const [endDate, setEndDate] = useState()
+
     const data = {
         data: [
         {
@@ -52,27 +55,42 @@ const DashboardPage = () => {
             {
                 "group": "Student",
                 "date": "2019-01-01T00:00:00.000Z",
-                "value": 20000
+                "value": 500,
             },
             {
                 "group": "Student",
                 "date": "2019-01-05T00:00:00.000Z",
-                "value": 25000
+                "value": 850
             },
             {
                 "group": "Student",
                 "date": "2019-01-08T00:00:00.000Z",
-                "value": 60000
+                "value": 600
             },
             {
                 "group": "Student",
                 "date": "2019-01-13T00:00:00.000Z",
-                "value": 30213
+                "value": 1000
             },
             {
                 "group": "Student",
                 "date": "2019-01-17T00:00:00.000Z",
-                "value": 55213
+                "value": 743
+            },
+            {
+                "group": "Student",
+                "date": "2019-01-21T00:00:00.000Z",
+                "value": 1205
+            },
+            {
+                "group": "Student",
+                "date": "2019-01-25T00:00:00.000Z",
+                "value": 950
+            },
+            {
+                "group": "Student",
+                "date": "2019-02-03T00:00:00.000Z",
+                "value": 730
             },
         ],
 		options: {
@@ -81,20 +99,23 @@ const DashboardPage = () => {
                     "stacked": true,
                     "scaleType": "linear",
                     "mapsTo": "value",
-                    "gridLines": {
-                        display: false, // Hide y-axis grid lines
-                    },
                 },
                 "bottom": {
                     "scaleType": "time",
                     "mapsTo": "date",
-                    "gridLines": {
-                        display: false, // Hide x-axis grid lines
-                    },
-                }
+                },
             },
             "curve": "curveMonotoneX",
             "height": "400px",
+            "color": {
+                scale: {
+                    Student: "#a6c8ff"
+                }
+            },
+            "grid": {
+                "left": false,
+                "bottom": false
+            }
         }
 	};
 
@@ -190,7 +211,7 @@ const DashboardPage = () => {
                                 </DatePicker>
                             </div>
                         </div>
-                        <div>
+                        <div className='px-4'>
                             <StackedAreaChart 
                                 data={chartData.data}
                                 options={chartData.options}

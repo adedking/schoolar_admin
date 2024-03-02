@@ -662,6 +662,17 @@ i {
 }
 
 
-.chart-container .cc-chart g.cc-axis-group g.cc-axis-tick-line {
+.x{
+  display: none;
+}
+
+.y{
+  display: none;
+}
+.chart-grid-backdrop{
+  display: none;
+}
+
+.domain {
   display: none;
 }

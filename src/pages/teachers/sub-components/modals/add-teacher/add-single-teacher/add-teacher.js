@@ -275,7 +275,7 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
                             <SelectItem
                             key={index}
                             value={item.value}
-                            text={item.label}
+                            text={item.text}
                             />
                             ))}
                         </Select>

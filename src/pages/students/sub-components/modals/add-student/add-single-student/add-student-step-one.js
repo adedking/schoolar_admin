@@ -329,7 +329,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             <SelectItem
                                 key={index}
                                 value={item.value}
-                                text={item.label}
+                                text={item.text}
                             />
                             ))}
                         </Select>
