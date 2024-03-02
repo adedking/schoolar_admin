@@ -10,10 +10,10 @@ import { useDeleteTeacher, useGetTeacher } from '../../../../redux/teachers/hook
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import ViewProfile from '../../../../components/view-profile';
-
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../../../components/modals/deleteModal';
 import AddTeacherModal from '../modals/add-teacher/add-single-teacher/add-teacher';
+import LessonPlans from './lesson-plans';
 
 const ViewTeacherPage = () => {
     const tabs = [
@@ -30,8 +30,8 @@ const ViewTeacherPage = () => {
         content: <Qualifications />
       },
       {
-        title: 'Lesson Plan',
-        content: <Qualifications />
+        title: 'Lesson Plans',
+        content: <LessonPlans />
       },
     ];
     const {id} = useParams();
@@ -83,7 +83,7 @@ const ViewTeacherPage = () => {
                 :
                 <div className='w-full flex flex-col'>
                   <ViewProfile 
-                    profileImage={''} 
+                    profileImage={teacher?.profile_photo_url} 
                     firstName={teacher?.first_name} 
                     lastName={teacher?.last_name} 
                     email={teacher?.email} 
@@ -94,8 +94,8 @@ const ViewTeacherPage = () => {
                     editFunction={() => {
                       setShowEditTeacher(true)
                     }} 
-                    route='Parents/guardians' 
-                    routeLink='/parents-guardians'
+                    route='Teachers' 
+                    routeLink='/teachers'
                     name={`${teacher?.title}. ${teacher?.first_name} ${teacher?.last_name}`}
                   />
                   <TabView componentTabs={tabs}/>

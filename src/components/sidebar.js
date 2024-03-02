@@ -67,12 +67,12 @@ const Sidebar = ({isSidebarOpen}) => {
           icon: UserFollow,
           route: '/sessions',
         },
-        // {
-        //   name: 'Student Records',
-        //   id: 'student-records',
-        //   icon: Document,
-        //   route: '/student-records',
-        // },
+        {
+          name: 'Terms',
+          id: 'academic-terms',
+          icon: UserFollow,
+          route: '/academic-terms',
+        },
         {
           name: 'Time Table',
           id: 'time-table',
@@ -84,6 +84,12 @@ const Sidebar = ({isSidebarOpen}) => {
           id: 'admission',
           icon: UserFollow,
           route: '/admission',
+        },
+        {
+          name: 'Fees Management',
+          id: 'fees-management',
+          icon: UserFollow,
+          route: '/fees-management',
         },
       ]
     },

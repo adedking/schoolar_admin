@@ -3,12 +3,10 @@ import {
     Button, 
     DataTable, 
     Loading, 
-    TableBatchAction, 
-    TableBatchActions, 
     TableContainer, 
     TableToolbar, 
     TableToolbarContent, 
-    TableToolbarSearch 
+    // TableToolbarSearch 
 } from 'carbon-components-react';
 import { 
     Add, 
@@ -38,7 +36,6 @@ const ClassesDataCard = ({
         <React.Fragment>
             <DataTable rows={data ? data : []} headers={tableHeader} isSortable render={({
                 getToolbarProps,
-                getBatchActionProps,
                 onInputChange,
                 getTableContainerProps
             }) => 
@@ -84,22 +81,16 @@ const ClassesDataCard = ({
                     <React.Fragment>
                         <TableContainer title={title} description={description} {...getTableContainerProps()}>
                             <TableToolbar {...getToolbarProps()}>
-                                <TableBatchActions {...getBatchActionProps()}>
-                                    <TableBatchAction iconDescription="Delete the selected rows" >
-                                        Edit
-                                    </TableBatchAction>
-                                    <TableBatchAction iconDescription="Save the selected rows" >
-                                        Send Announcement
-                                    </TableBatchAction>
-                                    <TableBatchAction iconDescription="Download the selected rows" >
-                                        Assign To Class
-                                    </TableBatchAction>
-                                    <TableBatchAction iconDescription="Download the selected rows" >
-                                        Remove Teacher
-                                    </TableBatchAction>
-                                </TableBatchActions>
                                 <TableToolbarContent>
-                                    <TableToolbarSearch onChange={onInputChange} />
+                                    {/* <TableToolbarSearch onChange={onInputChange} expanded /> */}
+                                    <AppButton 
+                                        text={'Add sub-class'}
+                                        renderIcon={Add} 
+                                        kind={'tertiary'}
+                                        action={() => {
+                                            setShowAddSubClass(true)
+                                        }}
+                                    />
                                     <Button 
                                         renderIcon={Add} 
                                         className='!w-[200px]'
@@ -112,39 +103,25 @@ const ClassesDataCard = ({
                                 </TableToolbarContent>
                             </TableToolbar>
                         </TableContainer>
-                        <div className='flex flex-col pt-6 bg-white gap-8 '>
+                        <div className='flex flex-col pt-6 bg-white gap-5 '>
                             {data.map(classInfo => (
-                                <div className='flex flex-col bg-white gap-2 hover:border-2 hover:bg-gray-50 rounded-md hover:p-3 min-h-[120px] duration-300'>
+                                <div className='flex flex-col  gap-2 hover:border-2 bg-gray-50 rounded-md hover:p-5 p-3 min-h-[120px] duration-300 shadow-sm'>
                                     <div className='flex justify-between w-full'>
-                                        <div className='text-[18px]'>{classInfo.name}</div>
-                                        {classInfo.sub_classes && classInfo.sub_classes.length > 0?
-                                        <div 
-                                            className='flex gap-1 text-[15px] text-primary hover:underline duration-300 cursor-pointer hover:font-semibold'
-                                            onClick={() => {
-                                                setClassInfo(classInfo)
-                                                setShowAddSubClass()
-                                            }}
-                                        >
-                                            <Add /> Sub-class
-                                        </div>
-                                        :
-                                        null
-                                        }
+                                        <div className='text-[18px] font-semibold'>{classInfo.name}</div>
                                     </div>
                                     {classInfo.sub_classes && classInfo.sub_classes.length > 0?
                                     <div className='grid md:grid-cols-3 grid-cols-1 gap-4 w-full duration-300'>
                                         {classInfo.sub_classes?.map(subClassInfo => (
                                         <div className='flex flex-col justify-between md:min-w-[33%] w-full h-[108px] bg-background rounded p-3 hover:shadow-md hover:scale-105 duration-300'>
                                             <div className='flex flex-col justify-between md:min-w-[33%] w-full h-[108px] bg-background rounded text-[16px]'>{classInfo.name} - {subClassInfo.name}</div>
-                                            <div 
-                                                className='flex gap-2 text-primary text-[13px] cursor-pointer'
+                                            <span 
+                                                className='flex gap-2 text-primary text-[13px] cursor-pointer max-w-fit hover:underline duration-300'
                                                 onClick={() => {
                                                     navigate(`/classes/${subClassInfo.id}`)
                                                 }}
                                             >
                                                 View class <ArrowRight />
-                                            </div>
-                                            
+                                            </span>
                                         </div>
                                         ))}
                                     </div>

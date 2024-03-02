@@ -1,30 +1,30 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import DashboardLayout from '../../../../components/layouts/dashboard';
-import { useParams } from 'react-router-dom';
+import DashboardLayout from '../../../../../components/layouts/dashboard';
+import { Link, useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
-import { useDeleteStudent, useGetStudent } from '../../../../redux/students/hook';
-import StudentBasicInfo from './view-basic-info';
-import StudentGuardian from './student-guardians';
-import HealthDetails from './health-details';
-import TabView from '../../../../components/tabs';
-import AddStudentModal from '../modals/add-student/add-single-student/add-student';
-import DeleteModal from '../../../../components/modals/deleteModal';
+import { useDeleteStudent, useGetStudent } from '../../../../../redux/students/hook';
+import TabView from '../../../../../components/tabs';
+import DeleteModal from '../../../../../components/modals/deleteModal';
 import TermAcademicRecords from './academic-records';
+import TermHolidays from './holidays';
+import TermTestDates from './test-dates';
+import TermActivities from './term-activities';
+import { useGetSession } from '../../../../../redux/administration/sessions/hook';
 
-const ViewStudentPage = () => {
+const ViewTermPage = () => {
     const tabs = [
         {
             title: 'Term Activities',
-            content: <StudentBasicInfo  />,
+            content: <TermActivities  />,
         },
         {
             title: 'Test Dates',
-            content: <HealthDetails />
+            content: <TermTestDates />
         },
         {
             title: 'Holidays',
-            content: <StudentGuardian  />
+            content: <TermHolidays  />
         },
         {
             title: 'Student Records',
@@ -33,7 +33,7 @@ const ViewStudentPage = () => {
     ];
 
     const {id} = useParams();
-    const { data: student, isLoading: studentLoading } = useGetStudent(id);
+    const { data: session, isLoading: sessionLoading } = useGetSession(id);
 
     const [showEditStudent, setShowEditStudent] =useState(false)
     const [showDeleteStudent, setShowDeleteStudent] =useState(false)
@@ -48,16 +48,6 @@ const ViewStudentPage = () => {
 
     return (
         <React.Fragment>
-            {showEditStudent ?
-            <AddStudentModal
-                type={'update'}
-                isOpen={showEditStudent}
-                closeModal={()=> setShowEditStudent(false)}
-                student={student}
-            />
-            :
-            null
-            }
             {showDeleteStudent ?
             <DeleteModal
                 type={'update'}
@@ -73,10 +63,33 @@ const ViewStudentPage = () => {
             null
             }
             <DashboardLayout viewComponent={null} viewTitle={'View student'}>
+                <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                    <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>
+                        {'Sessions'}
+                    </Link>
+                    {/* {session?
+                    <Link to={`/sessions/${session?.uuid}`} className='hover:underline duration-300 text-[15px]'>
+                        / {session?.name}
+                    </Link> 
+                    :
+                    null
+                    } */}
+                    /
+                    <Link to={`/sessions/${'test_session_id'}`} className='hover:underline duration-300 text-[15px]'>
+                         DEE 2094 (2024-02-27 to 2024-04-18)
+                    </Link>
+                    /
+                    <Link to={`/sessions/${'test_session_id'}/academic-terms`} className='hover:underline duration-300 text-[15px]'>
+                         Academic Terms
+                    </Link>
+                    <span className='text-[14px]'>
+                        / {'First Term'}
+                    </span>
+                </div>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
-                    {studentLoading ?
+                    {sessionLoading ?
                     <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={studentLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={sessionLoading} className={''} withOverlay={false} small={false} />
                     </div>
                     :
                     <div className='w-full flex flex-col'>
@@ -89,4 +102,4 @@ const ViewStudentPage = () => {
     );
 };
 
-export default ViewStudentPage;
+export default ViewTermPage;

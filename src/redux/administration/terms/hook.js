@@ -1,8 +1,8 @@
-import { store } from '../../..';
-import { setAlert, setIsLoading } from '../../../components/components-slice';
+import { store } from '../..';
+import { setAlert, setIsLoading } from '../../components/components-slice';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient } from '../../../..';
-import { terms } from '../../../../api/terms';
+import { queryClient } from '../../..';
+import { terms } from '../../../api/terms';
 
 export function useGetTerms( limit, page, statusFilter, search ) {
   return useQuery(

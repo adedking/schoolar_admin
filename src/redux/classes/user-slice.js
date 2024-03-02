@@ -2,33 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Slice
 const slice = createSlice({
-  name: 'user',
+  name: 'classes',
   initialState: {
-    user: null,
-    token: null,
-    webToken: null,
+    classes: null,
   },
   reducers: {
-    setUser: (state, { payload }) => {
-      state.user = payload;
+    setClasses: (state, { payload }) => {
+      state.classes = payload;
     },
-    clearUser: (state) => {
-      state.user = null;
-    },
-    setToken: (state, { payload }) => {
-      state.token = payload;
-    },
-    clearToken: (state) => {
-      state.token = null;
-    },
-    setWebToken: (state, { payload }) => {
-      state.webToken = payload;
+    clearClasses: (state) => {
+      state.classes = null;
     },
   },
 });
 
 // Actions
-export const { logoutSuccess, setUser, clearUser, setToken, clearToken, setWebToken } =
+export const { setClasses, clearClasses } =
   slice.actions;
 
 export default slice.reducer;

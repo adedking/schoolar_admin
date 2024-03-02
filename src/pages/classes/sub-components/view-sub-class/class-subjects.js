@@ -23,8 +23,15 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
         pagination.search
     );
 
-    
     const tableConfig = [
+        {
+            key: 'id',
+            header: 'id',
+        },
+        {
+            key: 'sub_class_id',
+            header: 'class_id',
+        },
         {
             key: 'name',
             header: 'Subject Name',

@@ -4,8 +4,9 @@ import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/dataTable';
 import { DatePicker, DatePickerInput } from 'carbon-components-react';
 import { ComboBox } from '@carbon/react';
-// import { StackedAreaChart } from '@carbon/charts-react'
-// import '@carbon/charts/styles.css'
+import { StackedAreaChart } from '@carbon/charts-react'
+import "@carbon/charts/styles/styles.scss";
+import { useGetSubClassesList } from '../../redux/classes/hook';
 
 const DashboardPage = () => {
 
@@ -45,6 +46,57 @@ const DashboardPage = () => {
             grade: '99%',
         },
     ]};
+
+    const chartData = {
+		data: [
+            {
+                "group": "Student",
+                "date": "2019-01-01T00:00:00.000Z",
+                "value": 20000
+            },
+            {
+                "group": "Student",
+                "date": "2019-01-05T00:00:00.000Z",
+                "value": 25000
+            },
+            {
+                "group": "Student",
+                "date": "2019-01-08T00:00:00.000Z",
+                "value": 60000
+            },
+            {
+                "group": "Student",
+                "date": "2019-01-13T00:00:00.000Z",
+                "value": 30213
+            },
+            {
+                "group": "Student",
+                "date": "2019-01-17T00:00:00.000Z",
+                "value": 55213
+            },
+        ],
+		options: {
+            "axes": {
+                "left": {
+                    "stacked": true,
+                    "scaleType": "linear",
+                    "mapsTo": "value",
+                    "gridLines": {
+                        display: false, // Hide y-axis grid lines
+                    },
+                },
+                "bottom": {
+                    "scaleType": "time",
+                    "mapsTo": "date",
+                    "gridLines": {
+                        display: false, // Hide x-axis grid lines
+                    },
+                }
+            },
+            "curve": "curveMonotoneX",
+            "height": "400px",
+        }
+	};
 
     const tableConfig = [
         {
@@ -96,28 +148,10 @@ const DashboardPage = () => {
         ]
     };
 
-    const items = [
-        {
-            id: 'option-0',
-            text: 'Choose a class'
-        }, 
-        {
-            id: 'option-1',
-            text: 'SS3 - A'
-        }, 
-        {
-            id: 'option-2',
-            text: 'SS2 - B'
-        }, 
-        {
-            id: 'option-2',
-            text: 'SS2 - C'
-        },
-        {
-            id: 'option-2',
-            text: 'SS2 - B'
-        },
-    ];
+    const { data: classes } = useGetSubClassesList(
+        1000,
+        1,
+    );
 
     return (
         <React.Fragment>
@@ -126,25 +160,29 @@ const DashboardPage = () => {
                     <WidgetCard 
                         cardData={cardData}
                     />
-                    <div className='flex flex-col bg-background w-full md:h-[386px] h-fit p-3 gap-3'>
+                    <div className='flex flex-col bg-background w-full min-h-[386px] h-fit p-3 gap-3'>
                         <div className='flex md:flex-row flex-col justify-between min-h-[56px] md:items-center w-full gap-3'>
                             <div className='md:min-w-1/3 w-full text-[18px]'>Class statistics</div>
                             <div className='flex md:flex-row flex-col gap-4 md:min-w-2/3 w-full justify-end'>
-                            <ComboBox
-                                onChange={() => {}} 
-                                id="assigned_teacher" 
-                                items={items} 
-                                downshiftProps={{
-                                onStateChange: () => {
-                                    // console.log('the state has changed');
-                                }
-                                }} 
-                                placeholder='Select class'
-                                itemToString={item => item ? item.text : ''} 
-                                titleText="Class"
-                                size="sm" 
-                                className='!w-[300px] text-[13px]'
-                            />
+                                <ComboBox 
+                                    id="class"
+                                    items={classes ? classes : []} 
+                                    onChange={(e) => {
+                                        // if (e?.selectedItem?.id) {
+                                        //     setClassName(e?.selectedItem?.text)
+                                        //     setClassRank(e?.selectedItem?.rank)
+                                        //     setClassId(e?.selectedItem?.id)
+                                        // } else {
+                                        //     setClassName('')
+                                        //     setClassRank(null)
+                                        //     setClassId(null)
+                                        // }
+                                    }}
+                                    size='sm'
+                                    placeholder='Select Class'
+                                    itemToString={item => item ? item.text : ''} 
+                                    titleText="Class"
+                                />
                                 {/* <Dropdown id="default" titleText="Class" initialSelectedItem={items[0]} size="sm" label="Class" items={items} itemToString={item => item ? item.text : ''} className='md:w-[288px] w-full' /> */}
                                 <DatePicker datePickerType="range">
                                     <DatePickerInput id="date-picker-input-id-start" placeholder="mm/dd/yyyy" labelText="From" size="sm" />
@@ -153,11 +191,12 @@ const DashboardPage = () => {
                             </div>
                         </div>
                         <div>
-                            Chart here
-                            {/* <StackedAreaChart 
-                                data={chartData} 
-                                options={options}
-                            ></ StackedAreaChart> */}
+                            <StackedAreaChart 
+                                data={chartData.data}
+                                options={chartData.options}
+                            >
+                            </ StackedAreaChart>
+                            
                         </div>
                     </div>
                     <div className='min-w-full max-w-full bg-background rounded-sm'>

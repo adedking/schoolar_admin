@@ -5,11 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Stack, TextInput } from '@carbon/react'
 import { ArrowRight } from '@carbon/icons-react';
-import { checkError } from '../../../../../../../utils/functions';
-import AppButton from '../../../../../../../components/app-button';
-import { useAddSession, useUpdateSession } from '../../../../../../../redux/administration/sessions/hook';
+import { checkError } from '../../../../../utils/functions';
+import AppButton from '../../../../../components/app-button';
+import { useAddSession, useUpdateSession } from '../../../../../redux/administration/sessions/hook';
 
-const AddTermModal = ({isOpen, closeModal, type='add', session=null}) => {
+const AddAdmissionModal = ({isOpen, closeModal, type='add', session=null}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
@@ -79,7 +79,7 @@ const AddTermModal = ({isOpen, closeModal, type='add', session=null}) => {
 
     return (
         <Modal 
-            modalHeading={type === 'add' ? "Create Term" : "Update Term"} 
+            modalHeading={type === 'add' ? "Create Admission" : "Update Admission"} 
             primaryButtonText="Continue" 
             secondaryButtonText={''}
             hasScrollingContent={false}
@@ -191,4 +191,4 @@ const AddTermModal = ({isOpen, closeModal, type='add', session=null}) => {
     )   
 }
 
-export default AddTermModal;
+export default AddAdmissionModal;

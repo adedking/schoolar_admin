@@ -1,15 +1,15 @@
 import React from 'react';
 
-const StudentAttendance = () => {
+const TermAttendance = () => {
 
     return (
         <div className='flex flex-col gap-4'>
             <div className='text-[20px] py-4'>
-                Student Attendance Data
+                Term Attendance Data
             </div>
             <hr className='divider' />
         </div>
     );
 };
 
-export default StudentAttendance;
+export default TermAttendance;

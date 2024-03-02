@@ -3,20 +3,9 @@ import DashboardLayout from '../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
 import AppDataTable from '../../../components/dataTable';
 import { useGetTerms } from '../../../redux/administration/terms/hook';
-import AddAdmissionModal from './sub-components/modals/add-admission';
-import WidgetCard from '../../../components/widget';
 
 
-const AdmissionsPage = () => {
-
-    const cardData = {
-        columns: 3,
-        items: [
-           { title: 'Completed', value: 50},
-           { title: 'On-going', value: 20},
-           { title: 'Up-coming', value: 20},
-        ]
-    }
+const StudentRecordsPage = () => {
 
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -25,14 +14,12 @@ const AdmissionsPage = () => {
         search: '',
     });
 
-    const { data: admissions, isLoading: admissionsLoading } = useGetTerms(
+    const { data: studentRecords, isLoading: studentRecordsLoading } = useGetTerms(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
         pagination.search,
     );
-
-    const [showAddAdmission, setShowAddAdmission] = useState(false);
 
     const tableConfig = [
         {
@@ -122,38 +109,26 @@ const AdmissionsPage = () => {
 
     return (
         <>
-        {showAddAdmission ?
-        <AddAdmissionModal
-            term={null}
-            type={'add'}
-            isOpen={showAddAdmission}
-            closeModal={()=> setShowAddAdmission(false)}
-        />
-        :
-        null
-        }
             <DashboardLayout>
-                <WidgetCard
-                    cardData={cardData}
-                />
                 <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>   
                     <AppDataTable
-                        title={'Admissions'}
-                        description={'Manage school admissions'}
+                        title={'Student Records'}
+                        description={'Manage school Student Records'}
                         tableHeader={tableConfig}
                         pagination={pagination}
                         setPagination={setPagination}
                         mobileTableHeader={mobileTableHeader}
-                        data={admissions}
-                        mainButtonText='Start Admission'
-                        mainButtonAction={() => {
-                            setShowAddAdmission(true)
-                        }}
-                        emptyText={'No session added'}
-                        emptySubText={'Please add admissions by clicking the button below'}
-                        viewActionType={'admission'}
+                        data={studentRecords}
+                        showMainButton={false}
+                        // mainButtonText='Start Admission'
+                        // mainButtonAction={() => {
+                        //     setShowAddAdmission(true)
+                        // }}
+                        // emptyText={'No session added'}
+                        // emptySubText={'Please add studentRecords by clicking the button below'}
+                        viewActionType={'student-records'}
                         statusConfig={sessionStatusConfig}
-                        loading={admissionsLoading}
+                        loading={studentRecordsLoading}
                         addMultiple={false}
                     />
                 </div>
@@ -162,4 +137,4 @@ const AdmissionsPage = () => {
     );
 };
 
-export default AdmissionsPage;
+export default StudentRecordsPage;

@@ -4,19 +4,8 @@ import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
 import AppDataTable from '../../../components/dataTable';
 import { useGetTerms } from '../../../redux/administration/terms/hook';
 import AddAdmissionModal from './sub-components/modals/add-admission';
-import WidgetCard from '../../../components/widget';
 
-
-const AdmissionsPage = () => {
-
-    const cardData = {
-        columns: 3,
-        items: [
-           { title: 'Completed', value: 50},
-           { title: 'On-going', value: 20},
-           { title: 'Up-coming', value: 20},
-        ]
-    }
+const FeesManagementPage = () => {
 
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -25,14 +14,14 @@ const AdmissionsPage = () => {
         search: '',
     });
 
-    const { data: admissions, isLoading: admissionsLoading } = useGetTerms(
+    const { data: fees, isLoading: feesLoading } = useGetTerms(
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
         pagination.search,
     );
 
-    const [showAddAdmission, setShowAddAdmission] = useState(false);
+    const [showAddFees, setShowAddFees] = useState(false);
 
     const tableConfig = [
         {
@@ -122,38 +111,35 @@ const AdmissionsPage = () => {
 
     return (
         <>
-        {showAddAdmission ?
+        {showAddFees ?
         <AddAdmissionModal
             term={null}
             type={'add'}
-            isOpen={showAddAdmission}
-            closeModal={()=> setShowAddAdmission(false)}
+            isOpen={showAddFees}
+            closeModal={()=> setShowAddFees(false)}
         />
         :
         null
         }
             <DashboardLayout>
-                <WidgetCard
-                    cardData={cardData}
-                />
                 <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>   
                     <AppDataTable
-                        title={'Admissions'}
-                        description={'Manage school admissions'}
+                        title={'Fees'}
+                        description={'Manage school fees'}
                         tableHeader={tableConfig}
                         pagination={pagination}
                         setPagination={setPagination}
                         mobileTableHeader={mobileTableHeader}
-                        data={admissions}
-                        mainButtonText='Start Admission'
+                        data={fees}
+                        mainButtonText='Create Fees'
                         mainButtonAction={() => {
-                            setShowAddAdmission(true)
+                            setShowAddFees(true)
                         }}
-                        emptyText={'No session added'}
-                        emptySubText={'Please add admissions by clicking the button below'}
-                        viewActionType={'admission'}
+                        emptyText={'No fees added'}
+                        emptySubText={'Please add fees by clicking the button below'}
+                        viewActionType={'fee'}
                         statusConfig={sessionStatusConfig}
-                        loading={admissionsLoading}
+                        loading={feesLoading}
                         addMultiple={false}
                     />
                 </div>
@@ -162,4 +148,4 @@ const AdmissionsPage = () => {
     );
 };
 
-export default AdmissionsPage;
+export default FeesManagementPage;

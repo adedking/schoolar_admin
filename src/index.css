@@ -5,6 +5,8 @@
 @use '@carbon/react/scss/breakpoint' as *;
 @use '@carbon/react/scss/theme' as *;
 @use '@carbon/charts-react/styles.css'
+@import "https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:400,600&display=swap";
+@import "https://unpkg.com/carbon-components/css/carbon-components.min.css";
 
  /* Tailwind equlavent scss variables */
  @layer components {
@@ -657,4 +659,9 @@ i {
 
 .cds--file__selected-file {
   display: none !important;
+}
+
+
+.chart-container .cc-chart g.cc-axis-group g.cc-axis-tick-line {
+  display: none;
 }

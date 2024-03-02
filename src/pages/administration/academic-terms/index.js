@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../../../../../components/layouts/dashboard';
-import { Link } from 'react-router-dom';
-import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../../../utils';
-import AppDataTable from '../../../../../components/dataTable';
-import AddTermModal from '../../../academic-terms/sub-components/modals/add-term';
-// import { useGetSession} from '../../../../../redux/administration/sessions/hook';
-import { useGetTerms } from '../../../../../redux/administration/terms/hook';
+import DashboardLayout from '../../../components/layouts/dashboard';
+import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
+import AppDataTable from '../../../components/dataTable';
+import AddTermModal from './sub-components/modals/add-term';
+import { useGetTerms } from '../../../redux/administration/terms/hook';
+import WidgetCard from '../../../components/widget';
 
 
-const SessionAcademicTermsPage = () => {
+const AcademicTermsPage = () => {
 
-    // const {id} = useParams();
-    // const { data: session } = useGetSession(id);
+    const cardData = {
+        columns: 3,
+        items: [
+           { title: 'Completed', value: 50},
+           { title: 'On-going', value: 20},
+           { title: 'Up-coming', value: 20},
+        ]
+    }
 
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -37,6 +42,10 @@ const SessionAcademicTermsPage = () => {
         {
             key: 'name',
             header: 'Term Name',
+        },
+        {
+            key: 'session',
+            header: 'Session',
         },
         {
             key: 'start_date',
@@ -120,19 +129,11 @@ const SessionAcademicTermsPage = () => {
         null
         }
         <DashboardLayout>
-            <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
-                <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>
-                    {'Sessions'}
-                </Link>
-                <Link to={`/sessions/${'test_session_id'}`} className='hover:underline duration-300 text-[15px]'>
-                    / DEE 2094 (2024-02-27 to 2024-04-18)
-                </Link>
-                <span className='text-[14px]'>
-                    / {'Terms'}
-                </span>
-            </div>
-            <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>
-                
+        <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
+            <WidgetCard
+                cardData={cardData}
+            />
+            <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>   
                 <AppDataTable
                     title={'Terms'}
                     description={'Manage academic terms for this session'}
@@ -153,9 +154,10 @@ const SessionAcademicTermsPage = () => {
                     addMultiple={false}
                 />
             </div>
+        </div>
         </DashboardLayout>
         </>
     );
 };
 
-export default SessionAcademicTermsPage;
+export default AcademicTermsPage;

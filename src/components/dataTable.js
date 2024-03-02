@@ -41,6 +41,7 @@ const AppDataTable = ({
     data, 
     title, 
     description, 
+    searchData=true,
     check=true, 
     mainButtonAction=()=>{},
     viewActionType=null,
@@ -54,6 +55,7 @@ const AppDataTable = ({
     emptyLinkText,
     statusConfig=null,
     addMultiple=false,
+    showMainButton=true,
     addMultipleAction=()=>{},
 }) => {
 
@@ -94,7 +96,7 @@ const AppDataTable = ({
 
     const navigate = useNavigate();
 
-    const viewAction = (id) => {
+    const viewAction = (id, class_id=null, term_id=null) => {
         if (viewActionType === 'teacher') {
             navigate(`/teachers/${id}`)
         } else if (viewActionType === 'student') {
@@ -103,6 +105,10 @@ const AppDataTable = ({
             navigate(`/parents-guardians/${id}`)
         } else if (viewActionType === 'session') {
             navigate(`/sessions/${id}`)
+        } else if (viewActionType === 'subject') {
+            navigate(`/classes/${class_id}/subjects/${id}`)
+        } else if (viewActionType === 'term') {
+            navigate(`/sessions/${id}/academic-terms/${term_id}`)
         }
     }
 
@@ -155,8 +161,9 @@ const AppDataTable = ({
                                 </TableBatchAction>
                             </TableBatchActions>
                             <TableToolbarContent>
-                                <TableToolbarSearch 
+                                <TableToolbarSearch
                                     value={search} 
+                                    disabled={!searchData}
                                     onInput={(e) => {
                                         if (e.target.value) {
                                             setSearch(e.target.value)
@@ -167,6 +174,7 @@ const AppDataTable = ({
                                         }
                                         
                                     }}
+                                    expanded
                                 />
                                 {data?.data?
                                 <>
@@ -181,6 +189,7 @@ const AppDataTable = ({
                                     />
                                     :
                                     null}
+                                    {showMainButton?
                                     <AppButton 
                                         text={mainButtonText}
                                         kind={'primary'} 
@@ -189,7 +198,8 @@ const AppDataTable = ({
                                             mainButtonAction()
                                         }}
                                     />
-                                
+                                    :
+                                    null}
                                 </>
                                 :
                                 null
@@ -215,7 +225,7 @@ const AppDataTable = ({
                                         {check?<TableSelectAll {...getSelectionProps()} />:null}
                                         {tableHeader.map((header, i) => (
                                             <>
-                                            {header.header === 'id' ?
+                                            {header.header === 'id' || header.header === 'class_id' ?
                                             null :
                                             <TableHeader key={i} {...getHeaderProps({
                                                 header
@@ -231,8 +241,12 @@ const AppDataTable = ({
                                     {rows.map(row => 
                                     <TableRow 
                                         className='!text-[13px] cursor-pointer' 
-                                        onClick={() => { 
-                                            {viewAction(row.cells[0].value)}
+                                        onClick={() => {
+                                            if (viewActionType === 'subject') {
+                                                viewAction(row.cells[0].value, row.cells[1].value)
+                                            } else {
+                                                viewAction(row.cells[0].value)
+                                            }
                                         }}
                                         key={row.id} 
                                         {...getRowProps({
@@ -245,7 +259,7 @@ const AppDataTable = ({
                                         {row.cells.map(cell => (
                                             // <div>{cell.id.split(":")[1]}</div>
                                             <>
-                                                {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid' ?
+                                                {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid'  || cell.id.split(":")[1] === 'class_id' ?
                                                 null 
                                                 : cell.id.split(":")[1] === 'status'?
                                                 <StatusCell
@@ -381,7 +395,7 @@ const AppDataTable = ({
                                         <TableSelectAll {...getSelectionProps()} />
                                         {mobileTableHeader.main.map((header, i) => (
                                             <>
-                                            {header.header === 'id' ?
+                                            {header.header === 'id' || header.header === 'class_id' ?
                                             null :
                                             <TableHeader key={i} {...getHeaderProps({
                                                 header
@@ -406,7 +420,7 @@ const AppDataTable = ({
                                         {row.cells.map(cell => (
                                             // <div>{cell.id.split(":")[1]}</div>
                                             <>
-                                                {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid' ?
+                                                {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid' || cell.id.split(":")[1] === 'class_id' ?
                                                 null 
                                                 : cell.id.split(":")[1] === 'status'?
                                                 <StatusCell

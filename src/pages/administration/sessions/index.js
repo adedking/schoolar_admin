@@ -4,8 +4,18 @@ import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
 import AppDataTable from '../../../components/dataTable';
 import AddSessionModal from './sub-components/modals/add-session';
 import { useGetSessions } from '../../../redux/administration/sessions/hook';
+import WidgetCard from '../../../components/widget';
 
 const SessionsPage = () => {
+
+    const cardData = {
+        columns: 3,
+        items: [
+           { title: 'Completed', value: 50},
+           { title: 'On-going', value: 20},
+           { title: 'Up-coming', value: 20},
+        ]
+    }
 
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -114,6 +124,10 @@ const SessionsPage = () => {
         null
         }
         <DashboardLayout>
+        <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
+            <WidgetCard
+                cardData={cardData}
+            />
             <div className='min-w-full max-w-full bg-background rounded-sm'>
                 <AppDataTable
                     title={'Sessions'}
@@ -135,6 +149,7 @@ const SessionsPage = () => {
                     addMultiple={false}
                 />
             </div>
+        </div>
         </DashboardLayout>
         </>
     );

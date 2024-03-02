@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import AppDataTable from '../../../../components/dataTable';
 import { useParams } from 'react-router-dom';
 import { PAGINATION_DEFAULT, studentStatusConfig } from '../../../../utils';
-import { useGetstudentsByParent } from '../../../../redux/parents/hook';
+import { useGetstudentsBySubClass } from '../../../../redux/classes/hook';
 
-
-const Children = ({setShowAddSubjectToClass}) => {
+const SubjectTimeTable = ({setShowAddStudent, setShowAddMultipleStudents}) => {
 
     const {id} = useParams();
+
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
@@ -15,7 +15,7 @@ const Children = ({setShowAddSubjectToClass}) => {
         search: '',
     });
 
-    const { data: students, isLoading: studentsLoading } = useGetstudentsByParent(
+    const { data: students, isLoading: studentsLoading } = useGetstudentsBySubClass(
         id,
         pagination.limit,
         pagination.page,
@@ -45,12 +45,12 @@ const Children = ({setShowAddSubjectToClass}) => {
             header: 'Gender',
         },
         {
-            key: 'class',
-            header: 'Class',
-        },
-        {
             key: 'registration_id',
             header: 'Enrolment ID',
+        },
+        {
+            key: 'parents',
+            header: 'Primary Guardian',
         },
         {
             key: 'status',
@@ -91,10 +91,6 @@ const Children = ({setShowAddSubjectToClass}) => {
                 header: 'Email',
             },
             {
-                key: 'gender',
-                header: 'Gender',
-            },
-            {
                 key: 'class',
                 header: 'Class',
             },
@@ -103,15 +99,18 @@ const Children = ({setShowAddSubjectToClass}) => {
                 header: 'Enrolment ID',
             },
             {
+                key: 'parents',
+                header: 'Primary Guardian',
+            },
+            {
                 key: 'status',
                 header: 'Status',
             },
         ]
     };
-    
+
     return (
         <React.Fragment>
-            
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
                     title={'Students'}
@@ -123,7 +122,7 @@ const Children = ({setShowAddSubjectToClass}) => {
                     data={students}
                     mainButtonText='Add Student'
                     mainButtonAction={() => {
-                        // setShowAddStudent(true)
+                        setShowAddStudent(true)
                     }}
                     emptyText={'No student added'}
                     emptySubText={'Please add students to your school by clicking the button below'}
@@ -133,7 +132,7 @@ const Children = ({setShowAddSubjectToClass}) => {
                     multipleButtonText={'Add Multiple Students'}
                     addMultiple={true}
                     addMultipleAction={() => {
-                        // setShowAddMultipleStudents(true)
+                        setShowAddMultipleStudents(true)
                     }}
                 />
             </div>
@@ -141,4 +140,4 @@ const Children = ({setShowAddSubjectToClass}) => {
     );
 };
 
-export default Children;
+export default SubjectTimeTable;

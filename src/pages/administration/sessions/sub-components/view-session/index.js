@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../../components/layouts/dashboard';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import { Settings } from '@carbon/icons-react';
 import DeleteModal from '../../../../../components/modals/deleteModal';
@@ -13,6 +13,7 @@ const ViewSessionPage = () => {
 
     const {id} = useParams();
     const { data: session, isLoading: sessionLoading } = useGetSession(id);
+    console.log(session)
 
     const [showEditSession, setShowEditSession] =useState(false)
     const [showDeleteSession, setShowDeleteSession] =useState(false)
@@ -27,7 +28,7 @@ const ViewSessionPage = () => {
 
     const sessionActivities = [
         {
-            title: 'Configure Session Terms',
+            title: 'Academic Terms',
             description: 'Manage all session terms. Configure term holidays, lecture dates and exam dates',
             link: `/sessions/${id}/terms`
         },
@@ -37,7 +38,7 @@ const ViewSessionPage = () => {
             link: `/sessions/${id}/time-table`
         },
         {
-            title: 'Admissions',
+            title: 'Admission',
             description: "Manage this academic session's admissions. Configure admissions and create CBT tests for admission candidates",
             link: `/sessions/${id}/admissions`
         },
@@ -106,6 +107,14 @@ const ViewSessionPage = () => {
                     </div>
                     :
                     <div className='w-full flex flex-col gap-4'>
+                        <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                            <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>
+                                {'Sessions'}
+                            </Link>
+                            <span className='text-[14px]'>
+                                / DEE 2094 (2024-02-27 to 2024-04-18)
+                            </span>
+                        </div>
                         <div className='flex items-center justify-between w-full md:gap-0 gap-3 h-[68px] bg-background px-4'>
                             <div className='flex flex-row gap-2'>
                                 <span className='text-[15px]'>
