@@ -420,7 +420,6 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                 />
                             </Stack>
                         </FormGroup>
-                        
                     </>
                     :
                     <div  className='flex flex-col gap-4'>

@@ -22,8 +22,6 @@ export function useGetParents( limit, page, statusFilter, search ) {
     },
   );
 }
-
-
 export function useGetParent(id) {
   return useQuery(
     ['parent', {id}],
@@ -55,6 +53,26 @@ export function useAddParent() {
         store.dispatch(setAlert(true, 'Add Parent Successful', 'success', 'You have successfully added a parent'));
       },
       onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useUpdateParent() {
+  return useMutation(
+    (payload) => {
+      store.dispatch(setIsLoading(true));
+      return parents.updateParent(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('parents');
+        queryClient.invalidateQueries('parent');
+        queryClient.invalidateQueries('parents-list');
+        store.dispatch(setAlert(true, 'success', 'Student updated successfully'));
+      },
+      onSettled: (data, error, variables, context) => {
         store.dispatch(setIsLoading(false));
       },
     },

@@ -174,7 +174,6 @@ const AppDataTable = ({
                                         }
                                         
                                     }}
-                                    expanded
                                 />
                                 {data?.data?
                                 <>

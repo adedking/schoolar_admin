@@ -14,7 +14,7 @@ const WidgetCard = ({cardData, loading=false}) => {
                 {cardData && cardData.items.map((item, i) => (
                     <div key={i} className=' flex flex-col justify-center p-3 gap-1 min-h-[75px]'>
                         <div className='!text-[13px] text-color-[#525252]'>{item.title}</div>
-                        <div className=''>{item.value}</div>
+                        <div className='font-semibold'>{item.value}</div>
                     </div>
                 ))}
             </div>

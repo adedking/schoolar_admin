@@ -24,7 +24,7 @@ const TabView = ({ componentTabs }) => {
   }, [componentTabs])
 
   return (
-    <Grid condensed className='!bg-background p-3 px-2 min-h-[500px] w-full'>
+    <Grid condensed className='!bg-background p-3 px-2 min-h-[500px] w-full -my-3'>
       <Column lg={16} md={16} sm={4}>
         <Tabs
           className='!min-w-[100%]'

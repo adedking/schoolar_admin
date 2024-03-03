@@ -105,7 +105,7 @@ const ClassesDataCard = ({
                         </TableContainer>
                         <div className='flex flex-col pt-6 bg-white gap-5 '>
                             {data.map(classInfo => (
-                                <div className='flex flex-col  gap-2 hover:border-2 bg-gray-50 rounded-md hover:p-5 p-3 min-h-[120px] duration-300 shadow-sm'>
+                                <div className='flex flex-col  gap-2 hover:border-2 bg-gray-50 rounded-md hover:p-5 p-3 min-h-[120px] duration-300 shadow-sm border'>
                                     <div className='flex justify-between w-full'>
                                         <div className='text-[18px] font-semibold'>{classInfo.name}</div>
                                     </div>
