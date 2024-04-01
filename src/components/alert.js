@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import NotificationSystem from 'react-notification-system';
-import { store } from '../redux';
-import { setAlert } from '../redux/components/components-slice';
+// import { store } from '../redux';
+// import { setAlert } from '../redux/components/components-slice';
 
 const Alert = ({
   title=null,
@@ -21,17 +21,17 @@ const Alert = ({
         level: type
       });
     }
-    return () => {
-      notification.removeNotification();
-      store.dispatch(
-        setAlert(
-          false,
-          '',
-          '',
-          '',
-        ),
-      );
-    }
+    // return () => {
+    //   notification.removeNotification();
+    //   store.dispatch(
+    //     setAlert(
+    //       false,
+    //       '',
+    //       '',
+    //       '',
+    //     ),
+    //   );
+    // }
   },[message, type])
   return (
     <NotificationSystem ref={notificationSystem} />

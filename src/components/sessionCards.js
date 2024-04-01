@@ -9,7 +9,7 @@ const SessionCards = ({ key, title, description, link }) => {
     return (
         <div 
             key={key} 
-            className='flex flex-col justify-between p-3 col-span-1 hover:bg-gray-50 bg-background h-[128px] hover:scale-105 hover:shadow-lg hover:border border-black duration-300 cursor-pointer'
+            className='flex flex-col justify-between p-3 col-span-1 hover:bg-gray-50 bg-background h-[150px] hover:scale-105 hover:shadow-lg hover:border border-black duration-300 cursor-pointer'
             onClick={() => {navigate(link)}}
         >
             <div className='flex flex-col gap-2'>

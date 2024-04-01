@@ -109,7 +109,11 @@ const AppDataTable = ({
             navigate(`/classes/${class_id}/subjects/${id}`)
         } else if (viewActionType === 'term') {
             navigate(`/sessions/${id}/academic-terms/${term_id}`)
-        }
+        } else if (viewActionType === 'transportation') {
+            navigate(`/transportation/${id}`)
+        } else if (viewActionType === 'fees') {
+            navigate(`/fees-management/${id}`)
+        }  
     }
 
     useEffect(() => {
@@ -256,7 +260,6 @@ const AppDataTable = ({
                                             <TableSelectRow {...getSelectionProps({row})} />
                                         :null}
                                         {row.cells.map(cell => (
-                                            // <div>{cell.id.split(":")[1]}</div>
                                             <>
                                                 {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid'  || cell.id.split(":")[1] === 'class_id' ?
                                                 null 

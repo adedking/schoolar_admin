@@ -64,15 +64,15 @@ const SubjectRegister = ({setShowAddAttendance}) => {
         <React.Fragment>
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
-                    title={'Manage class register'}
-                    description={'Update the register of the class'}
+                    title={'Manage Subject Attendance Register'}
+                    description={'Update the register of this subject'}
                     tableHeader={tableConfig}
                     pagination={pagination}
                     setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
                     showToolBar={false}
                     // data={teachers}
-                    mainButtonText='Mark Class Attendance'
+                    mainButtonText='Mark Subject Attendance Register'
                     mainButtonAction={() => {
                         setShowAddAttendance(true)
                     }}

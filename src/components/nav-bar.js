@@ -40,9 +40,9 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => 
           <HeaderGlobalAction aria-label="Calendar" onClick={() => {}}>
             <Calendar width={20} height={20} />
           </HeaderGlobalAction>
-          <HeaderGlobalAction aria-label="Session" onClick={() => {}} className='min-w-[140px] pr-2'>
+          <HeaderGlobalAction aria-label="Session" onClick={() => {}} className='min-w-[190px] pr-2'>
             <div className='flex flex-col '>
-              <span className='text-black min-w-fit text-[12px] font-semibold'>Schoolar-2024 session</span>
+              <span className='text-black min-w-fit text-[12px] font-semibold'>Schoolar - (2023-2024) session</span>
               <span className='text-[#29CC39] min-w-fit text-[10px] font-semibold'>Ongoing</span>
             </div>
           </HeaderGlobalAction>

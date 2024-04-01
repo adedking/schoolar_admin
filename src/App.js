@@ -30,6 +30,10 @@ import SessionAcademicTermsPage from './pages/administration/sessions/sub-compon
 import AcademicTermsPage from './pages/administration/academic-terms';
 import FeesManagementPage from './pages/administration/fees';
 import AdmissionsPage from './pages/administration/admission';
+import ViewAdmissionPage from './pages/administration/admission/sub-components/view-admission';
+import LessonPlansPage from './pages/administration/sessions/sub-components/lesson-plans';
+import TransportationRoutesPage from './pages/administration/transport';
+import ViewTransportPage from './pages/administration/transport/sub-components/view-transport-route';
 
 // /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
 
@@ -56,20 +60,25 @@ const App = () => {
               <Route exact path='/student-records' Component={StudentRecordsPage} />
               <Route exact path='/academic-terms' Component={AcademicTermsPage} />
               <Route exact path='/academic-terms/:termId' Component={ViewTermPage} />
-              <Route exact path='/fees-management' Component={FeesManagementPage} />
-              
-              <Route exact path='/admission' Component={AdmissionsPage} />
 
+              <Route exact path='/fees-management' Component={FeesManagementPage} />
+              <Route exact path='/transportation' Component={TransportationRoutesPage} />
+              <Route exact path='/transportation/:id' Component={ViewTransportPage} />
+              <Route exact path='/exam-result-settings' Component={FeesManagementPage} />
+              
+              <Route exact path='/admissions' Component={AdmissionsPage} />
+              <Route exact path='/admissions/:id' Component={ViewAdmissionPage} />
               
               <Route exact path='/sessions' Component={SessionsPage} />
               <Route exact path='/sessions/:id' Component={ViewSessionPage} />
               <Route exact path='/sessions/:id/academic-terms' Component={SessionAcademicTermsPage} />
               <Route exact path='/sessions/:id/academic-terms/:termId' Component={ViewTermPage} />
               <Route exact path='/sessions/:id/books' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/transportation' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/lesson-plans' Component={SessionAcademicTermsPage} />
+              <Route exact path='/sessions/:id/time-table' Component={SessionAcademicTermsPage} />
+              <Route exact path='/sessions/:id/lesson-plans' Component={LessonPlansPage} />
               <Route exact path='/sessions/:id/academic-records' Component={SessionAcademicTermsPage} />
               <Route exact path='/sessions/:id/fees-management' Component={SessionAcademicTermsPage} />
+              <Route exact path='/sessions/:id/admission/:admissionId' Component={ViewAdmissionPage} />
 
               <Route exact path='/time-table' Component={SchoolTimeTablePage} />
               <Route exact path='/' Component={LogInPage} />

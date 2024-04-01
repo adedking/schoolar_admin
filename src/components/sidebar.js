@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar, IsTurnRightPanelOff } from '../redux/components/components-slice';
 import { SideNav, SideNavItems, SideNavLink, SideNavMenu } from 'carbon-components-react';
-import { Dashboard, Education, GroupPresentation, ManageProtection, Person, UserFollow, UserMultiple } from '@carbon/icons-react';
+import { Dashboard, Education, GroupPresentation, ManageProtection, Person, UserMultiple, Book, Collaborate, CalendarTools, Wallet } from '@carbon/icons-react';
 
 const Sidebar = ({isSidebarOpen}) => {
 
@@ -62,35 +62,48 @@ const Sidebar = ({isSidebarOpen}) => {
       paths: ['sessions', 'student-records', 'admission'],
       subroute: [
         {
-          name: 'Sessions',
-          id: 'sessions',
-          icon: UserFollow,
-          route: '/sessions',
+          name: 'Fees Management',
+          id: 'fees-management',
+          icon: Wallet,
+          route: '/fees-management',
         },
         {
-          name: 'Terms',
-          id: 'academic-terms',
-          icon: UserFollow,
-          route: '/academic-terms',
+          name: 'Sessions',
+          id: 'sessions',
+          icon: Collaborate,
+          route: '/sessions',
         },
+        // {
+        //   name: 'Terms',
+        //   id: 'academic-terms',
+        //   icon: CalendarHeatMap,
+        //   route: '/academic-terms',
+        // },
         {
           name: 'Time Table',
           id: 'time-table',
-          icon: UserFollow,
+          icon: CalendarTools,
           route: '/time-table',
         },
         {
           name: 'Admissions',
           id: 'admission',
-          icon: UserFollow,
-          route: '/admission',
+          icon: Education,
+          route: '/admissions',
         },
         {
-          name: 'Fees Management',
-          id: 'fees-management',
-          icon: UserFollow,
-          route: '/fees-management',
+          name: 'Transportation Settings',
+          id: 'transportation',
+          icon: Book,
+          route: '/transportation',
         },
+        {
+          name: 'Exams/Result Settings',
+          id: 'exam-result-settings',
+          icon: Book,
+          route: '/exam-result-settings',
+        },
+        
       ]
     },
   ]
@@ -103,7 +116,7 @@ const Sidebar = ({isSidebarOpen}) => {
             <div id={item.id} key={index}>
               {item.subroute && item.subroute.length > 0?
               <SideNavMenu 
-                className='outline-none'
+                className='outline-none !text-[12px]'
                 large
                 title={item.name}
                 renderIcon={item.icon}
@@ -113,7 +126,7 @@ const Sidebar = ({isSidebarOpen}) => {
                 <SideNavLink 
                   key={subIndex}
                   isActive={location.pathname.split('/')[1] === (subItem.route).split('/')[1] ? true : false}
-                  className='cursor-pointer -ml-[35px]'
+                  className='cursor-pointer -ml-[35px] !text-[12px]'
                   element={Link} 
                   to={subItem.route}
                   renderIcon={subItem.icon}
@@ -133,7 +146,7 @@ const Sidebar = ({isSidebarOpen}) => {
               <SideNavLink 
                 key={index}
                 isActive={location.pathname.split('/')[1] === (item.route).split('/')[1] ? true : false}
-                className='cursor-pointer'
+                className='cursor-pointer !text-[12px]'
                 element={Link} 
                 to={item.route}
                 renderIcon={item.icon}

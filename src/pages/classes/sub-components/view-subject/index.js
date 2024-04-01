@@ -15,33 +15,35 @@ import SubjectTeachers from './subject-teachers';
 import SubjectRegister from './subject-register';
 import SubjectTimeTable from './time-table';
 import { useGetSubject } from '../../../../redux/subjects/hook';
+import SubjectBooks from './view-subject-books';
 
 const ViewSubject = () => {
-
     const [showAssignTeacherToSubject, setShowAssignTeacherToSubject] = useState(false);
     const [showAddClass, setShowAddClass] = useState(false);
     const [showAddStudent, setShowAddStudent] = useState(false);
-    const [showAddMultipleStudents, setShowAddMultipleStudents] = useState(false);
-    const [showAddSubjectToClass, setShowAddSubjectToClass] = useState(false);
     const [showAddAttendance, setShowAddAttendance] = useState(false);
     const [type, setType] = useState('add');
     const [showDelete, setShowDelete] =useState(false)
 
-    const [deleteTitle, setDeleteTitle] =useState('')
-    const [deleteText, setDeleteText] =useState('')
+    const [deleteTitle, setDeleteTitle] = useState('')
+    const [deleteText, setDeleteText] = useState('')
     const [deleteButtonText, setDeleteButtonText] =useState('')
-    const [deleteType, setDeleteType] =useState('')
+    const [deleteType, setDeleteType] = useState('')
 
     const navigate = useNavigate();
 
     const tabs = [
         {
+            title: 'Books',
+            content: <SubjectBooks />,
+        },
+        {
             title: 'Teachers',
-            content: <SubjectTeachers setShowAddStudent={setShowAddStudent} setShowAddMultipleStudents={setShowAddMultipleStudents} />,
+            content: <SubjectTeachers setShowAddStudent={setShowAddStudent} />,
         },
         {
             title: 'Attendance Register',
-            content: <SubjectRegister  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+            content: <SubjectRegister />
         },
         {
             title: 'Time Table',
@@ -53,7 +55,7 @@ const ViewSubject = () => {
     
     const { data: subjectInfo, isLoading: subjectLoading } = useGetSubject(id);
     const { data: classInfo, isLoading: classLoading } = useGetSubClass(classId);
-    console.log(classInfo)
+    // console.log(classInfo)
     const {mutateAsync: removeClass, isLoading: removeClassLoading} = useDeleteSubClass();
 
     const deleteClassFn = async () => {
@@ -85,9 +87,7 @@ const ViewSubject = () => {
                 isOpen={showAddAttendance}
                 closeModal={()=> setShowAddAttendance(false)}
             />
-            :
-            null
-            }
+            : null}
             {showAssignTeacherToSubject ?
             <AssignTeacherToSubjectModal
                 isOpen={showAssignTeacherToSubject}

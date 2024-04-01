@@ -124,8 +124,8 @@ const FeesManagementPage = () => {
             <DashboardLayout>
                 <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>   
                     <AppDataTable
-                        title={'Fees'}
-                        description={'Manage school fees'}
+                        title={'Fees Management'}
+                        description={'Manage student school fees'}
                         tableHeader={tableConfig}
                         pagination={pagination}
                         setPagination={setPagination}
@@ -136,8 +136,8 @@ const FeesManagementPage = () => {
                             setShowAddFees(true)
                         }}
                         emptyText={'No fees added'}
-                        emptySubText={'Please add fees by clicking the button below'}
-                        viewActionType={'fee'}
+                        emptySubText={'Please add student fees by clicking the button below'}
+                        viewActionType={'fees'}
                         statusConfig={sessionStatusConfig}
                         loading={feesLoading}
                         addMultiple={false}

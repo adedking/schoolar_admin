@@ -13,7 +13,7 @@ const ViewSessionPage = () => {
 
     const {id} = useParams();
     const { data: session, isLoading: sessionLoading } = useGetSession(id);
-    console.log(session)
+    // console.log(session)
 
     const [showEditSession, setShowEditSession] =useState(false)
     const [showDeleteSession, setShowDeleteSession] =useState(false)
@@ -30,13 +30,9 @@ const ViewSessionPage = () => {
         {
             title: 'Academic Terms',
             description: 'Manage all session terms. Configure term holidays, lecture dates and exam dates',
-            link: `/sessions/${id}/terms`
+            link: `/sessions/${id}/academic-terms`
         },
-        {
-            title: 'Time Table',
-            description: "Manage this academic session's lecture and exams time tables from here",
-            link: `/sessions/${id}/time-table`
-        },
+        
         {
             title: 'Admission',
             description: "Manage this academic session's admissions. Configure admissions and create CBT tests for admission candidates",
@@ -48,29 +44,19 @@ const ViewSessionPage = () => {
             link: `/sessions/${id}/academic-records`
         },
         {
+            title: 'Time Table',
+            description: "Manage this academic session's lecture and exams time tables from here",
+            link: `/sessions/${id}/time-table`
+        },
+        {
             title: 'Lesson Plans',
             description: 'Manage this academic session lecture and exams time tables here.',
             link: `/sessions/${id}/lesson-plans`
         },
         {
-            title: 'Exam/Result Configuration',
-            description: 'Manage this academic session results and exams settings.',
-            link: `/sessions/${id}/exam-result-configuration`
-        },
-        {
             title: 'Fees Configuration',
             description: 'Manage the fees structure for this session.',
             link: `/sessions/${id}/exam-result-configuration`
-        },
-        {
-            title: 'Transportation',
-            description: 'Manage and configure all school bus routes',
-            link: `/sessions/${id}/books`
-        },
-        {
-            title: 'Books',
-            description: 'Manage all recommended books for this academic session.',
-            link: `/sessions/${id}/books`
         },
     ]
 

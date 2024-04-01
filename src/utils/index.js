@@ -65,6 +65,19 @@ export const studentStatusConfig = [
   },
 ];
 
+export const transportRouteStatusConfig = [
+  {
+    label: 'Inactive',
+    value: 0,
+    color: 'red',
+  },
+  {
+    label: 'Active',
+    value: 1,
+    color: 'green',
+  },
+];
+
 export const parentStatusConfig = [
   {
     label: 'Inactive',

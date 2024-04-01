@@ -252,7 +252,7 @@ const AddTeacherModal = ({isOpen, closeModal}) => {
                             name={'trcn_registration_number'}
                             {...register('trcn_registration_number', { required: false })}
                             invalid={errors?.trcn_registration_number ? true : false}
-                            invalidText={errors?.first_name?.message? errors?.trcn_registration_number?.message : 'This field is required'}
+                            invalidText={errors?.trcn_registration_number?.message? errors?.trcn_registration_number?.message : 'This field is required'}
                             labelText="TRCN identification number"
                             placeholder="Enter TRCN number"
                             value={form.trcn_registration_number}

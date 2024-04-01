@@ -13,6 +13,7 @@ export function useGetClasses() {
     },
     {
       select: (data) => {
+        // console.log(data)
         return data;
       },
       onSettled: (data, error, variables, context) => {

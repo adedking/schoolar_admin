@@ -54,7 +54,7 @@ const SortRankInfo = () => {
         1000,
         1,
     );
-    console.log(classes)
+    // console.log(classes)
 
     useEffect(() => {
         if (classes) {

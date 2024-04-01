@@ -24,7 +24,10 @@ Axios.interceptors.response.use(
       logout();
       return;
     }
-
+    if (error.response.status === 504) {
+      // console.log(error)
+      return;
+    }
     if (error.response && error.response.data && error.response.data.message) {
       //error message
       store.dispatch(setAlert(true, 'Error', 'error', typeof error.response.data.message === 'string'? error.response.data.message: JSON.stringify(error.response.data.message)));

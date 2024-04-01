@@ -24,7 +24,7 @@ const TabView = ({ componentTabs }) => {
   }, [componentTabs])
 
   return (
-    <Grid condensed className='!bg-background p-3 px-2 min-h-[500px] w-full -my-3'>
+    <Grid condensed className='!bg-background p-3 px-2 min-h-[500px] w-full'>
       <Column lg={16} md={16} sm={4}>
         <Tabs
           className='!min-w-[100%]'
@@ -43,9 +43,12 @@ const TabView = ({ componentTabs }) => {
           </TabList>
           <TabPanels>
             {componentTabs?.map((item, index) => (
+              <>
+              
               <TabPanel key={index}>
                 {item.content}
               </TabPanel>
+              </>
             ))}
           </TabPanels>
         </Tabs>

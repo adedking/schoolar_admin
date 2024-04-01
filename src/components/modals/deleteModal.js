@@ -20,7 +20,7 @@ const DeleteModal = ({isOpen, closeModal, deleteTitle='Delete', deleteText="Are 
     size={'sm'}
   > 
     <div className=' w-full'>
-        <div className="flex items-center text-[15px] w-full font-semibold h-[100px] px-4">
+        <div className="flex items-center text-[15px] w-full font-normal h-[100px] px-4">
             {deleteText}
         </div>
         <div className='flex justify-end min-w-full'>

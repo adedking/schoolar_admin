@@ -27,10 +27,17 @@ const deleteSession = async (payload) => {
   return data;
 };
 
+const getFeesBySession = async (payload) => {
+  let search = payload.search ? '&search=' + payload.search : '';
+  const { data } = await Axios.get(`/school-sessions/${payload.id}/fees?limit=${payload.limit}&page=${payload.page}${search}`);
+  return data?.data;
+};
+
 export const sessions = {
-    getSessions,
-    getSession,
-    addSession,
-    updateSession,
-    deleteSession
+  getSessions,
+  getSession,
+  addSession,
+  updateSession,
+  deleteSession,
+  getFeesBySession
 }

@@ -6,7 +6,6 @@ import { useGetTerms } from '../../../redux/administration/terms/hook';
 import AddAdmissionModal from './sub-components/modals/add-admission';
 import WidgetCard from '../../../components/widget';
 
-
 const AdmissionsPage = () => {
 
     const cardData = {
