@@ -9,7 +9,7 @@ import { checkError } from '../../../../../utils/functions';
 import AppButton from '../../../../../components/app-button';
 import { useAddSession, useUpdateSession } from '../../../../../redux/administration/sessions/hook';
 
-const AddAdmissionModal = ({isOpen, closeModal, type='add', session=null}) => {
+const AddFeeModal = ({isOpen, closeModal, type='add', session=null}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
@@ -79,7 +79,7 @@ const AddAdmissionModal = ({isOpen, closeModal, type='add', session=null}) => {
 
     return (
         <Modal 
-            modalHeading={type === 'add' ? "Create Admission" : "Update Admission"} 
+            modalHeading={type === 'add' ? "Add Fees" : "Update Fees"} 
             primaryButtonText="Continue" 
             secondaryButtonText={''}
             hasScrollingContent={false}
@@ -191,4 +191,4 @@ const AddAdmissionModal = ({isOpen, closeModal, type='add', session=null}) => {
     )   
 }
 
-export default AddAdmissionModal;
+export default AddFeeModal;

@@ -5,14 +5,15 @@ import { useParams } from 'react-router-dom';
 const SubjectBooks = () => {
 
     const {id} = useParams();
-    const { data: student } = useGetStudent(id);
+    const { data: books } = useGetStudent(id);
     return (
         <div className='flex flex-col gap-4'>
             <div className='text-[20px] py-4'>
-                Student Details
+                Subject Recommended Book(s) Details
             </div>
             <hr className='divider' />
-            {student ?
+            {books && books.length > 0 ?
+            
             <>
                 <div className='flex justify-between text-[20px] py-3 w-full'>
                     <div className='flex flex-col gap-2'>
@@ -20,7 +21,7 @@ const SubjectBooks = () => {
                             Student ID
                         </div>
                         <div>
-                            {student?.registration_id}
+                            {books?.registration_id}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -28,7 +29,7 @@ const SubjectBooks = () => {
                             Gender
                         </div>
                         <div>
-                            {student?.gender}
+                            {books?.gender}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -36,7 +37,7 @@ const SubjectBooks = () => {
                             Date of Birth
                         </div>
                         <div>
-                            {student?.dob}
+                            {books?.dob}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -44,7 +45,7 @@ const SubjectBooks = () => {
                             Date of Admission
                         </div>
                         <div>
-                            {student?.registration_id}
+                            {books?.registration_id}
                         </div>
                     </div>
                 </div>
@@ -55,7 +56,7 @@ const SubjectBooks = () => {
                             Class
                         </div>
                         <div>
-                            {student?.main_class}
+                            {books?.main_class}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -63,14 +64,14 @@ const SubjectBooks = () => {
                             Sub-class
                         </div>
                         <div>
-                            {student?.sub_class}
+                            {books?.sub_class}
                         </div>
                     </div>
                 </div>
             </>
             :
             <div className='flex justify-center text-[20px] font-extrabold py-3 w-full'>
-                No student data fetched
+                No books data fetched
             </div>
             }
         </div>

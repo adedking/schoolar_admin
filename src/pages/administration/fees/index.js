@@ -3,7 +3,7 @@ import DashboardLayout from '../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
 import AppDataTable from '../../../components/dataTable';
 import { useGetTerms } from '../../../redux/administration/terms/hook';
-import AddAdmissionModal from './sub-components/modals/add-admission';
+import AddFeeModal from './sub-components/modals/add-fees';
 
 const FeesManagementPage = () => {
 
@@ -29,24 +29,16 @@ const FeesManagementPage = () => {
             header: 'id',
         },
         {
-            key: 'name',
-            header: 'Admission Name',
+            key: 'title',
+            header: 'Fees Title',
         },
         {
-            key: 'name',
+            key: 'session',
             header: 'Session',
         },
         {
-            key: 'start_date',
-            header: 'Opening Date',
-        },
-        {
-            key: 'end_date',
-            header: 'Closing Date',
-        },
-        {
-            key: 'end_date',
-            header: 'Applicants',
+            key: 'payment_due_date',
+            header: 'Payment Due Date',
         },
         {
             key: 'status',
@@ -112,7 +104,7 @@ const FeesManagementPage = () => {
     return (
         <>
         {showAddFees ?
-        <AddAdmissionModal
+        <AddFeeModal
             term={null}
             type={'add'}
             isOpen={showAddFees}

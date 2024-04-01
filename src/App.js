@@ -34,8 +34,7 @@ import ViewAdmissionPage from './pages/administration/admission/sub-components/v
 import LessonPlansPage from './pages/administration/sessions/sub-components/lesson-plans';
 import TransportationRoutesPage from './pages/administration/transport';
 import ViewTransportPage from './pages/administration/transport/sub-components/view-transport-route';
-
-// /http://localhost:3000/reset-password/svdgQoSpNB1bGapiseLU1697129612
+import ViewFeesPage from './pages/administration/fees/sub-components/view-fees';
 
 const App = () => {
   const { alert } = useSelector((state) => state.componentsSlice);
@@ -62,8 +61,11 @@ const App = () => {
               <Route exact path='/academic-terms/:termId' Component={ViewTermPage} />
 
               <Route exact path='/fees-management' Component={FeesManagementPage} />
+              <Route exact path='/fees-management/:id' Component={ViewFeesPage} />
+
               <Route exact path='/transportation' Component={TransportationRoutesPage} />
               <Route exact path='/transportation/:id' Component={ViewTransportPage} />
+
               <Route exact path='/exam-result-settings' Component={FeesManagementPage} />
               
               <Route exact path='/admissions' Component={AdmissionsPage} />
