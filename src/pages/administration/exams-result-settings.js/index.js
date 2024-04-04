@@ -48,21 +48,15 @@ const ExamsResultPage = () => {
                         <Loading active={studentLoading} className={''} withOverlay={false} small={false} />
                     </div>
                     :
-                    <div className='w-full flex flex-col'>
-                        {/* <ViewProfile 
-                            profileImage={student.file_url} 
-                            firstName={student?.first_name} 
-                            lastName={student?.last_name} 
-                            email={student?.email} 
-                            mobile={student?.mobile} 
-                            deleteText={'Delete student'}
-                            deleteFunction={() => setShowDeleteStudent(true)} 
-                            editText={'Edit student'} 
-                            editFunction={() => setShowEditStudent(true)} 
-                            route='Student' 
-                            routeLink='/students'
-                            name={`${student?.first_name} ${student?.last_name}`}
-                        /> */}
+                    <div className='w-full flex flex-col gap-4'>
+                        <div className='flex flex-col px-4 h-[86px] w-full justify-center gap-1 bg-background'>
+                            <div className='text-[18px]'>
+                                Exams and Result Configuration
+                            </div>
+                            <div className='text-[12px] font-light'>
+                                Manage school's exams and results configurations
+                            </div>
+                        </div>
                         <TabView componentTabs={tabs}/>
                     </div>
                     }

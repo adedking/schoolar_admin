@@ -114,3 +114,34 @@ export const sessionStatusConfig = [
   },
 ];
 
+export const admissionStatusConfig = [
+  {
+    label: 'On-going',
+    value: 0,
+    color: 'red',
+  },
+  {
+    label: 'Completed',
+    value: 1,
+    color: 'green',
+  },
+];
+
+export const admissionApplicantStatusConfig = [
+  {
+    label: 'Not Reviewd',
+    value: 0,
+    color: 'orange',
+  },
+  {
+    label: 'Admitted',
+    value: 1,
+    color: 'green',
+  },
+  {
+    label: 'Rejected',
+    value: 2,
+    color: 'red',
+  },
+];
+

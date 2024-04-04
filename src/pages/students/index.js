@@ -172,7 +172,7 @@ const StudentsPage = () => {
                             }}
                             emptyText={'No student added'}
                             emptySubText={'Please add students to your school by clicking the button below'}
-                            viewActionType={'transportation'}
+                            viewActionType={'student'}
                             statusConfig={studentStatusConfig}
                             loading={studentLoading}
                             multipleButtonText={'Add Multiple Students'}

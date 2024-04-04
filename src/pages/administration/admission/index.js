@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../components/layouts/dashboard';
-import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
+import { admissionStatusConfig, PAGINATION_DEFAULT } from '../../../utils';
 import { useGetTerms } from '../../../redux/administration/terms/hook';
 import AddAdmissionModal from './sub-components/modals/add-admission';
 import WidgetCard from '../../../components/widget';
@@ -13,7 +13,6 @@ const AdmissionsPage = () => {
         items: [
            { title: 'Completed', value: 50},
            { title: 'On-going', value: 20},
-           { title: 'Up-coming', value: 20},
         ]
     }
 
@@ -39,7 +38,7 @@ const AdmissionsPage = () => {
             header: 'id',
         },
         {
-            key: 'name',
+            key: 'admission_name',
             header: 'Admission Name',
         },
         {
@@ -48,14 +47,14 @@ const AdmissionsPage = () => {
         },
         {
             key: 'start_date',
-            header: 'Opening Date',
+            header: 'Application Start',
         },
         {
             key: 'end_date',
-            header: 'Closing Date',
+            header: 'Application End',
         },
         {
-            key: 'end_date',
+            key: 'applicants_count',
             header: 'Applicants',
         },
         {
@@ -85,32 +84,24 @@ const AdmissionsPage = () => {
                 header: 'id',
             },
             {
-                key: 'first_name',
-                header: 'First Name',
+                key: 'admission_name',
+                header: 'Admission Name',
             },
             {
-                key: 'last_name',
-                header: 'Last Name',
+                key: 'name',
+                header: 'Session',
             },
             {
-                key: 'email',
-                header: 'Email',
+                key: 'start_date',
+                header: 'Application Start',
             },
             {
-                key: 'gender',
-                header: 'Gender',
+                key: 'end_date',
+                header: 'Application End',
             },
             {
-                key: 'class',
-                header: 'Class',
-            },
-            {
-                key: 'enrolment_id',
-                header: 'Enrolment ID',
-            },
-            {
-                key: 'parents',
-                header: 'Primary Guardian',
+                key: 'applicants_count',
+                header: 'Applicants',
             },
             {
                 key: 'status',
@@ -151,7 +142,7 @@ const AdmissionsPage = () => {
                         emptyText={'No session added'}
                         emptySubText={'Please add admissions by clicking the button below'}
                         viewActionType={'admission'}
-                        statusConfig={sessionStatusConfig}
+                        statusConfig={admissionStatusConfig}
                         loading={admissionsLoading}
                         addMultiple={false}
                     />
