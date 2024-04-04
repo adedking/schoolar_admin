@@ -35,6 +35,8 @@ import LessonPlansPage from './pages/administration/sessions/sub-components/less
 import TransportationRoutesPage from './pages/administration/transport';
 import ViewTransportPage from './pages/administration/transport/sub-components/view-transport-route';
 import ViewFeesPage from './pages/administration/fees/sub-components/view-fees';
+import AttendanceRegisterPage from './pages/attendance-register';
+import ExamsResultPage from './pages/administration/exams-result-settings.js';
 
 const App = () => {
   const { alert } = useSelector((state) => state.componentsSlice);
@@ -52,9 +54,12 @@ const App = () => {
               <Route exact path='/students/:id' Component={ViewStudentPage} />
               <Route exact path='/classes' Component={ClassesPage} />
               <Route exact path='/classes/:id' Component={ViewClassPage} />
-              <Route exact path='/classes/:classId/subjects/:id' Component={ViewSubject} />
+              <Route exact path='/classes/:classId/:id' Component={ViewSubject} />
               <Route exact path='/parents-guardians' Component={ParentsPage} />
               <Route exact path='/parents-guardians/:id' Component={ViewParentPage} />
+
+              <Route exact path='/student-attendance' Component={AttendanceRegisterPage} />
+              <Route exact path='/student-attendance/:attendance_date' Component={ViewParentPage} />
 
               <Route exact path='/student-records' Component={StudentRecordsPage} />
               <Route exact path='/academic-terms' Component={AcademicTermsPage} />
@@ -66,7 +71,7 @@ const App = () => {
               <Route exact path='/transportation' Component={TransportationRoutesPage} />
               <Route exact path='/transportation/:id' Component={ViewTransportPage} />
 
-              <Route exact path='/exam-result-settings' Component={FeesManagementPage} />
+              <Route exact path='/exam-result-settings' Component={ExamsResultPage} />
               
               <Route exact path='/admissions' Component={AdmissionsPage} />
               <Route exact path='/admissions/:id' Component={ViewAdmissionPage} />

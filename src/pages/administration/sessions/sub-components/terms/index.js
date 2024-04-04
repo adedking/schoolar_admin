@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../../../../components/layouts/dashboard';
 import { Link } from 'react-router-dom';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../../../utils';
-import AppDataTable from '../../../../../components/dataTable';
+import AppDataTable from '../../../../../components/data-table';
 import AddTermModal from '../../../academic-terms/sub-components/modals/add-term';
 // import { useGetSession} from '../../../../../redux/administration/sessions/hook';
 import { useGetTerms } from '../../../../../redux/administration/terms/hook';

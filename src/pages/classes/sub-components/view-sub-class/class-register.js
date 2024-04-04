@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AppDataTable from '../../../../components/dataTable';
+import AppDataTable from '../../../../components/data-table';
 import { PAGINATION_DEFAULT } from '../../../../utils';
 
 
@@ -9,17 +9,20 @@ const ClassRegister = ({setShowAddAttendance}) => {
     const tableConfig = [
         {
             key: 'date',
-            header: 'Date',
+            header: 'Attendance Date',
         },
         {
-            key: 'full_name',
-            header: 'Student Name',
+            key: 'students_present',
+            header: 'Students Present',
         },
         {
-            key: 'status',
-            header: 'Attendance Status',
+            key: 'students_absent',
+            header: 'Students Absent',
         },
-        
+        {
+            key: 'total_students',
+            header: 'Total Students',
+        },
     ];
 
     const [pagination, setPagination] = useState({

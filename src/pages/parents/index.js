@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
-import AppDataTable from '../../components/dataTable';
+import AppDataTable from '../../components/data-table';
 import AddParentModal from './sub-components/modals/add-parent/add-single-parent/add-parent';
 import { PAGINATION_DEFAULT, parentStatusConfig } from '../../utils';
 import { useNavigate } from 'react-router-dom';

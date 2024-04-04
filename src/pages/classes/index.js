@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import AddClassModal from './sub-components/modals/add-class';
-import ClassesDataCard from '../../components/classDataTableCard';
+import ClassesDataCard from '../../components/class-data-table-card';
 import { Settings } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../../redux/components/components-slice';
@@ -129,7 +129,7 @@ const ClassesPage = () => {
                                 handleRightPanelToggle()
                             }}
                         >
-                            Class ranks <Settings />
+                            Class management <Settings />
                         </div>
                     </div>
                     <div className='min-w-full max-w-full bg-background rounded-sm'>

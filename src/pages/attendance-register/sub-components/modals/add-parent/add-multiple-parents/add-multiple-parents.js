@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
-
 import { FileUploaderDropContainer, FileUploaderItem, Form, FormGroup, FormLabel, Modal } from 'carbon-components-react';
 import React, { useState } from 'react';
-import { useAddTeacher } from '../../../../../../redux/teachers/hook';
 import { useForm } from 'react-hook-form';
 import { Stack } from '@carbon/react';
 import AppButton from '../../../../../../components/app-button';
 import { ArrowRight } from '@carbon/icons-react';
+import { useAddMultipleStudents } from '../../../../../../redux/students/hook';
 
-const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
+const AddMultipleParentsModal = ({isOpen, closeModal}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
@@ -17,7 +16,7 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
     })
     const [file, setFile] = useState()
     const [fileURL, setFileURL] = useState()
-    const [fileSelected, setFileSelected] = useState(form?.file ? true : false)
+    const [fileSelected, setFileSelected] = useState(file ? true : false)
 
     const onFileChange = (e) => {
         setFileURL(URL.createObjectURL(e.target.files[0]))
@@ -25,21 +24,21 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
         setFileSelected(true)
     };
 
-    const {mutateAsync: addTeacher, isLoading: addTeacherLoading} = useAddTeacher()
+    const {mutateAsync: addParents, isLoading: addParentsLoading} = useAddMultipleStudents()
 
     const requestSubmit = async () => {
         const formData = new FormData();
-        if (form.file) {
-            formData.append('file', form.file)
+        if (file) {
+            formData.append('file', file)
         }
-        await addTeacher(formData).then(() => {
+        await addParents(formData).then(() => {
         closeModal()
         })
     }
 
     return (
         <Modal 
-            modalHeading="Add Multiple Teachers" 
+            modalHeading="Add Multiple Parents" 
             primaryButtonText="Continue" 
             secondaryButtonText={''}
             hasScrollingContent={false}
@@ -53,7 +52,7 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
         > 
         <div className='flex flex-col justify-between w-full md:w-[600px] min-h-fit px-4'>
             <Form
-            onSubmit={handleSubmit(requestSubmit)}
+                onSubmit={handleSubmit(requestSubmit)}
             >
             <Stack gap={6}>
                 <FormGroup 
@@ -70,7 +69,8 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
                                         Download Template
                                     </div>
                                 </div>
-                                <FormLabel className='text-[12px] font-normal -mt-3'>Max file size is 3mb. Supported file types are .jpg, .jpeg and .png.</FormLabel>
+                                
+                                <FormLabel className='text-[12px] font-normal -mt-3'>Max file size is 3mb. Supported file types are .xlsx</FormLabel>
 
                                 <FileUploaderDropContainer 
                                     size='md' 
@@ -78,7 +78,7 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
                                     labelText={"Drag and drop files here or click to upload" }
                                     multiple={true} 
                                     name={'file'}
-                                    accept={['.jpeg', '.png', '.jpg']} 
+                                    accept={['.xlsx']} 
                                     onAddFiles={(e) => {
                                         onFileChange(e)
                                     }}
@@ -124,7 +124,7 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
                         className='!min-w-[220px] h-[60px]'
                         renderIcon={ArrowRight}
                         text={'Save & Close'}
-                        loading={addTeacherLoading}
+                        loading={addParentsLoading}
                     />
                 </div>
             </div>
@@ -134,4 +134,4 @@ const AddMultipleTeachersModal = ({isOpen, closeModal}) => {
     )   
 }
 
-export default AddMultipleTeachersModal;
+export default AddMultipleParentsModal;

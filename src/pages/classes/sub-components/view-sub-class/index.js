@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { useDeleteSubClass, useGetSubClass, useRemoveTeacherFromClass } from '../../../../redux/classes/hook';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
@@ -20,6 +20,7 @@ import MarkAttendance from '../modals/mark-attendance';
 import AddSubClassModal from '../modals/add-sub-class';
 import AddMultipleStudentsModal from '../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students';
 import DeleteModal from '../../../../components/modals/deleteModal';
+import ClassAcademicRecords from './class-academic-records';
 
 const ViewClassPage = () => {
 
@@ -56,7 +57,7 @@ const ViewClassPage = () => {
         },
         {
             title: 'Academic Records',
-            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+            content: <ClassAcademicRecords  setShowAddSubjectToClass={setShowAddSubjectToClass} />
         },
         
     ];
@@ -136,6 +137,8 @@ const ViewClassPage = () => {
             }
             {showAddClass ?
             <AddSubClassModal
+                classInfo={classInfo}
+                type={'upadte'}
                 isOpen={showAddClass}
                 closeModal={()=> setShowAddClass(false)}
             />
@@ -163,6 +166,14 @@ const ViewClassPage = () => {
             }
             <DashboardLayout viewComponent={null} viewTitle={'View teacher'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
+                    <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                        <Link to={'/classes'} className='hover:underline duration-300 text-[15px]'>
+                            {'Classes'}
+                        </Link>
+                        <span className='text-[14px]'>
+                            / {classInfo?.class_name} - {classInfo?.name} {classInfo?.type === 'arts' ? '(Arts)' : classInfo?.type === 'commerce' ? '(Commercial)' : classInfo?.type === 'sciences' ? '(Sciences)' : null}
+                        </span>
+                    </div>
                     {classLoading ?
                     <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
                         <Loading active={classLoading} className={''} withOverlay={false} small={false} />

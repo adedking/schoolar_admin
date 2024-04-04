@@ -43,12 +43,9 @@ const TabView = ({ componentTabs }) => {
           </TabList>
           <TabPanels>
             {componentTabs?.map((item, index) => (
-              <>
-              
-              <TabPanel key={index}>
+              <TabPanel key={index} className='-px-4'>
                 {item.content}
               </TabPanel>
-              </>
             ))}
           </TabPanels>
         </Tabs>

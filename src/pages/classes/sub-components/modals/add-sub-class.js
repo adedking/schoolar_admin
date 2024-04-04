@@ -8,28 +8,29 @@ import { useForm } from 'react-hook-form';
 import { checkError } from '../../../../utils/functions';
 import { useSelector } from 'react-redux';
 
-
-const AddSubClassModal = ({isOpen, closeModal, classInfo}) => {
+const AddSubClassModal = ({isOpen, closeModal, classInfo, type='add'}) => {
 
   const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
   const { user } = useSelector((state) => state.userSlice);
+
+  const [classId, setClassId] = useState(classInfo?.main_class_id ? classInfo?.main_class_id : "")
+  const [subClassId, setSubClassId] = useState(classInfo?.id ? classInfo?.id : "")
+  const [classRank, setClassRank] = useState(classInfo?.class_level ? classInfo?.class_level : "")
+  const [className, setClassName] = useState(classInfo?.class_name ? classInfo?.class_name : "")
 
   const [form, setForm] = useState({
     name: '',
     load_default: 1,
     type: null,
   })
-
-  const [classId, setClassId] = useState(classInfo?.id)
-  const [classRank, setClassRank] = useState(classInfo?.class_level)
-  const [className, setClassName] = useState(classInfo?.name)
-
   const {mutateAsync: addSubClass, isLoading: addSubClassLoading} = useAddSubClass()
   const { data: classes } = useGetClassesList(
     1000,
     1,
   );
+  console.log(classInfo)
+  
   
   const classTypeOptions = [
     {
@@ -66,18 +67,28 @@ const AddSubClassModal = ({isOpen, closeModal, classInfo}) => {
   }
 
   const submitForm = async () => {
-    let payload = {
-      id: classId,
-      data: form
+    if (type === 'add') {
+      let payload = {
+        id: classId,
+        data: form
+      }
+      await addSubClass(payload).then(() => {
+        closeModal()
+      })
+    } else {
+      let payload = {
+        id: subClassId,
+        data: form
+      }
+      await addSubClass(payload).then(() => {
+        closeModal()
+      })
     }
-    await addSubClass(payload).then(() => {
-      closeModal()
-    })
   };
     
   return (
     <Modal 
-      modalHeading={"Add sub-class"}
+      modalHeading={type === 'add' ? "Add sub-class" : "Update sub-class"}
       primaryButtonText="Continue" 
       secondaryButtonText={''}
       hasScrollingContent={false}
@@ -110,7 +121,7 @@ const AddSubClassModal = ({isOpen, closeModal, classInfo}) => {
                     setClassId(null)
                   }
                 }}
-                placeholder='Select teacher'
+                placeholder='Select class'
                 itemToString={item => item ? item.text : ''} 
                 titleText="Search and select class"
               />
@@ -152,7 +163,7 @@ const AddSubClassModal = ({isOpen, closeModal, classInfo}) => {
                 <hr className='divider' />
               </>
               :null}
-              
+              {type === 'add' ? 
               <div className='flex flex-row gap-4 items-center sm:justify-between'>
                 <label htmlFor="toggle-7" className=''>
                     Do you want to load default data?
@@ -171,6 +182,9 @@ const AddSubClassModal = ({isOpen, closeModal, classInfo}) => {
                     hideLabel 
                 />
               </div>
+              :
+              null}
+              
             </div>
           </Stack>
         </div>

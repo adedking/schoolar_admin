@@ -2,15 +2,15 @@
 
 import { FileUploaderDropContainer, FileUploaderItem, Form, FormGroup, FormLabel, Modal, Select, SelectItem } from 'carbon-components-react';
 import React, { useState } from 'react';
-import { useAddTeacher } from '../../../../../../redux/teachers/hook';
+import { useAddTeacher } from '../../../../../redux/teachers/hook';
 import { useForm } from 'react-hook-form';
-import { useGetSubClassesList } from '../../../../../../redux/classes/hook';
+import { useGetSubClassesList } from '../../../../../redux/classes/hook';
 import { Stack, TextInput } from '@carbon/react';
-import { checkError } from '../../../../../../utils/functions';
-import { AllCountries } from '../../../../../../utils/constants/countries';
-import AppButton from '../../../../../../components/app-button';
+import { checkError } from '../../../../../utils/functions';
+import { AllCountries } from '../../../../../utils/constants/countries';
+import AppButton from '../../../../../components/app-button';
 import { ArrowRight } from '@carbon/icons-react';
-import { genders } from '../../../../../../utils/constants';
+import { genders } from '../../../../../utils/constants';
 
 const AddTeacherModal = ({isOpen, closeModal}) => {
 

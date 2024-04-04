@@ -137,6 +137,45 @@ export function useAddSubClass() {
   );
 }
 
+export function useUpdateSubClass() {
+  return useMutation(
+    (payload) => {
+      store.dispatch(setIsLoading(true));
+      return classes.updateSubClass(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('students');
+        queryClient.invalidateQueries('student');
+        queryClient.invalidateQueries('students-list');
+        store.dispatch(setAlert(true, 'success', 'Student updated successfully'));
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useGetSubClasses() {
+  return useQuery(
+    ['sub-classes', {}],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return classes.getSubClasses();
+    },
+    {
+      select: (data) => {
+        // console.log(data)
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+      // keepPreviousData: true
+    },
+  );
+}
 export function useGetSubClassesList(limit, page, search) {
   return useQuery(
     ['subclasses-list', { limit, page, search }],

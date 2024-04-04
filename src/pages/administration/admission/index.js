@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
-import AppDataTable from '../../../components/dataTable';
 import { useGetTerms } from '../../../redux/administration/terms/hook';
 import AddAdmissionModal from './sub-components/modals/add-admission';
 import WidgetCard from '../../../components/widget';
+import AppDataTable from '../../../components/data-table';
 
 const AdmissionsPage = () => {
 

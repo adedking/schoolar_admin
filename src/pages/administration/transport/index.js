@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT, transportRouteStatusConfig } from '../../../utils';
-import AppDataTable from '../../../components/dataTable';
+import AppDataTable from '../../../components/data-table';
 import WidgetCard from '../../../components/widget';
 import AddTransportModal from './sub-components/modals/add-transport-route';
 import { useGetTransportationRoutes } from '../../../redux/administration/transportation/hook';

@@ -18,10 +18,10 @@ const ViewTermPage = () => {
             title: 'Term Activities',
             content: <TermActivities  />,
         },
-        {
-            title: 'Test Dates',
-            content: <TermTestDates />
-        },
+        // {
+        //     title: 'Test Dates',
+        //     content: <TermTestDates />
+        // },
         {
             title: 'Holidays',
             content: <TermHolidays  />

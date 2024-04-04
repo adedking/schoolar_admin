@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AppDataTable from '../../../../components/dataTable';
+import AppDataTable from '../../../../components/data-table';
 import { useParams } from 'react-router-dom';
 import { PAGINATION_DEFAULT, studentStatusConfig } from '../../../../utils';
 import { useGetstudentsBySubClass } from '../../../../redux/classes/hook';

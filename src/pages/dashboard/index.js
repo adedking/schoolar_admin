@@ -1,7 +1,7 @@
 import React from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
-import AppDataTable from '../../components/dataTable';
+import AppDataTable from '../../components/data-table';
 import { DatePicker, DatePickerInput } from 'carbon-components-react';
 import { ComboBox } from '@carbon/react';
 import { StackedAreaChart } from '@carbon/charts-react'

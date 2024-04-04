@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
-import AppDataTable from '../../components/dataTable';
+import AppDataTable from '../../components/data-table';
 import AddStudentModal from './sub-components/modals/add-student/add-single-student/add-student';
 import { PAGINATION_DEFAULT, studentStatusConfig  } from '../../utils';
 import { useGetStudents } from '../../redux/students/hook';

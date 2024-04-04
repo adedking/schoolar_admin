@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AppDataTable from '../../../../components/dataTable';
+import AppDataTable from '../../../../components/data-table';
 import { useGetSubjectsBySubClass } from '../../../../redux/classes/hook';
 import { useParams } from 'react-router-dom';
 import { PAGINATION_DEFAULT } from '../../../../utils';
@@ -29,10 +29,6 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
             header: 'id',
         },
         {
-            key: 'sub_class_id',
-            header: 'class_id',
-        },
-        {
             key: 'name',
             header: 'Subject Name',
         },
@@ -49,7 +45,6 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
             header: 'Support Teacher',
         },
     ];
-
     const mobileTableHeader = {
         main:[
             {
@@ -62,6 +57,10 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
             },
         ],
         full: [
+            {
+                key: 'id',
+                header: 'id',
+            },
             {
                 key: 'first_name',
                 header: 'First Name',

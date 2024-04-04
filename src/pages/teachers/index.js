@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
-import AppDataTable from '../../components/dataTable';
-import AddTeacherModal from './sub-components/modals/add-teacher/add-single-teacher/add-teacher';
+import AppDataTable from '../../components/data-table';
+import AddTeacherModal from './sub-components/modals/add-teacher/add-teacher';
 import { useGetTeachers } from '../../redux/teachers/hook';
 import { PAGINATION_DEFAULT, teacherStatusConfig } from '../../utils';
-import AddMultipleTeachersModal from './sub-components/modals/add-teacher/add-multiple-teachers/add-multiple-teachers';
+import AddMultipleTeachersModal from './sub-components/modals/add-teacher/add-multiple-teachers';
 
 const TeachersPage = () => {
     const [paginationData, setPaginationData] = useState({

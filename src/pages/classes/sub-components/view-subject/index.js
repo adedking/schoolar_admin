@@ -9,19 +9,20 @@ import { Edit, TrashCan } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
 import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
-import MarkAttendance from '../modals/mark-attendance';
 import DeleteModal from '../../../../components/modals/deleteModal';
 import SubjectTeachers from './subject-teachers';
 import SubjectRegister from './subject-register';
-import SubjectTimeTable from './time-table';
+import SubjectTimeTable from './subject-time-table';
 import { useGetSubject } from '../../../../redux/subjects/hook';
-import SubjectBooks from './view-subject-books';
+import SubjectBooks from './subject-books';
+import MarkSubjectAttendance from '../modals/mark-subject-attendance';
+import AddBookToSubjectModal from '../modals/add-book-to-subject';
+import SubjectAcademicRecords from './subject-academic-records';
 
 const ViewSubject = () => {
     const [showAssignTeacherToSubject, setShowAssignTeacherToSubject] = useState(false);
-    const [showAddClass, setShowAddClass] = useState(false);
-    const [showAddStudent, setShowAddStudent] = useState(false);
-    const [showAddAttendance, setShowAddAttendance] = useState(false);
+    const [showAddBookToSubject, setShowAddBookToSubject] = useState(false);
+    const [showMarkAttendance, setShowMarkAttendance] = useState(false);
     const [type, setType] = useState('add');
     const [showDelete, setShowDelete] =useState(false)
 
@@ -35,27 +36,30 @@ const ViewSubject = () => {
     const tabs = [
         {
             title: 'Books',
-            content: <SubjectBooks />,
+            content: <SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} />,
         },
         {
             title: 'Teachers',
-            content: <SubjectTeachers setShowAddStudent={setShowAddStudent} />,
+            content: <SubjectTeachers setShowAssignTeacherToSubject={setShowAssignTeacherToSubject} />,
         },
         {
             title: 'Attendance Register',
-            content: <SubjectRegister />
+            content: <SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  />
         },
         {
             title: 'Time Table',
-            content: <SubjectTimeTable  setShowAddAttendance={setShowAddAttendance} />
+            content: <SubjectTimeTable/>
         },
+        {
+            title: 'Academic Records',
+            content: <SubjectAcademicRecords/>
+        },  
     ];
 
     const {classId, id} = useParams();
     
     const { data: subjectInfo, isLoading: subjectLoading } = useGetSubject(id);
     const { data: classInfo, isLoading: classLoading } = useGetSubClass(classId);
-    // console.log(classInfo)
     const {mutateAsync: removeClass, isLoading: removeClassLoading} = useDeleteSubClass();
 
     const deleteClassFn = async () => {
@@ -82,10 +86,17 @@ const ViewSubject = () => {
             :
             null
             }
-            {showAddAttendance ?
-            <MarkAttendance
-                isOpen={showAddAttendance}
-                closeModal={()=> setShowAddAttendance(false)}
+            {showAddBookToSubject ?
+            <AddBookToSubjectModal
+                isOpen={showAddBookToSubject}
+                closeModal={()=> setShowAddBookToSubject(false)}
+            />
+            : null}
+            
+            {showMarkAttendance ?
+            <MarkSubjectAttendance
+                isOpen={showMarkAttendance}
+                closeModal={()=> setShowMarkAttendance(false)}
             />
             : null}
             {showAssignTeacherToSubject ?
@@ -118,9 +129,9 @@ const ViewSubject = () => {
                                     className='flex gap-2 text-[13px] text-red-500 items-center cursor-pointer hover:underline duration-300'
                                     onClick={() => {
                                         setDeleteTitle('Delete Subject from class')
-                                        setDeleteText(`Are you sure you want to delete ${subjectInfo?.name} from your school?`)
-                                        setDeleteType('class')
-                                        setDeleteButtonText('Delete Class')
+                                        setDeleteText(`Are you sure you want to delete ${subjectInfo?.name} from this class?`)
+                                        setDeleteType('subject')
+                                        setDeleteButtonText('Delete Subject')
                                         setShowDelete(true)
                                     }}
                                 >Remove subject <TrashCan /></div>
@@ -128,10 +139,7 @@ const ViewSubject = () => {
                                     type="button" 
                                     kind={'primary'} 
                                     renderIcon={Edit}
-                                    action={() => {
-                                        setType('edit')
-                                        setShowAddClass(true)
-                                    }}
+                                    action={() => {}}
                                     // loading={isLoading}
                                     text={'Edit subject'}
                                 />

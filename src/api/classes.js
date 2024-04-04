@@ -23,6 +23,11 @@ const addSubClass = async (payload) => {
   return data;
 };
 
+const updateSubClass = async (payload) => {
+  const { data } = await Axios.post(`/classes/${payload.id}/sub-classes`, payload.data);
+  return data;
+};
+
 const getSubClasses = async (payload) => {
   const { data } = await Axios.get(`/sub-classes`);
   return data?.data;
@@ -66,6 +71,7 @@ export const classes = {
     getClass,
     addClass,
     addSubClass,
+    updateSubClass,
     getSubClasses,
     getSubClass,
     assignTeacherToClass,

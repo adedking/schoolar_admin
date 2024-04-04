@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar, IsTurnRightPanelOff } from '../redux/components/components-slice';
 import { SideNav, SideNavItems, SideNavLink, SideNavMenu } from 'carbon-components-react';
-import { Dashboard, Education, GroupPresentation, ManageProtection, Person, UserMultiple, Book, Collaborate, CalendarTools, Wallet } from '@carbon/icons-react';
+import { Dashboard, Education, GroupPresentation, ManageProtection, Person, UserMultiple, Book, Collaborate, CalendarTools, Wallet, CalendarHeatMap } from '@carbon/icons-react';
 
 const Sidebar = ({isSidebarOpen}) => {
 
@@ -53,7 +53,12 @@ const Sidebar = ({isSidebarOpen}) => {
       icon: GroupPresentation,
       route: '/classes',
     },
-    
+    {
+      name: 'Attendance Register',
+      id: 'student-attendance',
+      icon: CalendarHeatMap,
+      route: '/student-attendance',
+    },
     {
       name: 'Administration',
       id: 'administration',
@@ -91,12 +96,12 @@ const Sidebar = ({isSidebarOpen}) => {
           icon: Education,
           route: '/admissions',
         },
-        {
-          name: 'Transportation Settings',
-          id: 'transportation',
-          icon: Book,
-          route: '/transportation',
-        },
+        // {
+        //   name: 'Transportation Settings',
+        //   id: 'transportation',
+        //   icon: Book,
+        //   route: '/transportation',
+        // },
         {
           name: 'Exams/Result Settings',
           id: 'exam-result-settings',

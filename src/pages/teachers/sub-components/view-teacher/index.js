@@ -12,7 +12,7 @@ import { Loading } from '@carbon/react';
 import ViewProfile from '../../../../components/view-profile';
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../../../components/modals/deleteModal';
-import AddTeacherModal from '../modals/add-teacher/add-single-teacher/add-teacher';
+import AddTeacherModal from '../modals/add-teacher/add-teacher';
 import LessonPlans from './lesson-plans';
 
 const ViewTeacherPage = () => {

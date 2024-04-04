@@ -7,7 +7,7 @@ import { Settings } from '@carbon/icons-react';
 import DeleteModal from '../../../../../components/modals/deleteModal';
 import { useDeleteSession, useGetSession } from '../../../../../redux/administration/sessions/hook';
 import AddSessionModal from '../modals/add-session';
-import SessionCards from '../../../../../components/sessionCards';
+import SessionCards from '../../../../../components/session-cards';
 
 const ViewSessionPage = () => {
 
@@ -54,7 +54,7 @@ const ViewSessionPage = () => {
             link: `/sessions/${id}/lesson-plans`
         },
         {
-            title: 'Fees Configuration',
+            title: 'School Fees Configuration',
             description: 'Manage the fees structure for this session.',
             link: `/sessions/${id}/exam-result-configuration`
         },

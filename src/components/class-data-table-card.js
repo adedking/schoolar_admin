@@ -113,8 +113,11 @@ const ClassesDataCard = ({
                                     <div className='grid md:grid-cols-3 grid-cols-1 gap-4 w-full duration-300'>
                                         {classInfo.sub_classes?.map(subClassInfo => (
                                         <div className='flex flex-col justify-between md:min-w-[33%] w-full h-[108px] bg-background rounded p-3 hover:shadow-md hover:scale-105 duration-300'>
-                                            <div className='flex flex-col justify-between md:min-w-[33%] w-full h-[108px] bg-background rounded text-[16px]'>{classInfo.name} - {subClassInfo.name}</div>
-                                            <span 
+                                            <div className='flex gap-1 items-center md:min-w-[33%] w-full bg-background rounded text-[16px]'>
+                                                {classInfo.name} - {subClassInfo.name} 
+                                                <span className='flex items-center text-[12px] text-gray-400'>{subClassInfo?.type === 'arts' ? '(Arts)' : subClassInfo?.type === 'commerce' ? '(Commercial)' : subClassInfo?.type === 'sciences' ? '(Sciences)' : null}</span>
+                                            </div>
+                                            <span
                                                 className='flex gap-2 text-primary text-[13px] cursor-pointer max-w-fit hover:underline duration-300'
                                                 onClick={() => {
                                                     navigate(`/classes/${subClassInfo.id}`)

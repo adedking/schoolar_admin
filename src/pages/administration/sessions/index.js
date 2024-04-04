@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../utils';
-import AppDataTable from '../../../components/dataTable';
+import AppDataTable from '../../../components/data-table';
 import AddSessionModal from './sub-components/modals/add-session';
 import { useGetSessions } from '../../../redux/administration/sessions/hook';
 import WidgetCard from '../../../components/widget';

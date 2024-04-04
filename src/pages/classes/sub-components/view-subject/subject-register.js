@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import AppDataTable from '../../../../components/dataTable';
+import AppDataTable from '../../../../components/data-table';
 import { PAGINATION_DEFAULT } from '../../../../utils';
 
 
 const SubjectRegister = ({setShowAddAttendance}) => {
 
-    
     const tableConfig = [
         {
             key: 'date',
@@ -64,7 +63,7 @@ const SubjectRegister = ({setShowAddAttendance}) => {
         <React.Fragment>
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
-                    title={'Manage Subject Attendance Register'}
+                    title={'Manage subject attendance register'}
                     description={'Update the register of this subject'}
                     tableHeader={tableConfig}
                     pagination={pagination}
@@ -76,7 +75,7 @@ const SubjectRegister = ({setShowAddAttendance}) => {
                     mainButtonAction={() => {
                         setShowAddAttendance(true)
                     }}
-                    emptyText={'No attendance data provided yet'}
+                    emptyText={'No subject attendance yet'}
                     emptySubText={'Please mark attendance by clicking the button below'}
                 />
             </div>
