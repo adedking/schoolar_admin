@@ -45,7 +45,7 @@ const MarkAttendance = ({isOpen, closeModal}) => {
             ...form,
             students: newArray
         })
-      };
+    };
 
     // const navigate = useNavigate();
     return (

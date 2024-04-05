@@ -1,4 +1,4 @@
-export const checkError = (required=false, e, text, name, setError, clearErrors, setFunction, type='text', password=null) => {
+export const checkError = (required=false, e, text, name, setError, clearErrors, setFunction, type='text', password=null, index=null) => {
     if (required) {
         if (type === 'text') {
             if (text.length > 0) {

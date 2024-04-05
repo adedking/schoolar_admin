@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import AddClassModal from './sub-components/modals/add-class';
-import ClassesDataCard from '../../components/class-data-table-card';
+import ClassesDataCard from './sub-components/class-data-table-card';
 import { Settings } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { IsTurnRightPanelOn } from '../../redux/components/components-slice';

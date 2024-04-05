@@ -158,3 +158,45 @@ export const classRanks = [
     {value: 5, text: 5},
     {value: 6, text: 6},
 ]
+
+export const gradeRemarkOptions = [
+    { id: 'Excellent', text: 'Excellent' },
+    { id: 'Very Good', text: 'Very Good' },
+    { id: 'Good', text: 'Good' },
+    { id: 'Fairly Good', text: 'Fairly Good' },
+    { id: 'Average', text: 'Average' },
+    { id: 'Credit', text: 'Credit' },
+    { id: 'Pass', text: 'Pass' },
+    { id: 'Fail', text: 'Fail' },
+];
+
+export const gradeOptions = [
+    {
+        value: 'A+',
+        text: 'A+',
+    },
+    {
+        value: 'A',
+        text: 'A',
+    },
+    {
+        value: 'B',
+        text: 'B',
+    },
+    {
+        value: 'C',
+        text: 'C',
+    },
+    {
+        value: 'D',
+        text: 'D',
+    },
+    {
+        value: 'E',
+        text: 'E',
+    },
+    {
+        value: 'F',
+        text: 'F',
+    },
+]

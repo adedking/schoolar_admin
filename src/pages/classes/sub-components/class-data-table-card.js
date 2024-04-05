@@ -15,7 +15,7 @@ import {
     OrderDetails
 } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
-import AppButton from './app-button';
+import AppButton from '../../../components/app-button';
 import { ImportExport } from '@carbon/icons-react';
 
 const ClassesDataCard = ({

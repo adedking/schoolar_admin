@@ -1,31 +1,81 @@
-import React, { useState } from 'react';
-import { TextInput, ComboBox } from 'carbon-components-react';
-// import { checkError } from '../../../utils/functions';
+import React, { useEffect, useState } from 'react';
+import { Form, TextInput, ComboBox } from 'carbon-components-react';
 import { useForm } from 'react-hook-form';
+import AppButton from '../../../components/app-button';
+import { Add, Subtract } from '@carbon/icons-react';
 
 const AssessmentTypes = () => {
 
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [inputValue, setInputValue] = useState('');
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const [form, setForm] = useState([
+        {
+            assessment_type: 'Exam',
+            assessment_weight: 60,
+        },
+        {
+            assessment_type: 'Test',
+            assessment_weight: 30,
+        },
+        {
+            assessment_type: 'Attendance',
+            assessment_weight: 10,
+        },
+    ])
 
-    const items = [
+    const [totalWeight, setTotalWeight] = useState(100);
+
+    useEffect(() => {
+        let weightSum = 0;
+        for (let i=0; i<form.length; i++) {
+            weightSum += form[i].assessment_weight
+        }
+        setTotalWeight(weightSum)
+    }, [form])
+
+    const assessmentTypeOptions = [
         { id: 'test', text: 'Test' },
         { id: 'exam', text: 'Exam' },
         { id: 'attendance', text: 'Attendance' },
     ];
     
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-    
-    const handleSelectItem = (event) => {
-        const selectedItem = event.selectedItem;
-        setSelectedItem(selectedItem);
-        setInputValue(selectedItem ? selectedItem.text : '');
+    const handleSelectItem = (e, index) => {
+        let newArray = JSON.parse(JSON.stringify(form));
+        newArray[index].assessment_type = e?.selectedItem?.text ? e?.selectedItem?.text : ''
+        setForm(newArray)
     };
 
-    const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
-    const [form, setForm] = useState({})
+    const removeAssessmentType = (index) => {
+        let newArray = JSON.parse(JSON.stringify(form));
+        newArray.splice(index, 1)
+        setForm(newArray)
+    }
+
+    const addAssessmentType = () => {
+        let newArray = JSON.parse(JSON.stringify(form));
+        newArray.push(
+            {
+                assessment_type: 'Test',
+                assessment_weight: 0,
+            },
+        )
+        setForm(newArray)
+    }
+
+    const handleChange = (e, type='text', name='', index) => {
+        if (type === 'number') {
+            let newArray = JSON.parse(JSON.stringify(form));
+            newArray[index][name] = e.value
+            setForm(newArray)
+        } else {
+            let newArray = JSON.parse(JSON.stringify(form));
+            newArray[index][e.target.name] = e.target.value
+            setForm(newArray)
+        }
+    }
+
+    const submitGrades = () => {
+
+    }
 
     return (
         <div className='flex flex-col gap-4'>
@@ -45,45 +95,85 @@ const AssessmentTypes = () => {
                         />
                     </div>
                 </div>
-                
             </div>
             <hr className='divider' />
-            <div className='flex flex-col gap-2'>
-                <div className='flex gap-4 w-full p-2 bg-white'>
-                    <div className='w-1/4'>
-                        <ComboBox 
-                            id="class"
-                            items={items ? items : []} 
-                            value={inputValue}
-                            onInput={(e) => {
-                                console.log(e)
-                                setInputValue(e?.selectedItem?.text)
-                            }}
-                            placeholder="Select or type an Assessment type"
-                            itemToString={item => item ? item.text : ''} 
-                            titleText="Search and select an Assessment type"
-                            shouldFilterItem={() => true}
-                        />
+            <Form onSubmit={handleSubmit(submitGrades)}>
+                <div className='flex flex-col gap-2'>
+                    {totalWeight !== 100 ?
+                    <div className='flex justify-end w-full text-[13px] text-error gap-1 pb-2 '>
+                        Total weight must be equal to <span className='font-semibold'>(100)</span>
                     </div>
-                    <div className='w-1/4'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            name={'book_name'}
-                            id="subject_name"
-                            required
-                            invalidText="Please enter a valid book name"
-                            labelText="Percentage"
-                            placeholder="Enter Grade Remark"
-                            // value={name}
-                            // onChange={(e) => {
-                            //     setName(e.target.value)
-                            // }}
+                    :null}
+                    
+                    {form.map((item, index) => (
+                        <> 
+                            <div className='flex gap-4 w-full p-2 bg-white'>
+                                <div className='w-1/4'>
+                                    <ComboBox 
+                                        id={"assessment_type"+index}
+                                        items={assessmentTypeOptions ? assessmentTypeOptions : []} 
+                                        value={item.assessment_type}
+                                        onChange={(e) => handleSelectItem(e, index)}
+                                        onInput={(e) => {
+                                            let newArray = JSON.parse(JSON.stringify(form));
+                                            newArray[index].assessment_type = e.target.value
+                                            setForm(newArray)
+                                        }}
+                                        placeholder="Select or type an a remark"
+                                        itemToString={item => item ? item.text : ''} 
+                                        titleText="Search and select a remark"
+                                        shouldFilterItem={() => true}
+                                    />
+                                </div>
+                                <div className='w-1/4'>
+                                    <TextInput
+                                        className='min-w-full'
+                                        kind={'number'}
+                                        name={'assessment_weight'+index}
+                                        id={"assessment_weight"+index}
+                                        {...register('assessment_weight'+index, { required: true })}
+                                        invalid={errors['assessment_weight'+index] ? true : false}
+                                        invalidText={errors['assessment_weight'+index]?.message? errors['assessment_weight'+index]?.message : 'This field is required'}
+                                        labelText="Assessment Weight (%)"
+                                        placeholder="Enter the weight of assessment type"
+                                        value={item.assessment_weight}
+                                        onChange={(e) => {handleChange(e, 'number', 'assessment_weight', index)}}
+                                    />
+                                </div>
+                                {form?.length > 1?
+                                <div 
+                                    className='flex gap-1 justify-end items-start pt-2 text-error hover:font-semibold w-2/4'
+                                    onClick={() => {
+                                        removeAssessmentType(index)
+                                    }}
+                                >
+                                    <Subtract /><span className='text-[12px] text-error cursor-pointer hover:underline duration-300'>Remove</span>
+                                </div>
+                                : null }
+                            </div>
+                            <hr className='divider mt-2 mb-2' />
+                        </>
+                    ))}
+                    <div className='flex gap-2 items-center text-primary text-[13px] cursor-pointer max-w-fit hover:underline duration-300 hover:font-bold'
+                        onClick={() => {
+                            addAssessmentType()
+                        }}
+                    >
+                        <Add />New Assessment Type
+                    </div>
+                    <hr className='divider mt-2' />
+                    <div className='flex justify-end mt-2'>
+                        <AppButton
+                            type="submit" 
+                            kind={'primary'} 
+                            // renderIcon={ArrowRight}
+                            className={'h-[64px] !w-fit'}
+                            // loading={assignTeacherLoading}
+                            text={'Save Assessment Types'}
                         />
                     </div>
                 </div>
-                <hr className='divider mt-2' />
-            </div>
+            </Form>
         </div>
     );
 };
