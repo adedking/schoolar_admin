@@ -114,6 +114,24 @@ export const sessionStatusConfig = [
   },
 ];
 
+export const lessonPlanStatusConfig = [
+  {
+    label: 'Pending Approval',
+    value: 0,
+    color: 'orange',
+  },
+  {
+    label: 'Approved',
+    value: 1,
+    color: 'green',
+  },
+  {
+    label: 'Declined',
+    value: 2,
+    color: 'red',
+  },
+];
+
 export const admissionStatusConfig = [
   {
     label: 'On-going',

@@ -82,7 +82,7 @@ const AssessmentTypes = () => {
             <div className='flex flex-row justify-between items-center text-[15px]'>
                 <span>Assessment Types</span>
                 <div className='flex items-center justify-end gap-2 p-2 bg-white w-fit '>
-                    <span className='text-[13px]'>Minimum Pass Score:</span>
+                    <span className='text-[13px] font-semibold'>Minimum overall pass score:</span>
                     <div>
                         <TextInput
                             className='min-w-full'
@@ -141,17 +141,20 @@ const AssessmentTypes = () => {
                                     />
                                 </div>
                                 {form?.length > 1?
-                                <div 
-                                    className='flex gap-1 justify-end items-start pt-2 text-error hover:font-semibold w-2/4'
-                                    onClick={() => {
-                                        removeAssessmentType(index)
-                                    }}
-                                >
-                                    <Subtract /><span className='text-[12px] text-error cursor-pointer hover:underline duration-300'>Remove</span>
+                                <div className='flex gap-1 justify-end items-start pt-2 w-2/4 text-error'>
+                                    <Subtract />
+                                    <span 
+                                        className='text-[12px] text-error cursor-pointer hover:underline hover:font-semibold duration-300'
+                                        onClick={() => {
+                                            removeAssessmentType(index)
+                                        }}
+                                    >
+                                        Remove
+                                    </span>
                                 </div>
                                 : null }
                             </div>
-                            <hr className='divider mt-2 mb-2' />
+                            <hr className='divider' />
                         </>
                     ))}
                     <div className='flex gap-2 items-center text-primary text-[13px] cursor-pointer max-w-fit hover:underline duration-300 hover:font-bold'
@@ -161,7 +164,7 @@ const AssessmentTypes = () => {
                     >
                         <Add />New Assessment Type
                     </div>
-                    <hr className='divider mt-2' />
+                    <hr className='divider' />
                     <div className='flex justify-end mt-2'>
                         <AppButton
                             type="submit" 

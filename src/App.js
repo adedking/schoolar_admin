@@ -37,6 +37,7 @@ import ViewTransportPage from './pages/administration/transport/sub-components/v
 import ViewFeesPage from './pages/administration/fees/sub-components/view-fees';
 import AttendanceRegisterPage from './pages/attendance-register';
 import ExamsResultPage from './pages/administration/exams-result-settings.js';
+import SessionTimeTablePage from './pages/administration/sessions/sub-components/time-table/index.js';
 
 const App = () => {
   const { alert } = useSelector((state) => state.componentsSlice);
@@ -81,7 +82,7 @@ const App = () => {
               <Route exact path='/sessions/:id/academic-terms' Component={SessionAcademicTermsPage} />
               <Route exact path='/sessions/:id/academic-terms/:termId' Component={ViewTermPage} />
               <Route exact path='/sessions/:id/books' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/time-table' Component={SessionAcademicTermsPage} />
+              <Route exact path='/sessions/:id/time-table' Component={SessionTimeTablePage} />
               <Route exact path='/sessions/:id/lesson-plans' Component={LessonPlansPage} />
               <Route exact path='/sessions/:id/academic-records' Component={SessionAcademicTermsPage} />
               <Route exact path='/sessions/:id/fees-management' Component={SessionAcademicTermsPage} />

@@ -102,7 +102,7 @@ const GradingSystem = () => {
             <div className='text-[15px] py-2 pt-4'>
                 Grading System
             </div>
-            <hr className='divider' />
+            <hr className='divider -mb-2' />
             <Form onSubmit={handleSubmit(submitGrades)}>
                 <div className='flex flex-col gap-2'>
                     {form.map((item, index) => (
@@ -178,20 +178,30 @@ const GradingSystem = () => {
                                     </div>
                                 </div>
                                 {form?.length > 1?
-                                <div 
-                                    className='flex w-full gap-1 justify-end items-center pt-1 text-error'
-                                    onClick={() => {
-                                        removeGrade(index)
-                                    }}
-                                >
-                                    <Subtract /><span className='text-[12px] text-error cursor-pointer hover:underline duration-300'>Remove</span>
+                                <div className='flex w-full gap-1 justify-end items-center pt-1 text-error'>
+                                    <Subtract />
+                                    <span 
+                                        className='text-[12px] text-error cursor-pointer hover:underline hover:font-semibold duration-300'
+                                        onClick={() => {
+                                            removeGrade(index)
+                                        }}
+                                    >
+                                        Remove
+                                    </span>
                                 </div>
+                                // <div 
+                                //     className='flex w-full gap-1 justify-end items-center pt-1 text-error'
+                                //     onClick={() => {
+                                //         removeGrade(index)
+                                //     }}
+                                // >
+                                //     <Subtract /><span className='text-[12px] text-error cursor-pointer hover:underline duration-300'>Remove</span>
+                                // </div>
                                 : null }
                             </div>
-                            <hr className='divider mt-2' />
+                            <hr className='divider' />
                         </>
                     ))}
-                    
                     <div className='flex gap-2 items-center text-primary text-[13px] cursor-pointer max-w-fit hover:underline duration-300 hover:font-bold'
                         onClick={() => {
                             addGrade()

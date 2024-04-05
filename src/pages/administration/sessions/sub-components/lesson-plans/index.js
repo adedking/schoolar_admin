@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../../components/layouts/dashboard';
-import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../../../utils';
+import { lessonPlanStatusConfig, PAGINATION_DEFAULT } from '../../../../../utils';
 import AppDataTable from '../../../../../components/data-table';
 import { useGetTerms } from '../../../../../redux/administration/terms/hook';
 import WidgetCard from '../../../../../components/widget';
@@ -47,16 +47,16 @@ const LessonPlansPage = () => {
             header: 'Session',
         },
         {
+            key: 'term',
+            header: 'Term',
+        },
+        {
             key: 'subject',
             header: 'Subject',
         },
         {
             key: 'class',
-            header: 'Class Name',
-        },
-        {
-            key: 'period_covered',
-            header: 'Period Covered',
+            header: 'Class',
         },
         {
             key: 'status',
@@ -85,32 +85,24 @@ const LessonPlansPage = () => {
                 header: 'id',
             },
             {
-                key: 'first_name',
-                header: 'First Name',
+                key: 'teacher_name',
+                header: "Teacher's Name",
             },
             {
-                key: 'last_name',
-                header: 'Last Name',
+                key: 'session',
+                header: 'Session',
             },
             {
-                key: 'email',
-                header: 'Email',
+                key: 'term',
+                header: 'Term',
             },
             {
-                key: 'gender',
-                header: 'Gender',
+                key: 'subject',
+                header: 'Subject',
             },
             {
                 key: 'class',
                 header: 'Class',
-            },
-            {
-                key: 'enrolment_id',
-                header: 'Enrolment ID',
-            },
-            {
-                key: 'parents',
-                header: 'Primary Guardian',
             },
             {
                 key: 'status',
@@ -151,7 +143,7 @@ const LessonPlansPage = () => {
                         emptyText={'No Lesson Plan added'}
                         emptySubText={'Please add lesson plan by clicking the button below'}
                         viewActionType={'lesson-plan'}
-                        statusConfig={sessionStatusConfig}
+                        statusConfig={lessonPlanStatusConfig}
                         loading={admissionsLoading}
                         addMultiple={false}
                     />
