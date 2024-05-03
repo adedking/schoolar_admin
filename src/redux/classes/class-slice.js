@@ -4,20 +4,20 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'classes',
   initialState: {
-    classes: null,
+    sub_class: null,
   },
   reducers: {
     setClasses: (state, { payload }) => {
-      state.classes = payload;
+      state.sub_class = payload;
     },
     clearClasses: (state) => {
-      state.classes = null;
+      state.sub_class = null;
     },
   },
 });
 
 // Actions
-export const { setClasses, clearClasses } =
+export const { setClass, clearClass } =
   slice.actions;
 
 export default slice.reducer;

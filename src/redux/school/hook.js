@@ -2,9 +2,8 @@ import { companies } from '../../api';
 import { store } from '..';
 import { setAlert, setIsLoading } from '../components/components-slice';
 import { updateUser } from '../user/hook';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { setCompany, setSchools } from './reducer';
-import { queryClient } from '../..';
+import { useMutation } from '@tanstack/react-query';
+import { setSchools } from './school-slice';
 
 export function useCreateSchools() {
   return useMutation(

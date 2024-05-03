@@ -22,6 +22,6 @@ test('renders text element', async () => {
         </PersistGate>
     </Provider>
   );
-  const textElement = await screen.findByText(/Login to Schoolar/i);
+  const textElement = await screen.findByText(/Login to Pluraled/i);
   expect(textElement).toBeInTheDocument();
 });

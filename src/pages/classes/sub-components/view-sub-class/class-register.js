@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import AppDataTable from '../../../../components/data-table';
 import { PAGINATION_DEFAULT } from '../../../../utils';
-
+import { useGetAttendanceBySubClass } from '../../../../redux/classes/hook';
+import { useParams } from 'react-router-dom';
 
 const ClassRegister = ({setShowAddAttendance}) => {
 
-    
     const tableConfig = [
         {
-            key: 'date',
+            key: 'attendance_date',
             header: 'Attendance Date',
         },
         {
@@ -31,6 +31,16 @@ const ClassRegister = ({setShowAddAttendance}) => {
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
+
+    const {id} = useParams();
+
+    const { data: classAttendance, isLoading: classAttendanceLoading } = useGetAttendanceBySubClass(
+        id,
+        pagination.limit,
+        pagination.page,
+        pagination.statusFilter,
+        pagination.search
+    );
 
     const mobileTableHeader = {
         main:[
@@ -68,13 +78,15 @@ const ClassRegister = ({setShowAddAttendance}) => {
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
                     title={'Manage class register'}
-                    description={'Update the register of the class'}
+                    description={'Manage the attendance register of this class'}
                     tableHeader={tableConfig}
                     pagination={pagination}
                     setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
-                    showToolBar={false}
-                    // data={teachers}
+                    showToolBar={true}
+                    loading={classAttendanceLoading}
+                    data={classAttendance}
+                    showMainButton={true}
                     mainButtonText='Mark Class Attendance'
                     mainButtonAction={() => {
                         setShowAddAttendance(true)

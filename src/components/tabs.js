@@ -2,9 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs, Tab, TabList, TabPanels, TabPanel, Grid, Column } from "carbon-components-react";
 
-const TabView = ({ componentTabs }) => {
+const TabView = ({ componentTabs}) => {
+
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0)
 
   const [className, setClassName] = useState(`md:min-w-[180px] !text-[14px] !h-[40px]`)
+  
   useEffect(() => {
     if (componentTabs && componentTabs.length > 0) {
       if (componentTabs.length === 1) {
@@ -23,11 +26,19 @@ const TabView = ({ componentTabs }) => {
     }
   }, [componentTabs])
 
+  const onChangeTab = (event) => {
+    setSelectedTabIndex(event.selectedIndex)
+  }
+
   return (
-    <Grid condensed className='!bg-background p-3 px-2 min-h-[500px] w-full'>
+    <Grid condensed className='!bg-background py-3 min-h-[500px] w-full'>
       <Column lg={16} md={16} sm={4}>
         <Tabs
-          className='!min-w-[100%]'
+          className='!min-w-[100%] -mx-2'
+          selectedIndex={selectedTabIndex}
+          onChange={(e) => {
+            onChangeTab(e)
+          }}
         >
           <TabList 
             aria-label="List of tabs"
@@ -43,9 +54,13 @@ const TabView = ({ componentTabs }) => {
           </TabList>
           <TabPanels>
             {componentTabs?.map((item, index) => (
-              <TabPanel key={index} className='-px-4'>
+              <>
+              {selectedTabIndex === index ?
+              <TabPanel key={index} className='-mx-4'>
                 {item.content}
               </TabPanel>
+              :null}
+              </>
             ))}
           </TabPanels>
         </Tabs>

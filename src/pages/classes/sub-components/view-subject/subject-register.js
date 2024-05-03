@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import AppDataTable from '../../../../components/data-table';
 import { PAGINATION_DEFAULT } from '../../../../utils';
+import { useParams } from 'react-router-dom';
+import { useGetAttendanceBySubject } from '../../../../redux/subjects/hook';
 
-
-const SubjectRegister = ({setShowAddAttendance}) => {
+const SubjectRegister = ({setShowMarkAttendance}) => {
 
     const tableConfig = [
         {
-            key: 'date',
-            header: 'Date',
+            key: 'attendance_date',
+            header: 'Attendance Date',
         },
         {
-            key: 'full_name',
-            header: 'Student Name',
+            key: 'students_present',
+            header: 'Students Present',
         },
         {
-            key: 'status',
-            header: 'Attendance Status',
+            key: 'students_absent',
+            header: 'Students Absent',
         },
-        
+        {
+            key: 'total_students',
+            header: 'Total Students',
+        },
     ];
 
     const [pagination, setPagination] = useState({
@@ -27,6 +31,16 @@ const SubjectRegister = ({setShowAddAttendance}) => {
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
+
+    const {id} = useParams();
+
+    const { data: subjectAttendance, isLoading: subjectAttendanceLoading } = useGetAttendanceBySubject(
+        id,
+        pagination.limit,
+        pagination.page,
+        pagination.statusFilter,
+        pagination.search
+    );
 
     const mobileTableHeader = {
         main:[
@@ -58,24 +72,25 @@ const SubjectRegister = ({setShowAddAttendance}) => {
             },
         ]
     };
-    
+
     return (
         <React.Fragment>
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
-                    title={'Manage subject attendance register'}
-                    description={'Update the register of this subject'}
+                    title={'Manage subject register'}
+                    description={'Manage the attendance register of this subject'}
                     tableHeader={tableConfig}
                     pagination={pagination}
                     setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
                     showToolBar={false}
-                    // data={teachers}
-                    mainButtonText='Mark Subject Attendance Register'
+                    loading={subjectAttendanceLoading}
+                    data={subjectAttendance}
+                    mainButtonText='Mark Subject Attendance'
                     mainButtonAction={() => {
-                        setShowAddAttendance(true)
+                        setShowMarkAttendance(true)
                     }}
-                    emptyText={'No subject attendance yet'}
+                    emptyText={'No attendance data provided yet'}
                     emptySubText={'Please mark attendance by clicking the button below'}
                 />
             </div>

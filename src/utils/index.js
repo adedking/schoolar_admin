@@ -98,17 +98,17 @@ export const parentStatusConfig = [
 
 export const sessionStatusConfig = [
   {
-    label: 'Inactive',
+    label: 'Ongoing',
     value: 0,
     color: 'red',
   },
   {
-    label: 'Active',
+    label: 'Completed',
     value: 1,
     color: 'green',
   },
   {
-    label: 'Pending',
+    label: 'Upcoming',
     value: 2,
     color: 'orange',
   },

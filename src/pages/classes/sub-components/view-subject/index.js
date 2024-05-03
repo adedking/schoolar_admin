@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
-import { useDeleteSubClass, useGetSubClass } from '../../../../redux/classes/hook';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
@@ -13,17 +12,21 @@ import DeleteModal from '../../../../components/modals/deleteModal';
 import SubjectTeachers from './subject-teachers';
 import SubjectRegister from './subject-register';
 import SubjectTimeTable from './subject-time-table';
-import { useGetSubject } from '../../../../redux/subjects/hook';
+import { useDeleteSubject, useGetSubject } from '../../../../redux/subjects/hook';
 import SubjectBooks from './subject-books';
 import MarkSubjectAttendance from '../modals/mark-subject-attendance';
 import AddBookToSubjectModal from '../modals/add-book-to-subject';
 import SubjectAcademicRecords from './subject-academic-records';
 
 const ViewSubject = () => {
+
+    const {id} = useParams();
+    
+    const { data: subjectInfo, isLoading: subjectLoading } = useGetSubject(id);
+    
     const [showAssignTeacherToSubject, setShowAssignTeacherToSubject] = useState(false);
     const [showAddBookToSubject, setShowAddBookToSubject] = useState(false);
     const [showMarkAttendance, setShowMarkAttendance] = useState(false);
-    const [type, setType] = useState('add');
     const [showDelete, setShowDelete] =useState(false)
 
     const [deleteTitle, setDeleteTitle] = useState('')
@@ -31,20 +34,22 @@ const ViewSubject = () => {
     const [deleteButtonText, setDeleteButtonText] =useState('')
     const [deleteType, setDeleteType] = useState('')
 
+    const [attendanceInfo, setAttendanceInfo] =useState(null)
+
     const navigate = useNavigate();
 
     const tabs = [
-        {
-            title: 'Books',
-            content: <SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} />,
-        },
         {
             title: 'Teachers',
             content: <SubjectTeachers setShowAssignTeacherToSubject={setShowAssignTeacherToSubject} />,
         },
         {
+            title: 'Books',
+            content: <SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} />,
+        },
+        {
             title: 'Attendance Register',
-            content: <SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  />
+            content: <SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  setAttendanceInfo={setAttendanceInfo} />
         },
         {
             title: 'Time Table',
@@ -56,16 +61,12 @@ const ViewSubject = () => {
         },  
     ];
 
-    const {classId, id} = useParams();
-    
-    const { data: subjectInfo, isLoading: subjectLoading } = useGetSubject(id);
-    const { data: classInfo, isLoading: classLoading } = useGetSubClass(classId);
-    const {mutateAsync: removeClass, isLoading: removeClassLoading} = useDeleteSubClass();
+    const {mutateAsync: removeSubject, isLoading: removeSubjectLoading} = useDeleteSubject();
 
-    const deleteClassFn = async () => {
-        await removeClass(id).then(() => {
+    const deleteSubjectFn = async () => {
+        await removeSubject(id).then(() => {
             setShowDelete(false)
-            navigate(`/classes/${classId}`)
+            navigate(`/classes/${subjectInfo.sub_class.id}`)
         })
     }
 
@@ -78,9 +79,9 @@ const ViewSubject = () => {
                 deleteTitle={deleteTitle}
                 deleteText={deleteText}
                 deleteAction={() => {
-                    deleteClassFn()
+                    deleteSubjectFn()
                 }} 
-                deleteLoading={removeClassLoading}
+                deleteLoading={removeSubjectLoading}
                 buttonText={deleteButtonText}
             />
             :
@@ -88,6 +89,7 @@ const ViewSubject = () => {
             }
             {showAddBookToSubject ?
             <AddBookToSubjectModal
+                subjectInfo={subjectInfo}
                 isOpen={showAddBookToSubject}
                 closeModal={()=> setShowAddBookToSubject(false)}
             />
@@ -95,12 +97,15 @@ const ViewSubject = () => {
             
             {showMarkAttendance ?
             <MarkSubjectAttendance
+                attendanceInfo={attendanceInfo}
+                subjectInfo={subjectInfo}
                 isOpen={showMarkAttendance}
                 closeModal={()=> setShowMarkAttendance(false)}
             />
             : null}
             {showAssignTeacherToSubject ?
             <AssignTeacherToSubjectModal
+                subjectInfo={subjectInfo}
                 isOpen={showAssignTeacherToSubject}
                 closeModal={()=> setShowAssignTeacherToSubject(false)}
             />
@@ -109,16 +114,27 @@ const ViewSubject = () => {
             }
             <DashboardLayout viewComponent={null} viewTitle={'View teacher'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
-                    {subjectLoading || classLoading ?
+                    <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                        <Link to={'/classes'} className='hover:underline duration-300 text-[15px]'>
+                            {'Classes'}
+                        </Link>
+                        <Link to={`/classes/${subjectInfo?.sub_class?.id}`} className='hover:underline duration-300 text-[15px]'>
+                        / {subjectInfo?.main_class?.name} - {subjectInfo?.sub_class?.name} {subjectInfo?.sub_class?.type === 'arts' ? '(Arts)' : subjectInfo?.sub_class?.type === 'commerce' ? '(Commercial)' : subjectInfo?.sub_class?.type === 'sciences' ? '(Sciences)' : null}
+                        </Link>
+                        <span className='text-[14px]'>
+                            / {subjectInfo?.name}
+                        </span>
+                    </div>
+                    {subjectLoading ?
                     <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={subjectLoading || classLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={subjectLoading} className={''} withOverlay={false} small={true} />
                     </div>
                     :
                     <React.Fragment>
                         <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
                             <div className='flex flex-col gap-2 px-4'>
-                                <div className='text-[13px]'>
-                                    {classInfo?.class_name} - {classInfo?.name} {classInfo?.type === 'art' ? '(Art)' : classInfo?.type === 'commerce' ? '(Commercial)' : classInfo?.type === 'science' ? '(Science)' : null}
+                                <div className='text-[14px]'>
+                                    {subjectInfo?.main_class?.name} - {subjectInfo?.sub_class?.name} <span className='text-[13px] text-gray-500'>{subjectInfo?.sub_class?.type === 'arts' ? '(Arts)' : subjectInfo?.sub_class?.type === 'commerce' ? '(Commercial)' : subjectInfo?.sub_class?.type === 'sciences' ? '(Sciences)' : null}</span>
                                 </div>
                                 <div className='font-semibold'>
                                     {subjectInfo?.name}

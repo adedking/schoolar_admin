@@ -46,7 +46,7 @@ const LogInPage = () => {
                     className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[430px] h-screen md:p-4 p-8 pb-[15px] md:mt-16 rounded'
                 >
                     <Stack gap={6}>
-                        <div className='header-2'>Login to Schoolar</div>
+                        <div className='header-2'>Login to Pluraled</div>
                         <TextInput
                             className='min-w-full'
                             kind={'email'}

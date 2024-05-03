@@ -14,7 +14,6 @@ const PromotionCriteriaDataCard = ({
     loading=false,
     setShowPromotionCriteria
 }) => {
-    // console.log(data)
     return (
         <React.Fragment>    
             {loading ?

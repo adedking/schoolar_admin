@@ -10,7 +10,7 @@ const SessionTimeTablePage = () => {
                         <div className='text-[18px] font-semibold'>
                             Session Time-table Configuration
                         </div>
-                        <div className='text-[12px] font-light'>
+                        <div className='text-[13px] font-light'>
                             Manage this sessions time-table for both lectures and exams
                         </div>
                     </div>

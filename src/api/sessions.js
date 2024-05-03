@@ -3,7 +3,7 @@ import { Axios } from './axios.js';
 const getSessions = async (payload) => {
     let search = payload.search ? '&search=' + payload.search : '';
     let filter = payload.statusFilter && payload.statusFilter !== -1 ? '&filter=' + payload.statusFilter : '';
-    const { data } = await Axios.get(`/school-parents?limit=${payload.limit}&page=${payload.page}${search}${filter}`);
+    const { data } = await Axios.get(`/school-sessions?limit=${payload.limit}&page=${payload.page}${search}${filter}`);
     return data?.data;
 };
 

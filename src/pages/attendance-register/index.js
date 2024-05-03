@@ -116,7 +116,7 @@ const AttendanceRegisterPage = () => {
                     />
                     <div className='min-w-full max-w-full bg-background rounded-sm'>
                         <AppDataTable 
-                            title={'Atteandance Register'}
+                            title={'attendance Register'}
                             description={'View Student Attendance'}
                             tableHeader={tableConfig}
                             pagination={pagination}

@@ -21,8 +21,12 @@ import AddSubClassModal from '../modals/add-sub-class';
 import AddMultipleStudentsModal from '../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students';
 import DeleteModal from '../../../../components/modals/deleteModal';
 import ClassAcademicRecords from './class-academic-records';
+import ClassTimeTable from './class-time-table';
 
 const ViewClassPage = () => {
+
+    const {id} = useParams();
+    const { data: classInfo, isLoading: classLoading } = useGetSubClass(id);
 
     const [showAssignTeacherToSubject, setShowAssignTeacherToSubject] = useState(false);
     const [showAssignTeacherToClass, setShowAssignTeacherToClass] = useState(false);
@@ -40,6 +44,8 @@ const ViewClassPage = () => {
     const [deleteButtonText, setDeleteButtonText] =useState('')
     const [deleteType, setDeleteType] =useState('')
 
+    const [attendanceInfo, setAttendanceInfo] =useState(null)
+
     const navigate = useNavigate();
 
     const tabs = [
@@ -53,17 +59,19 @@ const ViewClassPage = () => {
         },
         {
             title: 'Class Register',
-            content: <ClassRegister  setShowAddAttendance={setShowAddAttendance} />
+            content: <ClassRegister  setShowAddAttendance={setShowAddAttendance} setAttendanceInfo={setAttendanceInfo} />
+        },
+        {
+            title: 'Class Time-table',
+            content: <ClassTimeTable classInfo={classInfo} />
         },
         {
             title: 'Academic Records',
             content: <ClassAcademicRecords  setShowAddSubjectToClass={setShowAddSubjectToClass} />
         },
-        
     ];
 
-    const {id} = useParams();
-    const { data: classInfo, isLoading: classLoading } = useGetSubClass(id);
+    
     const {mutateAsync: removeClass, isLoading: removeClassLoading} = useDeleteSubClass()
     const {mutateAsync: removeTeacher, isLoading: removeTeacherLoading} = useRemoveTeacherFromClass()
 
@@ -103,6 +111,8 @@ const ViewClassPage = () => {
             }
             {showAddAttendance ?
             <MarkAttendance
+                attendanceInfo={attendanceInfo}
+                classInfo={classInfo}
                 isOpen={showAddAttendance}
                 closeModal={()=> setShowAddAttendance(false)}
             />
@@ -111,6 +121,7 @@ const ViewClassPage = () => {
             }
             {showAddSubjectToClass ?
             <AddSubjectToClassModal
+                classInfo={classInfo}
                 isOpen={showAddSubjectToClass}
                 closeModal={()=> setShowAddSubjectToClass(false)}
             />
@@ -181,8 +192,9 @@ const ViewClassPage = () => {
                     :
                     <React.Fragment>
                         <div className='flex justify-between items-center w-full h-[60px] bg-background rounded'>
-                            <div className='px-4'>
-                                {classInfo?.class_name} - {classInfo?.name} {classInfo?.type === 'art' ? '(Art)' : classInfo?.type === 'commerce' ? '(Commercial)' : classInfo?.type === 'science' ? '(Science)' : null}
+                            <div className='flex items-center gap-2 px-4 font-semibold'>
+                                {classInfo?.class_name} - {classInfo?.name} 
+                                <span className='text-[12px] font-normal text-gray-500'>{classInfo?.type === 'arts' ? '(Arts)' : classInfo?.type === 'commerce' ? '(Commercial)' : classInfo?.type === 'sciences' ? '(Sciences)' : null}</span>
                             </div>
                             <div className='flex gap-4 items-center'>
                                 <div 
@@ -286,7 +298,6 @@ const ViewClassPage = () => {
                                         />
                                     </div>
                                 </React.Fragment>}
-                                
                             </div>
                         </div>
                     </React.Fragment>

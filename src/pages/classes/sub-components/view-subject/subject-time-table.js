@@ -1,109 +1,278 @@
-import React, { useState } from 'react';
-import AppDataTable from '../../../../components/data-table';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { PAGINATION_DEFAULT } from '../../../../utils';
 import { useGetstudentsBySubClass } from '../../../../redux/classes/hook';
+import { Loading } from '@carbon/react';
 
-const SubjectTimeTable = ({setShowAddTeacher}) => {
+const SubjectTimeTable = () => {
 
-    const {id} = useParams();
+    const {class_id} = useParams();
 
-    const [pagination, setPagination] = useState({
-        limit: PAGINATION_DEFAULT.limit,
-        page: PAGINATION_DEFAULT.page,
-        statusFilter: PAGINATION_DEFAULT.statusFilter,
-        search: '',
-    });
+    const { data: timeTableBySubjectByClass, isLoading: timeTableBySubjectByClassLoading } = useGetstudentsBySubClass( class_id );
 
-    const { data: timeTableBySubjectByClass, isLoading: timeTableBySubjectByClassLoading } = useGetstudentsBySubClass(
-        id,
-        pagination.limit,
-        pagination.page,
-        pagination.statusFilter,
-        pagination.search
-    );
-
-    const tableConfig = [
+    const [days, setDays] = useState([
         {
-            key: 'uuid',
-            header: 'id',
+            day: 'Monday',
+            times: [
+                {
+                    start_time: '08:01',
+                    end_time: '09:00',
+                    subject: 'Physics',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+                {
+                    start_time: '09:01',
+                    end_time: '10:00',
+                    subject: 'Accounting',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+            ],
         },
         {
-            key: 'day',
-            header: 'Day',
+            day: 'Tuesday',
+            times: [
+                {
+                    start_time: '08:01',
+                    end_time: '09:00',
+                    subject: 'Physics',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+                {
+                    start_time: '09:01',
+                    end_time: '10:00',
+                    subject: 'Accounting',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+            ],
+            selected: false
         },
         {
-            key: 'start_time',
-            header: 'Start Time',
+            day: 'Wednesday',
+            times: [
+                {
+                    start_time: '08:01',
+                    end_time: '09:00',
+                    subject: 'Physics',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+                {
+                    start_time: '09:01',
+                    end_time: '10:00',
+                    subject: 'Accounting',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+            ],
+            selected: false
         },
         {
-            key: 'end_time',
-            header: 'End Time',
+            day: 'Thursday',
+            times: [
+                {
+                    start_time: '08:01',
+                    end_time: '09:00',
+                    subject: 'Physics',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+                {
+                    start_time: '09:01',
+                    end_time: '10:00',
+                    subject: 'Accounting',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+                
+            ],
+            selected: false
         },
-    ];
+        {
+            day: 'Friday',
+            times: [
+                {
+                    start_time: '08:01',
+                    end_time: '09:00',
+                    subject: 'Physics',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+                {
+                    start_time: '09:01',
+                    end_time: '10:00',
+                    subject: 'Accounting',
+                    subject_id: null,
+                    activity_type: 'lecture'
+                },
+            ],
+            selected: false
+        },
+    ])
 
-    const mobileTableHeader = {
-        main:[
-            {
-                header: 'id',
-                key: 'uuid'
-            },
-            {
-                header: 'Day',
-                key: 'day'
-            },
-            {
-                header: 'Start Time',
-                key: 'start_time'
-            },
-            {
-                header: 'End Time',
-                key: 'end_time'
-            },
-        ],
-        full: [
-            {
-                key: 'uuid',
-                header: 'id',
-            },
-            {
-                key: 'day',
-                header: 'Day',
-            },
-            {
-                key: 'start_time',
-                header: 'Start Time',
-            },
-            {
-                key: 'end_time',
-                header: 'End Time',
-            },
-        ]
-    };
+    useEffect(() => {
+        if (timeTableBySubjectByClass) {
+            setDays([
+                {
+                    day: 'Monday',
+                    times: [
+                        {
+                            start_time: '08:01',
+                            end_time: '09:00',
+                            subject: 'Physics',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                        {
+                            start_time: '09:01',
+                            end_time: '10:00',
+                            subject: 'Accounting',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                    ],
+                },
+                {
+                    day: 'Tuesday',
+                    times: [
+                        {
+                            start_time: '08:01',
+                            end_time: '09:00',
+                            subject: 'Physics',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                        {
+                            start_time: '09:01',
+                            end_time: '10:00',
+                            subject: 'Accounting',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                    ],
+                    selected: false
+                },
+                {
+                    day: 'Wednesday',
+                    times: [
+                        {
+                            start_time: '08:01',
+                            end_time: '09:00',
+                            subject: 'Physics',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                        {
+                            start_time: '09:01',
+                            end_time: '10:00',
+                            subject: 'Accounting',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                    ],
+                    selected: false
+                },
+                {
+                    day: 'Thursday',
+                    times: [
+                        {
+                            start_time: '08:01',
+                            end_time: '09:00',
+                            subject: 'Physics',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                        {
+                            start_time: '09:01',
+                            end_time: '10:00',
+                            subject: 'Accounting',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                        
+                    ],
+                    selected: false
+                },
+                {
+                    day: 'Friday',
+                    times: [
+                        {
+                            start_time: '08:01',
+                            end_time: '09:00',
+                            subject: 'Physics',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                        {
+                            start_time: '09:01',
+                            end_time: '10:00',
+                            subject: 'Accounting',
+                            subject_id: null,
+                            activity_type: 'lecture'
+                        },
+                    ],
+                    selected: false
+                },
+            ])
+        }
+    }, [timeTableBySubjectByClass])
 
     return (
-        <React.Fragment>
-            <div className='min-w-full bg-background rounded-sm'>
-                <AppDataTable
-                    title={'Subject time-table'}
-                    description={'View subject time-table for this class'}
-                    tableHeader={tableConfig}
-                    pagination={pagination}
-                    setPagination={setPagination}
-                    mobileTableHeader={mobileTableHeader}
-                    data={timeTableBySubjectByClass}
-                    mainButtonText='Visit Administration Page'
-                    mainButtonAction={() => {
-                        setShowAddTeacher(true)
-                    }}
-                    emptyText={'Subject time-table not created yet'}
-                    emptySubText={'Please visit the administrations page to create and update time-table'}
-                    viewActionType={'subject'}
-                    loading={timeTableBySubjectByClassLoading}
-                    addMultiple={false}
-                />
+        <div className='flex flex-col items-center jusify-center min-w-full gap-4 -mt-3 outline-none'>
+            <div className='flex flex-col h-[76px] w-full justify-center gap-1 bg-background'>
+                <div className='text-[18px] font-semibold'>
+                    Subject Time-table
+                </div>
+                <div className='text-[13px] font-light'>
+                    Manage your subject time-table for lectures.
+                </div>
             </div>
-        </React.Fragment>
+            <div className='flex flex-col gap-4 w-full bg-background rounded-sm pb-5 -mt-3'>
+                <hr className='divider' />
+                {timeTableBySubjectByClassLoading ?
+                <div className='flex flex-row p-8 px-16 h-[300px] min-w-full bg-background gap-4 justify-center items-center'>
+                    <Loading active={timeTableBySubjectByClassLoading} className={''} withOverlay={false} small={false} />
+                </div>
+                :
+                <div className='flex md:flex-row flex-col w-full gap-4'>
+                    <div className='flex flex-col w-full gap-4 bg-white p-4'>
+                        <div className='text-[15px] h-[60px] w-full flex items-center px-4 bg-background font-extrabold'>
+                            Mathematics time-table
+                        </div>
+                        {days.map((item, index) => (
+                            <div className='flex flex-col gap-2 bg-background p-2' key={index}>
+                                <div className='flex md:flex-row flex-col gap-3 justify-between w-full'>
+                                    <div className='font-extrabold text-2xl md:w-1/2 w-full'>{item.day}</div>
+                                </div>
+                                <div className='grid md:grid-cols-2 gap-4'>
+                                    {item.times.map((timesItem, timesIndex) => (
+                                        <div className='h-[60px] bg-white flex flex-row items-center p-3 gap-4'>
+                                            <div className='flex flex-row gap-2'>
+                                                <span>
+                                                    {timesItem.start_time}
+                                                </span>
+                                                <span>
+                                                    -
+                                                </span>
+                                                <span>
+                                                    {timesItem.end_time}:
+                                                </span>
+                                            </div>
+                                            <div className='font-semibold'>
+                                                {timesItem.subject}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
     );
 };
 

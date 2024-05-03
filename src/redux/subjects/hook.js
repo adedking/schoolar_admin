@@ -43,23 +43,23 @@ export function useGetSubject(id) {
   );
 }
 
-export function useGetSubjectList(limit, page, search) {
+export function useGetSubjectList(sub_class_id, limit, page) {
   return useQuery(
-    ['subjects-list', { limit, page, search }],
+    ['subjects-list', { sub_class_id, limit, page }],
     () => {
       store.dispatch(setIsLoading(true));
       return subjects.getSubjects({
+        sub_class_id,
         limit,
         page,
-        search,
       });
     },
     {
       select: (data) => {
         let newData = [];
-        newData.push({ id: null, value: null, text: 'Select a class', rank: null });
-        data?.forEach((item) => {
-          newData.push({ id: item.id, value: item.id, text: item.name, rank: item.class_level});
+        newData.push({ id: null, value: null, text: 'Select a class' });
+        data?.data.forEach((item) => {
+          newData.push({ id: item.id, value: item.id, text: item.name});
         });
         return newData;
       },
@@ -99,7 +99,7 @@ export function useAssignTeacherToSubject() {
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('subjects');
         queryClient.invalidateQueries('subject');
-        store.dispatch(setAlert(true, 'Teacher assigned successful', 'success', 'You have successfully assigned teacher to class'));
+        store.dispatch(setAlert(true, 'Teacher assigned successful', 'success', 'You have successfully assigned teacher to subject'));
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
@@ -108,11 +108,11 @@ export function useAssignTeacherToSubject() {
   );
 }
 
-export function useDeleteSubClass() {
+export function useDeleteSubject() {
   return useMutation(
     (payload) => {
       store.dispatch(setIsLoading(true));
-      return subjects.deleteSubClass(payload);
+      return subjects.deleteSubject(payload);
     },
     {
       onSuccess: (response, variables, context) => {
@@ -128,7 +128,7 @@ export function useDeleteSubClass() {
   );
 }
 
-export function useRemoveTeacherFromClass() {
+export function useRemoveTeacherFromSubject() {
   return useMutation(
     (payload) => {
       store.dispatch(setIsLoading(true));
@@ -142,6 +142,65 @@ export function useRemoveTeacherFromClass() {
         store.dispatch(setAlert(true, 'success', 'Class deleted successfully'));
       },
       onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useAddSubjectBook() {
+  return useMutation(
+    (payload) => {
+      return subjects.addSubjectBook(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('subjects');
+        queryClient.invalidateQueries('subject');
+        queryClient.invalidateQueries('subjects-list');
+        store.dispatch(setAlert(true, 'Class added successful', 'success', 'You have successfully added the class'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useGetAttendanceBySubject( id, limit, page, statusFilter, search ) {
+  return useQuery(
+    ['attendance-by-subject', { id, limit, page, statusFilter, search }],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return subjects.getAttendanceBySubject({ id, limit, page, statusFilter, search });
+    },
+    {
+      select: (data) => {
+        data?.data?.forEach((subject) => {
+          subject.subject_type = subject.compulsory === 1 ? 'Compulsory' : 'Optional'
+        });
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useMarkSubjectAttendance() {
+  return useMutation(
+    (payload) => {
+      return subjects.markSubjectAttendance(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('subjects');
+        queryClient.invalidateQueries('subject');
+        queryClient.invalidateQueries('subjects-list');
+        store.dispatch(setAlert(true, 'Class added successful', 'success', response.message));
+      },
+      onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));
       },
     },

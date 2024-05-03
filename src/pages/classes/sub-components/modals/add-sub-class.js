@@ -29,8 +29,6 @@ const AddSubClassModal = ({isOpen, closeModal, classInfo, type='add'}) => {
     1000,
     1,
   );
-  console.log(classInfo)
-  
   
   const classTypeOptions = [
     {

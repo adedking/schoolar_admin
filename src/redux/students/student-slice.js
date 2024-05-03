@@ -4,20 +4,20 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'students',
   initialState: {
-    students: null,
+    student: null,
   },
   reducers: {
-    setStudents: (state, { payload }) => {
-      state.students = payload;
+    setStudent: (state, { payload }) => {
+      state.student = payload;
     },
-    clearStudents: (state) => {
-      state.students = null;
+    clearStudent: (state) => {
+      state.student = null;
     },
   },
 });
 
 // Actions
-export const { setStudents, clearStudents } =
+export const { setStudent, clearStudent } =
   slice.actions;
 
 export default slice.reducer;

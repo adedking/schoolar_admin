@@ -17,7 +17,7 @@ const ViewFeesPage = () => {
                         {'Fee Management'}
                     </Link>
                     <span className='text-[14px]'>
-                        / {'First Term'}
+                        / {'Fee'}
                     </span>
                 </div>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
@@ -26,7 +26,17 @@ const ViewFeesPage = () => {
                         <Loading active={feeLoading} className={''} withOverlay={false} small={false} />
                     </div>
                     :
-                    <div className='w-full flex flex-col'>
+                    <div className='w-full flex flex-col gap-4'>
+                        <div className='flex flex-col px-4 h-[76px] w-full justify-center gap-1 bg-background'>
+                            <div className='text-[18px] font-semibold'>
+                                School Fees
+                            </div>
+                            <div className='text-[13px] font-light'>
+                                Manage and update school fees
+                            </div>
+                        </div>
+                        <div className='flex flex-col px-4 h-[76px] w-full justify-center gap-1 bg-background'>
+                        </div>
                     </div>
                     }
                 </div>

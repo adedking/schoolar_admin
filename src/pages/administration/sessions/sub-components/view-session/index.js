@@ -12,8 +12,8 @@ import SessionCards from '../../../../../components/session-cards';
 const ViewSessionPage = () => {
 
     const {id} = useParams();
+
     const { data: session, isLoading: sessionLoading } = useGetSession(id);
-    // console.log(session)
 
     const [showEditSession, setShowEditSession] =useState(false)
     const [showDeleteSession, setShowDeleteSession] =useState(false)
@@ -44,8 +44,8 @@ const ViewSessionPage = () => {
             link: `/sessions/${id}/academic-records`
         },
         {
-            title: 'Time Table',
-            description: "Manage this academic session's lecture and exams time tables from here",
+            title: 'Exam Time Table',
+            description: "Manage this academic session's exams time tables from here",
             link: `/sessions/${id}/time-table`
         },
         {
@@ -88,8 +88,13 @@ const ViewSessionPage = () => {
             <DashboardLayout viewComponent={null} viewTitle={'View student'}>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {sessionLoading ?
-                    <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={sessionLoading} className={''} withOverlay={false} small={false} />
+                    <div className='flex flex-col gap-4 w-full'>
+                        <div className='flex flex-col px-4 h-[76px] w-full justify-center items-center gap-1 bg-background'>
+                            <Loading active={sessionLoading} className={''} withOverlay={false} small={true} />
+                        </div>
+                        <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
+                            <Loading active={sessionLoading} className={''} withOverlay={false} small={false} />
+                        </div>
                     </div>
                     :
                     <div className='w-full flex flex-col gap-4'>
@@ -103,7 +108,7 @@ const ViewSessionPage = () => {
                         </div>
                         <div className='flex items-center justify-between w-full md:gap-0 gap-3 h-[68px] bg-background px-4'>
                             <div className='flex flex-row gap-2'>
-                                <span className='text-[15px]'>
+                                <span className='text-[15px] font-semibold'>
                                     Academic Session:
                                 </span>
                                 <span className='text-[15px]'>
@@ -118,7 +123,7 @@ const ViewSessionPage = () => {
                             </div>
                         </div>
                         <div 
-                            className='py-2 text-[18px]'
+                            className='py-2 text-[16px] font-semibold'
                         >
                             Manage Session Activities
                         </div>

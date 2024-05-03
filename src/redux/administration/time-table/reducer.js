@@ -2,22 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Slice
 const slice = createSlice({
-  name: 'students',
+  name: 'timeTable',
   initialState: {
-    students: null,
+    timeTable: null,
   },
   reducers: {
-    setStudents: (state, { payload }) => {
+    setTimeTable: (state, { payload }) => {
       state.students = payload;
     },
-    clearStudents: (state) => {
+    clearTimeTable: (state) => {
       state.students = null;
     },
   },
 });
 
 // Actions
-export const { setStudents, clearStudents } =
+export const { setTimeTable, clearTimeTable } =
   slice.actions;
 
 export default slice.reducer;

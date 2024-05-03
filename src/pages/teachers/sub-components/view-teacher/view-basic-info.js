@@ -6,7 +6,6 @@ const TeacherBasicInfo = () => {
 
     const {id} = useParams();
     const { data: teacher } = useGetTeacher(id);
-    // console.log(teacher)
     return (
         <div className='flex flex-col gap-4'>
             <div className='text-[20px] py-4'>

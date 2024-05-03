@@ -1,36 +1,30 @@
 import React from 'react';
-import { useGetStudent } from '../../../../redux/students/hook';
 import { useParams } from 'react-router-dom';
 import AppButton from '../../../../components/app-button';
 import { ArrowRight, OrderDetails} from '@carbon/icons-react';
 import TeachersCard from '../../../../components/teachers-card';
+import { useGetSubject } from '../../../../redux/subjects/hook';
+import { Loading } from '@carbon/react';
 
 const SubjectTeachers = ({setShowAssignTeacherToSubject}) => {
     const {id} = useParams();
-    const { data: teachers } = useGetStudent(id);
+    const { data: subjectInfo, isLoading: subjectLoading } = useGetSubject(id);
     return (
         <div className='flex flex-col gap-2'>
             <div className='flex w-full justify-between text-[20px] py-2 pb-4 items-center'>
                 <span>
                     Subject Teachers
                 </span>
-                {teachers && teachers.length > 0 ?
-                <AppButton
-                    text={'Assign Teacher'}
-                    kind={'primary'}
-                    action={() => {
-                        setShowAssignTeacherToSubject(true)
-                    }}
-                    renderIcon={ArrowRight} 
-                />
-                : null }
             </div>
             <hr className='divider' />
-            {teachers && teachers.length > 0 ?
-            <div className='grid grid-cols-2'>
-                {teachers.map((teacher, index) => (
-                    <TeachersCard key={index} teacher={teacher}/>
-                ))}
+            {subjectLoading ?
+            <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
+                <Loading active={subjectLoading} className={''} withOverlay={false} small={false} />
+            </div>
+            : subjectInfo ?
+            <div className='grid grid-cols-2 gap-4'>
+                <TeachersCard teacher={subjectInfo.primary_teacher} type={'primary'} setShowAssignTeacherToSubject={setShowAssignTeacherToSubject}/>
+                <TeachersCard teacher={subjectInfo.support_teacher} type={'support'} setShowAssignTeacherToSubject={setShowAssignTeacherToSubject}/>
             </div>
             :
             <div className='flex flex-col p-4 !px-2 md:min-h-[350px] w-full bg-background gap-3 justify-center items-start -mt-8'>

@@ -5,7 +5,7 @@ import { Axios } from '../../api/axios.js'
 import { queryClient } from '../..';
 import { setAlert, setIsLoading } from '../components/components-slice';
 import { useMutation } from '@tanstack/react-query';
-import { clearSchools, setSchools } from '../school/reducer';
+import { clearSchools, setCurrentSession, setCurrentTerm, setSchool, setSchoolLocation, setSchools } from '../school/school-slice.js';
 
 export function useLogin() {
   return useMutation(
@@ -17,6 +17,10 @@ export function useLogin() {
         store.dispatch(setToken(response.data.authorization.token));
         store.dispatch(setSchools(response.data?.schools));
         store.dispatch(setUser(response.data));
+        store.dispatch(setSchoolLocation(response.data?.school_location));
+        store.dispatch(setCurrentSession(response.data?.school_location.current_session));
+        store.dispatch(setCurrentTerm(response.data?.school_location.current_term));
+        store.dispatch(setSchool(response.data?.school));
         store.dispatch(setAlert(true, 'Login successful', 'success', 'You have successfully logged in'));
       },
       onSettled: (response, error, variables, context) => {
@@ -101,7 +105,7 @@ export function UseVerifyOTP() {
     {
       onSuccess: (response, variables, context) => {
         updateUser({reload: false})
-        store.dispatch(setAlert(true, 'OTP verification successful', 'success', 'You have successfully verified your email. Welcome to Schoolar'));
+        store.dispatch(setAlert(true, 'OTP verification successful', 'success', 'You have successfully verified your email. Welcome to Pluraled'));
       },
       onSettled: (response, error, variables, context) => {
         store.dispatch(setIsLoading(false));

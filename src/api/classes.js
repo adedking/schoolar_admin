@@ -66,6 +66,16 @@ const removeTeacherFromClass = async (payload) => {
   return data;
 };
 
+const getAtteandanceBySubClass = async (payload) => {
+  const { data } = await Axios.get(`/class-attendance/${payload.id}?limit=${payload.limit}&page=${payload.page}`);
+  return data?.data;
+};
+
+const markClassAttendance = async (payload) => {
+  const { data } = await Axios.post(`/class-attendance`, payload);
+  return data;
+};
+
 export const classes = {
     getClasses,
     getClass,
@@ -76,7 +86,10 @@ export const classes = {
     getSubClass,
     assignTeacherToClass,
     getSubjectsBySubClasses,
+    getAtteandanceBySubClass,
     getStudentsBySubClasses,
     deleteSubClass,
-    removeTeacherFromClass
+    removeTeacherFromClass,
+
+    markClassAttendance
 }

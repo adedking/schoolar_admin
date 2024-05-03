@@ -1,58 +1,46 @@
 import React from 'react'
+import Book from '../assets/img/default-book.png';
 
 function BooksCard({book, key}) {
   return (
-    <div key={key}>
-        <div className='flex justify-between text-[20px] py-3 w-full'>
-            <div className='flex flex-col gap-2'>
-                <div className='text-[14px]'>
-                    Student ID
+    <div key={key}  className='flex flex-col justify-between text-[20px] w-full bg-white py-4'>
+        <div className='flex justify-between text-[20px] w-full min-h-[300px] p-4'>
+            <img src={Book} alt='book_image' srcSet='' />
+        </div>
+        <hr className='divider' />
+        <div className='flex justify-between text-[14px] px-4 w-full mt-2' >
+            <div className='flex flex-col gap-2 md:w-1/2 w-full'>
+                <div className='text-[12px] font-semibold'>
+                    Title
                 </div>
                 <div>
-                    {book?.registration_id}
+                    {book?.book_name}
                 </div>
             </div>
-            <div className='flex flex-col gap-2'>
-                <div className='text-[14px]'>
-                    Gender
+            <div className='flex flex-col gap-2 md:w-1/2 w-full'>
+                <div className='text-[12px] font-semibold'>
+                    Author
                 </div>
                 <div>
-                    {book?.gender}
-                </div>
-            </div>
-            <div className='flex flex-col gap-2'>
-                <div className='text-[14px]'>
-                    Date of Birth
-                </div>
-                <div>
-                    {book?.dob}
-                </div>
-            </div>
-            <div className='flex flex-col gap-2'>
-                <div className='text-[14px]'>
-                    Date of Admission
-                </div>
-                <div>
-                    {book?.registration_id}
+                    {book?.authors}
                 </div>
             </div>
         </div>
-        <hr className='divider' />
-        <div className='flex justify-between text-[20px] py-3 md:w-1/2 w-full'>
-            <div className='flex flex-col gap-2'>
-                <div className='text-[14px]'>
-                    Class
+        <div className='flex justify-between text-[14px] px-4 w-full mt-3'>
+            <div className='flex flex-col gap-2 md:w-1/2 w-full'>
+                <div className='text-[12px] font-semibold'>
+                    Year Published
                 </div>
                 <div>
-                    {book?.main_class}
+                    {book?.year_published}
                 </div>
             </div>
-            <div className='flex flex-col gap-2'>
-                <div className='text-[14px]'>
-                    Sub-class
+            <div className='flex flex-col gap-2 md:w-1/2 w-full'>
+                <div className='text-[12px] font-semibold'>
+                    Compulsory?
                 </div>
                 <div>
-                    {book?.sub_class}
+                    {book?.compulsory ? 'Compulsory' : 'Not Compulsory'}
                 </div>
             </div>
         </div>

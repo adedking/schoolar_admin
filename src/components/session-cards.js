@@ -13,7 +13,7 @@ const SessionCards = ({ key, title, description, link }) => {
             onClick={() => {navigate(link)}}
         >
             <div className='flex flex-col gap-2'>
-                <header className='text-[17px] font-semi-bold' >
+                <header className='text-[15px] font-semibold' >
                     {title}
                 </header>
                 <div className='text-[12px] leading-4 text-justify font-light'>

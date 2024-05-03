@@ -1,14 +1,48 @@
-import { Form, Modal, Select, SelectItem, TextInput } from 'carbon-components-react';
-import React from 'react';
+import { Form, Modal, TextInput, ComboBox } from 'carbon-components-react';
+import React, { useState } from 'react';
 import AppButton from '../../../../components/app-button';
-import { Stack } from '@carbon/react';
+import { Stack, Toggle } from '@carbon/react';
+import { useGetTeachersList } from '../../../../redux/teachers/hook';
+import DOMPurify from 'dompurify';
+import { useAddSubject } from '../../../../redux/subjects/hook';
 
-const AddSubjectToClassModal = ({isOpen, closeModal}) => {
+const AddSubjectToClassModal = ({isOpen, closeModal, classInfo}) => {
 
-    // const navigate = useNavigate();
+    const { data: teachers } = useGetTeachersList(
+        1000,
+        1,
+    );
+    console.log(classInfo)
+
+    const [primaryTeacherId, setPrimaryTeacherId] = useState()
+    const [primaryTeacherName, setPrimaryTeacherName] = useState()
+    const [compulsory, setCompulsory] = useState(true)
+    const [name, setName] = useState('')
+
+    const [supportTeacherId, setSupportTeacherId] = useState()
+    const [supportTeacherName, setSupportTeacherName] = useState()
+
+    const {mutateAsync: addSubject, isLoading: addSubjectLoading} = useAddSubject()
+
+    const submitForm = async () => {
+        let payload = {
+            id: classInfo.id,
+            data: {
+                name: DOMPurify.sanitize(name),
+                primary_teacher: parseInt(DOMPurify.sanitize(primaryTeacherId)),
+                support_teacher: parseInt(DOMPurify.sanitize(supportTeacherId)),
+                compulsory: parseInt(DOMPurify.sanitize(compulsory? 1 : 0)),
+            }
+         
+        }
+        await addSubject(payload).then(() => {
+          closeModal()
+        })
+      };
+
     return (
         <Modal 
-            modalHeading="Add a subject to class 12 - A" 
+            modalHeading={`Add a subject to ${classInfo?.class_name} - ${classInfo?.name}`}
             primaryButtonText="Continue" 
             secondaryButtonText={''}
             hasScrollingContent={false}
@@ -38,102 +72,79 @@ const AddSubjectToClassModal = ({isOpen, closeModal}) => {
                             invalidText="Please enter a valid subject name"
                             labelText="Subject name"
                             placeholder="Input subject name"
-                            // value={name}
-                            // onChange={(e) => {
-                            //     setName(e.target.value)
-                            // }}
+                            value={name}
+                            onChange={(e) => {
+                                setName(e.target.value)
+                            }}
                         />
-                        <Select
-                            id="subject_classification"
-                            defaultValue={20}
-                            required
-                            labelText="Subject classification"
-                            // value={classLevel}
-                            // onChange={(e) => {
-                            //     setClassLevel(e.target.value)
-                            // }}
-                        >
-                            <SelectItem
-                                value={null}
-                                text="Compulsory / Voluntary"
+                        <div className='flex flex-col justify-between w-full'>
+                            <ComboBox 
+                                value={primaryTeacherName}
+                                id="assigned_teacher" 
+                                items={teachers ? teachers : []} 
+                                downshiftProps={{
+                                onStateChange: (e) => {
+                                    if (e?.selectedItem?.id) {
+                                        setPrimaryTeacherId(e?.selectedItem?.id)
+                                        setPrimaryTeacherName(e?.selectedItem?.text)
+                                    } else {
+                                        setPrimaryTeacherName('')
+                                        setPrimaryTeacherId(null)
+                                    }
+                                }
+                                }} 
+                                placeholder='Select teacher'
+                                itemToString={item => item ? item.text : ''} 
+                                titleText="Search and select teacher"
                             />
-                            <SelectItem
-                            value={'compulsory'}
-                            text={'Compulsory'}
+                        </div>
+                        <div className='flex flex-col justify-between w-full mb-4'>
+                            <ComboBox 
+                                value={supportTeacherName}
+                                id="support_teacher" 
+                                items={teachers ? teachers : []} 
+                                downshiftProps={{
+                                onStateChange: (e) => {
+                                    if (e?.selectedItem?.id) {
+                                        setSupportTeacherId(e?.selectedItem?.id)
+                                        setSupportTeacherName(e?.selectedItem?.text)
+                                    } else {
+                                        setSupportTeacherName('')
+                                        setSupportTeacherId(null)
+                                    }
+                                }
+                                }} 
+                                placeholder='Select teacher'
+                                itemToString={item => item ? item.text : ''} 
+                                titleText="Search and select teacher"
                             />
-                            <SelectItem
-                            value={'voluntary'}
-                            text={'Voluntary'}
+                        </div>
+                        <hr className='divider -mt-2' />
+                        <div className='flex flex-row justify-between items-center gap-4'>
+                            <span className='text-[14px]'>Is this subject compulsory?</span>
+                            <Toggle
+                                size="md"  
+                                id="compulsory" 
+                                hideLabel
+                                toggled={compulsory}
+                                onToggle={() => {
+                                    setCompulsory(!compulsory)
+                                }}
                             />
-                        </Select>
-                        <Select
-                            id="primary_teacher"
-                            defaultValue={null}
-                            required
-                            labelText="Primary Teacher"
-                            // value={classLevel}
-                            // onChange={(e) => {
-                            //     setClassLevel(e.target.value)
-                            // }}
-                        >
-                            <SelectItem
-                                value={null}
-                                text="Select a teacher"
-                            />
-                            <SelectItem
-                                value={1}
-                                text={'Adedokun Agunbiade'}
-                            />
-                            <SelectItem
-                                value={2}
-                                text={'Omotolani Olurotimi'}
-                            />
-                            <SelectItem
-                                value={3}
-                                text={'Oladotun Aboaba'}
-                            />
-                        </Select>
-                        <Select
-                            id="support_teacher"
-                            defaultValue={null}
-                            required
-                            labelText="Support Teacher"
-                            // value={classLevel}
-                            // onChange={(e) => {
-                            //     setClassLevel(e.target.value)
-                            // }}
-                        >
-                            <SelectItem
-                                value={null}
-                                text="Select a teacher"
-                            />
-                            <SelectItem
-                                value={1}
-                                text={'Adedokun Agunbiade'}
-                            />
-                            <SelectItem
-                                value={2}
-                                text={'Omotolani Olurotimi'}
-                            />
-                            <SelectItem
-                                value={3}
-                                text={'Oladotun Aboaba'}
-                            />
-                        </Select>
+                        </div>
+                        <hr className='divider -mt-2' />
                     </div>
                 </Stack>
                 
             </div>
             <div className='flex justify-end'>
                 <AppButton
-                    type="submit" 
+                    type="button" 
                     kind={'primary'} 
-                    // renderIcon={ArrowRight}
-                    // action={submitForm}
+                    action={submitForm}
                     className={'!mt-5 h-[64px] !w-[224px]'}
-                    // loading={isLoading}
                     text={'Add Subject'}
-                    // loading={addClassLoading}
+                    loading={addSubjectLoading}
                 />
             </div>
             </Form>

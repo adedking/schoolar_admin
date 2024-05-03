@@ -1,32 +1,35 @@
 /* eslint-disable no-unused-vars */
 
-import { Form, Modal, Select, SelectItem } from 'carbon-components-react';
+import { Form, Modal, Select, SelectItem, Toggle } from 'carbon-components-react';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Stack, TextInput } from '@carbon/react'
+import { Stack, TextInput, DatePicker, DatePickerInput } from '@carbon/react'
 import { ArrowRight } from '@carbon/icons-react';
 import { checkError } from '../../../../../utils/functions';
 import AppButton from '../../../../../components/app-button';
 import { useAddSession, useUpdateSession } from '../../../../../redux/administration/sessions/hook';
+import moment from 'moment';
 
 const AddSessionModal = ({isOpen, closeModal, type='add', session=null}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
     const [form, setForm] = useState({
-        name: '',
-        start_date: '',
-        end_date: '',
-        status: 1
+        session_name: '',
+        start_date: moment().format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD'),
+        status: 1,
+        load_default: true,
     })
 
     useEffect(() => {
         if (session) {
             setForm({
-                name: session.name,
+                session_name: session.name,
                 start_date: session.start_date,
                 end_date: session.end_date,
-                status: session.status
+                status: session.status,
+                load_default: session.load_default === 1 ? true : false,
             })
         }
     }, [session])
@@ -91,7 +94,7 @@ const AddSessionModal = ({isOpen, closeModal, type='add', session=null}) => {
             onRequestClose={() => closeModal()}
             size={'lg'}
         > 
-        <div className='flex flex-col justify-between w-full md:w-[600px] min-h-fit px-4'>
+        <div className='flex flex-col justify-between w-full md:w-fit min-h-fit px-4'>
             <Form
             onSubmit={handleSubmit(requestSubmit)}
             >
@@ -101,56 +104,51 @@ const AddSessionModal = ({isOpen, closeModal, type='add', session=null}) => {
                         <TextInput
                             className='min-w-full'
                             kind={'text'}
-                            id={'name'}
-                            name={'name'}
-                            {...register('name', { required: true })}
-                            invalid={errors?.name ? true : false}
-                            invalidText={errors?.name?.message? errors?.name?.message : 'This field is required'}
+                            id={'session_name'}
+                            name={'session_name'}
+                            {...register('session_name', { required: true })}
+                            invalid={errors?.session_name ? true : false}
+                            invalidText={errors?.session_name?.message? errors?.session_name?.message : 'This field is required'}
                             value={form.name}
                             labelText="Session Name "
                             placeholder="Enter Your Session Name"
                             onChange={(e) => {
-                                checkError(true, e, e.target.value, 'name', setError, clearErrors, handleChange)
+                                checkError(true, e, e.target.value, 'session_name', setError, clearErrors, handleChange)
                             }}
                         />
                     </div>
                 </div>
                 <hr className='divider'/>
-                <div className='flex md:flex-row flex-col gap-4 w-full'>
-                    <div className='md:w-1/2 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'date'}
-                            name={'start_date '}
+                <div className='flex md:flex-row flex-col gap-4 justify-between !w-full'>
+                    <DatePicker datePickerType="single">
+                        <DatePickerInput
+                            dateFormat='YYYY-MM-DD'
                             id="start_date"
-                            value={form.start_date}
-                            {...register('start_date', { required: true })}
-                            invalid={errors?.start_date? true : false}
-                            invalidText={errors?.start_date?.message? errors?.start_date?.message : 'This field is required'}
-                            labelText="Start Date"
-                            placeholder="Enter Session Start Date"
+                            labelText="Session Start Date"
                             onChange={(e) => {
-                                checkError(true, e, e.target.value, 'start_date', setError, clearErrors, handleChange, 'text')
+                                setForm({...form,
+                                    start_date: e.target.value
+                                })
                             }}
+                            value={form.start_date}
+                            placeholder="YYYY-MM-DD"
                         />
-                    </div>
-                    <div className='md:w-1/2 w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'date'}
-                            name={'end_date'}
-                            value={form.end_date}
+                    </DatePicker>
+                    <DatePicker datePickerType="single">
+                        <DatePickerInput
+                            dateFormat='YYYY-MM-DD'
                             id="end_date"
                             labelText="Session End Date"
-                            {...register('end_date', { required: false })}
-                            invalid={errors?.end_date? true : false}
-                            invalidText={errors?.end_date?.message? errors?.end_date?.message : 'This field is required'}
-                            placeholder="Enter Session End Date"
                             onChange={(e) => {
-                                checkError(false, e, e.target.value, 'end_date', setError, clearErrors, handleChange, 'text')
+                                setForm({...form,
+                                    end_date: e.target.value
+                                })
                             }}
+                            value={form.end_date}
+                            placeholder="YYYY-MM-DD"
                         />
-                    </div>
+                    </DatePicker>
+                    
                 </div>
                 <hr className='divider'/>
                 <div className='md:w-1/2 w-full'>
@@ -172,6 +170,23 @@ const AddSessionModal = ({isOpen, closeModal, type='add', session=null}) => {
                         ))}
                     </Select>
                 </div>
+                <hr className='divider'/>
+                <div className='flex flex-row justify-between items-center gap-4'>
+                    <span className='text-[14px]'>Do you want to preload default data to this session?</span>
+                    <Toggle 
+                        size="md"  
+                        id="load_default" 
+                        hideLabel
+                        toggled={form.load_default}
+                        onToggle={() => {
+                            setForm({
+                                ...form,
+                                load_default: !form.load_default
+                            })
+                        }}
+                    />
+                </div>
+                <hr className='divider'/>
             </Stack>
             <div className='flex justify-end mt-8 -mx-4'>
                 <div className='flex justify-end w-full'>

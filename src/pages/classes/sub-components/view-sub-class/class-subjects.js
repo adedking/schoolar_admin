@@ -42,18 +42,18 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
         },
         {
             key: 'support_teacher',
-            header: 'Support Teacher',
+            header: 'Suport Teacher',
         },
     ];
     const mobileTableHeader = {
         main:[
             {
-                key: 'full_name',
-                header: 'Student Name',
+                key: 'name',
+                header: 'Subject Name',
             },
             {
-                key: 'email',
-                header: 'Email',
+                key: 'subject_type',
+                header: 'Subject Type',
             },
         ],
         full: [
@@ -62,39 +62,22 @@ const ClassSubjects = ({setShowAddSubjectToClass}) => {
                 header: 'id',
             },
             {
-                key: 'first_name',
-                header: 'First Name',
+                key: 'name',
+                header: 'Subject Name',
             },
             {
-                key: 'last_name',
-                header: 'Last Name',
+                key: 'subject_type',
+                header: 'Subject Type',
             },
             {
-                key: 'email',
-                header: 'Email',
-            },
-            {
-                key: 'phone_number',
-                header: 'Phone Number',
-            },
-            {
-                key: 'teaching_subject',
-                header: 'Teaching Subject',
-            },
-            {
-                key: 'teaching_class',
-                header: 'Teaching Class',
-            },
-            {
-                key: 'status',
-                header: 'Status',
+                key: 'primary_teacher',
+                header: 'Primary Teacher',
             },
         ]
     };
     
     return (
         <React.Fragment>
-            
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
                     title={'Manage class subjects'}

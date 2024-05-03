@@ -58,29 +58,29 @@ const ViewAdmissionPage = () => {
             null
             }
             <DashboardLayout viewComponent={null} viewTitle={'View student'}>
-                <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                {/* <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
                     <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>
                         {'Sessions'}
                     </Link>
-                    {/* {session?
-                    <Link to={`/sessions/${session?.uuid}`} className='hover:underline duration-300 text-[15px]'>
-                        / {session?.name}
-                    </Link> 
-                    :
-                    null
-                    } */}
                     /
                     <Link to={`/sessions/${'test_session_id'}`} className='hover:underline duration-300 text-[15px]'>
                          DEE 2094 (2024-02-27 to 2024-04-18)
                     </Link>
                     /
-                    <Link to={`/sessions/${'test_session_id'}/academic-terms`} className='hover:underline duration-300 text-[15px]'>
-                         Academic Terms
-                    </Link>
                     <span className='text-[14px]'>
-                        / {'First Term'}
+                        {'First Admission'}
+                    </span>
+                </div> */}
+                <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
+                    <Link to={'/admissions'} className='hover:underline duration-300 text-[15px]'>
+                        {'Admissions'}
+                    </Link>
+                    /
+                    <span className='text-[14px]'>
+                        {'  '}{'First Admission'}
                     </span>
                 </div>
+                
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {sessionLoading ?
                     <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>

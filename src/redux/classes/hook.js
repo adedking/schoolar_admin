@@ -13,7 +13,6 @@ export function useGetClasses() {
     },
     {
       select: (data) => {
-        // console.log(data)
         return data;
       },
       onSettled: (data, error, variables, context) => {
@@ -166,7 +165,6 @@ export function useGetSubClasses() {
     },
     {
       select: (data) => {
-        // console.log(data)
         return data;
       },
       onSettled: (data, error, variables, context) => {
@@ -192,7 +190,7 @@ export function useGetSubClassesList(limit, page, search) {
         let newData = [];
         newData.push({ value: null, text: 'Select a class' });
         data?.forEach((item) => {
-          newData.push({ value: item.id, text: item.class_name + ' - ' + item.name });
+          newData.push({ value: item.id, text: item.class_name + ' - ' + item.name, id: item.id  });
         });
         return newData;
       },
@@ -248,6 +246,27 @@ export function useGetSubjectsBySubClass( id, limit, page, statusFilter, search 
     () => {
       store.dispatch(setIsLoading(true));
       return classes.getSubjectsBySubClasses({ id, limit, page, statusFilter, search });
+    },
+    {
+      select: (data) => {
+        data?.data?.forEach((subject) => {
+          subject.subject_type = subject.compulsory === 1 ? 'Compulsory' : 'Optional'
+        });
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useGetAttendanceBySubClass( id, limit, page, statusFilter, search ) {
+  return useQuery(
+    ['attendance-by-sub-class', { id, limit, page, statusFilter, search }],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return classes.getAtteandanceBySubClass({ id, limit, page, statusFilter, search });
     },
     {
       select: (data) => {
@@ -323,6 +342,27 @@ export function useRemoveTeacherFromClass() {
     },
   );
 }
+
+export function useMarkClassAttendance() {
+  return useMutation(
+    (payload) => {
+      return classes.markClassAttendance(payload);
+    },
+    {
+      onSuccess: (response, variables, context) => {
+        queryClient.invalidateQueries('classes');
+        queryClient.invalidateQueries('class');
+        queryClient.invalidateQueries('classes-list');
+        store.dispatch(setAlert(true, 'Class added successful', 'success', 'You have successfully added the class'));
+      },
+      onSettled: (response, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+
 
 
 

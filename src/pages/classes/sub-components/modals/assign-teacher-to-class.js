@@ -15,6 +15,7 @@ const AssignTeacherToClassModal = ({isOpen, closeModal, className, updateTeacher
   const {id} = useParams();
   const {mutateAsync: assignTeacher, isLoading: assignTeacherLoading} = useAssignTeacherToClass()
   const [teacherId, setTeacherId] = useState(updateTeacherId)
+  const [teacherName, setTeacherName] = useState()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -47,14 +48,16 @@ const AssignTeacherToClassModal = ({isOpen, closeModal, className, updateTeacher
         >
             <div className='flex flex-col justify-between w-full md:w-[500px] min-h-[120px] px-4 mb-4 mt-8'>
               <ComboBox 
-                value={teacherId}
+                value={teacherName}
                 id="assigned_teacher" 
                 items={teachers ? teachers : []} 
                 downshiftProps={{
                   onStateChange: (e) => {
                     if (e?.selectedItem?.id) {
                       setTeacherId(e?.selectedItem?.id)
+                      setTeacherName(e?.selectedItem?.text)
                   } else {
+                    setTeacherName('')
                     setTeacherId(null)
                   }
                   }

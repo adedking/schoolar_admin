@@ -41,18 +41,16 @@ const ExamsResultPage = () => {
                 )
             }
             <DashboardLayout viewComponent={null} viewTitle={'View student'}>
-                <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
-                    <div className='w-full flex flex-col gap-4'>
-                        <div className='flex flex-col px-4 h-[76px] w-full justify-center gap-1 bg-background'>
-                            <div className='text-[18px] font-semibold'>
-                                Exams and Result Configuration
-                            </div>
-                            <div className='text-[12px] font-light'>
-                                Manage school's exams and results configurations
-                            </div>
+                <div className='flex flex-col items-center jusify-center w-full gap-4'>
+                    <div className='flex flex-col px-4 h-[76px] w-full justify-center gap-1 bg-background'>
+                        <div className='text-[18px] font-semibold'>
+                            Exams and Result Configuration
                         </div>
-                        <TabView componentTabs={tabs}/>
+                        <div className='text-[13px] font-light'>
+                            Manage school's exams and results configurations
+                        </div>
                     </div>
+                    <TabView componentTabs={tabs}/>
                 </div>
             </DashboardLayout>
         </React.Fragment>

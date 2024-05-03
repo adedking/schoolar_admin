@@ -39,7 +39,7 @@ const SessionsPage = () => {
             header: 'id',
         },
         {
-            key: 'name',
+            key: 'session_name',
             header: 'Session Name',
         },
         {

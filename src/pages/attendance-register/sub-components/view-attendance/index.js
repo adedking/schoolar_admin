@@ -8,7 +8,7 @@ import AddParentModal from '../modals/add-parent/add-single-parent/add-parent';
 
 import { useNavigate } from 'react-router-dom';
 
-const ViewAtteandancePage = () => {
+const ViewattendancePage = () => {
     const {id} = useParams();
     const { data: parent, isLoading: parentLoading } = useGetParent(id);
     const [showEditParent, setShowEditParent] = useState(false);
@@ -40,4 +40,4 @@ const ViewAtteandancePage = () => {
     );
 };
 
-export default ViewAtteandancePage;
+export default ViewattendancePage;

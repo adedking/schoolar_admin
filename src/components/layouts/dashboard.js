@@ -75,7 +75,7 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
             null
             }
             <div className='flex flex-col bg-white !max-h-screen !min-h-screen relative overflow-hidden'>
-                <Header aria-label="Schoolar" className='flex justify-between w-full px-4 !z-40'>
+                <Header aria-label="Pluraled" className='flex justify-between w-full px-4 !z-40'>
                     <NavBar
                         isSidebarOpen={isSidebarOpen}
                         isRightPanelOpen={isRightPanelOpen}

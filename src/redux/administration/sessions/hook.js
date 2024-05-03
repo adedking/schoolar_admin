@@ -23,7 +23,6 @@ export function useGetSessions( limit, page, statusFilter, search ) {
   );
 }
 
-
 export function useGetSession(id) {
   return useQuery(
     ['session', {id}],
