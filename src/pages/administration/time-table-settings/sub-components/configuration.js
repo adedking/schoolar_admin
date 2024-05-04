@@ -119,27 +119,27 @@ const SchoolTimeTableConfigurationTab = () => {
     };
 
     const handleBreakChange = (e, index, name) => {
-        let newForm = Object.assign({}, form)
-        newForm.breaks[index][name] = e.target.value
-        setForm(newForm)
+        let newForm = JSON.parse(JSON.sringify(form.breaks))
+        newForm[index][name] = e.target.value
+        setForm({...form, breaks: newForm})
     };
 
     const handleBreakDayChange = (index, dayIndex) => {
-        let newForm = Object.assign({}, form)
-        newForm.breaks[index].break_days[dayIndex].status = newForm.breaks[index].break_days[dayIndex].status === 1 ? 0 : 1
-        setForm(newForm)
+        let newForm = JSON.parse(JSON.sringify(form.breaks))
+        newForm[index].break_days[dayIndex].status = newForm[index].break_days[dayIndex].status === 1 ? 0 : 1
+        setForm({...form, breaks: newForm})
     };
 
     const handleLessonChange = (e, name) => {
-        let newForm = Object.assign({}, form)
-        newForm.lesson_details[name] = e.target.value
-        setForm(newForm)
+        let newForm = Object.assign({}, form.lesson_details)
+        newForm[name] = e.target.value
+        setForm({...form, lesson_days: newForm})
     };
 
     const handleLessonDayChange = (index) => {
-        let newForm = Object.assign({}, form)
-        newForm.lesson_details.lesson_days[index].status = newForm.lesson_details.lesson_days[index].status === 1 ? 0 : 1
-        setForm(newForm)
+        let newForm = Object.assign({}, form.lesson_details)
+        newForm.lesson_days[index].status = newForm.lesson_days[index].status === 1 ? 0 : 1
+        setForm({...form, lesson_days: newForm})
     };
 
     const addBreak = () => {
@@ -201,7 +201,7 @@ const SchoolTimeTableConfigurationTab = () => {
             <hr className='divider mb-1 -mt-3' />
             {confgurationLoading ?
             <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
-                <Loading active={confgurationLoading} className={''} withOverlay={false} small={false} />
+                <Loading active={confgurationLoading} className={''} withOverlay={false} small={true} />
             </div>
             :
             <Form className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm pb-5 pt-0'>

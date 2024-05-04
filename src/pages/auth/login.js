@@ -38,8 +38,7 @@ const LogInPage = () => {
     }
     
     return (
-        <AuthLayout
-        >
+        <AuthLayout>
             <div className='flex flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form 
                     onSubmit={handleSubmit(submitForm)}

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { useDeleteSubClass, useGetSubClass, useRemoveTeacherFromClass } from '../../../../redux/classes/hook';
 import { Link, useParams } from 'react-router-dom';
@@ -8,20 +8,21 @@ import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
-import SubClassStudents from './sub-class-students';
-import ClassSubjects from './class-subjects';
 import profilePix from '../../../../assets/svg/profile-pix-placeholder.svg';
 import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
 import AssignTeacherToClassModal from '../modals/assign-teacher-to-class';
 import AddStudentModal from '../../../students/sub-components/modals/add-student/add-single-student/add-student';
 import AddSubjectToClassModal from '../modals/assign-subject-to-class';
-import ClassRegister from './class-register';
 import MarkAttendance from '../modals/mark-attendance';
 import AddSubClassModal from '../modals/add-sub-class';
 import AddMultipleStudentsModal from '../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students';
 import DeleteModal from '../../../../components/modals/deleteModal';
-import ClassAcademicRecords from './class-academic-records';
-import ClassTimeTable from './class-time-table';
+
+const SubClassStudents = lazy(() => import('./sub-class-students'));
+const ClassRegister = lazy(() => import('./class-register'));
+const ClassSubjects = lazy(() => import('./class-subjects'));
+const ClassAcademicRecords = lazy(() => import('./class-academic-records'));
+const ClassTimeTable = lazy(() => import('./class-time-table'));
 
 const ViewClassPage = () => {
 
@@ -51,19 +52,19 @@ const ViewClassPage = () => {
     const tabs = [
         {
             title: 'Students',
-            content: <SubClassStudents setShowAddStudent={setShowAddStudent} setShowAddMultipleStudents={setShowAddMultipleStudents} />,
+            content: <Suspense fallback = {null} ><SubClassStudents setShowAddStudent={setShowAddStudent} setShowAddMultipleStudents={setShowAddMultipleStudents} /></Suspense>,
         },
         {
             title: 'Subjects',
-            content: <ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+            content: <Suspense fallback = {null} ><ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} /></Suspense>
         },
         {
             title: 'Class Register',
-            content: <ClassRegister  setShowAddAttendance={setShowAddAttendance} setAttendanceInfo={setAttendanceInfo} />
+            content: <Suspense fallback = {null} ><ClassRegister  setShowAddAttendance={setShowAddAttendance} setAttendanceInfo={setAttendanceInfo} /></Suspense>
         },
         {
             title: 'Class Time-table',
-            content: <ClassTimeTable classInfo={classInfo} />
+            content: <Suspense fallback = {null} ><ClassTimeTable classInfo={classInfo} /></Suspense>
         },
         {
             title: 'Academic Records',
@@ -187,7 +188,7 @@ const ViewClassPage = () => {
                     </div>
                     {classLoading ?
                     <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={classLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={classLoading} className={''} withOverlay={false} small={true} />
                     </div>
                     :
                     <React.Fragment>

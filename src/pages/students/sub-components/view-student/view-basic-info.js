@@ -55,15 +55,42 @@ const StudentBasicInfo = () => {
                             Class
                         </div>
                         <div>
-                            {student?.main_class}
+                            {student?.main_class} - {student?.sub_class}
+                        </div>
+                    </div>
+                </div>
+                <hr className='divider' />
+                <div className='flex justify-between text-[20px] py-3 w-full'>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Weight
+                        </div>
+                        <div>
+                            {student?.health_info?.weight} {student?.health_info?.weight_measurement}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
                         <div className='text-[14px]'>
-                            Sub-class
+                            Height
                         </div>
                         <div>
-                            {student?.sub_class}
+                            {student?.health_info?.height} {student?.health_info?.height_measurement}
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Blood Group
+                        </div>
+                        <div>
+                            {student?.health_info?.blood_group}
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                        <div className='text-[14px]'>
+                            Genotype
+                        </div>
+                        <div>
+                            {student?.health_info?.genotype}
                         </div>
                     </div>
                 </div>

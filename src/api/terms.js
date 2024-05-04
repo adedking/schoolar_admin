@@ -3,7 +3,7 @@ import { Axios } from './axios.js';
 const getTerms = async (payload) => {
     let search = payload.search ? '&search=' + payload.search : '';
     let filter = payload.statusFilter && payload.statusFilter !== -1 ? '&filter=' + payload.statusFilter : '';
-    const { data } = await Axios.get(`/school-parents?limit=${payload.limit}&page=${payload.page}${search}${filter}`);
+    const { data } = await Axios.get(`/school-session-terms/${payload.uuid}?limit=${payload.limit}&page=${payload.page}${search}${filter}`);
     return data?.data;
 };
 
@@ -13,7 +13,7 @@ const getTerm = async (payload) => {
 };
 
 const addTerm = async (payload) => {
-const { data } = await Axios.post('/school-sessions', payload,);
+const { data } = await Axios.post(`/school-sessions/${payload.uuid}/terms`, payload.data);
 return data;
 };
 

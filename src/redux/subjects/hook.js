@@ -31,7 +31,7 @@ export function useGetSubject(id) {
       return subjects.getSubject(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },
@@ -55,9 +55,9 @@ export function useGetSubjectList(sub_class_id, limit, page) {
       });
     },
     {
+      enabled: sub_class_id !== null,
       select: (data) => {
         let newData = [];
-        newData.push({ id: null, value: null, text: 'Select a class' });
         data?.data.forEach((item) => {
           newData.push({ id: item.id, value: item.id, text: item.name});
         });
@@ -206,7 +206,4 @@ export function useMarkSubjectAttendance() {
     },
   );
 }
-
-
-
 

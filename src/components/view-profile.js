@@ -18,6 +18,8 @@ const ViewProfile = (
         deleteText, 
         deleteFunction, 
         editText, 
+        showDelete=true,
+        showEdit=true,
         editFunction=() => {}, 
         route, 
         routeLink,
@@ -38,7 +40,7 @@ const ViewProfile = (
             :
             null
             }
-            <div className='flex md:flex-row flex-col items-start md:min-h-[100px] md:max-h-[110px] min-w-full !bg-white px-4 gap-4 my-2'>
+            <div className='flex md:flex-row flex-col items-start md:min-h-[100px] md:max-h-[110px] min-w-full !bg-white px-4 gap-4'>
                 {type !== 'session'?
                 <div className='flex items-center md:w-1/2 w-full md:gap-0 gap-3'>
                     <div className='w-1/4'>
@@ -71,7 +73,8 @@ const ViewProfile = (
                 </div>
                 }
                 
-                <div className='flex gap-3 items-center md:justify-end md:w-1/2 w-full'>
+                <div className='flex gap-3 items-center md:justify-end md:w-1/2 w-full h-full'>
+                    {showDelete ?
                     <div 
                         className='flex gap-2 text-[13px] text-red-500 items-center cursor-pointer'
                         onClick={() => {
@@ -80,6 +83,8 @@ const ViewProfile = (
                     >
                         {deleteText} <TrashCan />
                     </div>
+                    :null}
+                    {showEdit ?
                     <AppButton
                         type="button"
                         kind={'primary'} 
@@ -89,6 +94,7 @@ const ViewProfile = (
                         }}
                         text={editText}
                     />
+                    :null}
                 </div>
             </div>
         </div>

@@ -3,39 +3,60 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/data-table';
-import AddParentModal from './sub-components/modals/add-parent/add-single-parent/add-parent';
 import { PAGINATION_DEFAULT, parentStatusConfig } from '../../utils';
-import { useGetParents } from '../../redux/parents/hook';
-import AddMultipleParentsModal from './sub-components/modals/add-parent/add-multiple-parents/add-multiple-parents';
+import { useGetAttendances } from '../../redux/attendance-register/hook';
+import ViewAttendance from './sub-components/modals/view-attendance';
+import { Select, SelectItem } from '@carbon/react';
 
 const AttendanceRegisterPage = () => {
 
     const cardData = {
         columns: 3,
         items: [
-           { title: 'Active', value: 50},
-           { title: 'Inactive', value: 20},
+           { title: 'Present', value: 50},
+           { title: 'Absent', value: 20},
+           { title: 'Total', value: 70},
         ]
     }
-    const [showAddParent, setShowAddParent] = useState(false);
-    const [showAddMultipleParents, setShowAddMultipleParents] = useState(false);
+
+    const [showAttendance, setShowAttendance] = useState(false)
+    const [attendanceInfo, setAttendanceInfo] = useState(null)
+    const [attendanceType, setAttendanceType] = useState('class')
+
+    const attendanceTypeOptions = [
+        {
+            value: 'class',
+            label: 'Class'
+        },
+        {
+            value: 'subject',
+            label: 'Subject'
+        }
+    ]
+
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
         page: PAGINATION_DEFAULT.page,
         statusFilter: PAGINATION_DEFAULT.statusFilter,
         search: '',
     });
-    const { data: parents, isLoading: parentsLoading } = useGetParents(
+    
+    const { data: attendances, isLoading: attendanceLoading } = useGetAttendances(
+        attendanceType,
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
-        pagination.search,
+        pagination.search
     );
 
     const tableConfig = [
         {
             key: 'uuid',
-            header: 'id',
+            header: 'uuid',
+        },
+        {
+            key: 'attendance_date',
+            header: 'Attendance Date',
         },
         {
             key: 'attendance_date',
@@ -48,6 +69,10 @@ const AttendanceRegisterPage = () => {
         {
             key: 'students_absent',
             header: 'Students Absent',
+        },
+        {
+            key: 'total_students',
+            header: 'Total Students',
         },
     ];
 
@@ -90,20 +115,18 @@ const AttendanceRegisterPage = () => {
         ]
     };
 
+    const mainAction = () => {
+        setShowAttendance(true)
+    }
+
     return (
         <React.Fragment>
-            {showAddParent ?
-            <AddParentModal
-                isOpen={showAddParent}
-                closeModal={()=> setShowAddParent(false)}
-            />
-            :
-            null
-            }
-            {showAddMultipleParents ?
-            <AddMultipleParentsModal
-                isOpen={showAddMultipleParents}
-                closeModal={()=> setShowAddMultipleParents(false)}
+            {showAttendance ?
+            <ViewAttendance
+                type={attendanceType}
+                attendanceInfo={attendanceInfo}
+                isOpen={showAttendance}
+                closeModal={()=> setShowAttendance(false)}
             />
             :
             null
@@ -112,21 +135,47 @@ const AttendanceRegisterPage = () => {
                 <div className='flex flex-col items-center jusify-center min-w-full max-w-full gap-4 mb-3'>
                     <WidgetCard 
                         cardData={cardData}
-                        loading={parentsLoading}
+                        loading={attendanceLoading}
                     />
                     <div className='min-w-full max-w-full bg-background rounded-sm'>
+                        <div className='flex flex-row justify-end items-center text-[15px] p-2'>
+                            <div className='flex items-center justify-end gap-2 px-2 bg-white w-[300px] h-[60px] '>
+                                <span className='text-[13px] font-semibold mt-2'>Attendance Type</span>
+                                <Select
+                                    id="attendance_type"
+                                    name={'attendance_type'}
+                                    value={attendanceType}
+                                    labelText=""
+                                    onChange={(e) => {
+                                        setAttendanceType(e.target.value)
+                                    }}
+                                >
+                                    {attendanceTypeOptions.map((item, index) => (
+                                        <SelectItem
+                                            key={index}
+                                            value={item.value}
+                                            text={item.label}
+                                        />
+                                    ))}
+                                </Select>
+                            </div>
+                        </div>
+                        <hr className='divider' />
                         <AppDataTable 
-                            title={'attendance Register'}
+                            title={'Attendance Register'}
                             description={'View Student Attendance'}
                             tableHeader={tableConfig}
                             pagination={pagination}
                             setPagination={setPagination}
                             mobileTableHeader={mobileTableHeader}
-                            data={parents}
+                            showToolBar={false}
+                            data={attendances}
+                            mainAction={mainAction}
+                            setValue={setAttendanceInfo}
                             emptyText={'No attendance added'}
                             viewActionType={'attendance-register'}
                             statusConfig={parentStatusConfig}
-                            loading={parentsLoading}
+                            loading={attendanceLoading}
                             addMultiple={false}
                         />
                     </div>

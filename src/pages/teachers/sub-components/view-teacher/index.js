@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import TabView from '../../../../components/tabs';
-import TeacherBasicInfo from './view-basic-info';
-import TeachingClasses from './teaching-classes';
-import Qualifications from './qualifications';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { useDeleteTeacher, useGetTeacher } from '../../../../redux/teachers/hook';
 import { useParams } from 'react-router-dom';
@@ -13,25 +10,29 @@ import ViewProfile from '../../../../components/view-profile';
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../../../components/modals/deleteModal';
 import AddTeacherModal from '../modals/add-teacher/add-teacher';
-import LessonPlans from './lesson-plans';
+
+const TeacherBasicInfo = lazy(() => import('./view-basic-info'));
+const TeachingClasses = lazy(() => import('./teaching-classes'));
+const Qualifications = lazy(() => import('./qualifications'));
+const LessonPlans = lazy(() => import('./lesson-plans'));
 
 const ViewTeacherPage = () => {
     const tabs = [
       {
         title: 'Basic Information',
-        content: <TeacherBasicInfo  />,
+        content: <Suspense fallback = {null} ><TeacherBasicInfo  /></Suspense>
       },
       {
         title: 'Teaching Classes',
-        content: <TeachingClasses  />
+        content: <Suspense fallback = {null} ><TeachingClasses  /></Suspense>
       },
       {
         title: 'Qualifications',
-        content: <Qualifications />
+        content: <Suspense fallback = {null} ><Qualifications /></Suspense>
       },
       {
         title: 'Lesson Plans',
-        content: <LessonPlans />
+        content: <Suspense fallback = {null} ><LessonPlans /></Suspense>
       },
     ];
     const {id} = useParams();
@@ -78,7 +79,7 @@ const ViewTeacherPage = () => {
             <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                 {teacherLoading ?
                 <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                    <Loading active={teacherLoading} className={''} withOverlay={false} small={false} />
+                    <Loading active={teacherLoading} className={''} withOverlay={false} small={true} />
                 </div>
                 :
                 <div className='w-full flex flex-col'>

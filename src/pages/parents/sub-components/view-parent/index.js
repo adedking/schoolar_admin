@@ -1,35 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
-import Children from './children';
-import SchoolFees from './fees';
-import ParentMessages from './messages';
 import { useDeleteParent, useGetParent } from '../../../../redux/parents/hook';
 import AddParentModal from '../modals/add-parent/add-single-parent/add-parent';
 
 import { useNavigate } from 'react-router-dom';
 
+const ParentBasicInformation = lazy(() => import('./basic-information'));
+const Children = lazy(() => import('./children'));
+const SchoolFees = lazy(() => import('./fees'));
+const ParentMessages = lazy(() => import('./messages'));
+
 const ViewParentPage = () => {
     const tabs = [
         {
+            title: 'Basic Information',
+            content: <Suspense fallback = {null} ><ParentBasicInformation  /></Suspense>,
+        },
+        {
             title: 'Children/Wards',
-            content: <Children  />,
+            content: <Suspense fallback = {null} ><Children  /></Suspense>,
         },
         {
             title: 'Fees History',
-            content: <SchoolFees  />
+            content: <Suspense fallback = {null} ><SchoolFees  /></Suspense>
         },
         {
             title: 'Messages',
-            content: <ParentMessages />
-        },
-        {
-            title: 'Documents',
-            content: <ParentMessages />
+            content: <Suspense fallback = {null} ><ParentMessages /></Suspense>
         },
     ];
 
@@ -63,7 +65,7 @@ const ViewParentPage = () => {
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {parentLoading ?
                     <div className='flex flex-row p-8 px-16 h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={parentLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={parentLoading} className={''} withOverlay={false} small={true} />
                     </div>
                     :
                     <div className='w-full flex flex-col'>

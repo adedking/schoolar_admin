@@ -96,7 +96,7 @@ const MarkSubjectAttendance = ({isOpen, closeModal, subjectInfo, attendanceInfo=
                         {studentsLoading?
                         <div className=' bg-white py-4'>
                             <div className='flex flex-col p-8 min-h-[450px] w-full bg-background gap-4 justify-center items-center'>
-                                <Loading active={studentsLoading} className={''} withOverlay={false} small={false} />
+                                <Loading active={studentsLoading} className={''} withOverlay={false} small={true} />
                             </div>
                         </div>
                         :

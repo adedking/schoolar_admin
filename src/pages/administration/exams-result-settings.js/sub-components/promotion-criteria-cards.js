@@ -18,7 +18,7 @@ const PromotionCriteriaDataCard = ({
         <React.Fragment>    
             {loading ?
             <div className='flex flex-col p-8 px-16 min-h-[530px] w-full bg-background gap-4 justify-center items-center'>
-                <Loading className={''} withOverlay={false} small={false} />
+                <Loading className={''} withOverlay={false} small={true} />
             </div>
             :
             <div className='flex flex-col gap-2 mt-4'>

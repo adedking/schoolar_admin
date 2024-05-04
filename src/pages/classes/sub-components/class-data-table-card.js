@@ -43,7 +43,7 @@ const ClassesDataCard = ({
                     
                     {loading ?
                     <div className='flex flex-col p-8 px-16 min-h-[530px] w-full bg-background gap-4 justify-center items-center'>
-                        <Loading className={''} withOverlay={false} small={false} />
+                        <Loading className={''} withOverlay={false} small={true} />
                     </div>
                     : !data && !loading ?
                     <div className='flex flex-col p-4 px-8 min-h-[530px] w-full bg-background gap-3 justify-center items-start'>
@@ -105,14 +105,14 @@ const ClassesDataCard = ({
                         </TableContainer>
                         <div className='flex flex-col pt-6 bg-white gap-5 '>
                             {data.map(classInfo => (
-                                <div className='flex flex-col  gap-2 hover:border-2 bg-gray-50 rounded-md hover:p-5 p-3 min-h-[120px] duration-300 shadow-sm border'>
+                                <div className='flex flex-col gap-2 hover:border-2 bg-gray-50 hover:p-5 p-3 min-h-[120px] duration-300 shadow-sm border'>
                                     <div className='flex justify-between w-full'>
                                         <div className='text-[18px] font-semibold'>{classInfo.name}</div>
                                     </div>
                                     {classInfo.sub_classes && classInfo.sub_classes.length > 0?
                                     <div className='grid md:grid-cols-3 grid-cols-1 gap-4 w-full duration-300'>
                                         {classInfo.sub_classes?.map(subClassInfo => (
-                                        <div className='flex flex-col justify-between md:min-w-[33%] w-full h-[108px] bg-background rounded p-3 hover:shadow-md hover:scale-105 duration-300'>
+                                        <div className='flex flex-col justify-between md:min-w-[33%] w-full h-[108px] bg-background p-3 hover:shadow-md hover:scale-105 duration-300'>
                                             <div className='flex gap-1 items-center md:min-w-[33%] w-full bg-background rounded text-[16px]'>
                                                 {classInfo.name} - {subClassInfo.name} 
                                                 <span className='flex items-center text-[12px] text-gray-400'>{subClassInfo?.type === 'arts' ? '(Arts)' : subClassInfo?.type === 'commerce' ? '(Commercial)' : subClassInfo?.type === 'sciences' ? '(Sciences)' : null}</span>

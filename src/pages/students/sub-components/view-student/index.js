@@ -1,40 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import { useDeleteStudent, useGetStudent } from '../../../../redux/students/hook';
-import StudentBasicInfo from './view-basic-info';
-import StudentGuardian from './student-guardians';
-import HealthDetails from './health-details';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
 import AddStudentModal from '../modals/add-student/add-single-student/add-student';
 import DeleteModal from '../../../../components/modals/deleteModal';
-import StudentAcademicRecords from './academic-records';
-import StudentAttendance from './attendance';
+
+const StudentBasicInfo = lazy(() => import('./view-basic-info'));
+const StudentGuardian = lazy(() => import('./student-guardians'));
+const StudentAcademicRecords = lazy(() => import('./academic-records'));
+const StudentAttendance = lazy(() => import('./attendance'));
 
 const ViewStudentPage = () => {
     const tabs = [
         {
             title: 'Basic Information',
-            content: <StudentBasicInfo  />,
-        },
-        {
-            title: 'Health Details',
-            content: <HealthDetails />
+            content: <Suspense fallback = {null} ><StudentBasicInfo /></Suspense>
+            ,
         },
         {
             title: 'Guardians',
-            content: <StudentGuardian  />
-        },
-        {
-            title: 'Academic Records',
-            content: <StudentAcademicRecords  />
+            content: <Suspense fallback = {null} ><StudentGuardian  /></Suspense>
         },
         {
             title: 'Attendance',
-            content: <StudentAttendance  />
+            content: <Suspense fallback = {null} ><StudentAttendance  /></Suspense>
+        },
+        {
+            title: 'Academic Records',
+            content: <Suspense fallback = {null} ><StudentAcademicRecords  /></Suspense>
         },
     ];
 
@@ -82,7 +79,7 @@ const ViewStudentPage = () => {
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {studentLoading ?
                     <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={studentLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={studentLoading} className={''} withOverlay={false} small={true} />
                     </div>
                     :
                     <div className='w-full flex flex-col'>

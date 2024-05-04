@@ -50,7 +50,7 @@ export function useGetTransportationRoute(id) {
       return transportRoutes.getTransportRoute(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },

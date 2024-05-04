@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -9,14 +9,15 @@ import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
 import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
 import DeleteModal from '../../../../components/modals/deleteModal';
-import SubjectTeachers from './subject-teachers';
-import SubjectRegister from './subject-register';
-import SubjectTimeTable from './subject-time-table';
 import { useDeleteSubject, useGetSubject } from '../../../../redux/subjects/hook';
-import SubjectBooks from './subject-books';
 import MarkSubjectAttendance from '../modals/mark-subject-attendance';
 import AddBookToSubjectModal from '../modals/add-book-to-subject';
-import SubjectAcademicRecords from './subject-academic-records';
+
+const SubjectTeachers = lazy(() => import('./subject-teachers'));
+const SubjectRegister = lazy(() => import('./subject-register'));
+const SubjectTimeTable = lazy(() => import('./subject-time-table'));
+const SubjectBooks = lazy(() => import('./subject-books'));
+const SubjectAcademicRecords = lazy(() => import('./subject-academic-records'));
 
 const ViewSubject = () => {
 
@@ -41,23 +42,23 @@ const ViewSubject = () => {
     const tabs = [
         {
             title: 'Teachers',
-            content: <SubjectTeachers setShowAssignTeacherToSubject={setShowAssignTeacherToSubject} />,
+            content: <Suspense fallback = {null} ><SubjectTeachers setShowAssignTeacherToSubject={setShowAssignTeacherToSubject} /></Suspense>
         },
         {
             title: 'Books',
-            content: <SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} />,
+            content: <Suspense fallback = {null} ><SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} /></Suspense>
         },
         {
             title: 'Attendance Register',
-            content: <SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  setAttendanceInfo={setAttendanceInfo} />
+            content: <Suspense fallback = {null} ><SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  setAttendanceInfo={setAttendanceInfo} /></Suspense>
         },
         {
             title: 'Time Table',
-            content: <SubjectTimeTable/>
+            content: <Suspense fallback = {null} ><SubjectTimeTable subjectInfo={subjectInfo}/></Suspense>
         },
         {
             title: 'Academic Records',
-            content: <SubjectAcademicRecords/>
+            content: <Suspense fallback = {null} ><SubjectAcademicRecords/></Suspense>
         },  
     ];
 

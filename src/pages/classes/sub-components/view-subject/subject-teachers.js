@@ -19,7 +19,7 @@ const SubjectTeachers = ({setShowAssignTeacherToSubject}) => {
             <hr className='divider' />
             {subjectLoading ?
             <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
-                <Loading active={subjectLoading} className={''} withOverlay={false} small={false} />
+                <Loading active={subjectLoading} className={''} withOverlay={false} small={true} />
             </div>
             : subjectInfo ?
             <div className='grid grid-cols-2 gap-4'>

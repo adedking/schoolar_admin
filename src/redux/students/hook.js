@@ -25,7 +25,6 @@ export function useGetStudents( limit, page, statusFilter, search ) {
   );
 }
 
-
 export function useGetStudent(id) {
   return useQuery(
     ['student', {id}],
@@ -34,7 +33,7 @@ export function useGetStudent(id) {
       return students.getStudent(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         data?.parents?.forEach((parent) => {
           parent.full_address = `${parent.address} ${parent.lga}, ${parent.state}, ${parent.country}`

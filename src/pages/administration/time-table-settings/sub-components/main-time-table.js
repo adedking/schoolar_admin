@@ -1,8 +1,8 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Form, SelectItem, Select, ComboBox, Toggle, TimePicker } from 'carbon-components-react';
 import { Loading } from '@carbon/react';
-import { useForm } from 'react-hook-form';
 import { Add, Subtract } from '@carbon/icons-react';
 import { useGetSubClass, useGetSubClassesList } from '../../../../redux/classes/hook';
 import AppButton from '../../../../components/app-button';
@@ -10,9 +10,9 @@ import { useAddTimeTable, useGetTimeTableBySubClass } from '../../../../redux/ad
 import { useGetSubjectList } from '../../../../redux/subjects/hook';
 
 const SchoolTimeTableTab = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
     const [classId, setClassId] = useState(null)
     const [className, setClassName] = useState("")
+    const [selectedIndex, setSelectedIndex] = useState(0)
 
     const { data: classes } = useGetSubClassesList(
         1000,
@@ -116,18 +116,7 @@ const SchoolTimeTableTab = () => {
     }
 
     const changeSelected = (index) => {
-        let newArray = JSON.parse(JSON.stringify(form.days));
-        for (let i = 0; i < newArray.length; i++) {
-            if (i !== index) {
-                newArray[i].selected = false
-            } else {
-                newArray[i].selected = true
-                if (newArray[i].time_breakdown.length < 1) {
-                    setEditTimeTable(true)
-                }
-            } 
-        }
-        setForm({...form, days: newArray})
+        setSelectedIndex(index)
     }
 
     const {mutateAsync: addTimeTable, isLoading: addTimeTableLoading} = useAddTimeTable()
@@ -138,17 +127,37 @@ const SchoolTimeTableTab = () => {
 
     return (
         <div className='flex flex-col items-center jusify-center min-w-full gap-4 -mt-3'>
-            <div className='flex flex-col h-[76px] w-full justify-center gap-1 bg-background'>
-                <div className='text-[18px] font-semibold'>
-                    School Time-table
+            <div className='flex justify-between items-center w-full'>
+                <div className='flex flex-col h-[76px] w-full justify-center gap-1 bg-background'>
+                    <div className='text-[18px] font-semibold'>
+                        School Time-table
+                    </div>
+                    <div className='text-[13px] font-light'>
+                        Manage your school time-table for lectures and other activities.
+                    </div>
+                    
                 </div>
-                <div className='text-[13px] font-light'>
-                    Manage your school time-table for lectures.
+                {classId?
+                <div className='flex flex-row justify-end items-center gap-4 md:w-1/2 w-full'>
+                    <span className='text-[14px]'>Do you want to edit time-table?</span>
+                    <Toggle 
+                        size="lg"  
+                        id="edit_time_table" 
+                        hideLabel
+                        toggled={editTimeTable}
+                        onToggle={() => {
+                            setEditTimeTable(!editTimeTable)
+                        }}
+                    />
                 </div>
+                :
+                null
+                }
             </div>
+            
             <div className='flex flex-col gap-4 w-full bg-background rounded-sm pb-5 -mt-4'>
                 <hr className='divider' />
-                <div className='flex flex-row justify-between items-center text-[15px]'>
+                <div className='flex flex-row justify-between items-center text-[15px] md:px-0 px-4'>
                     <div className='flex items-center justify-end gap-2 p-2 bg-white md:w-fit w-full '>
                         <span className='text-[13px] font-semibold'>Select Class</span>
                         <div>
@@ -175,19 +184,18 @@ const SchoolTimeTableTab = () => {
                 <hr className='divider' />
                 {timeTableLoading || classLoading ?
                 <div className='flex flex-row p-8 px-16 h-[300px] min-w-full bg-background gap-4 justify-center items-center'>
-                    <Loading active={timeTableLoading || classLoading} className={''} withOverlay={false} small={false} />
+                    <Loading active={timeTableLoading || classLoading} className={''} withOverlay={false} small={true} />
                 </div>
                 : classId ?
-                <div className='flex md:flex-row flex-col w-full gap-4'>
-                    <div
-                        className='md:flex hidden flex-col gap-2 w-1/4'
-                    >
-                        {form.days.map((item, index) => (
+                <div className='flex md:flex-row flex-col w-full gap-4 md:px-0 px-4' >
+                    <div className='md:flex hidden flex-col gap-2 w-1/4'>
+                        {form?.days.map((item, index) => (
                             <div
                                 onClick={() => {
                                     changeSelected(index)
+                                    setSelectedDay(item.day)
                                 }}
-                                className={`h-[60px] border-b-2 p-4 ${item.selected ? 'bg-gray-100' : 'bg-white'} flex items-center w-full cursor-pointer font-semibold hover:bg-gray-100 duration-300`} 
+                                className={`h-[60px] border-b-2 p-4 ${selectedIndex == index ? 'bg-gray-100' : 'bg-white'} flex items-center w-full cursor-pointer font-semibold hover:bg-gray-100 duration-300`} 
                             >
                                 {item.day}
                             </div>
@@ -195,47 +203,37 @@ const SchoolTimeTableTab = () => {
                     </div>
                     <div className='md:hidden flex flex-col gap-2 w-full'>
                         <Select
-                            id="status"
-                            name={'status'}
-                            value={selectedDay}
-                            labelText="Session Status"
+                            id="day_selector"
+                            name={'day_selector'}
+                            value={selectedIndex}
+                            labelText="Select Day"
                             onChange={(e) => {
+                                changeSelected(e.target.value)
+                                setSelectedDay(e.target.text)
                             }}
                         >
-                            {form.days.map((item, index) => (
+                            {form?.days.map((item, index) => (
                                 <SelectItem
                                     key={index}
-                                    value={item.value}
-                                    text={item.label}
+                                    value={index}
+                                    text={item.day}
                                 />
                             ))}
                         </Select>
                     </div>
-                    <div className='flex flex-col w-3/4 gap-4 bg-white p-4'>
+                    <div className='flex flex-col md:w-3/4 w-full gap-4 bg-white p-4'>
                         {form?.days?.map((item, index) => (
                             <React.Fragment key={index}>
-                                {item.selected ?
+                                {selectedIndex == index ?
                                     <>
                                         <div className='flex md:flex-row flex-col gap-3 justify-between w-full'>
                                             <div className='font-extrabold text-xl md:w-1/2 w-full'>{item.day} Time-table</div>
-                                            <div className='flex flex-row justify-end items-center gap-4 md:w-1/2 w-full'>
-                                                <span className='text-[14px]'>Do you want to edit time-table?</span>
-                                                <Toggle 
-                                                    size="lg"  
-                                                    id="edit_time_table" 
-                                                    hideLabel
-                                                    toggled={editTimeTable}
-                                                    onToggle={() => {
-                                                        setEditTimeTable(!editTimeTable)
-                                                    }}
-                                                />
-                                            </div>
                                         </div>
                                         <hr className='divider' />
                                         {editTimeTable?
-                                        <div className='grid gap-5 mt-2'>
+                                        <div className='grid gap-4 mt-2'>
                                             {item.time_breakdown.map((timeBreakdownItem, timeBreakdownIndex) => (
-                                                <Form className='flex flex-row gap-2 bg-background -mt-2 relative' key={timeBreakdownIndex}>
+                                                <Form className='flex md:flex-row flex-col gap-2 bg-background -mt-2 relative' key={timeBreakdownIndex}>
                                                     {item?.time_breakdown?.length > 1?
                                                     <div className='flex gap-1 justify-end items-start pt-2 w-2/4 text-error absolute top-0 right-2'>
                                                         <Subtract />
@@ -275,41 +273,43 @@ const SchoolTimeTableTab = () => {
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className='flex flex-col gap-2 md:w-1/3 mt-[9px]'>
-                                                        <Select
-                                                            id="status"
-                                                            name={'status'}
-                                                            value={timeBreakdownItem.activity_type}
-                                                            labelText="Select Activity Type"
-                                                            onChange={(e) => {
-                                                            }}
-                                                        >
-                                                            {activityOptions.map((item, index) => (
-                                                                <SelectItem
-                                                                    key={index}
-                                                                    value={item.value}
-                                                                    text={item.label}
-                                                                />
-                                                            ))}
-                                                        </Select>
-                                                    </div>
-                                                    <div className='flex items-center gap-4 w-full border border-primary md:w-1/3'>
-                                                    <div>
-                                                        <ComboBox 
-                                                            id="class"
-                                                            items={subjects ? subjects : []} 
-                                                            value={timeBreakdownItem.subject_name}
-                                                            onChange={(e) => {
-                                                                let newArray = JSON.parse(JSON.stringify(form.days))
-                                                                newArray[index].time_breakdown[timeBreakdownIndex].subject_name = e?.selectedItem?.text
-                                                                newArray[index].time_breakdown[timeBreakdownIndex].subject_id = e?.selectedItem?.id
-                                                                setForm({...form, days: newArray})
-                                                            }}
-                                                            placeholder='Select subject'
-                                                            itemToString={item => item ? item.text : ''} 
-                                                            titleText={'Subject'}
-                                                        />
-                                                    </div>
+                                                    <div className='flex gap-4 p-2 md:w-2/3'>
+                                                        <div className='flex flex-col gap-2 md:w-1/3 mt-[2px]'>
+                                                            <Select
+                                                                id="status"
+                                                                name={'status'}
+                                                                value={timeBreakdownItem.activity_type}
+                                                                labelText="Select Activity Type"
+                                                                onChange={(e) => {
+                                                                }}
+                                                            >
+                                                                {activityOptions.map((item, index) => (
+                                                                    <SelectItem
+                                                                        key={index}
+                                                                        value={item.value}
+                                                                        text={item.label}
+                                                                    />
+                                                                ))}
+                                                            </Select>
+                                                        </div>
+                                                        <div className='flex items-center gap-4 w-full border border-primary md:w-1/3'>
+                                                        <div>
+                                                            <ComboBox 
+                                                                id="class"
+                                                                items={subjects ? subjects : []} 
+                                                                value={timeBreakdownItem.subject_name}
+                                                                onChange={(e) => {
+                                                                    let newArray = JSON.parse(JSON.stringify(form.days))
+                                                                    newArray[index].time_breakdown[timeBreakdownIndex].subject_name = e?.selectedItem?.text
+                                                                    newArray[index].time_breakdown[timeBreakdownIndex].subject_id = e?.selectedItem?.id
+                                                                    setForm({...form, days: newArray})
+                                                                }}
+                                                                placeholder='Select subject'
+                                                                itemToString={item => item ? item.text : ''} 
+                                                                titleText={'Subject'}
+                                                            />
+                                                        </div>
+                                                        </div>
                                                     </div>
                                                     <hr className='divider' />
                                                 </Form>
@@ -334,10 +334,10 @@ const SchoolTimeTableTab = () => {
                                                 />
                                             </div>
                                         </div>
-                                        :
+                                        : item.time_breakdown?.length > 0 ?
                                         <div className='grid md:grid-cols-2 gap-4'>
                                             {item.time_breakdown.map((timeBreakdownItem, timeBreakdownIndex) => (
-                                                <div className='h-[60px] bg-background flex flex-row items-center p-3 gap-4'>
+                                                <div className='h-[60px] bg-background flex flex-row items-center p-3 gap-4 hover:border-2 hover:scale-105 hover:shadow-md duration-300 cursor-default'>
                                                     <div className='flex flex-row gap-2'>
                                                         <span>
                                                             {timeBreakdownItem.start_time}
@@ -355,8 +355,9 @@ const SchoolTimeTableTab = () => {
                                                 </div>
                                             ))}
                                         </div>
+                                        :
+                                        <div className='flex items-center justify-center w-full font-semibold text-[18px]'>No Activity</div>
                                         }
-                                        
                                     </>
                                 : null}
                             </React.Fragment>

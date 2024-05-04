@@ -4,12 +4,12 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '../../..';
 import { terms } from '../../../api/terms';
 
-export function useGetTerms( limit, page, statusFilter, search ) {
+export function useGetTerms( uuid, limit, page, statusFilter, search ) {
   return useQuery(
-    ['terms', { limit, page, statusFilter, search }],
+    ['terms', { uuid, limit, page, statusFilter, search }],
     () => {
       store.dispatch(setIsLoading(true));
-      return terms.getTerms({ limit, page, statusFilter, search });
+      return terms.getTerms({ uuid, limit, page, statusFilter, search });
     },
     {
       select: (data) => {
@@ -32,7 +32,7 @@ export function useGetTerm(id) {
       return terms.getTerm(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },
@@ -102,23 +102,24 @@ export function useDeleteTerm() {
   );
 }
 
-export function useGetTermsList(limit, page, search) {
+export function useGetTermsList( uuid, limit, page, search) {
   return useQuery(
-    ['terms-list', { limit, page, search }],
+    ['terms-list', { uuid, limit, page, search }],
     () => {
       store.dispatch(setIsLoading(true));
       return terms.getTerms({
+        uuid,
         limit,
         page,
         search,
       });
     },
     {
+      enabled: uuid !== null,
       select: (data) => {
         let newData = [];
-        newData.push({ id: null, text: 'Select a session', value: null });
         data?.data.forEach((item) => {
-          newData.push({ uuid: item.uuid, id: item.id, text: item.name + ' | (' + item.start_date + ' ' + item.end_date + ')' });
+          newData.push({ uuid: item.uuid, id: item.id, text: item.term_name + ' | (' + item.start_date + ' ' + item.end_date + ')' });
         });
         return newData;
       },

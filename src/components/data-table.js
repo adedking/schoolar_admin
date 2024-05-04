@@ -30,7 +30,7 @@ import {
 import { Add, ArrowRight, OrderDetails} from '@carbon/icons-react';
 import { PAGINATION_DEFAULT } from '../utils';
 import { StatusCell } from './fragments/data-table-fragments/status-cell';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ParentCell } from './fragments/data-table-fragments/parent-cell';
 import AppButton from './app-button';
 import { TeacherCell } from './fragments/data-table-fragments/teacher-cell';
@@ -44,6 +44,8 @@ const AppDataTable = ({
     description, 
     searchData=true,
     check=true, 
+    mainAction=()=>{},
+    setValue=()=>{},
     mainButtonAction=()=>{},
     viewActionType=null,
     mainButtonText,
@@ -97,28 +99,34 @@ const AppDataTable = ({
         })
     }
 
+    const {id} = useParams();
+
     const navigate = useNavigate();
 
-    const viewAction = (id, subject_name=null, term_id=null) => {
+    const viewAction = (main_id, subject_name=null, session_id=null) => {
         if (viewActionType === 'teacher') {
-            navigate(`/teachers/${id}`)
+            navigate(`/teachers/${main_id}`)
         } else if (viewActionType === 'student') {
-            navigate(`/students/${id}`)
+            navigate(`/students/${main_id}`)
         } else if (viewActionType === 'parent') {
-            navigate(`/parents-guardians/${id}`)
-        } else if (viewActionType === 'session') {
-            navigate(`/sessions/${id}`)
+            navigate(`/parents-guardians/${main_id}`)
         } else if (viewActionType === 'subject') {
-            navigate(`/classes/${subject_name}/${id}`)
-        } else if (viewActionType === 'term') {
-            navigate(`/sessions/${id}/academic-terms/${term_id}`)
+            navigate(`/classes/${subject_name}/${main_id}`)
         } else if (viewActionType === 'transportation') {
-            navigate(`/transportation/${id}`)
+            navigate(`/transportation/${main_id}`)
         } else if (viewActionType === 'fees') {
-            navigate(`/fees-management/${id}`)
+            navigate(`/fees-management/${main_id}`)
+        } else if (viewActionType === 'attendance-register') {
+            mainAction() 
+        } else if (viewActionType === 'session') {
+            navigate(`/sessions/${main_id}`)
+        } else if (viewActionType === 'term') {
+            navigate(`/sessions/${id}/academic-terms/${main_id}`)
         } else if (viewActionType === 'admission') {
-            navigate(`/admissions/${id}`)
-        }   
+            navigate(`/admissions/${main_id}`)
+        }  else if (viewActionType === 'lesson-plan') {
+            navigate(`/sessions/${id}/lesson-plans/${main_id}`)
+        }  
     }
 
     useEffect(() => {
@@ -218,7 +226,7 @@ const AppDataTable = ({
                     {loading?
                     <div className=' bg-white py-4'>
                         <div className='flex flex-col p-8 min-h-[450px] w-full bg-background gap-4 justify-center items-center'>
-                            <Loading active={loading} className={''} withOverlay={false} small={false} />
+                            <Loading active={loading} className={''} withOverlay={false} small={true} />
                         </div>
                     </div>
                     :
@@ -232,7 +240,7 @@ const AppDataTable = ({
                                     {check?<TableSelectAll {...getSelectionProps()} />:null}
                                     {tableHeader.map((header, i) => (
                                         <>
-                                        {header.header === 'id' || header.header === 'class_id' || header.header === 'uuid'  || header.header === 'sub_class_id'?
+                                        {header.header === 'id' || header.header === 'class_id' || header.header === 'uuid'  || header.header === 'sub_class_id' || header.header === 'school_session_id'?
                                         null :
                                         <TableHeader key={i} {...getHeaderProps({
                                             header
@@ -251,7 +259,10 @@ const AppDataTable = ({
                                     onClick={() => {
                                         if (viewActionType === 'subject') {
                                             viewAction(row.cells[0].value, row.cells[1].value)
+                                        } else if (viewActionType === 'term') {
+                                            viewAction(row.cells[0].value, null, row.cells[1].value )
                                         } else {
+                                            setValue(row.cells[0])
                                             viewAction(row.cells[0].value)
                                         }
                                     }}
@@ -265,7 +276,7 @@ const AppDataTable = ({
                                     :null}
                                     {row.cells.map(cell => (
                                         <>
-                                            {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid'  || cell.id.split(":")[1] === 'class_id' || cell.id.split(":")[1] === 'sub_class_id' ?
+                                            {cell.id.split(":")[1] === 'id' || cell.id.split(":")[1] === 'uuid'  || cell.id.split(":")[1] === 'class_id' || cell.id.split(":")[1] === 'sub_class_id' || cell.id.split(":")[1] === 'school_session_id' ?
                                             null 
                                             : cell.id.split(":")[1] === 'status'?
                                             <StatusCell
@@ -406,7 +417,7 @@ const AppDataTable = ({
                     {loading?
                     <div className=' bg-white py-4'>
                         <div className='flex flex-col p-8 px-16 min-h-[450px] w-full bg-background gap-4 justify-center items-center'>
-                            <Loading active={loading} className={''} withOverlay={false} small={false} />
+                            <Loading active={loading} className={''} withOverlay={false} small={true} />
                         </div>
                     </div>
                     : data?.data?

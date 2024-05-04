@@ -31,7 +31,7 @@ export function useGetClass(id) {
       return classes.getClass(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },
@@ -174,6 +174,7 @@ export function useGetSubClasses() {
     },
   );
 }
+
 export function useGetSubClassesList(limit, page, search) {
   return useQuery(
     ['subclasses-list', { limit, page, search }],
@@ -188,9 +189,8 @@ export function useGetSubClassesList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
-        newData.push({ value: null, text: 'Select a class' });
         data?.forEach((item) => {
-          newData.push({ value: item.id, text: item.class_name + ' - ' + item.name, id: item.id  });
+          newData.push({ value: item.id, text: item.class_name + ' - ' + item.name, id: item.id, main_class_id: item.main_class_id  });
         });
         return newData;
       },
@@ -210,7 +210,7 @@ export function useGetSubClass(id) {
       return classes.getSubClass(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },

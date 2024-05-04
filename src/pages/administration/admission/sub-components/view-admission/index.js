@@ -84,7 +84,7 @@ const ViewAdmissionPage = () => {
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {sessionLoading ?
                     <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={sessionLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={sessionLoading} className={''} withOverlay={false} small={true} />
                     </div>
                     :
                     <div className='w-full flex flex-col'>

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { FilterableMultiSelect, Form, Modal, Stack} from 'carbon-components-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ArrowRight } from '@carbon/icons-react';
 import AppButton from '../../../../../components/app-button';

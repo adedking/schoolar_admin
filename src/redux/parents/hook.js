@@ -22,6 +22,7 @@ export function useGetParents( limit, page, statusFilter, search ) {
     },
   );
 }
+
 export function useGetParent(id) {
   return useQuery(
     ['parent', {id}],
@@ -30,7 +31,7 @@ export function useGetParent(id) {
       return parents.getParent(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },
@@ -93,7 +94,6 @@ export function useGetParentsList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
-        newData.push({ id: null, text: 'Select a parent', value: null });
         data?.data.forEach((item) => {
           newData.push({ uuid: item.uuid, id: item.id, text: item.title + '. ' + item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
         });

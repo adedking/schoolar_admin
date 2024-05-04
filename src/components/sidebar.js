@@ -3,7 +3,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IsTogglingSidebar, IsTurnRightPanelOff } from '../redux/components/components-slice';
 import { SideNav, SideNavItems, SideNavLink, SideNavMenu } from 'carbon-components-react';
-import { Dashboard, Education, GroupPresentation, ManageProtection, Person, UserMultiple, Book, Collaborate, CalendarTools, Wallet, CalendarHeatMap } from '@carbon/icons-react';
+import { 
+  Dashboard, 
+  Education,
+  GroupPresentation, 
+  ManageProtection, 
+  Person, 
+  UserMultiple, 
+  Book, 
+  Collaborate, 
+  CalendarTools, 
+  Wallet, 
+  CalendarHeatMap,
+  IbmWatsonMachineLearning
+} from '@carbon/icons-react';
 
 const Sidebar = ({isSidebarOpen}) => {
 
@@ -60,12 +73,24 @@ const Sidebar = ({isSidebarOpen}) => {
       route: '/student-attendance',
     },
     {
+      name: 'E-Learning',
+      id: 'e-learning',
+      icon: IbmWatsonMachineLearning,
+      route: '/e-learning',
+    },
+    {
       name: 'Administration',
       id: 'administration',
       icon: ManageProtection,
       route: null,
       paths: ['sessions', 'student-records', 'admission'],
       subroute: [
+        {
+          name: 'Non-Teaching Staff',
+          id: 'non-academic-staff',
+          icon: UserMultiple,
+          route: '/non-academic-staff',
+        },
         {
           name: 'Fees Management',
           id: 'fees-management',
@@ -78,12 +103,6 @@ const Sidebar = ({isSidebarOpen}) => {
           icon: Collaborate,
           route: '/sessions',
         },
-        // {
-        //   name: 'Terms',
-        //   id: 'academic-terms',
-        //   icon: CalendarHeatMap,
-        //   route: '/academic-terms',
-        // },
         {
           name: 'Time Table',
           id: 'time-table',

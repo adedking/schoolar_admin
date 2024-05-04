@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => {
   const dispatch = useDispatch();
-  const { school, currentSession, currentTerm } = useSelector((state) => state.schoolsSlice);
+  const { school, currentSession } = useSelector((state) => state.schoolsSlice);
 
   const handleSidebarToggle = () => {
     dispatch(IsTogglingSidebar());
@@ -44,8 +44,8 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => 
           </HeaderGlobalAction>
           <HeaderGlobalAction aria-label="Session" onClick={() => {}} className='min-w-[190px] pr-2'>
             <div className='flex flex-col '>
-              <span className='text-black min-w-fit text-[12px] font-semibold'>{school?.name} - {currentSession?.session_name ? currentSession?.session_name : '2023/2024'}</span>
-              <span className='text-[#29CC39] min-w-fit text-[10px] font-semibold'>Ongoing</span>
+              <span className='text-black min-w-fit text-[10px] font-semibold'>{school?.name} - {currentSession?.session_name ? currentSession?.session_name : '2023/2024'}</span>
+              <span className='text-[#29CC39] min-w-fit text-[9px] font-semibold'>Ongoing</span>
             </div>
           </HeaderGlobalAction>
           

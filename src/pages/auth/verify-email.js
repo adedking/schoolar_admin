@@ -5,8 +5,8 @@ import { ArrowRight } from '@carbon/icons-react';
 
 const VerifyEmailPage = () => {
     return (
-        <AuthLayout
-        >
+        
+        <AuthLayout>
             <div className='flex  flex-col items-center jusify-center min-w-screen min-h-full'>
                 <Form className='bg-white md:w-[450px] w-screen md:min-h-[400px] md:max-h-[400px] h-screen md:p-4 p-8 pb-[25px] md:mt-20'>
                     <Stack gap={7}>

@@ -15,6 +15,7 @@ const AuthLayout = ({children, loggedIn=false}) => {
         if (type === 'user') {
             if (
                 location.pathname === '/' ||
+                location.pathname === '/login' ||
                 currentLocation === 'register' ||
                 currentLocation === 'forgot-password' ||
                 currentLocation === 'set-password' ||
@@ -27,6 +28,7 @@ const AuthLayout = ({children, loggedIn=false}) => {
         } else {
             if (
                 location.pathname !== '/' &&
+                location.pathname !== '/login' &&
                 currentLocation !== 'register' &&
                 currentLocation !== 'forgot-password' &&
                 currentLocation !== 'set-password' &&

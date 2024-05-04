@@ -116,7 +116,7 @@ const ViewTransportPage = () => {
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>
                     {transportRouteLoading ?
                     <div className='flex flex-row p-8 px-16 h-[120px] min-w-full bg-background gap-4 justify-center items-center'>
-                        <Loading active={transportRouteLoading} className={''} withOverlay={false} small={false} />
+                        <Loading active={transportRouteLoading} className={''} withOverlay={false} small={true} />
                     </div>
                     :
                     <React.Fragment>

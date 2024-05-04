@@ -32,7 +32,6 @@ const ViewSessionPage = () => {
             description: 'Manage all session terms. Configure term holidays, lecture dates and exam dates',
             link: `/sessions/${id}/academic-terms`
         },
-        
         {
             title: 'Admission',
             description: "Manage this academic session's admissions. Configure admissions and create CBT tests for admission candidates",
@@ -56,7 +55,7 @@ const ViewSessionPage = () => {
         {
             title: 'School Fees Configuration',
             description: 'Manage the fees structure for this session.',
-            link: `/sessions/${id}/exam-result-configuration`
+            link: `/sessions/${id}/fees-management`
         },
     ]
 
@@ -93,7 +92,7 @@ const ViewSessionPage = () => {
                             <Loading active={sessionLoading} className={''} withOverlay={false} small={true} />
                         </div>
                         <div className='flex flex-row p-8 px-16 min-h-[530px] min-w-full bg-background gap-4 justify-center items-center'>
-                            <Loading active={sessionLoading} className={''} withOverlay={false} small={false} />
+                            <Loading active={sessionLoading} className={''} withOverlay={false} small={true} />
                         </div>
                     </div>
                     :
@@ -103,7 +102,7 @@ const ViewSessionPage = () => {
                                 {'Sessions'}
                             </Link>
                             <span className='text-[14px]'>
-                                / DEE 2094 (2024-02-27 to 2024-04-18)
+                                / {session?.session_name}
                             </span>
                         </div>
                         <div className='flex items-center justify-between w-full md:gap-0 gap-3 h-[68px] bg-background px-4'>
@@ -112,7 +111,7 @@ const ViewSessionPage = () => {
                                     Academic Session:
                                 </span>
                                 <span className='text-[15px]'>
-                                    DEE 2094 (2024-02-27 to 2024-04-18)
+                                    {session.session_name}
                                 </span>
                             </div>
                             <div 

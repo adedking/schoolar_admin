@@ -98,7 +98,7 @@ export const parentStatusConfig = [
 
 export const sessionStatusConfig = [
   {
-    label: 'Ongoing',
+    label: 'Upcoming',
     value: 0,
     color: 'red',
   },
@@ -108,7 +108,7 @@ export const sessionStatusConfig = [
     color: 'green',
   },
   {
-    label: 'Upcoming',
+    label: 'Ongoing',
     value: 2,
     color: 'orange',
   },

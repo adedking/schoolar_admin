@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../../../../components/layouts/dashboard';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../../../utils';
 import AppDataTable from '../../../../../components/data-table';
 import AddTermModal from '../../../academic-terms/sub-components/modals/add-term';
-// import { useGetSession} from '../../../../../redux/administration/sessions/hook';
 import { useGetTerms } from '../../../../../redux/administration/terms/hook';
-
+import { useGetSession } from '../../../../../redux/administration/sessions/hook';
 
 const SessionAcademicTermsPage = () => {
 
-    // const {id} = useParams();
-    // const { data: session } = useGetSession(id);
+    const {id} = useParams();
+
+    const { data: session } = useGetSession(id);
 
     const [pagination, setPagination] = useState({
         limit: PAGINATION_DEFAULT.limit,
@@ -20,7 +20,8 @@ const SessionAcademicTermsPage = () => {
         search: '',
     });
 
-    const { data: terms, isLoading: sessionLoading } = useGetTerms(
+    const { data: terms, isLoading: termsLoading } = useGetTerms(
+        id,
         pagination.limit,
         pagination.page,
         pagination.statusFilter,
@@ -35,7 +36,11 @@ const SessionAcademicTermsPage = () => {
             header: 'id',
         },
         {
-            key: 'name',
+            key: 'school_session_id',
+            header: 'school_session_id',
+        },
+        {
+            key: 'term_name',
             header: 'Term Name',
         },
         {
@@ -124,14 +129,16 @@ const SessionAcademicTermsPage = () => {
                 <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>
                     {'Sessions'}
                 </Link>
-                <Link to={`/sessions/${'test_session_id'}`} className='hover:underline duration-300 text-[15px]'>
-                    / DEE 2094 (2024-02-27 to 2024-04-18)
+                /
+                <Link to={`/sessions/${session?.uuid}`} className='hover:underline duration-300 text-[15px]'>
+                    {session?.session_name}
                 </Link>
+                /
                 <span className='text-[14px]'>
-                    / {'Terms'}
+                    {'Academic Terms'}
                 </span>
             </div>
-            <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>
+            <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm mt-1'>
                 
                 <AppDataTable
                     title={'Terms'}
@@ -141,15 +148,15 @@ const SessionAcademicTermsPage = () => {
                     setPagination={setPagination}
                     mobileTableHeader={mobileTableHeader}
                     data={terms}
-                    mainButtonText='Create Term'
+                    mainButtonText='Add Academic Term'
                     mainButtonAction={() => {
                         setShowAddTerm(true)
                     }}
-                    emptyText={'No session added'}
-                    emptySubText={'Please add terms to this academic session by clicking the button below'}
+                    emptyText={'No academic term added yet'}
+                    emptySubText={'Please add terms to this academic term by clicking the button below'}
                     viewActionType={'term'}
                     statusConfig={sessionStatusConfig}
-                    loading={sessionLoading}
+                    loading={termsLoading}
                     addMultiple={false}
                 />
             </div>

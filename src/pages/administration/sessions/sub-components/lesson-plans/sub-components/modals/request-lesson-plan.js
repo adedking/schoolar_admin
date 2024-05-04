@@ -3,13 +3,16 @@
 import { Form, Modal, Select, SelectItem } from 'carbon-components-react';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Stack, TextInput } from '@carbon/react'
+import { ComboBox, Stack, TextInput } from '@carbon/react'
 import { ArrowRight } from '@carbon/icons-react';
 import { checkError } from '../../../../../../../utils/functions';
 import AppButton from '../../../../../../../components/app-button';
 import { useAddSession, useUpdateSession } from '../../../../../../../redux/administration/sessions/hook';
+import { useGetTeachersList } from '../../../../../../../redux/teachers/hook';
+import { useParams } from 'react-router-dom';
+import { useGetSubClassesList } from '../../../../../../../redux/classes/hook';
 
-const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) => {
+const RequestLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) => {
 
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
 
@@ -19,6 +22,25 @@ const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) 
         end_date: '',
         status: 1
     })
+
+    const { data: teachers } = useGetTeachersList(
+        1000,
+        1,
+    );
+
+    const { data: classes } = useGetSubClassesList(
+        1000,
+        1,
+    );
+    
+    const {id} = useParams();
+//   const {mutateAsync: assignTeacher, isLoading: assignTeacherLoading} = useAssignTeacherToClass()
+    const [teacherId, setTeacherId] = useState()
+    const [teacherName, setTeacherName] = useState()
+
+    const [subClassId, setSubClassId] = useState()
+    const [mainClassId, setMainClassId] = useState()
+    const [className, setClassName] = useState()
 
     useEffect(() => {
         if (session) {
@@ -50,6 +72,15 @@ const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) 
         },
     ]
 
+    // 'main_class_id' => 'required|integer',
+    // 'sub_class_id' => 'required|integer',
+    // 'session_id' => 'required|integer',
+    // 'term_id' => 'required|integer',
+    // 'subject_id' => 'required|integer',
+    // 'teacher_id' => 'required|integer',
+    // 'lesson_plan' => 'required|string',
+    // 'file' => 'file|mimes:pdf,doc,docx,txt,xls,xlsx,wps|nullable',
+
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -62,6 +93,16 @@ const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) 
 
     const requestSubmit = async () => {
         if (type === 'add') {
+            let payload = {
+                main_class_id: null,
+                sub_class_id: null,
+                session_id: null,
+                term_id: null,
+                subject_id: null,
+                teacher_id: null,
+                lesson_plan: null,
+                file: null,
+            }
             await addSession(form).then(() => {
                 closeModal()
             })
@@ -73,15 +114,12 @@ const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) 
             await updateSession(payload).then(() => {
                 closeModal()
             })
-        }
-        
+        } 
     }
 
     return (
         <Modal 
-            modalHeading={type === 'add' ? "Create Admission" : "Update Admission"} 
-            primaryButtonText="Continue" 
-            secondaryButtonText={''}
+            modalHeading={"Request Lesson Plan"} 
             hasScrollingContent={false}
             passiveModal
             isFullWidth
@@ -95,26 +133,53 @@ const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) 
             <Form
             onSubmit={handleSubmit(requestSubmit)}
             >
-            <Stack gap={6}>
-                <div className='flex md:flex-row flex-col gap-4 w-full'>
-                    <div className='w-full'>
-                        <TextInput
-                            className='min-w-full'
-                            kind={'text'}
-                            id={'name'}
-                            name={'name'}
-                            {...register('name', { required: true })}
-                            invalid={errors?.name ? true : false}
-                            invalidText={errors?.name?.message? errors?.name?.message : 'This field is required'}
-                            value={form.name}
-                            labelText="Session Name "
-                            placeholder="Enter Your Term Name"
-                            onChange={(e) => {
-                                checkError(true, e, e.target.value, 'name', setError, clearErrors, handleChange)
-                            }}
-                        />
-                    </div>
+            <Stack gap={5}>
+                <div className='flex flex-col justify-between w-full mt-4'>
+                    <ComboBox
+                        value={teacherName}
+                        id="teacher_id" 
+                        items={teachers ? teachers : []} 
+                        downshiftProps={{
+                        onStateChange: (e) => {
+                            if (e?.selectedItem?.id) {
+                            setSubClassId(e?.selectedItem?.id)
+                            setTeacherName(e?.selectedItem?.text)
+                        } else {
+                            setTeacherName('')
+                            setTeacherId(null)
+                        }
+                        }
+                        }} 
+                        placeholder='Select teacher'
+                        itemToString={item => item ? item.text : ''} 
+                        titleText="Search and select teacher"
+                    />
                 </div>
+                <hr className='divider'/>
+                <div className='flex flex-col justify-between w-full mb-4'>
+                    <ComboBox
+                        value={className}
+                        id="class" 
+                        items={classes ? classes : []} 
+                        downshiftProps={{
+                        onStateChange: (e) => {
+                            if (e?.selectedItem?.id) {
+                                setSubClassId(e?.selectedItem?.id)
+                                setMainClassId(e?.selectedItem?.main_class_id)
+                                setClassName(e?.selectedItem?.text)
+                            } else {
+                                setClassName('')
+                                setSubClassId(null)
+                                setMainClassId(null)
+                            }
+                        }
+                        }} 
+                        placeholder='Select class'
+                        itemToString={item => item ? item.text : ''} 
+                        titleText="Search and select class"
+                    />
+                </div>
+                
                 <hr className='divider'/>
                 <div className='flex md:flex-row flex-col gap-4 w-full'>
                     <div className='md:w-1/2 w-full'>
@@ -191,4 +256,4 @@ const ApproveLessonPlanModal = ({isOpen, closeModal, type='add', session=null}) 
     )   
 }
 
-export default ApproveLessonPlanModal;
+export default RequestLessonPlanModal;

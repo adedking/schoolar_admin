@@ -31,7 +31,7 @@ export function useGetSession(id) {
       return sessions.getSession(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },
@@ -115,7 +115,6 @@ export function useGetSessionsList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
-        newData.push({ id: null, text: 'Select a session', value: null });
         data?.data.forEach((item) => {
           newData.push({ uuid: item.uuid, id: item.id, text: item.name + ' | (' + item.start_date + ' ' + item.end_date + ')' });
         });

@@ -24,6 +24,7 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
         if (type === 'user') {
             if (
                 location.pathname === '/' ||
+                location.pathname === '/login' ||
                 currentLocation === 'register' ||
                 currentLocation === 'forgot-password' ||
                 currentLocation === 'set-password' ||
@@ -35,6 +36,7 @@ const DashboardLayout = ({children, viewComponent, viewTitle}) => {
         } else {
             if (
                 location.pathname !== '/' &&
+                location.pathname !== '/login' &&
                 currentLocation !== 'register' &&
                 currentLocation !== 'forgot-password' &&
                 currentLocation !== 'set-password' &&

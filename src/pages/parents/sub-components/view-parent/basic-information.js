@@ -1,13 +1,13 @@
 import React from 'react';
 
-const ParentMessages = () => {
+const ParentBasicInformation = () => {
 
     // const navigate = useNavigate();
     return (
         <React.Fragment>
-            Parent Messages
+            Basic Information
         </React.Fragment>
     );
 };
 
-export default ParentMessages;
+export default ParentBasicInformation;

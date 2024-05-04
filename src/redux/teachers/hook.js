@@ -65,7 +65,7 @@ export function useGetTeacher(id) {
       return teachers.getTeacher(id);
     },
     {
-      isEnabled: id !== null,
+      enabled: id !== null,
       select: (data) => {
         return data;
       },
@@ -91,7 +91,6 @@ export function useGetTeachersList(limit, page, search) {
     {
       select: (data) => {
         let newData = [];
-        newData.push({ id: null, text: 'Select a teacher', value: null });
         data?.data.forEach((item) => {
           newData.push({ id: item.id, uuid: item.uuid, text: item.first_name + ' ' + item.last_name+ ' | ' + item.mobile });
         });

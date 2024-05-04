@@ -40,14 +40,15 @@ export function useAddTimeTableConfiguration() {
   );
 }
 
-export function useGetTimeTableBySubClass( payload ) {
+export function useGetTimeTableBySubClass( id ) {
   return useQuery(
-    ['time-table-by-sub_class', payload],
+    ['time-table-by-sub_class', id],
     () => {
       store.dispatch(setIsLoading(true));
-      return timeTable.getTimeTableBySubClass(payload);
+      return timeTable.getTimeTableBySubClass(id);
     },
     {
+      enabled: id !== null,
       select: (data) => {
         
         return data;
@@ -65,6 +66,7 @@ export function useAddTimeTable() {
       return timeTable.addTimeTable(payload);
     },
     {
+      
       onSuccess: (response, variables, context) => {
         queryClient.invalidateQueries('time-table-by-sub_class');
         store.dispatch(setAlert(true, 'Add Time-table successful', 'success', 'You have successfully created a class time-table'));

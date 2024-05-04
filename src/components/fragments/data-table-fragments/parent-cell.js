@@ -1,10 +1,9 @@
 import React from 'react';
 import studentPix from '../../../assets/svg/student.svg';
-import { TableCell } from 'carbon-components-react';
 
 export const ParentCell = ({guardian_info}) => {
   return (
-    <TableCell  className={'text-[13px] items-center justify-center w-[220px] rounded-sm px-2 py-1 h-full'}>
+    <div  className={'text-[13px] items-center justify-center w-[220px] rounded-sm px-2 py-1 h-full'}>
       <div  className={'flex flex-row gap-3 text-[13px] items-center w-full rounded-sm border-2 !border-parent-thick min-h-[45px] !text-parent-thick bg-parent-background px-2 py-2 !h-full'}>
         {guardian_info && guardian_info.length > 0 ?
         <>
@@ -20,6 +19,6 @@ export const ParentCell = ({guardian_info}) => {
         '-'
         }
       </div>
-    </TableCell>
+    </div>
   );
 };

@@ -1,103 +1,129 @@
-import React from 'react';
-import LogInPage from './pages/auth/login';
+import React, { lazy } from 'react';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './app.scss';
-import SignupPage from './pages/auth/register';
-import PasswordRecoveryPage from './pages/auth/forgot-password';
-import SetPasswordPage from './pages/auth/set-password';
-import ResetPasswordPage from './pages/auth/reset-password';
-import DashboardPage from './pages/dashboard';
-import TeachersPage from './pages/teachers';
-import StudentsPage from './pages/students';
-import ClassesPage from './pages/classes';
-import VerifyEmailPage from './pages/auth/verify-email';
-import ParentsPage from './pages/parents';
-import VerifyOTPPage from './pages/onboarding/verify-otp';
-import AddSchoolPage from './pages/onboarding/add-school';
 import { useSelector } from 'react-redux';
 import Alert from './components/alert';
-import ViewStudentPage from './pages/students/sub-components/view-student';
-import ViewClassPage from './pages/classes/sub-components/view-sub-class';
-import ViewParentPage from './pages/parents/sub-components/view-parent';
-import ViewTeacherPage from './pages/teachers/sub-components/view-teacher';
-import SessionsPage from './pages/administration/sessions';
-import ViewSessionPage from './pages/administration/sessions/sub-components/view-session';
-import SchoolTimeTablePage from './pages/administration/time-table-settings';
-import ViewSubject from './pages/classes/sub-components/view-subject';
-import ViewTermPage from './pages/administration/academic-terms/sub-components/view-term';
-import StudentRecordsPage from './pages/administration/student-records';
-import SessionAcademicTermsPage from './pages/administration/sessions/sub-components/terms';
-import AcademicTermsPage from './pages/administration/academic-terms';
-import FeesManagementPage from './pages/administration/fees';
-import AdmissionsPage from './pages/administration/admission';
-import ViewAdmissionPage from './pages/administration/admission/sub-components/view-admission';
-import LessonPlansPage from './pages/administration/sessions/sub-components/lesson-plans';
-import TransportationRoutesPage from './pages/administration/transport';
-import ViewTransportPage from './pages/administration/transport/sub-components/view-transport-route';
-import ViewFeesPage from './pages/administration/fees/sub-components/view-fees';
-import AttendanceRegisterPage from './pages/attendance-register';
-import ExamsResultPage from './pages/administration/exams-result-settings.js';
-import SessionTimeTablePage from './pages/administration/sessions/sub-components/time-table/index.js';
+import { Suspense } from 'react';
+
+import { Loading } from '@carbon/react';
+
+const LogInPage = lazy(() => import('./pages/auth/login'));
+const SignupPage = lazy(() => import('./pages/auth/register'));
+const PasswordRecoveryPage = lazy(() => import('./pages/auth/forgot-password'));
+const SetPasswordPage = lazy(() => import('./pages/auth/set-password'));
+const ResetPasswordPage = lazy(() => import('./pages/auth/reset-password'));
+
+const DashboardPage = lazy(() => import('./pages/dashboard'));
+const TeachersPage = lazy(() => import('./pages/teachers'));
+const StudentsPage = lazy(() => import('./pages/students'));
+const ClassesPage = lazy(() => import('./pages/classes'));
+const VerifyEmailPage = lazy(() => import('./pages/auth/verify-email'));
+const ParentsPage = lazy(() => import('./pages/parents'));
+const VerifyOTPPage = lazy(() => import('./pages/onboarding/verify-otp'));
+const AddSchoolPage = lazy(() => import('./pages/onboarding/add-school'));
+const ViewStudentPage = lazy(() => import('./pages/students/sub-components/view-student'));
+const ViewClassPage = lazy(() => import('./pages/classes/sub-components/view-sub-class'));
+const ViewParentPage = lazy(() => import('./pages/parents/sub-components/view-parent'));
+const ViewTeacherPage = lazy(() => import('./pages/teachers/sub-components/view-teacher'));
+const SessionsPage = lazy(() => import('./pages/administration/sessions'));
+const ViewSessionPage = lazy(() => import('./pages/administration/sessions/sub-components/view-session'));
+const SchoolTimeTablePage = lazy(() => import('./pages/administration/time-table-settings'));
+const ViewSubject = lazy(() => import('./pages/classes/sub-components/view-subject'));
+const ViewTermPage = lazy(() => import('./pages/administration/academic-terms/sub-components/view-term'));
+const StudentRecordsPage = lazy(() => import('./pages/administration/student-records'));
+const SessionAcademicTermsPage = lazy(() => import('./pages/administration/sessions/sub-components/terms'));
+const AcademicTermsPage = lazy(() => import('./pages/administration/academic-terms'));
+const FeesManagementPage = lazy(() => import('./pages/administration/fees'));
+const AdmissionsPage = lazy(() => import('./pages/administration/admission'));
+const ViewAdmissionPage = lazy(() => import('./pages/administration/admission/sub-components/view-admission'));
+const LessonPlansPage = lazy(() => import('./pages/administration/sessions/sub-components/lesson-plans'));
+const TransportationRoutesPage = lazy(() => import('./pages/administration/transport'));
+const ViewTransportPage = lazy(() => import('./pages/administration/transport/sub-components/view-transport-route'));
+const ViewFeesPage = lazy(() => import('./pages/administration/fees/sub-components/view-fees'));
+const AttendanceRegisterPage = lazy(() => import('./pages/attendance-register'));
+const ExamsResultPage = lazy(() => import('./pages/administration/exams-result-settings.js'));
+const SessionTimeTablePage = lazy(() => import('./pages/administration/sessions/sub-components/exam-time-table/index.js'));
+const ELearning = lazy(() => import('./pages/e-learning/index.js'));
+const NonTeachingStaffPage = lazy(() => import('./pages/administration/non-teaching-staff/index.js'));
+const ViewNonTeachingStaffPage = lazy(() => import('./pages/administration/non-teaching-staff/sub-components/view-non-teaching-staff/index.js'));
+const ViewLessonPlanPage = lazy(() => import('./pages/administration/sessions/sub-components/lesson-plans/view-lesson-plan/index.js'));
+const SessionFeesPage = lazy(() => import('./pages/administration/sessions/sub-components/fees/index.js'));
+
+const PageNotFound = lazy(() => import('./pages/errors/page-not-found.js'));
 
 const App = () => {
   const { alert } = useSelector((state) => state.componentsSlice);
-  
+
+  const loading =
+    <div className='flex flex-col min-h-screen w-screen justify-center items-center gap-8'>
+      <span className='font-semibold text-[30px] animate-pulse duration-300'>Pluraled</span>
+      <Loading className={''} withOverlay={false} small={true} />
+    </div>
+  // const subLoading = null
+
   return (
       <React.Fragment>
         <BrowserRouter>
-            <Routes>
-              <Route exact path='/onboarding/verify-otp' Component={VerifyOTPPage} />
-              <Route exact path='/add-school-location' Component={AddSchoolPage} />
-              <Route exact path='/dashboard' Component={DashboardPage} />
-              <Route exact path='/teachers' Component={TeachersPage} />
-              <Route exact path='/teachers/:id' Component={ViewTeacherPage} />
-              <Route exact path='/students' Component={StudentsPage} />
-              <Route exact path='/students/:id' Component={ViewStudentPage} />
-              <Route exact path='/classes' Component={ClassesPage} />
-              <Route exact path='/classes/:id' Component={ViewClassPage} />
-              <Route exact path='/classes/:classId/:id' Component={ViewSubject} />
-              <Route exact path='/parents-guardians' Component={ParentsPage} />
-              <Route exact path='/parents-guardians/:id' Component={ViewParentPage} />
+          <Routes>
+            <Route exact path='/add-school-location' element={<Suspense fallback={loading}><AddSchoolPage /></Suspense>} />
+            <Route exact path='/dashboard' element={<Suspense fallback={loading}><DashboardPage /></Suspense>} />
+            <Route exact path='/onboarding/otp' element={<Suspense fallback={loading}><VerifyOTPPage /></Suspense>} />
+            
+            <Route exact path='/teachers' element={<Suspense fallback={loading}><TeachersPage /></Suspense>} />
+            <Route exact path='/teachers/:id' element={<Suspense fallback={loading}><ViewTeacherPage /></Suspense>} />
+            <Route exact path='/students' element={<Suspense fallback={loading}><StudentsPage /></Suspense>} />
+            <Route exact path='/students/:id' element={<Suspense fallback={loading}><ViewStudentPage /></Suspense>} />
+            <Route exact path='/classes' element={<Suspense fallback={loading}><ClassesPage /></Suspense>} />
+            <Route exact path='/classes/:id' element={<Suspense fallback={loading}><ViewClassPage /></Suspense>} />
+            <Route exact path='/classes/:classId/:id' element={<Suspense fallback={loading}><ViewSubject /></Suspense>} />
+            <Route exact path='/parents-guardians' element={<Suspense fallback={loading}><ParentsPage /></Suspense>} />
+            <Route exact path='/parents-guardians/:id' element={<Suspense fallback={loading}><ViewParentPage /></Suspense>} />
+            <Route exact path='/student-attendance' element={<Suspense fallback={loading}><AttendanceRegisterPage /></Suspense>} />
+            <Route exact path='/student-records' element={<Suspense fallback={loading}><StudentRecordsPage /></Suspense>} />
+            <Route exact path='/academic-terms' element={<Suspense fallback={loading}><AcademicTermsPage /></Suspense>} />
+            <Route exact path='/academic-terms/:termId' element={<Suspense fallback={loading}><ViewTermPage /></Suspense>} />
 
-              <Route exact path='/student-attendance' Component={AttendanceRegisterPage} />
-              <Route exact path='/student-attendance/:attendance_date' Component={ViewParentPage} />
+            <Route exact path='/fees-management' element={<Suspense fallback={loading}><FeesManagementPage /></Suspense>} />
+            <Route exact path='/fees-management/:id' element={<Suspense fallback={loading}><ViewFeesPage /></Suspense>} />
 
-              <Route exact path='/student-records' Component={StudentRecordsPage} />
-              <Route exact path='/academic-terms' Component={AcademicTermsPage} />
-              <Route exact path='/academic-terms/:termId' Component={ViewTermPage} />
+            <Route exact path='/transportation' element={<Suspense fallback={loading}><TransportationRoutesPage /></Suspense>} />
+            <Route exact path='/transportation/:id' element={<Suspense fallback={loading}><ViewTransportPage /></Suspense>} />
 
-              <Route exact path='/fees-management' Component={FeesManagementPage} />
-              <Route exact path='/fees-management/:id' Component={ViewFeesPage} />
+            <Route exact path='/non-academic-staff' element={<Suspense fallback={loading}><NonTeachingStaffPage /></Suspense>} />
+            <Route exact path='/non-academic-saff/:id' element={<Suspense fallback={loading}><ViewNonTeachingStaffPage /></Suspense>} />
 
-              <Route exact path='/transportation' Component={TransportationRoutesPage} />
-              <Route exact path='/transportation/:id' Component={ViewTransportPage} />
+            <Route exact path='/exam-result-settings' element={<Suspense fallback={loading}><ExamsResultPage /></Suspense>} />
 
-              <Route exact path='/exam-result-settings' Component={ExamsResultPage} />
-              
-              <Route exact path='/admissions' Component={AdmissionsPage} />
-              <Route exact path='/admissions/:id' Component={ViewAdmissionPage} />
-              
-              <Route exact path='/sessions' Component={SessionsPage} />
-              <Route exact path='/sessions/:id' Component={ViewSessionPage} />
-              <Route exact path='/sessions/:id/academic-terms' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/academic-terms/:termId' Component={ViewTermPage} />
-              <Route exact path='/sessions/:id/books' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/time-table' Component={SessionTimeTablePage} />
-              <Route exact path='/sessions/:id/lesson-plans' Component={LessonPlansPage} />
-              <Route exact path='/sessions/:id/academic-records' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/fees-management' Component={SessionAcademicTermsPage} />
-              <Route exact path='/sessions/:id/admission/:admissionId' Component={ViewAdmissionPage} />
+            <Route exact path='/admissions' element={<Suspense fallback={loading}><AdmissionsPage /></Suspense>} />
+            <Route exact path='/admissions/:id' element={<Suspense fallback={loading}><ViewAdmissionPage /></Suspense>} />
 
-              <Route exact path='/time-table' Component={SchoolTimeTablePage} />
-              <Route exact path='/' Component={LogInPage} />
-              <Route exact path='/register' Component={SignupPage} />
-              <Route exact path='/forgot-password' Component={PasswordRecoveryPage} />
-              <Route exact path='/set-password/:token' Component={SetPasswordPage} />
-              <Route exact path='/reset-password/:token' Component={ResetPasswordPage} />
-              <Route exact path='/verify-email/:token' Component={VerifyEmailPage} />
-            </Routes>
+            <Route exact path='/e-learning' element={<Suspense fallback={loading}><ELearning /></Suspense>} />
+
+            <Route exact path='/sessions' element={<Suspense fallback={loading}><SessionsPage /></Suspense>} />
+            <Route exact path='/sessions/:id' element={<Suspense fallback={loading}><ViewSessionPage /></Suspense>} />
+            <Route exact path='/sessions/:id/academic-terms' element={<Suspense fallback={loading}><SessionAcademicTermsPage /></Suspense>} />
+            <Route exact path='/sessions/:id/admissions' element={<Suspense fallback={loading}><AdmissionsPage /></Suspense>} />
+            <Route exact path='/sessions/:id/academic-terms/:termId' element={<Suspense fallback={loading}><ViewTermPage /></Suspense>} />
+            <Route exact path='/sessions/:id/time-table' element={<Suspense fallback={loading}><SessionTimeTablePage /></Suspense>} />
+            <Route exact path='/sessions/:id/lesson-plans' element={<Suspense fallback={loading}><LessonPlansPage /></Suspense>} />
+            <Route exact path='/sessions/:id/lesson-plans/:lesson_plan_id' element={<Suspense fallback={loading}><ViewLessonPlanPage /></Suspense>} />
+            <Route exact path='/sessions/:id/academic-records' element={<Suspense fallback={loading}><SessionAcademicTermsPage /></Suspense>} />
+            <Route exact path='/sessions/:id/fees-management' element={<Suspense fallback={loading}><SessionFeesPage /></Suspense>} />
+            <Route exact path='/sessions/:id/admission/:admissionId' element={<Suspense fallback={loading}><ViewAdmissionPage /></Suspense>} />
+            <Route exact path='/time-table' element={<Suspense fallback={loading}><SchoolTimeTablePage /></Suspense>} />
+
+            <Route exact path='/' element={<Suspense fallback={loading}><LogInPage /></Suspense>} />
+            <Route exact path='/login' element={<Suspense fallback={loading}><LogInPage /></Suspense>} />
+            <Route exact path='/register' element={<Suspense fallback={loading}><SignupPage /></Suspense>} />
+            <Route exact path='/forgot-password' element={<Suspense fallback={loading}><PasswordRecoveryPage /></Suspense>} />
+            <Route exact path='/set-password/:token' element={<Suspense fallback={loading}><SetPasswordPage /></Suspense>} />
+            <Route exact path='/reset-password/:token' element={<Suspense fallback={loading}><ResetPasswordPage /></Suspense>} />
+            <Route exact path='/verify-email/:token' element={<Suspense fallback={loading}><VerifyEmailPage /></Suspense>} />
+            <Route exact path='*' element={<Suspense fallback={loading}><PageNotFound /></Suspense>} />
+          </Routes>
         </BrowserRouter>
-        {/* Other components */}
+        {/* Alert components */}
         {alert?.show && (
           <Alert
             title={alert?.title}
