@@ -3,9 +3,9 @@ import DashboardLayout from '../../../../../components/layouts/dashboard';
 import { Link, useParams } from 'react-router-dom';
 import { PAGINATION_DEFAULT, sessionStatusConfig } from '../../../../../utils';
 import AppDataTable from '../../../../../components/data-table';
-import AddTermModal from '../../../academic-terms/sub-components/modals/add-term';
 import { useGetTerms } from '../../../../../redux/administration/terms/hook';
 import { useGetSession } from '../../../../../redux/administration/sessions/hook';
+import AddTermModal from './sub-components/modals/add-term';
 
 const SessionAcademicTermsPage = () => {
 

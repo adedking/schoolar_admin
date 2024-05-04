@@ -1,62 +1,38 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import DashboardLayout from '../../../../../components/layouts/dashboard';
+import React, { useState, Suspense, lazy } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
-import { useDeleteStudent } from '../../../../../redux/students/hook';
-import TabView from '../../../../../components/tabs';
-import DeleteModal from '../../../../../components/modals/deleteModal';
-import { useGetSession } from '../../../../../redux/administration/sessions/hook';
-import Applicants from './applicants';
-import AdmissionConfiguration from './configuration';
-import AdmissionFees from './admission-fees';
+import { useGetSession } from '../../../../../../redux/administration/sessions/hook';
+import { useDeleteStudent } from '../../../../../../redux/students/hook';
+import DeleteModal from '../../../../../../components/modals/deleteModal';
+import DashboardLayout from '../../../../../../components/layouts/dashboard';
+import TabView from '../../../../../../components/tabs';
+
+const Applicants = lazy(() => import('../applicants'));
+const AdmissionConfiguration = lazy(() => import('../configuration'));
+const AdmissionFees = lazy(() => import('../admission-fees'));
 
 const ViewAdmissionPage = () => {
     const tabs = [
         {
             title: 'Applicants',
-            content: <Applicants  />,
+            content: <Suspense fallback = {null} ><Applicants  /></Suspense>,
+        },
+        {
+            title: 'Fees Breakdown',
+            content: <Suspense fallback = {null} ><AdmissionFees  /></Suspense>
         },
         {
             title: 'Configuration',
-            content: <AdmissionConfiguration />
-        },
-        {
-            title: 'Fees',
-            content: <AdmissionFees  />
+            content: <Suspense fallback = {null} ><AdmissionConfiguration /></Suspense>
         },
     ];
 
     const {id} = useParams();
     const { data: session, isLoading: sessionLoading } = useGetSession(id);
 
-    const [showEditStudent, setShowEditStudent] =useState(false)
-    const [showDeleteStudent, setShowDeleteStudent] =useState(false)
-
-    const {mutateAsync: deleteStudent, isLoading: deleteStudentLoading} = useDeleteStudent()
-
-    const deleteStudentFn = async () => {
-        await deleteStudent(id).then((response) => {
-            setShowDeleteStudent(false)
-        })
-    }
-
     return (
         <React.Fragment>
-            {showDeleteStudent ?
-            <DeleteModal
-                type={'update'}
-                isOpen={showDeleteStudent}
-                closeModal={()=> setShowDeleteStudent(false)}
-                deleteTitle='Delete Student Profile' 
-                deleteText="Are you sure you want to delete Oladotun from your student directory?"
-                deleteAction={() => {deleteStudentFn()}} 
-                deleteLoading={deleteStudentLoading}
-                buttonText='Delete Student'
-            />
-            :
-            null
-            }
             <DashboardLayout viewComponent={null} viewTitle={'View student'}>
                 {/* <div className='flex gap-2 min-h-[18px] max-h-[40px] w-full items-center'>
                     <Link to={'/sessions'} className='hover:underline duration-300 text-[15px]'>

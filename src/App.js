@@ -30,13 +30,12 @@ const SessionsPage = lazy(() => import('./pages/administration/sessions'));
 const ViewSessionPage = lazy(() => import('./pages/administration/sessions/sub-components/view-session'));
 const SchoolTimeTablePage = lazy(() => import('./pages/administration/time-table-settings'));
 const ViewSubject = lazy(() => import('./pages/classes/sub-components/view-subject'));
-const ViewTermPage = lazy(() => import('./pages/administration/academic-terms/sub-components/view-term'));
+const ViewTermPage = lazy(() => import('./pages/administration/sessions/sub-components/terms/sub-components/view-term'));
 const StudentRecordsPage = lazy(() => import('./pages/administration/student-records'));
 const SessionAcademicTermsPage = lazy(() => import('./pages/administration/sessions/sub-components/terms'));
-const AcademicTermsPage = lazy(() => import('./pages/administration/academic-terms'));
+const SessionAcademicRecordsPage = lazy(() => import('./pages/administration/sessions/sub-components/academic-records'));
 const FeesManagementPage = lazy(() => import('./pages/administration/fees'));
-const AdmissionsPage = lazy(() => import('./pages/administration/admission'));
-const ViewAdmissionPage = lazy(() => import('./pages/administration/admission/sub-components/view-admission'));
+const ViewAdmissionPage = lazy(() => import('./pages/administration/sessions/sub-components/admission/index.js'));
 const LessonPlansPage = lazy(() => import('./pages/administration/sessions/sub-components/lesson-plans'));
 const TransportationRoutesPage = lazy(() => import('./pages/administration/transport'));
 const ViewTransportPage = lazy(() => import('./pages/administration/transport/sub-components/view-transport-route'));
@@ -81,8 +80,6 @@ const App = () => {
             <Route exact path='/parents-guardians/:id' element={<Suspense fallback={loading}><ViewParentPage /></Suspense>} />
             <Route exact path='/student-attendance' element={<Suspense fallback={loading}><AttendanceRegisterPage /></Suspense>} />
             <Route exact path='/student-records' element={<Suspense fallback={loading}><StudentRecordsPage /></Suspense>} />
-            <Route exact path='/academic-terms' element={<Suspense fallback={loading}><AcademicTermsPage /></Suspense>} />
-            <Route exact path='/academic-terms/:termId' element={<Suspense fallback={loading}><ViewTermPage /></Suspense>} />
 
             <Route exact path='/fees-management' element={<Suspense fallback={loading}><FeesManagementPage /></Suspense>} />
             <Route exact path='/fees-management/:id' element={<Suspense fallback={loading}><ViewFeesPage /></Suspense>} />
@@ -95,20 +92,17 @@ const App = () => {
 
             <Route exact path='/exam-result-settings' element={<Suspense fallback={loading}><ExamsResultPage /></Suspense>} />
 
-            <Route exact path='/admissions' element={<Suspense fallback={loading}><AdmissionsPage /></Suspense>} />
-            <Route exact path='/admissions/:id' element={<Suspense fallback={loading}><ViewAdmissionPage /></Suspense>} />
-
             <Route exact path='/e-learning' element={<Suspense fallback={loading}><ELearning /></Suspense>} />
 
             <Route exact path='/sessions' element={<Suspense fallback={loading}><SessionsPage /></Suspense>} />
             <Route exact path='/sessions/:id' element={<Suspense fallback={loading}><ViewSessionPage /></Suspense>} />
             <Route exact path='/sessions/:id/academic-terms' element={<Suspense fallback={loading}><SessionAcademicTermsPage /></Suspense>} />
-            <Route exact path='/sessions/:id/admissions' element={<Suspense fallback={loading}><AdmissionsPage /></Suspense>} />
+            <Route exact path='/sessions/:id/admission' element={<Suspense fallback={loading}><ViewAdmissionPage /></Suspense>} />
             <Route exact path='/sessions/:id/academic-terms/:termId' element={<Suspense fallback={loading}><ViewTermPage /></Suspense>} />
             <Route exact path='/sessions/:id/time-table' element={<Suspense fallback={loading}><SessionTimeTablePage /></Suspense>} />
             <Route exact path='/sessions/:id/lesson-plans' element={<Suspense fallback={loading}><LessonPlansPage /></Suspense>} />
             <Route exact path='/sessions/:id/lesson-plans/:lesson_plan_id' element={<Suspense fallback={loading}><ViewLessonPlanPage /></Suspense>} />
-            <Route exact path='/sessions/:id/academic-records' element={<Suspense fallback={loading}><SessionAcademicTermsPage /></Suspense>} />
+            <Route exact path='/sessions/:id/academic-records' element={<Suspense fallback={loading}><SessionAcademicRecordsPage /></Suspense>} />
             <Route exact path='/sessions/:id/fees-management' element={<Suspense fallback={loading}><SessionFeesPage /></Suspense>} />
             <Route exact path='/sessions/:id/admission/:admissionId' element={<Suspense fallback={loading}><ViewAdmissionPage /></Suspense>} />
             <Route exact path='/time-table' element={<Suspense fallback={loading}><SchoolTimeTablePage /></Suspense>} />

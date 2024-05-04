@@ -35,7 +35,7 @@ const ViewSessionPage = () => {
         {
             title: 'Admission',
             description: "Manage this academic session's admissions. Configure admissions and create CBT tests for admission candidates",
-            link: `/sessions/${id}/admissions`
+            link: `/sessions/${id}/admission`
         },
         {
             title: 'Student Records',
@@ -126,7 +126,7 @@ const ViewSessionPage = () => {
                         >
                             Manage Session Activities
                         </div>
-                        <div className='grid md:grid-cols-3 grid-cols-1 md:gap-8 gap-4 justify-items-stretch'>
+                        <div className='grid md:grid-cols-3 grid-cols-1 gap-4 justify-items-stretch'>
                             {sessionActivities.map((item, index) => (
                                 <SessionCards
                                     key={index}

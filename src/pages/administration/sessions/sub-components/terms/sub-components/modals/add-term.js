@@ -5,11 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Stack, TextInput, NumberInput } from '@carbon/react'
 import { ArrowRight } from '@carbon/icons-react';
-import { checkError } from '../../../../../utils/functions';
-import AppButton from '../../../../../components/app-button';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
-import { useAddTerm, useUpdateTerm } from '../../../../../redux/administration/terms/hook';
+import { useAddTerm, useUpdateTerm } from '../../../../../../../redux/administration/terms/hook';
+import AppButton from '../../../../../../../components/app-button';
+import { checkError } from '../../../../../../../utils/functions';
 
 const AddTermModal = ({isOpen, closeModal, type='add', term=null}) => {
     const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();

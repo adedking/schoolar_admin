@@ -110,18 +110,6 @@ const Sidebar = ({isSidebarOpen}) => {
           route: '/time-table',
         },
         {
-          name: 'Admissions',
-          id: 'admission',
-          icon: Education,
-          route: '/admissions',
-        },
-        // {
-        //   name: 'Transportation Settings',
-        //   id: 'transportation',
-        //   icon: Book,
-        //   route: '/transportation',
-        // },
-        {
           name: 'Exams/Result Settings',
           id: 'exam-result-settings',
           icon: Book,

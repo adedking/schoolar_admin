@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, Suspense, lazy } from 'react';
-import DashboardLayout from '../../../../../components/layouts/dashboard';
 import { Link, useParams } from 'react-router-dom';
-import { Loading } from '@carbon/react';
-import { useDeleteStudent } from '../../../../../redux/students/hook';
-import TabView from '../../../../../components/tabs';
-import DeleteModal from '../../../../../components/modals/deleteModal';
-import { useGetTerm } from '../../../../../redux/administration/terms/hook';
+import { Loading } from '@carbon/react';import { useGetTerm } from '../../../../../../../redux/administration/terms/hook';
+import { useDeleteStudent } from '../../../../../../../redux/students/hook';
+import DeleteModal from '../../../../../../../components/modals/deleteModal';
+import DashboardLayout from '../../../../../../../components/layouts/dashboard';
+import TabView from '../../../../../../../components/tabs';
 
 const TermActivities = lazy(() => import('./term-activities'));
 const TermHolidays = lazy(() => import('./holidays'));
