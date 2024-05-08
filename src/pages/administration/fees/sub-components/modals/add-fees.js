@@ -109,7 +109,7 @@ const AddFeeModal = ({isOpen, closeModal, type='add', session=null}) => {
                             value={form.name}
                             labelText="Session Name "
                             placeholder="Enter Your Term Name"
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -129,7 +129,7 @@ const AddFeeModal = ({isOpen, closeModal, type='add', session=null}) => {
                             invalidText={errors?.start_date?.message? errors?.start_date?.message : 'This field is required'}
                             labelText="Start Date"
                             placeholder="Enter Term Start Date"
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'start_date', setError, clearErrors, handleChange, 'text')
                             }}
                         />
@@ -146,7 +146,7 @@ const AddFeeModal = ({isOpen, closeModal, type='add', session=null}) => {
                             invalid={errors?.end_date? true : false}
                             invalidText={errors?.end_date?.message? errors?.end_date?.message : 'This field is required'}
                             placeholder="Enter Term End Date"
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(false, e, e.target.value, 'end_date', setError, clearErrors, handleChange, 'text')
                             }}
                         />

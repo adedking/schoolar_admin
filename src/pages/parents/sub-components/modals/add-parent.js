@@ -1,16 +1,26 @@
 
 import { Modal } from 'carbon-components-react';
-import { FilterableMultiSelect, FileUploaderDropContainer, FileUploaderItem, Form, FormGroup, FormLabel, Stack, TextInput, Select, SelectItem } from 'carbon-components-react';
+import { 
+    FilterableMultiSelect, 
+    FileUploaderDropContainer, 
+    FileUploaderItem, 
+    Form, 
+    FormGroup, 
+    FormLabel, 
+    Stack, 
+    TextInput, 
+    Select, 
+    SelectItem 
+} from 'carbon-components-react';
 import React, { useState } from 'react';
 import { ArrowRight } from '@carbon/icons-react';
-import { useGetStudentsList } from '../../../../../../redux/students/hook';
+import { useGetStudentsList } from '../../../../redux/students/hook';
 import { useForm } from 'react-hook-form';
-import { useAddParent, useUpdateParent } from '../../../../../../redux/parents/hook';
-import { checkError } from '../../../../../../utils/functions';
-import { titles } from '../../../../../../utils/constants';
-import { AllCountries } from '../../../../../../utils/constants/countries';
-import AppButton from '../../../../../../components/app-button';
-
+import { useAddParent, useUpdateParent } from '../../../../redux/parents/hook';
+import { checkError } from '../../../../utils/functions';
+import { titles } from '../../../../utils/constants';
+import { AllCountries } from '../../../../utils/constants/countries';
+import AppButton from '../../../../components/app-button';
 
 const AddParentModal = ({isOpen, closeModal, type}) => {
   const { register, handleSubmit, formState: { errors }, clearErrors, setError } = useForm();
@@ -51,9 +61,9 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
     nationality: 'Nigeria',
     address: '',
     occupation: '',
-    town: 'Male',
+    town: '',
     lga: '',
-    state: 'Male',
+    state: 'Lagos',
     country: 'Nigeria',
     primary: true,
     relationship: 'Mother',
@@ -126,10 +136,10 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
               <Stack gap={5}>
                 <div className='flex gap-3 items-center justify-between'>
                   <div className='flex flex-col justify-center item-start gap-4 w-full'>
-                      <FormLabel className='text-[15px] font-bold'>Upload profile image - (Optional)</FormLabel>
+                      <FormLabel className='text-[15px] font-bold'>Upload parent profile image - (Optional)</FormLabel>
                       <FormLabel className='text-[12px] font-normal -mt-3'>Max file size is 3mb. Supported file types are .jpg, .jpeg and .png.</FormLabel>
                       <FileUploaderDropContainer 
-                          size='md' 
+                          size='md'
                           required={false}
                           labelText={"Drag and drop files here or click to upload" }
                           multiple={true} 
@@ -203,9 +213,9 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         invalid={errors?.first_name? true : false}
                         invalidText={errors?.first_name?.message? errors?.first_name?.message : 'Please enter a valid first name'}
                         labelText="First Name"
-                        placeholder="Student First Name"
+                        placeholder="Parent First name"
                         value={form.first_name}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                         }}
                     />
@@ -219,10 +229,10 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         {...register('last_name', { required: true })}
                         invalid={errors?.last_name ? true : false}
                         invalidText={errors?.last_name?.message? errors?.last_name?.message : 'This field is required'}
-                        labelText="Last Name"
-                        placeholder="Student Surname"
+                        labelText="Last name"
+                        placeholder="Parent surname"
                         value={form.last_name}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                         }}
                     />
@@ -238,9 +248,9 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         invalid={errors?.email? true : false}
                         invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
                         labelText="Email - (Optional)"
-                        placeholder="Student Email"
+                        placeholder="Enter parent email"
                         value={form.email}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(false, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                         }}
                     />
@@ -254,10 +264,10 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         {...register('mobile', { required: true })}
                         invalid={errors?.mobile? true : false}
                         invalidText={errors?.mobile?.message? errors?.mobile?.message : 'This field is required'}
-                        labelText="Phone Number"
+                        labelText="Phone number"
                         placeholder="+234 - 000 000 0000"
                         value={form.mobile}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'mobile', setError, clearErrors, handleChange, 'mobile')
                         }}
                     />
@@ -298,7 +308,7 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         labelText="Occupation"
                         placeholder="Enter parent's occupation"
                         value={form.occupation}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'occupation', setError, clearErrors, handleChange)
                         }}
                     />
@@ -357,10 +367,10 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         {...register('lga', { required: true })}
                         invalid={errors?.lga? true : false}
                         invalidText={errors?.lga?.message? errors?.lga?.message : 'This field is required'}
-                        labelText="Local Government Area"
-                        placeholder="Enter your Local Government area"
+                        labelText="Local Government Area - (Optional)"
+                        placeholder="Enter parent LGA"
                         value={form.lga}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'lga', setError, clearErrors, handleChange)
                         }}
                     />
@@ -377,7 +387,7 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                         labelText="City/Town - (Optional)"
                         placeholder="Enter the teacher's town"
                         value={form.town}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'town', setError, clearErrors, handleChange)
                         }}
                     />
@@ -397,9 +407,9 @@ const AddParentModal = ({isOpen, closeModal, type}) => {
                       invalid={errors?.address? true : false}
                       invalidText={errors?.address?.message? errors?.address?.message : 'This field is required'}
                       labelText="Address"
-                      placeholder="Enter the teacher's address"
+                      placeholder="Enter the parent's address"
                       value={form.address}
-                      onChange={(e) => {
+                      onInput={(e) => {
                           checkError(true, e, e.target.value, 'address', setError, clearErrors, handleChange)
                       }}
                   />

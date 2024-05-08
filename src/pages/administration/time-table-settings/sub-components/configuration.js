@@ -106,6 +106,7 @@ const SchoolTimeTableConfigurationTab = () => {
             }
         },
     )
+
     useEffect(() => {
         if (confguration) {
             setForm(confguration)
@@ -119,13 +120,13 @@ const SchoolTimeTableConfigurationTab = () => {
     };
 
     const handleBreakChange = (e, index, name) => {
-        let newForm = JSON.parse(JSON.sringify(form.breaks))
+        let newForm = Object.assign([], form.breaks)
         newForm[index][name] = e.target.value
         setForm({...form, breaks: newForm})
     };
 
     const handleBreakDayChange = (index, dayIndex) => {
-        let newForm = JSON.parse(JSON.sringify(form.breaks))
+        let newForm = Object.assign([], form.breaks)
         newForm[index].break_days[dayIndex].status = newForm[index].break_days[dayIndex].status === 1 ? 0 : 1
         setForm({...form, breaks: newForm})
     };
@@ -133,13 +134,13 @@ const SchoolTimeTableConfigurationTab = () => {
     const handleLessonChange = (e, name) => {
         let newForm = Object.assign({}, form.lesson_details)
         newForm[name] = e.target.value
-        setForm({...form, lesson_days: newForm})
+        setForm({...form, lesson_details: newForm})
     };
 
     const handleLessonDayChange = (index) => {
         let newForm = Object.assign({}, form.lesson_details)
         newForm.lesson_days[index].status = newForm.lesson_days[index].status === 1 ? 0 : 1
-        setForm({...form, lesson_days: newForm})
+        setForm({...form, lesson_details: newForm})
     };
 
     const addBreak = () => {
@@ -206,8 +207,8 @@ const SchoolTimeTableConfigurationTab = () => {
             :
             <Form className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm pb-5 pt-0'>
                 {/* <span className='flex font-semibold text-[13px] -mb-2'>Assembly Time Configuration</span> */}
-                <div className='flex gap-4 items-center bg-white p-2 w-full'>
-                    <div className='flex gap-4 items-center w-1/2'>
+                <div className='flex md:flex-row flex-col gap-4 items-center bg-white p-2 w-full'>
+                    <div className='flex md:gap-4 items-center md:justify-start justify-between md:w-1/2 w-full'>
                         <span className='text-[13px]'>When does assembly start daily?</span>
                         <div className='w-1/4'>
                             <TimePicker
@@ -217,7 +218,7 @@ const SchoolTimeTableConfigurationTab = () => {
                             />
                         </div>
                     </div>
-                    <div className='flex gap-4 items-center w-1/2'>
+                    <div className='flex md:gap-4 items-center md:justify-start justify-between md:w-1/2 w-full'>
                         <span className='text-[13px]'>When does assembly end daily?</span>
                         <div className='w-1/4'>
                             <TimePicker
@@ -229,8 +230,8 @@ const SchoolTimeTableConfigurationTab = () => {
                     </div>
                 </div>
                 {/* <span className='flex font-semibold text-[13px] -mb-2'>Lectures Time Configuration</span> */}
-                <div className='flex gap-4 bg-white p-2 w-full'>
-                    <div className='flex gap-4 items-center w-1/2'>
+                <div className='flex md:flex-row flex-col gap-4 items-center bg-white p-2 w-full'>
+                    <div className='flex md:gap-4 items-center md:justify-start justify-between md:w-1/2 w-full'>
                         <span className='text-[13px]'>When do lectures start daily?</span>
                         <div className='w-1/4'>
                             <TimePicker
@@ -240,7 +241,7 @@ const SchoolTimeTableConfigurationTab = () => {
                             />
                         </div>
                     </div>
-                    <div className='flex gap-4 items-center w-1/2'>
+                    <div className='flex md:gap-4 items-center md:justify-start justify-between md:w-1/2 w-full'>
                         <span className='text-[13px]'>When do lectures end daily?</span>
                         <div className='w-1/4'>
                             <TimePicker
@@ -272,7 +273,7 @@ const SchoolTimeTableConfigurationTab = () => {
                 </div> */}
                 {form.configure_break_time === 1 ?
                 <>
-                    <div className='grid grid-cols-2 gap-4 items-start'>
+                    <div className='grid md:grid-cols-2 grid-cols-1 gap-4 items-start'>
                         {form?.breaks?.length > 0 && form?.breaks.map((item, index) => (
                             <div className='flex flex-col gap-4 items-start bg-white p-3 w-full relative' key={index}>
                                 {form?.breaks?.length > 1?
@@ -331,7 +332,7 @@ const SchoolTimeTableConfigurationTab = () => {
                                                 {dayItem.status === 1 ?
                                                 <button 
                                                     type="button" 
-                                                    className='flex items-center justify-center text-[12px] bg-primary w-[75px] h-[30px] border border-primary text-white' 
+                                                    className='flex items-center justify-center md:text-[12px] text-[9px] bg-primary md:w-[75px] w-[53px] md:h-[30px] h-[25px] border border-primary text-white' 
                                                     key={dayIndex}
                                                     onClick={() => {
                                                         handleBreakDayChange(index, dayIndex)
@@ -342,7 +343,7 @@ const SchoolTimeTableConfigurationTab = () => {
                                                 :
                                                 <button 
                                                     type="button" 
-                                                    className='flex items-center justify-center text-[12px] bg-white w-[75px] border border-primary h-[30px] text-primary' 
+                                                    className='flex items-center justify-center md:text-[12px] text-[9px] bg-white md:w-[75px] w-[53px] md:h-[30px] h-[25px] border border-primary text-primary' 
                                                     key={dayIndex}
                                                     onClick={() => {
                                                         handleBreakDayChange(index, dayIndex)
@@ -388,10 +389,10 @@ const SchoolTimeTableConfigurationTab = () => {
                 </div>
                 {form.configure_lesson === 1 ?
                 <div className='flex flex-col gap-2 bg-white p-2 px-4'>
-                    <div className='flex gap-4 w-full'>
-                        <div className='flex gap-4 items-center w-1/2'>
+                    <div className='flex md:flex-row flex-col gap-4 w-full'>
+                        <div className='flex gap-4 items-center md:justify-start justify-between md:w-1/2 w-full'>
                             <span className='text-[13px]'>When do lessons start daily?</span>
-                            <div className='w-1/2'>
+                            <div className='md:w-1/2 w-1/4'>
                                 <TimePicker
                                     className='min-w-full'
                                     value={form.lesson_details?.lesson_start_time}
@@ -399,9 +400,9 @@ const SchoolTimeTableConfigurationTab = () => {
                                 />
                             </div>
                         </div>
-                        <div className='flex gap-4 items-center w-1/2'>
+                        <div className='flex gap-4 items-center md:justify-start justify-between md:w-1/2 w-full'>
                             <span className='text-[13px]'>When do lessons end daily?</span>
-                            <div className='w-1/2'>
+                            <div className='md:w-1/2 w-1/4'>
                                 <TimePicker
                                     className='min-w-full'
                                     value={form.lesson_details?.lesson_end_time}
@@ -418,7 +419,7 @@ const SchoolTimeTableConfigurationTab = () => {
                                     {lessonDayItem.status === 1 ?
                                     <button 
                                         type="button" 
-                                        className='flex items-center justify-center text-[12px] bg-primary w-[75px] h-[30px] border border-primary text-white' 
+                                        className='flex items-center justify-center md:text-[12px] text-[9px] bg-primary md:w-[75px] w-[53px] md:h-[30px] h-[25px] border border-primary text-white'
                                         key={lessonDayIndex}
                                         onClick={() => {
                                             handleLessonDayChange(lessonDayIndex)
@@ -429,7 +430,7 @@ const SchoolTimeTableConfigurationTab = () => {
                                     :
                                     <button 
                                         type="button" 
-                                        className='flex items-center justify-center text-[12px] bg-primary w-[75px] h-[30px] border border-primary text-white' 
+                                        className='flex items-center justify-center md:text-[12px] text-[9px] bg-white md:w-[75px] w-[53px] md:h-[30px] h-[25px] border border-primary text-primary' 
                                         key={lessonDayIndex}
                                         onClick={() => {
                                             handleLessonDayChange(lessonDayIndex)

@@ -103,7 +103,7 @@ const SignupPage = () => {
                                     labelText="First Name"
                                     placeholder="Enter Your First Name"
                                     value={form.first_name}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -119,7 +119,7 @@ const SignupPage = () => {
                                     labelText="Last Name (Surname)"
                                     placeholder="Enter Your Surname"
                                     value={form.last_name}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -135,7 +135,7 @@ const SignupPage = () => {
                             labelText="Email"
                             placeholder="Enter Your Email"
                             value={form.email}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                             }}
                         />
@@ -149,9 +149,9 @@ const SignupPage = () => {
                                     labelText="Create Password"
                                     {...register('password', { required: true })}
                                     invalid={errors?.password? true : false}
-                                    invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
+                                    invalidText={errors?.password?.message? errors?.password?.message : ''}
                                     placeholder="Enter Your Password"
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange, 'password')
                                     }}
                                 />
@@ -166,8 +166,8 @@ const SignupPage = () => {
                                     placeholder="Confirm Your Password"
                                     {...register('password_confirmation', { required: true })}
                                     invalid={errors?.password_confirmation? true : false}
-                                    invalidText={errors?.password_confirmation?.message? errors?.password_confirmation?.message : 'This field is required'}
-                                    onChange={(e) => {
+                                    invalidText={errors?.password_confirmation?.message? errors?.password_confirmation?.message : ''}
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'password_confirmation', setError, clearErrors, handleChange, 'password_confirmation', form.password)
                                     }}
                                 />
@@ -223,7 +223,7 @@ const SignupPage = () => {
                                     labelText="School Name"
                                     placeholder="Enter Your School Name"
                                     value={form.school_name}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'school_name', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -297,7 +297,7 @@ const SignupPage = () => {
                                     labelText="Address **"
                                     placeholder="Enter the teacher's address"
                                     value={form.address}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'address', setError, clearErrors, handleChange)
                                     }}
                                 />

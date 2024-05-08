@@ -14,9 +14,9 @@ const StudentBasicInfo = () => {
             <hr className='divider' />
             {student ?
             <>
-                <div className='flex justify-between text-[20px] py-3 w-full'>
+                <div className='flex justify-between md:text-[20px] text-[15px] py-3 w-full'>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Student ID
                         </div>
                         <div>
@@ -24,7 +24,7 @@ const StudentBasicInfo = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Gender
                         </div>
                         <div>
@@ -32,7 +32,7 @@ const StudentBasicInfo = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Date of Birth
                         </div>
                         <div>
@@ -40,7 +40,7 @@ const StudentBasicInfo = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Date of Admission
                         </div>
                         <div>
@@ -49,9 +49,9 @@ const StudentBasicInfo = () => {
                     </div>
                 </div>
                 <hr className='divider' />
-                <div className='flex justify-between text-[20px] py-3 md:w-1/2 w-full'>
+                <div className='flex justify-between md:text-[20px] text-[15px] py-3 md:w-1/2 w-full'>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Class
                         </div>
                         <div>
@@ -60,9 +60,9 @@ const StudentBasicInfo = () => {
                     </div>
                 </div>
                 <hr className='divider' />
-                <div className='flex justify-between text-[20px] py-3 w-full'>
+                <div className='flex justify-between md:text-[20px] text-[15px] py-3 w-full'>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Weight
                         </div>
                         <div>
@@ -70,7 +70,7 @@ const StudentBasicInfo = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Height
                         </div>
                         <div>
@@ -78,7 +78,7 @@ const StudentBasicInfo = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Blood Group
                         </div>
                         <div>
@@ -86,7 +86,7 @@ const StudentBasicInfo = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='text-[14px]'>
+                        <div className='md:text-[14px] text-[11px]'>
                             Genotype
                         </div>
                         <div>

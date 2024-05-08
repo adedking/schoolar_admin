@@ -5,10 +5,28 @@ import { attendances } from '../../api/attendances';
 
 export function useGetAttendances( type, limit, page, statusFilter, search ) {
   return useQuery(
-    ['attendances', { type, limit, page, statusFilter, search }],
+    ['class-attendances', { type, limit, page, statusFilter, search }],
     () => {
       store.dispatch(setIsLoading(true));
       return attendances.getAttendances({ type, limit, page, statusFilter, search });
+    },
+    {
+      select: (data) => {
+        return data;
+      },
+      onSettled: (data, error, variables, context) => {
+        store.dispatch(setIsLoading(false));
+      },
+    },
+  );
+}
+
+export function useGetAttendancesBySubject( type, limit, page, statusFilter, search ) {
+  return useQuery(
+    ['subject-attendances', { type, limit, page, statusFilter, search }],
+    () => {
+      store.dispatch(setIsLoading(true));
+      return attendances.getAttendancesBySubject({ type, limit, page, statusFilter, search });
     },
     {
       select: (data) => {

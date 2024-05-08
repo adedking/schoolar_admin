@@ -33,6 +33,7 @@ const LessonPlansPage = () => {
 
     const { data: lessonPlans, isLoading: lessonPlanLoading } = useGetLessonPlans(
         id,
+        'session',
         pagination.limit,
         pagination.page,
         pagination.statusFilter,

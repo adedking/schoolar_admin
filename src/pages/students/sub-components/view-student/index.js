@@ -1,37 +1,37 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, Suspense, lazy } from 'react';
 import DashboardLayout from '../../../../components/layouts/dashboard';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import { useDeleteStudent, useGetStudent } from '../../../../redux/students/hook';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
-import AddStudentModal from '../modals/add-student/add-single-student/add-student';
-import DeleteModal from '../../../../components/modals/deleteModal';
+import SubLoader from '../../../../components/sub-loader';
 
 const StudentBasicInfo = lazy(() => import('./view-basic-info'));
 const StudentGuardian = lazy(() => import('./student-guardians'));
 const StudentAcademicRecords = lazy(() => import('./academic-records'));
 const StudentAttendance = lazy(() => import('./attendance'));
+const AddStudentModal = lazy(() => import('../modals/add-student/add-single-student/add-student'));
+const DeleteModal = lazy(() => import('../../../../components/modals/deleteModal'));
 
 const ViewStudentPage = () => {
     const tabs = [
         {
             title: 'Basic Information',
-            content: <Suspense fallback = {null} ><StudentBasicInfo /></Suspense>
-            ,
+            content: <Suspense fallback = {<SubLoader />} ><StudentBasicInfo /></Suspense>
         },
         {
             title: 'Guardians',
-            content: <Suspense fallback = {null} ><StudentGuardian  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><StudentGuardian  /></Suspense>
         },
         {
             title: 'Attendance',
-            content: <Suspense fallback = {null} ><StudentAttendance  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><StudentAttendance  /></Suspense>
         },
         {
             title: 'Academic Records',
-            content: <Suspense fallback = {null} ><StudentAcademicRecords  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><StudentAcademicRecords  /></Suspense>
         },
     ];
 
@@ -43,35 +43,42 @@ const ViewStudentPage = () => {
 
     const {mutateAsync: deleteStudent, isLoading: deleteStudentLoading} = useDeleteStudent()
 
+    const navigate = useNavigate();
+
     const deleteStudentFn = async () => {
         await deleteStudent(id).then((response) => {
             setShowDeleteStudent(false)
+            navigate('/parents-guardians')
         })
     }
 
     return (
         <React.Fragment>
             {showEditStudent ?
-            <AddStudentModal
-                type={'update'}
-                isOpen={showEditStudent}
-                closeModal={()=> setShowEditStudent(false)}
-                student={student}
-            />
+            <Suspense fallback = {null} >
+                <AddStudentModal
+                    type={'update'}
+                    isOpen={showEditStudent}
+                    closeModal={()=> setShowEditStudent(false)}
+                    student={student}
+                />
+            </Suspense>
             :
             null
             }
             {showDeleteStudent ?
-            <DeleteModal
-                type={'update'}
-                isOpen={showDeleteStudent}
-                closeModal={()=> setShowDeleteStudent(false)}
-                deleteTitle='Delete Student Profile' 
-                deleteText="Are you sure you want to delete Oladotun from your student directory?"
-                deleteAction={() => {deleteStudentFn()}} 
-                deleteLoading={deleteStudentLoading}
-                buttonText='Delete Student'
-            />
+            <Suspense fallback = {null} >
+                <DeleteModal
+                    type={'update'}
+                    isOpen={showDeleteStudent}
+                    closeModal={()=> setShowDeleteStudent(false)}
+                    deleteTitle='Delete Student Profile' 
+                    deleteText="Are you sure you want to delete Oladotun from your student directory?"
+                    deleteAction={() => {deleteStudentFn()}} 
+                    deleteLoading={deleteStudentLoading}
+                    buttonText='Delete Student'
+                />      
+            </Suspense>
             :
             null
             }

@@ -105,9 +105,9 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
                             value={form.weight}
                             onChange={(e, state) => {
                                 if (form.weight) {
-                                checkError(true, state, state.value, 'weight', setError, clearErrors, handleChange, 'number')
+                                    checkError(true, state, state.value, 'weight', setError, clearErrors, handleChange, 'number')
                                 } else {
-                                checkError(true, e, 1, 'weight', setError, clearErrors, handleChange, 'number')
+                                    checkError(true, state, 1, 'weight', setError, clearErrors, handleChange, 'number')
                                 }
                             }}
                         />
@@ -148,9 +148,9 @@ const AddStudentStepTwo = ({student, changeStep, studentUUID}) => {
                             value={form.height}
                             onChange={(e, state) => {
                                 if (form.height) {
-                                checkError(true, e, state.value, 'height', setError, clearErrors, handleChange, 'number')
+                                checkError(true, state, state.value, 'height', setError, clearErrors, handleChange, 'number')
                                 } else {
-                                checkError(true, e, 1, 'height', setError, clearErrors, handleChange, 'number')
+                                checkError(true, state, 1, 'height', setError, clearErrors, handleChange, 'number')
                                 }
                             }}
                         />

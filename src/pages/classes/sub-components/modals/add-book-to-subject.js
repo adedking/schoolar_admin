@@ -153,7 +153,7 @@ const AddBookToSubjectModal = ({isOpen, closeModal, subjectInfo}) => {
                             value={form.class_name}
                             labelText="Book Name"
                             placeholder="Input book name"
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'book_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -168,7 +168,7 @@ const AddBookToSubjectModal = ({isOpen, closeModal, subjectInfo}) => {
                             value={form.authors}
                             labelText="Author Name(s)"
                             placeholder="Input author names (separate with commas)"
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'book_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -184,7 +184,7 @@ const AddBookToSubjectModal = ({isOpen, closeModal, subjectInfo}) => {
                                     labelText="Year published"
                                     placeholder="Input year published"
                                     // value={name}
-                                    // onChange={(e) => {
+                                    // onInput={(e) => {
                                     //     setName(e.target.value)
                                     // }}
                                 />

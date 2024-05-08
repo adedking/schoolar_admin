@@ -685,3 +685,7 @@ i {
 .bx--checkbox:focus+.bx--checkbox-label::before, .bx--checkbox-label__focus::before, .bx--checkbox:checked:focus+.bx--checkbox-label::before, .bx--checkbox-label[data-contained-checkbox-state='true'].bx--checkbox-label__focus::before, .bx--checkbox:indeterminate:focus+.bx--checkbox-label::before, .bx--checkbox-label[data-contained-checkbox-state='mixed'].bx--checkbox-label__focus::before {
   border: 0
 }
+
+.cds--tabs {
+  min-width: 100%;
+}

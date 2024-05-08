@@ -147,7 +147,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
                         value={form.first_name}
                         labelText="First Name "
                         placeholder="Enter Your First Name"
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                         }}
                     />
@@ -164,7 +164,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
                         labelText="Last Name"
                         placeholder="Enter Your Last Name"
                         value={form.last_name}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                         }}
                     />
@@ -181,7 +181,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
               invalid={errors?.email? true : false}
               invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
               placeholder="Teacher email"
-              onChange={(e) => {
+              onInput={(e) => {
                   checkError(false, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
               }}
             />
@@ -198,7 +198,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
                       invalidText={errors?.mobile?.message? errors?.mobile?.message : 'This field is required'}
                       labelText="Phone Number"
                       placeholder="+234 - 000 000 0000"
-                      onChange={(e) => {
+                      onInput={(e) => {
                           checkError(true, e, e.target.value, 'mobile', setError, clearErrors, handleChange, 'mobile')
                       }}
                   />
@@ -237,7 +237,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
                   labelText="Identity Document Number"
                   placeholder="Enter Identity Document Number"
                   value={form.identity_number}
-                  onChange={(e) => {
+                  onInput={(e) => {
                       checkError(false, e, e.target.value, 'identity_number', setError, clearErrors, handleChange)
                   }}
                 />
@@ -292,7 +292,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
                   labelText="City - (Optional)"
                   placeholder="Enter the teacher's city"
                   value={form.city}
-                  onChange={(e) => {
+                  onInput={(e) => {
                     checkError(false, e, e.target.value, 'city', setError, clearErrors, handleChange)
                   }}
                 />
@@ -314,7 +314,7 @@ const AssignDriverToRouteModal = ({isOpen, closeModal, routeName=''}) => {
                   labelText="Address"
                   placeholder="Enter the teacher's address"
                   value={form.address}
-                  onChange={(e) => {
+                  onInput={(e) => {
                     checkError(true, e, e.target.value, 'address', setError, clearErrors, handleChange)
                   }}
                 />

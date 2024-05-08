@@ -115,7 +115,7 @@ const AddTermModal = ({isOpen, closeModal, type='add', term=null}) => {
                                     value={form.term_name}
                                     labelText="Term Name "
                                     placeholder="Enter Your Term Name"
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'term_name', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -188,10 +188,9 @@ const AddTermModal = ({isOpen, closeModal, type='add', term=null}) => {
                                     label="Enter term position"
                                     placeholder="Enter term position"
                                     value={form.position}
-                                    onChange={(e) => {
-                                        console.log(e)
+                                    onChange={(e, state) => {
                                         setForm({...form,
-                                            position: e.value
+                                            position: state.value
                                         })
                                     }}
                                 />

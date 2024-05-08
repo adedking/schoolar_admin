@@ -79,12 +79,30 @@ const Sidebar = ({isSidebarOpen}) => {
       route: '/e-learning',
     },
     {
+      name: 'Boarding',
+      id: 'boarding',
+      icon: IbmWatsonMachineLearning,
+      route: '/boarding',
+    },
+    {
+      name: 'Reports',
+      id: 'reports',
+      icon: IbmWatsonMachineLearning,
+      route: '/reports',
+    },
+    {
       name: 'Administration',
       id: 'administration',
       icon: ManageProtection,
       route: null,
       paths: ['sessions', 'student-records', 'admission'],
       subroute: [
+        {
+          name: 'General Settings',
+          id: 'general-settings',
+          icon: UserMultiple,
+          route: '/general-settings',
+        },
         {
           name: 'Non-Teaching Staff',
           id: 'non-academic-staff',
@@ -115,7 +133,12 @@ const Sidebar = ({isSidebarOpen}) => {
           icon: Book,
           route: '/exam-result-settings',
         },
-        
+        {
+          name: 'Transportation Routes',
+          id: 'transportation',
+          icon: IbmWatsonMachineLearning,
+          route: '/transportation',
+        },
       ]
     },
   ]

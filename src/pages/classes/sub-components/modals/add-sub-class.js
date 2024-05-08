@@ -134,7 +134,7 @@ const AddSubClassModal = ({isOpen, closeModal, classInfo, type='add'}) => {
                 value={form.name}
                 labelText="Sub-class Name"
                 placeholder="Input class name / number"
-                onChange={(e) => {
+                onInput={(e) => {
                   checkError(true, e, e.target.value, 'name', setError, clearErrors, handleChange)
                 }}
               />

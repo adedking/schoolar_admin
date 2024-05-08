@@ -78,7 +78,7 @@ const AddClassModal = ({isOpen, closeModal, type='add'}) => {
               value={form.class_name}
               labelText="Class Name"
               placeholder="Input class name / number"
-              onChange={(e) => {
+              onInput={(e) => {
                 checkError(true, e, e.target.value, 'class_name', setError, clearErrors, handleChange)
               }}
             />

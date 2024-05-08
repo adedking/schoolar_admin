@@ -110,7 +110,7 @@ const AddSessionModal = ({isOpen, closeModal, type='add', session=null}) => {
                                 value={form.name}
                                 labelText="Session Name "
                                 placeholder="Enter Your Session Name"
-                                onChange={(e) => {
+                                onInput={(e) => {
                                     checkError(true, e, e.target.value, 'session_name', setError, clearErrors, handleChange)
                                 }}
                             />

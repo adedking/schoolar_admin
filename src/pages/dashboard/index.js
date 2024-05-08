@@ -19,9 +19,6 @@ const DashboardPage = () => {
         ]
     }
 
-    // const [startDate, setStartDate] = useState()
-    // const [endDate, setEndDate] = useState()
-
     const data = {
         data: [
         {

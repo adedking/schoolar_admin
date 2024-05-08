@@ -1,7 +1,6 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { SelectItem, Select, Toggle } from 'carbon-components-react';
 import { Loading } from '@carbon/react';
 import { useGetTimeTableBySubClass } from '../../../../redux/administration/time-table/hook';
@@ -9,10 +8,10 @@ import { useGetSubClass } from '../../../../redux/classes/hook';
 
 const SubjectTimeTable = ({subjectInfo}) => {
 
-    const { data: timeTable, isLoading: timeTableLoading } = useGetTimeTableBySubClass(subjectInfo.sub_class.id);
+    const { data: timeTable, isLoading: timeTableLoading } = useGetTimeTableBySubClass(subjectInfo?.sub_class?.id);
     const [selectedDay, setSelectedDay] = useState('Monday')
     const [selectedIndex, setSelectedIndex] = useState(0)
-    const { data: classInfo, isLoading: classLoading } = useGetSubClass(subjectInfo.sub_class.id);
+    const { data: classInfo, isLoading: classLoading } = useGetSubClass(subjectInfo?.sub_class?.id);
 
     const [form, setForm] = useState({})
 
@@ -32,7 +31,7 @@ const SubjectTimeTable = ({subjectInfo}) => {
             <div className='flex justify-between items-center w-full'>
                 <div className='flex flex-col h-[76px] w-full justify-center gap-1 bg-background'>
                     <div className='text-[18px] font-semibold'>
-                        Class Time-table
+                        Subject Time-table
                     </div>
                     <div className='text-[13px] font-light'>
                         Manage your subject time-table for lectures.

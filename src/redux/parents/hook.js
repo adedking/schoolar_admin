@@ -132,7 +132,7 @@ export function useDeleteParent() {
   return useMutation(
     (payload) => {
       store.dispatch(setIsLoading(true));
-      return parents.deleteSubClass(payload);
+      return parents.deleteParent(payload);
     },
     {
       onSuccess: (response, variables, context) => {

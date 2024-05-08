@@ -8,31 +8,32 @@ import { useParams } from 'react-router-dom';
 import { Loading } from '@carbon/react';
 import ViewProfile from '../../../../components/view-profile';
 import { useNavigate } from 'react-router-dom';
-import DeleteModal from '../../../../components/modals/deleteModal';
-import AddTeacherModal from '../modals/add-teacher/add-teacher';
+import SubLoader from '../../../../components/sub-loader';
 
 const TeacherBasicInfo = lazy(() => import('./view-basic-info'));
 const TeachingClasses = lazy(() => import('./teaching-classes'));
-const Qualifications = lazy(() => import('./qualifications'));
+// const Qualifications = lazy(() => import('./qualifications'));
 const LessonPlans = lazy(() => import('./lesson-plans'));
+const DeleteModal = lazy(() => import('../../../../components/modals/deleteModal'));
+const AddTeacherModal = lazy(() => import('../modals/add-teacher/add-teacher'));
 
 const ViewTeacherPage = () => {
     const tabs = [
       {
         title: 'Basic Information',
-        content: <Suspense fallback = {null} ><TeacherBasicInfo  /></Suspense>
+        content: <Suspense fallback = {<SubLoader />} ><TeacherBasicInfo  /></Suspense>
       },
       {
         title: 'Teaching Classes',
-        content: <Suspense fallback = {null} ><TeachingClasses  /></Suspense>
+        content: <Suspense fallback = {<SubLoader />} ><TeachingClasses  /></Suspense>
       },
-      {
-        title: 'Qualifications',
-        content: <Suspense fallback = {null} ><Qualifications /></Suspense>
-      },
+      // {
+      //   title: 'Qualifications',
+      //   content: <Suspense fallback = {<SubLoader />} ><Qualifications /></Suspense>
+      // },
       {
         title: 'Lesson Plans',
-        content: <Suspense fallback = {null} ><LessonPlans /></Suspense>
+        content: <Suspense fallback = {<SubLoader />} ><LessonPlans /></Suspense>
       },
     ];
     const {id} = useParams();
@@ -53,25 +54,29 @@ const ViewTeacherPage = () => {
     return (
       <React.Fragment>
         {showEditTeacher ?
-        <AddTeacherModal
-            type={'update'}
-            isOpen={showEditTeacher}
-            closeModal={()=> setShowEditTeacher(false)}
-            teacher={teacher}
-        />
+        <Suspense fallback = {null} >
+          <AddTeacherModal
+              type={'update'}
+              isOpen={showEditTeacher}
+              closeModal={()=> setShowEditTeacher(false)}
+              teacher={teacher}
+          />
+        </Suspense>
         :
         null
         }
         {showDelete ?
-        <DeleteModal
-            isOpen={showDelete}
-            closeModal={()=> setShowDelete(false)}
-            deleteTitle='Delete Teacher' 
-            deleteText={`Are you sure you want to delete ${teacher?.first_name} from your teacher directory?`}
-            deleteAction={() => {deleteTeacherFn()}} 
-            deleteLoading={removeTeacherLoading}
-            buttonText='Delete Teacher'
-        />
+        <Suspense fallback = {null} >
+          <DeleteModal
+              isOpen={showDelete}
+              closeModal={()=> setShowDelete(false)}
+              deleteTitle='Delete Teacher' 
+              deleteText={`Are you sure you want to delete ${teacher?.first_name} from your teacher directory?`}
+              deleteAction={() => {deleteTeacherFn()}} 
+              deleteLoading={removeTeacherLoading}
+              buttonText='Delete Teacher'
+          />
+        </Suspense>
         :
         null
         }
@@ -97,7 +102,7 @@ const ViewTeacherPage = () => {
                     }} 
                     route='Teachers' 
                     routeLink='/teachers'
-                    name={`${teacher?.title}. ${teacher?.first_name} ${teacher?.last_name}`}
+                    name={`${teacher?.title ? teacher?.title : ''} ${teacher?.first_name} ${teacher?.last_name}`}
                   />
                   <TabView componentTabs={tabs}/>
                 </div>
@@ -105,7 +110,6 @@ const ViewTeacherPage = () => {
             </div>
         </DashboardLayout>
       </React.Fragment>
-        
     )   
 }
 

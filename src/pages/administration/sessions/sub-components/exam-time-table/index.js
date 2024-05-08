@@ -21,7 +21,7 @@ const SessionTimeTablePage = () => {
                     </Link>
                     /
                     <span className='text-[14px]'>
-                        {'Lesson Plans'}
+                        {'Examination Time-table'}
                     </span>
                 </div>
                 <div className='flex flex-col items-center jusify-center min-w-full gap-4'>

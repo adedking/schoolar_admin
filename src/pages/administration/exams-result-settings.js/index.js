@@ -1,28 +1,29 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import DashboardLayout from '../../../components/layouts/dashboard';
 import TabView from '../../../components/tabs';
-import GradingSystem from './grading-system';
-import AssessmentTypes from './assessment-types';
-import PromotionCriteria from './promotion-criteria';
-import PromotionCriteriaModal from './sub-components/modal/promotion-criteria';
+import SubLoader from '../../../components/sub-loader';
+
+const GradingSystem = lazy(() => import('./grading-system'));
+const AssessmentTypes = lazy(() => import('./assessment-types'));
+const PromotionCriteria = lazy(() => import('./promotion-criteria'));
+const PromotionCriteriaModal = lazy(() => import('./sub-components/modal/promotion-criteria'));
 
 const ExamsResultPage = () => {
-
     const [showPromotionCriteria, setShowPromotionCriteria] = useState(false)
     const [promotionCriteriaData, setPromotionCriteriaData] = useState(null)
     const tabs = [
         {
             title: 'Grading System',
-            content: <GradingSystem  />,
+            content: <Suspense fallback = {<SubLoader />} ><GradingSystem  /></Suspense>,
         },
         {
             title: 'Assessment Types',
-            content: <AssessmentTypes />
+            content: <Suspense fallback = {<SubLoader />} ><AssessmentTypes /></Suspense>
         },
         {
             title: 'Promotion Criteria',
-            content: <PromotionCriteria setShowPromotionCriteria={setShowPromotionCriteria} setPromotionCriteriaData={setPromotionCriteriaData}  />
+            content: <Suspense fallback = {<SubLoader />} ><PromotionCriteria setShowPromotionCriteria={setShowPromotionCriteria} setPromotionCriteriaData={setPromotionCriteriaData}  /></Suspense>
         },
     ];
 

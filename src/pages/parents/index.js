@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/data-table';
-import AddParentModal from './sub-components/modals/add-parent/add-single-parent/add-parent';
+import AddParentModal from './sub-components/modals/add-parent';
 import { PAGINATION_DEFAULT, parentStatusConfig } from '../../utils';
-import { useNavigate } from 'react-router-dom';
 import { useGetParents } from '../../redux/parents/hook';
-import AddMultipleParentsModal from './sub-components/modals/add-parent/add-multiple-parents/add-multiple-parents';
+import AddMultipleParentsModal from './sub-components/modals/add-multiple-parents';
 
 const ParentsPage = () => {
 

@@ -6,32 +6,37 @@ import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
 import ViewProfile from '../../../../components/view-profile';
 import { useDeleteParent, useGetParent } from '../../../../redux/parents/hook';
-import AddParentModal from '../modals/add-parent/add-single-parent/add-parent';
-
 import { useNavigate } from 'react-router-dom';
+import SubLoader from '../../../../components/sub-loader';
 
 const ParentBasicInformation = lazy(() => import('./basic-information'));
 const Children = lazy(() => import('./children'));
 const SchoolFees = lazy(() => import('./fees'));
 const ParentMessages = lazy(() => import('./messages'));
+const AddMultipleStudentsModal = lazy(() => import('../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students'));
+const AddStudentModal = lazy(() => import('../../../students/sub-components/modals/add-student/add-single-student/add-student'));
+const DeleteModal = lazy(() => import('../../../../components/modals/deleteModal'));
+const AddParentModal = lazy(() => import('../modals/add-parent'));
 
 const ViewParentPage = () => {
+    const [showAddStudent, setShowAddStudent] = useState(false);
+    const [showAddMultipleStudent, setShowAddMultipleStudent] = useState(false);
     const tabs = [
         {
             title: 'Basic Information',
-            content: <Suspense fallback = {null} ><ParentBasicInformation  /></Suspense>,
+            content: <Suspense fallback = {<SubLoader />} ><ParentBasicInformation  /></Suspense>,
         },
         {
             title: 'Children/Wards',
-            content: <Suspense fallback = {null} ><Children  /></Suspense>,
+            content: <Suspense fallback = {<SubLoader />} ><Children  setShowAddStudent={setShowAddStudent} setShowAddMultipleStudent={setShowAddMultipleStudent}/></Suspense>,
         },
         {
             title: 'Fees History',
-            content: <Suspense fallback = {null} ><SchoolFees  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><SchoolFees  /></Suspense>
         },
         {
             title: 'Messages',
-            content: <Suspense fallback = {null} ><ParentMessages /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><ParentMessages /></Suspense>
         },
     ];
 
@@ -52,12 +57,54 @@ const ViewParentPage = () => {
 
     return (
         <React.Fragment>
+            {showDelete ?
+            <Suspense fallback = {null} >
+                <DeleteModal
+                    isOpen={showDelete}
+                    closeModal={()=> setShowDelete(false)}
+                    deleteTitle='Delete Parent Profile' 
+                    deleteText="Are you sure you want to delete Oladotun from your parent directory?. Note, all data relating to this parent will be removed from the system."
+                    deleteAction={() => {deleteParentFn()}} 
+                    deleteLoading={removeParentLoading}
+                    buttonText='Delete Parent'
+                />
+            </Suspense>
+            :
+            null
+            }
             {showEditParent ?
-            <AddParentModal
-                type={'edit'}
-                isOpen={showEditParent}
-                closeModal={()=> setShowEditParent(false)}
-            />
+            <Suspense fallback = {null} >
+                <AddParentModal
+                    type={'edit'}
+                    isOpen={showEditParent}
+                    closeModal={()=> setShowEditParent(false)}
+                />
+            </Suspense>
+            :
+            null
+            }
+            {showAddStudent ?
+            <Suspense fallback = {null} >
+                <AddStudentModal
+                    student={null}
+                    type={'new'}
+                    isOpen={showAddStudent}
+                    closeModal={()=> setShowAddStudent(false)}
+                />
+            </Suspense>
+            :
+            null
+            }
+            {showAddMultipleStudent ?
+            <Suspense fallback = {null} >
+                <AddMultipleStudentsModal
+                    student={null}
+                    type={'new'}
+                    isOpen={showAddMultipleStudent}
+                    closeModal={()=> setShowAddMultipleStudent(false)}
+                />
+            </Suspense>
+            
             :
             null
             }
@@ -76,7 +123,7 @@ const ViewParentPage = () => {
                         email={parent?.email} 
                         mobile={parent?.mobile} 
                         deleteText={'Delete parent'}
-                        deleteFunction={deleteParentFn} 
+                        deleteFunction={() => setShowDelete(true)} 
                         editText={'Edit parent'} 
                         editFunction={() => {
                             setShowEditParent(true)

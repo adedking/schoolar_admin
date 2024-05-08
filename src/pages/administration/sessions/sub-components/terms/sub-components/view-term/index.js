@@ -6,34 +6,45 @@ import { useDeleteStudent } from '../../../../../../../redux/students/hook';
 import DeleteModal from '../../../../../../../components/modals/deleteModal';
 import DashboardLayout from '../../../../../../../components/layouts/dashboard';
 import TabView from '../../../../../../../components/tabs';
+import SubLoader from '../../../../../../../components/sub-loader';
 
 const TermActivities = lazy(() => import('./term-activities'));
 const TermHolidays = lazy(() => import('./holidays'));
 const TermAcademicRecords = lazy(() => import('./academic-records'));
 const TermExamsTimeTable = lazy(() => import('./exam-time-table'));
+const LessonPlansByTerm = lazy(() => import('./lesson-plans'));
 const TermAttendance = lazy(() => import('./attendance'));
+const AddLessonPlanModal = lazy(() => import('../../../lesson-plans/sub-components/modals/add-lesson-plan'));
+const RequestLessonPlanModal = lazy(() => import('../../../lesson-plans/sub-components/modals/request-lesson-plan'));
 
 const ViewTermPage = () => {
+
+    const [showAddLessonPlan, setShowAddLessonPlan] = useState(false);
+    const [showRequestLessonPlan, setShowRequestLessonPlan] = useState(false);
     const tabs = [
         {
             title: 'Activities',
-            content: <Suspense fallback = {null} ><TermActivities  /></Suspense>,
+            content: <Suspense fallback = {<SubLoader />} ><TermActivities  /></Suspense>,
         },
         {
             title: 'Holidays',
-            content: <Suspense fallback = {null} ><TermHolidays  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><TermHolidays  /></Suspense>
         },
         {
             title: 'Attendance',
-            content: <Suspense fallback = {null} ><TermAttendance  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><TermAttendance  /></Suspense>
         },
         {
             title: 'Exam Time-table',
-            content: <Suspense fallback = {null} ><TermExamsTimeTable  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><TermExamsTimeTable  /></Suspense>
+        },
+        {
+            title: 'Lesson Plans',
+            content: <Suspense fallback = {<SubLoader />} ><LessonPlansByTerm setShowAddLessonPlan={setShowAddLessonPlan} setShowRequestLessonPlan={setShowRequestLessonPlan}/></Suspense>
         },
         {
             title: 'Student Records',
-            content: <Suspense fallback = {null} ><TermAcademicRecords  /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><TermAcademicRecords  /></Suspense>
         },
         
     ];
@@ -53,16 +64,41 @@ const ViewTermPage = () => {
     return (
         <React.Fragment>
             {showDeleteStudent ?
-            <DeleteModal
-                type={'update'}
-                isOpen={showDeleteStudent}
-                closeModal={()=> setShowDeleteStudent(false)}
-                deleteTitle='Delete Session Term' 
-                deleteText="Are you sure you want to delete this term?"
-                deleteAction={() => {deleteStudentFn()}} 
-                deleteLoading={deleteStudentLoading}
-                buttonText='Delete Term'
-            />
+            <Suspense fallback = {null} >
+                <DeleteModal
+                    type={'update'}
+                    isOpen={showDeleteStudent}
+                    closeModal={()=> setShowDeleteStudent(false)}
+                    deleteTitle='Delete Session Term' 
+                    deleteText="Are you sure you want to delete this term?"
+                    deleteAction={() => {deleteStudentFn()}} 
+                    deleteLoading={deleteStudentLoading}
+                    buttonText='Delete Term'
+                />  
+            </Suspense>
+            
+            :
+            null
+            }
+            {showAddLessonPlan ?
+            <Suspense fallback = {null} >
+                <AddLessonPlanModal
+                    session={session}
+                    type={'add'}
+                    isOpen={showAddLessonPlan}
+                    closeModal={()=> setShowAddLessonPlan(false)}
+                />
+            </Suspense>
+            :
+            null
+            }
+            {showRequestLessonPlan ?
+            <Suspense fallback = {null} >
+                <RequestLessonPlanModal
+                    isOpen={showRequestLessonPlan}
+                    closeModal={()=> setShowRequestLessonPlan(false)}
+                />
+            </Suspense>
             :
             null
             }

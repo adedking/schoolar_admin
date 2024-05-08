@@ -46,7 +46,7 @@ const PasswordRecoveryPage = () => {
                             {...register('email', { required: true })}
                             invalid={errors?.email? true : false}
                             invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e.target.value, 'email', setError, clearErrors, setEmail, 'email')
                             }}
                             labelText="Email"

@@ -8,21 +8,24 @@ import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
-import profilePix from '../../../../assets/svg/profile-pix-placeholder.svg';
-import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
-import AssignTeacherToClassModal from '../modals/assign-teacher-to-class';
-import AddStudentModal from '../../../students/sub-components/modals/add-student/add-single-student/add-student';
-import AddSubjectToClassModal from '../modals/assign-subject-to-class';
-import MarkAttendance from '../modals/mark-attendance';
-import AddSubClassModal from '../modals/add-sub-class';
-import AddMultipleStudentsModal from '../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students';
-import DeleteModal from '../../../../components/modals/deleteModal';
+import SubLoader from '../../../../components/sub-loader';
 
 const SubClassStudents = lazy(() => import('./sub-class-students'));
 const ClassRegister = lazy(() => import('./class-register'));
 const ClassSubjects = lazy(() => import('./class-subjects'));
 const ClassAcademicRecords = lazy(() => import('./class-academic-records'));
 const ClassTimeTable = lazy(() => import('./class-time-table'));
+const profilePix = lazy(() => import('../../../../assets/svg/profile-pix-placeholder.svg'));
+const AssignTeacherToSubjectModal = lazy(() => import('../modals/assign-teacher-to-subject'));
+const AssignTeacherToClassModal = lazy(() => import('../modals/assign-teacher-to-class'));
+const AddStudentModal = lazy(() => import('../../../students/sub-components/modals/add-student/add-single-student/add-student'));
+const AddSubjectToClassModal = lazy(() => import('../modals/assign-subject-to-class'));
+const MarkAttendance = lazy(() => import('../modals/mark-attendance'));
+const AddSubClassModal = lazy(() => import('../modals/add-sub-class'));
+const AddMultipleStudentsModal = lazy(() => import('../../../students/sub-components/modals/add-student/add-multiple-students/add-multiple-students'));
+const DeleteModal = lazy(() => import('../../../../components/modals/deleteModal'));
+const ClassConfiguration = lazy(() => import('./class-configuration'));
+
 
 const ViewClassPage = () => {
 
@@ -52,27 +55,30 @@ const ViewClassPage = () => {
     const tabs = [
         {
             title: 'Students',
-            content: <Suspense fallback = {null} ><SubClassStudents setShowAddStudent={setShowAddStudent} setShowAddMultipleStudents={setShowAddMultipleStudents} /></Suspense>,
+            content: <Suspense fallback = {<SubLoader />} ><SubClassStudents setShowAddStudent={setShowAddStudent} setShowAddMultipleStudents={setShowAddMultipleStudents} /></Suspense>,
         },
         {
             title: 'Subjects',
-            content: <Suspense fallback = {null} ><ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><ClassSubjects  setShowAddSubjectToClass={setShowAddSubjectToClass} /></Suspense>
         },
         {
             title: 'Class Register',
-            content: <Suspense fallback = {null} ><ClassRegister  setShowAddAttendance={setShowAddAttendance} setAttendanceInfo={setAttendanceInfo} /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><ClassRegister  setShowAddAttendance={setShowAddAttendance} setAttendanceInfo={setAttendanceInfo} /></Suspense>
         },
         {
             title: 'Class Time-table',
-            content: <Suspense fallback = {null} ><ClassTimeTable classInfo={classInfo} /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><ClassTimeTable classInfo={classInfo} /></Suspense>
         },
         {
             title: 'Academic Records',
-            content: <ClassAcademicRecords  setShowAddSubjectToClass={setShowAddSubjectToClass} />
+            content: <Suspense fallback = {<SubLoader />} ><ClassAcademicRecords  setShowAddSubjectToClass={setShowAddSubjectToClass} /></Suspense>
+        },
+        {
+            title: 'Assessment Config.',
+            content: <Suspense fallback = {<SubLoader />} ><ClassConfiguration classInfo={classInfo}/></Suspense>
         },
     ];
 
-    
     const {mutateAsync: removeClass, isLoading: removeClassLoading} = useDeleteSubClass()
     const {mutateAsync: removeTeacher, isLoading: removeTeacherLoading} = useRemoveTeacherFromClass()
 
@@ -92,87 +98,102 @@ const ViewClassPage = () => {
     return (
         <React.Fragment>
             {showDelete ?
-            <DeleteModal
-                isOpen={showDelete}
-                closeModal={()=> setShowDelete(false)}
-                deleteTitle={deleteTitle}
-                deleteText={deleteText}
-                deleteAction={() => {
-                    if (deleteType === 'class') {
-                        deleteClassFn()
-                    } else {
-                        removeTeacherFn()
-                    }
-                }} 
-                deleteLoading={removeClassLoading || removeTeacherLoading}
-                buttonText={deleteButtonText}
-            />
+            <Suspense fallback = {null} >
+                <DeleteModal
+                    isOpen={showDelete}
+                    closeModal={()=> setShowDelete(false)}
+                    deleteTitle={deleteTitle}
+                    deleteText={deleteText}
+                    deleteAction={() => {
+                        if (deleteType === 'class') {
+                            deleteClassFn()
+                        } else {
+                            removeTeacherFn()
+                        }
+                    }} 
+                    deleteLoading={removeClassLoading || removeTeacherLoading}
+                    buttonText={deleteButtonText}
+                />
+            </Suspense>
             :
             null
             }
             {showAddAttendance ?
-            <MarkAttendance
-                attendanceInfo={attendanceInfo}
-                classInfo={classInfo}
-                isOpen={showAddAttendance}
-                closeModal={()=> setShowAddAttendance(false)}
-            />
+            <Suspense fallback = {null} >
+                <MarkAttendance
+                    attendanceInfo={attendanceInfo}
+                    classInfo={classInfo}
+                    isOpen={showAddAttendance}
+                    closeModal={()=> setShowAddAttendance(false)}
+                />
+            </Suspense>
             :
             null
             }
             {showAddSubjectToClass ?
-            <AddSubjectToClassModal
-                classInfo={classInfo}
-                isOpen={showAddSubjectToClass}
-                closeModal={()=> setShowAddSubjectToClass(false)}
-            />
+            <Suspense fallback = {null} >
+                <AddSubjectToClassModal
+                    classInfo={classInfo}
+                    isOpen={showAddSubjectToClass}
+                    closeModal={()=> setShowAddSubjectToClass(false)}
+                />
+            </Suspense>
             :
             null
             }
             {showAddStudent ?
-            <AddStudentModal
-                student={null}
-                type={'add'}
-                isOpen={showAddStudent}
-                closeModal={()=> setShowAddStudent(false)}
-            />
+            <Suspense fallback = {null} >
+                <AddStudentModal
+                    student={null}
+                    type={'add'}
+                    isOpen={showAddStudent}
+                    closeModal={()=> setShowAddStudent(false)}
+                />
+            </Suspense>
             :
             null
             }
             {showAddMultipleStudents ?
-            <AddMultipleStudentsModal
-                isOpen={showAddMultipleStudents}
-                closeModal={()=> setShowAddMultipleStudents(false)}
-            />
+            <Suspense fallback = {null} >
+                <AddMultipleStudentsModal
+                    isOpen={showAddMultipleStudents}
+                    closeModal={()=> setShowAddMultipleStudents(false)}
+                />
+            </Suspense>
             :
             null
             }
             {showAddClass ?
-            <AddSubClassModal
-                classInfo={classInfo}
-                type={'upadte'}
-                isOpen={showAddClass}
-                closeModal={()=> setShowAddClass(false)}
-            />
+            <Suspense fallback = {null} >
+                <AddSubClassModal
+                    classInfo={classInfo}
+                    type={'upadte'}
+                    isOpen={showAddClass}
+                    closeModal={()=> setShowAddClass(false)}
+                />
+            </Suspense>
             :
             null
             }
             {showAssignTeacherToSubject ?
-            <AssignTeacherToSubjectModal
-                
-                isOpen={showAssignTeacherToSubject}
-                closeModal={()=> setShowAssignTeacherToSubject(false)}
-            />
+            <Suspense fallback = {null} >
+                <AssignTeacherToSubjectModal
+                    isOpen={showAssignTeacherToSubject}
+                    closeModal={()=> setShowAssignTeacherToSubject(false)}
+                />
+            </Suspense>
             :
             null
             }
             {showAssignTeacherToClass ?
-            <AssignTeacherToClassModal
-                className={`${classInfo?.class_name} - ${classInfo?.name}`}
-                updateTeacherId={teacherId}
-                isOpen={showAssignTeacherToClass}
-                closeModal={()=> setShowAssignTeacherToClass(false)}
-            />
+            <Suspense fallback = {null} >
+                <AssignTeacherToClassModal
+                    className={`${classInfo?.class_name} - ${classInfo?.name}`}
+                    updateTeacherId={teacherId}
+                    isOpen={showAssignTeacherToClass}
+                    closeModal={()=> setShowAssignTeacherToClass(false)}
+                />
+            </Suspense>
             :
             null
             }

@@ -23,7 +23,6 @@ export function useGetTerms( uuid, limit, page, statusFilter, search ) {
   );
 }
 
-
 export function useGetTerm(id) {
   return useQuery(
     ['term', {id}],

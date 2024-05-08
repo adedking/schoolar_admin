@@ -78,7 +78,7 @@ const AddTransportModal = ({isOpen, closeModal}) => {
                             value={form.first_name}
                             labelText="First Name "
                             placeholder="Enter Your First Name"
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -95,7 +95,7 @@ const AddTransportModal = ({isOpen, closeModal}) => {
                             labelText="Last Name"
                             placeholder="Enter Your Last Name"
                             value={form.last_name}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -134,7 +134,7 @@ const AddTransportModal = ({isOpen, closeModal}) => {
                             labelText="City - (Optional)"
                             placeholder="Enter the teacher's city"
                             value={form.city}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(false, e, e.target.value, 'city', setError, clearErrors, handleChange)
                             }}
                         />

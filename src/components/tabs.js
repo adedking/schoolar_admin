@@ -31,10 +31,10 @@ const TabView = ({ componentTabs}) => {
   }
 
   return (
-    <Grid condensed className='!bg-background py-3 min-h-[500px] w-full'>
-      <Column lg={16} md={16} sm={4}>
+    <Grid condensed className='!bg-background py-3 min-h-[500px] w-full ' >
+      <Column lg={16} md={8} sm={4}>
         <Tabs
-          className='!min-w-[100%] -mx-2'
+          className='w-full md:-mx-2 '
           selectedIndex={selectedTabIndex}
           onChange={(e) => {
             onChangeTab(e)
@@ -42,7 +42,7 @@ const TabView = ({ componentTabs}) => {
         >
           <TabList 
             aria-label="List of tabs"
-            fullWidth
+            isFullWidth
             activation="manual"
             className='flex justify-between !min-w-full'
           >
@@ -56,7 +56,7 @@ const TabView = ({ componentTabs}) => {
             {componentTabs?.map((item, index) => (
               <>
               {selectedTabIndex === index ?
-              <TabPanel key={index} className='-mx-4'>
+              <TabPanel key={index} className='md:-mx-4'>
                 {item.content}
               </TabPanel>
               :null}

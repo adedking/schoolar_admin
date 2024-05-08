@@ -2,7 +2,6 @@ import { user } from '../../api/user';
 import { store } from '..';
 import { clearToken, clearUser, setToken, setUser } from './user-slice';
 import { Axios } from '../../api/axios.js'
-import { queryClient } from '../..';
 import { setAlert, setIsLoading } from '../components/components-slice';
 import { useMutation } from '@tanstack/react-query';
 import { clearSchools, setCurrentSession, setCurrentTerm, setSchool, setSchoolLocation, setSchools } from '../school/school-slice.js';
@@ -135,8 +134,6 @@ export const logout = async () => {
   store.dispatch(clearUser());
   store.dispatch(clearSchools());
   store.dispatch(clearToken());
-  // store.dispatch(clearTwoFaToken());
-  queryClient.invalidateQueries();
   delete Axios.defaults.headers.common['Authorization'];
-  store.dispatch(setAlert(true, 'Logout successful', 'warning', 'You are successfully logged out.'));
+  store.dispatch(setAlert(true, 'Logout successful', 'error', 'You are successfully logged out.'));
 };

@@ -35,7 +35,6 @@ const SchoolTimeTableTab = () => {
 
     useEffect(() => {
         if (timeTable) {
-            console.log(timeTable)
             setForm(timeTable)
         } else {
             setForm({

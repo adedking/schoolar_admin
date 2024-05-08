@@ -5,7 +5,7 @@ import { PAGINATION_DEFAULT, studentStatusConfig } from '../../../../utils';
 import { useGetstudentsByParent } from '../../../../redux/parents/hook';
 
 
-const Children = ({setShowAddSubjectToClass}) => {
+const Children = ({setShowAddStudent, setShowAddMultipleStudent}) => {
 
     const {id} = useParams();
     const [pagination, setPagination] = useState({
@@ -114,8 +114,8 @@ const Children = ({setShowAddSubjectToClass}) => {
             
             <div className='min-w-full bg-background rounded-sm'>
                 <AppDataTable
-                    title={'Students'}
-                    description={'Add to or remove students from the class'}
+                    title={'Children/Wards'}
+                    description={'View children/wards of this parent'}
                     tableHeader={tableConfig}
                     pagination={pagination}
                     setPagination={setPagination}
@@ -123,7 +123,7 @@ const Children = ({setShowAddSubjectToClass}) => {
                     data={students}
                     mainButtonText='Add Student'
                     mainButtonAction={() => {
-                        // setShowAddStudent(true)
+                        setShowAddStudent(true)
                     }}
                     emptyText={'No student added'}
                     emptySubText={'Please add students to your school by clicking the button below'}
@@ -133,7 +133,7 @@ const Children = ({setShowAddSubjectToClass}) => {
                     multipleButtonText={'Add Multiple Students'}
                     addMultiple={true}
                     addMultipleAction={() => {
-                        // setShowAddMultipleStudents(true)
+                        setShowAddMultipleStudent(true)
                     }}
                 />
             </div>

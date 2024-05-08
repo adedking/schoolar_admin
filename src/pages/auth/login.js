@@ -40,10 +40,7 @@ const LogInPage = () => {
     return (
         <AuthLayout>
             <div className='flex flex-col items-center jusify-center min-w-screen min-h-full'>
-                <Form 
-                    onSubmit={handleSubmit(submitForm)}
-                    className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[430px] h-screen md:p-4 p-8 pb-[15px] md:mt-16 rounded'
-                >
+                <Form onSubmit={handleSubmit(submitForm)}className='bg-white md:w-[450px] w-screen md:min-h-fit md:max-h-[430px] h-screen md:p-4 p-8 pb-[15px] md:mt-16 rounded'>
                     <Stack gap={6}>
                         <div className='header-2'>Login to Pluraled</div>
                         <TextInput
@@ -54,12 +51,12 @@ const LogInPage = () => {
                             value={form.email}
                             {...register('email', { required: true })}
                             invalid={errors?.email? true : false}
-                            invalidText={errors?.email?.message? errors?.email?.message : 'This field is required'}
-                            onChange={(e) => {
+                            invalidText={errors?.email?.message? errors?.email?.message : 'Please enter an email'}
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                             }}
                             labelText="Email"
-                            placeholder="Enter Your Email"
+                            placeholder="Enter your email"
                         />
                         <div className='w-full mb-2'>
                             <div className='flex flex-row justify-between text-[12px] mb-[8px] text-gray-600 !w-full'> 
@@ -67,22 +64,22 @@ const LogInPage = () => {
                                 <span className=' text-primary hover:underline duration-300 cursor-pointer' onClick={() => {navigate("/forgot-password")}}>Forget Password?</span>
                             </div>
                             <PasswordInput
-                                type="password"
                                 name={'password'}
                                 value={form.password}
                                 id="passsword"
                                 {...register('password', { required: true })}
-                                invalid={errors?.password? true : false}
-                                invalidText={errors?.password?.message? errors?.password?.message : 'This field is required'}
+                                invalid={errors?.password ? true : false}
+                                invalidText={errors?.password?.message? errors?.password?.message : 'Please enter a valid password'}
                                 placeholder="Enter Your Password"
-                                onChange={(e) => {
-                                    checkError(true, e, e.target.value, 'passsword', setError, clearErrors, handleChange)
+                                onInput={(e) => {
+                                    checkError(true, e, e.target.value, 'text', setError, clearErrors, handleChange)
                                 }}
                             />
                         </div>
                         <Checkbox className={'text-[13px]'} labelText={`Stay Logged In`} id="stay_logged_in" />
                         <AppButton
                             type="submit" 
+                            // action={submitForm}
                             kind={'primary'} 
                             renderIcon={ArrowRight}
                             loading={isLoading}

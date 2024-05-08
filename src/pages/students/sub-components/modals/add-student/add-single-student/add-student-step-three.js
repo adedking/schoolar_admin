@@ -220,7 +220,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="First Name"
                                     placeholder="Student First Name"
                                     value={form.first_name}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -237,7 +237,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="Last Name"
                                     placeholder="Student Surname"
                                     value={form.last_name}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -255,7 +255,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="Email - (Optional)"
                                     placeholder="Student Email"
                                     value={form.email}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(false, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                                     }}
                                 />
@@ -272,7 +272,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="Phone Number"
                                     placeholder="+234 - 000 000 0000"
                                     value={form.mobile}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'mobile', setError, clearErrors, handleChange, 'mobile')
                                     }}
                                 />
@@ -313,7 +313,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="Occupation"
                                     placeholder="Enter parent's occupation"
                                     value={form.occupation}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'occupation', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -375,7 +375,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="Local Government Area"
                                     placeholder="Enter your Local Government area"
                                     value={form.lga}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'lga', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -392,7 +392,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="City/Town - (Optional)"
                                     placeholder="Enter the teacher's town"
                                     value={form.town}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'town', setError, clearErrors, handleChange)
                                     }}
                                 />
@@ -414,7 +414,7 @@ const AddStudentStepThree = ({changeStep, studentUUID}) => {
                                     labelText="Address"
                                     placeholder="Enter the teacher's address"
                                     value={form.address}
-                                    onChange={(e) => {
+                                    onInput={(e) => {
                                         checkError(true, e, e.target.value, 'address', setError, clearErrors, handleChange)
                                     }}
                                 />

@@ -179,7 +179,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="First Name"
                             placeholder="Student First Name"
                             value={form.first_name}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'first_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -196,7 +196,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="Middle Name - (Optional)"
                             placeholder="Student Middle Name"
                             value={form.middle_name}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(false, e, e.target.value, 'middle_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -213,7 +213,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="Last Name"
                             placeholder="Student Surname"
                             value={form.last_name}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'last_name', setError, clearErrors, handleChange)
                             }}
                         />
@@ -231,7 +231,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="Email - (Optional)"
                             placeholder="Student Email"
                             value={form.email}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(false, e, e.target.value, 'email', setError, clearErrors, handleChange, 'email')
                             }}
                         />
@@ -248,7 +248,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="Phone Number - (Optional)"
                             placeholder="+234 - 000 000 0000"
                             value={form.mobile}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(false, e, e.target.value, 'mobile', setError, clearErrors, handleChange, 'mobile')
                             }}
                         />
@@ -290,7 +290,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="Date of Birth"
                             placeholder="Date of Birth"
                             value={form.dob}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'dob', setError, clearErrors, handleChange)
                             }}
                         />
@@ -310,7 +310,7 @@ const AddStudentStepOne = ({student, changeStep, setStudentUUID, studentUUID}) =
                             labelText="Enrolment ID"
                             placeholder="Enrolment ID"
                             value={form.registration_id}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 checkError(true, e, e.target.value, 'registration_id', setError, clearErrors, handleChange)
                             }}
                         />

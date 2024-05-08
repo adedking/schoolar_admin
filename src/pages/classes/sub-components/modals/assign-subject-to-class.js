@@ -73,7 +73,7 @@ const AddSubjectToClassModal = ({isOpen, closeModal, classInfo}) => {
                             labelText="Subject name"
                             placeholder="Input subject name"
                             value={name}
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 setName(e.target.value)
                             }}
                         />

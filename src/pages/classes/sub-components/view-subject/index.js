@@ -7,17 +7,19 @@ import AppButton from '../../../../components/app-button';
 import { Edit, TrashCan } from '@carbon/icons-react';
 import { Loading } from '@carbon/react';
 import TabView from '../../../../components/tabs';
-import AssignTeacherToSubjectModal from '../modals/assign-teacher-to-subject';
-import DeleteModal from '../../../../components/modals/deleteModal';
 import { useDeleteSubject, useGetSubject } from '../../../../redux/subjects/hook';
-import MarkSubjectAttendance from '../modals/mark-subject-attendance';
-import AddBookToSubjectModal from '../modals/add-book-to-subject';
+import SubLoader from '../../../../components/sub-loader';
 
 const SubjectTeachers = lazy(() => import('./subject-teachers'));
+const LessonPlansBySubject = lazy(() => import('./lesson-plans'));
 const SubjectRegister = lazy(() => import('./subject-register'));
 const SubjectTimeTable = lazy(() => import('./subject-time-table'));
 const SubjectBooks = lazy(() => import('./subject-books'));
 const SubjectAcademicRecords = lazy(() => import('./subject-academic-records'));
+const MarkSubjectAttendance = lazy(() => import('../modals/mark-subject-attendance'));
+const AddBookToSubjectModal = lazy(() => import('../modals/add-book-to-subject'));
+const AssignTeacherToSubjectModal = lazy(() => import('../modals/assign-teacher-to-subject'));
+const DeleteModal = lazy(() => import('../../../../components/modals/deleteModal'));
 
 const ViewSubject = () => {
 
@@ -42,23 +44,27 @@ const ViewSubject = () => {
     const tabs = [
         {
             title: 'Teachers',
-            content: <Suspense fallback = {null} ><SubjectTeachers setShowAssignTeacherToSubject={setShowAssignTeacherToSubject} /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><SubjectTeachers setShowAssignTeacherToSubject={setShowAssignTeacherToSubject} /></Suspense>
         },
         {
             title: 'Books',
-            content: <Suspense fallback = {null} ><SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><SubjectBooks setShowAddBookToSubject={setShowAddBookToSubject} /></Suspense>
         },
         {
             title: 'Attendance Register',
-            content: <Suspense fallback = {null} ><SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  setAttendanceInfo={setAttendanceInfo} /></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><SubjectRegister  setShowMarkAttendance={setShowMarkAttendance}  setAttendanceInfo={setAttendanceInfo} /></Suspense>
         },
         {
             title: 'Time Table',
-            content: <Suspense fallback = {null} ><SubjectTimeTable subjectInfo={subjectInfo}/></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><SubjectTimeTable subjectInfo={subjectInfo}/></Suspense>
+        },
+        {
+            title: 'Lesson Plans',
+            content: <Suspense fallback = {<SubLoader />} ><LessonPlansBySubject  subjectInfo={subjectInfo}/></Suspense>
         },
         {
             title: 'Academic Records',
-            content: <Suspense fallback = {null} ><SubjectAcademicRecords/></Suspense>
+            content: <Suspense fallback = {<SubLoader />} ><SubjectAcademicRecords  subjectInfo={subjectInfo}/></Suspense>
         },  
     ];
 
@@ -74,42 +80,50 @@ const ViewSubject = () => {
     return (
         <React.Fragment>
             {showDelete ?
-            <DeleteModal
-                isOpen={showDelete}
-                closeModal={()=> setShowDelete(false)}
-                deleteTitle={deleteTitle}
-                deleteText={deleteText}
-                deleteAction={() => {
-                    deleteSubjectFn()
-                }} 
-                deleteLoading={removeSubjectLoading}
-                buttonText={deleteButtonText}
-            />
+            <Suspense fallback = {null} >
+                <DeleteModal
+                    isOpen={showDelete}
+                    closeModal={()=> setShowDelete(false)}
+                    deleteTitle={deleteTitle}
+                    deleteText={deleteText}
+                    deleteAction={() => {
+                        deleteSubjectFn()
+                    }} 
+                    deleteLoading={removeSubjectLoading}
+                    buttonText={deleteButtonText}
+                />
+            </Suspense>
             :
             null
             }
             {showAddBookToSubject ?
-            <AddBookToSubjectModal
-                subjectInfo={subjectInfo}
-                isOpen={showAddBookToSubject}
-                closeModal={()=> setShowAddBookToSubject(false)}
-            />
+            <Suspense fallback = {null} >
+                <AddBookToSubjectModal
+                    subjectInfo={subjectInfo}
+                    isOpen={showAddBookToSubject}
+                    closeModal={()=> setShowAddBookToSubject(false)}
+                />
+            </Suspense>
             : null}
-            
             {showMarkAttendance ?
-            <MarkSubjectAttendance
-                attendanceInfo={attendanceInfo}
-                subjectInfo={subjectInfo}
-                isOpen={showMarkAttendance}
-                closeModal={()=> setShowMarkAttendance(false)}
-            />
+            <Suspense fallback = {null} >
+                <MarkSubjectAttendance
+                    attendanceInfo={attendanceInfo}
+                    subjectInfo={subjectInfo}
+                    isOpen={showMarkAttendance}
+                    closeModal={()=> setShowMarkAttendance(false)}
+                />
+            </Suspense>
             : null}
             {showAssignTeacherToSubject ?
-            <AssignTeacherToSubjectModal
-                subjectInfo={subjectInfo}
-                isOpen={showAssignTeacherToSubject}
-                closeModal={()=> setShowAssignTeacherToSubject(false)}
-            />
+            <Suspense fallback = {null} >
+                <AssignTeacherToSubjectModal
+                    subjectInfo={subjectInfo}
+                    isOpen={showAssignTeacherToSubject}
+                    closeModal={()=> setShowAssignTeacherToSubject(false)}
+                />
+            </Suspense>
+            
             :
             null
             }

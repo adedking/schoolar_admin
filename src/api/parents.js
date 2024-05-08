@@ -24,9 +24,15 @@ const getStudentsByParent = async (payload) => {
   return data?.data;
 };
 
+const deleteParent = async (payload) => {
+  const { data } = await Axios.delete(`/school-parents/${payload}`);
+  return data;
+};
+
 export const parents = {
   getParents,
   getParent,
   addParent,
-  getStudentsByParent
+  getStudentsByParent,
+  deleteParent
 }

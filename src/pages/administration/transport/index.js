@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import DashboardLayout from '../../../components/layouts/dashboard';
 import { PAGINATION_DEFAULT, transportRouteStatusConfig } from '../../../utils';
-import AppDataTable from '../../../components/data-table';
-import WidgetCard from '../../../components/widget';
+// import AppDataTable from '../../components/data-table';
+// import WidgetCard from '../../components/widget';
 import AddTransportModal from './sub-components/modals/add-transport-route';
-import { useGetTransportationRoutes } from '../../../redux/administration/transportation/hook';
+// import { useGetTransportationRoutes } from '../../redux/administration/transportation/hook';
+import ChevronSVG from '../../../assets/svg/work-in-progress.svg';
 
 const TransportationRoutesPage = () => {
     const cardData = {
@@ -21,12 +23,12 @@ const TransportationRoutesPage = () => {
         search: '',
     });
 
-    const { data: transportRoutes, isLoading: transportRoutesLoading } = useGetTransportationRoutes(
-        pagination.limit,
-        pagination.page,
-        pagination.statusFilter,
-        pagination.search,
-    );
+    // const { data: transportRoutes, isLoading: transportRoutesLoading } = useGetTransportationRoutes(
+    //     pagination.limit,
+    //     pagination.page,
+    //     pagination.statusFilter,
+    //     pagination.search,
+    // );
 
     const [showAddTransportRoute, setShowAddTransportRoute] = useState(false);
 
@@ -125,7 +127,11 @@ const TransportationRoutesPage = () => {
             null
             }
             <DashboardLayout>
-                <WidgetCard
+            <div className='flex flex-col items-center jusify-center w-full mt-12 font-semibold'>
+                <img src={ChevronSVG} alt='' srcSet='' />
+                <span className='font-semibold text-[30px] -mt-8'>Launching Soon...</span>
+            </div>
+                {/* <WidgetCard
                     cardData={cardData}
                 />
                 <div className='flex flex-col gap-4 min-w-full max-w-full bg-background rounded-sm'>   
@@ -148,7 +154,7 @@ const TransportationRoutesPage = () => {
                         loading={transportRoutesLoading}
                         addMultiple={false}
                     />
-                </div>
+                </div> */}
             </DashboardLayout>
         </>
     );

@@ -44,13 +44,12 @@ export function useGetTimeTableBySubClass( id ) {
   return useQuery(
     ['time-table-by-sub_class', id],
     () => {
-      store.dispatch(setIsLoading(true));
+      // store.dispatch(setIsLoading(true));
       return timeTable.getTimeTableBySubClass(id);
     },
     {
       enabled: id !== null,
       select: (data) => {
-        
         return data;
       },
       onSettled: (data, error, variables, context) => {

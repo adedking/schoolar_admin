@@ -1,12 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import DashboardLayout from '../../components/layouts/dashboard';
 import WidgetCard from '../../components/widget';
 import AppDataTable from '../../components/data-table';
 import { PAGINATION_DEFAULT, parentStatusConfig } from '../../utils';
 import { useGetAttendances } from '../../redux/attendance-register/hook';
-import ViewAttendance from './sub-components/modals/view-attendance';
 import { Select, SelectItem } from '@carbon/react';
+import SubLoader from '../../components/sub-loader';
+
+const ViewAttendance = lazy(() => import('./sub-components/modals/view-attendance'));
+const ClassAttendanceView = lazy(() => import('./sub-components/class-attendance'));
+const SubjectAttendanceView = lazy(() => import('./sub-components/subject-attendance'));
 
 const AttendanceRegisterPage = () => {
 
@@ -161,23 +165,10 @@ const AttendanceRegisterPage = () => {
                             </div>
                         </div>
                         <hr className='divider' />
-                        <AppDataTable 
-                            title={'Attendance Register'}
-                            description={'View Student Attendance'}
-                            tableHeader={tableConfig}
-                            pagination={pagination}
-                            setPagination={setPagination}
-                            mobileTableHeader={mobileTableHeader}
-                            showToolBar={false}
-                            data={attendances}
-                            mainAction={mainAction}
-                            setValue={setAttendanceInfo}
-                            emptyText={'No attendance added'}
-                            viewActionType={'attendance-register'}
-                            statusConfig={parentStatusConfig}
-                            loading={attendanceLoading}
-                            addMultiple={false}
-                        />
+                        {attendanceType === 'class' ?
+                        <Suspense fallback = {<SubLoader />} ><ClassAttendanceView /></Suspense> :
+                        <Suspense fallback = {<SubLoader />} ><SubjectAttendanceView /></Suspense>
+                        }
                     </div>
                 </div>
             </DashboardLayout>

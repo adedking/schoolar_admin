@@ -6,10 +6,12 @@ import { HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName, Over
 import { OverflowMenuItem } from '@carbon/react';
 import { logout } from '../redux/user/hook';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => {
   const dispatch = useDispatch();
   const { school, currentSession } = useSelector((state) => state.schoolsSlice);
+  const navigate = useNavigate()
 
   const handleSidebarToggle = () => {
     dispatch(IsTogglingSidebar());
@@ -37,30 +39,43 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => 
         Pluraled
       </HeaderName>
       <HeaderGlobalBar>
-        {profile?
+        {profile ?
         <>
           <HeaderGlobalAction aria-label="Calendar" onClick={() => {}}>
             <Calendar width={20} height={20} />
           </HeaderGlobalAction>
-          <HeaderGlobalAction aria-label="Session" onClick={() => {}} className='min-w-[190px] pr-2'>
-            <div className='flex flex-col '>
-              <span className='text-black min-w-fit text-[10px] font-semibold'>{school?.name} - {currentSession?.session_name ? currentSession?.session_name : '2023/2024'}</span>
+          <HeaderGlobalAction aria-label="Session" 
+            onClick={() => {
+              if (currentSession) {
+                navigate(`/sessions/${currentSession?.uuid}`)
+              } else {
+                navigate(`/sessions`)
+              }
+              
+            }} 
+            className='md:flex hidden md:min-w-[190px] w-0 pr-2 '
+            >
+            <div className='md:flex flex-col hidden'>
+              <span className='text-black min-w-fit text-[10px] font-semibold'>{school?.name} - {currentSession?.session_name ? currentSession?.session_name : 'No session'}</span>
               <span className='text-[#29CC39] min-w-fit text-[9px] font-semibold'>Ongoing</span>
             </div>
           </HeaderGlobalAction>
-          
           <HeaderGlobalAction aria-label="Help" onClick={() => {}}>
             <Help width={20} height={20} />
           </HeaderGlobalAction>
           <HeaderGlobalAction aria-label="Profile">
-            <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} iconClass='scale-125' className='!bg-white '>
+            <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} iconClass='scale-125' className='!bg-white'>
+              <OverflowMenuItem 
+                itemText="New Location"
+                className=' !bg-white hover:font-semibold duration-300'
+              />
               <OverflowMenuItem 
                 itemText="My Profile" 
-                className=' !bg-white' 
+                className=' !bg-white hover:font-semibold duration-300' 
               />
               <OverflowMenuItem 
                 itemText="Log out"  
-                className='!text-red-500 !bg-white'
+                className='!text-red-500 !bg-white hover:font-semibold duration-300'
                 onClick={() => {
                   logout()
                 }} 
@@ -68,7 +83,7 @@ const NavBar = ({profile=false, isSidebarOpen, toggle=true, loggedIn=false}) => 
             </OverflowMenu>
           </HeaderGlobalAction>
         </>
-        : !profile && loggedIn?
+        : !profile && loggedIn ?
         <HeaderGlobalAction aria-label="Profile">
           <OverflowMenu renderIcon={UserAvatar} flipped size={'md'} iconClass='scale-125' className='!bg-white '>
             <OverflowMenuItem 
